@@ -2,7 +2,7 @@
    ADON STUDIO — Design System (PaperTiger Clone)
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ─── CSS Variables ─── */
 :root {
@@ -15,7 +15,7 @@
   --card-bg: #e8e9e9;
   --overlay: rgba(8, 8, 8, 0.06);
 
-  --font-headline: 'Barlow Condensed', 'Impact', sans-serif;
+  --font-headline: 'Bebas Neue', 'Barlow Condensed', 'Impact', sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', 'Helvetica Neue', sans-serif;
 
