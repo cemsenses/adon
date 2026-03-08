@@ -1139,7 +1139,7 @@ footer {
   font-weight: 900;
   font-size: clamp(40px, 6.5vw, 110px);
   line-height: 0.9;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
