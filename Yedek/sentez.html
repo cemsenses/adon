@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentez — İnsan Zanaat ile Yapay Zeka Orkestrasyonu | ADON Studio</title>
+    <meta name="description"
+        content="ADON Studio'nun özel Sentez çerçevesini keşfedin. İnsan yaratıcı yönetimi ile gelişmiş yapay zeka orkestrasyonunu birleştiriyoruz." />
+
+    <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="media/favicon-192.png" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/animations.css" />
+    <style>
+        .step-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .step-visual {
+            aspect-ratio: 1;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-headline);
+            font-size: 120px;
+            font-weight: 900;
+            opacity: 0.12;
+            color: var(--black);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="page-overlay"></div>
+
+    <!-- ─── Navigation ─── -->
+    <nav class="nav nav--dark">
+        <a href="index.html" class="nav-logo"><img src="media/beyaz.png" alt="ADON Studio"
+                style="height: 22px; width: auto; display: block;"></a>
+        <div class="nav-links">
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="cozumler.html">Çözümler</a>
+            <a href="calismalar.html">Çalışmalar</a>
+            <a href="sentez.html">Sentez</a>
+        </div>
+        <a href="iletisim.html" class="nav-cta">İletişim</a>
+        <button class="nav-menu-toggle" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- ─── Page Header ─── -->
+    <header class="page-header page-header--photo">
+        <div class="page-header-bg">
+            <img src="media/hero/sentez.jpg" alt="Sentez">
+            <div class="page-header-overlay"></div>
+        </div>
+        <div class="page-header-content">
+            <p class="page-header-label">Sentez Çerçevesi</p>
+            <h1 class="page-header-title">
+                Yapay Zekaya<br>
+                Hakim<br>
+                <em>Olmak.</em>
+            </h1>
+            <p class="page-header-sub">
+                Bizim İnsan-Yapay Zeka Sentez Çerçevemiz. Üretken yapay zekanın risklerini azaltırken hız, ölçek ve
+                yaratıcılık potansiyelini en üst düzeye çıkarmak için tasarlandı.
+            </p>
+        </div>
+    </header>
+
+    <!-- ─── Framework Overview ─── -->
+    <section class="section">
+        <p class="section-label">5 Adımlı Sentez</p>
+        <div class="split" style="margin-bottom: 80px;">
+            <h2 class="section-headline reveal">
+                Sadece<br>
+                Yönetmek<br>
+                Değil,<br>
+                <em>Orkestramak.</em>
+            </h2>
+            <div>
+                <p class="section-body reveal reveal-delay-1">
+                    Çerçevemiz, birden fazla yapay zeka modelini ustaca birleştirerek her kritik noktada insan yaratıcı
+                    yönlendirmesini güvence altına alır. Sonuç: marka uyumlu, sinematik kalitede içerik — geleneksel
+                    üretimin bir kesrinde.
+                </p>
+            </div>
+        </div>
+
+        <!-- Steps -->
+        <div class="synthesis-step reveal">
+            <div class="step-num">01</div>
+            <div>
+                <div class="step-tag">İNSAN ODAKLI</div>
+                <div class="step-title">Stratejik Analiz</div>
+                <ul class="step-list">
+                    <li>Marka yönergeleri, estetik standartlar (ışık, kompozisyon, anlatı) ve kampanya hedeflerinin
+                        derinlemesine analizi.</li>
+                    <li>Belirli zorluk için geleneksel prodüksiyon ile yapay zeka modellerinin doğru karışımının
+                        belirlenmesi.</li>
+                    <li>Etik sınırların ve uyumluluk gerekliliklerinin tanımlanması.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="synthesis-step reveal">
+            <div class="step-num">02</div>
+            <div>
+                <div class="step-tag">İŞBİRLİKÇİ HIZ</div>
+                <div class="step-title">Yapay Zeka-insan İdeasyonu</div>
+                <ul class="step-list">
+                    <li>Konsept, senaryo ve görsel stillerin hızlı iterasyonu.</li>
+                    <li>İlham ve keşif için yapay zeka kullanılırken insan yaratıcı yönetmenler gözetim, iyileştirme ve
+                        estetik yargı sağlar.</li>
+                    <li>Ön görselleştirme ve prototipleme benzersiz hızda.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="synthesis-step reveal">
+            <div class="step-num">03</div>
+            <div>
+                <div class="step-tag">ÖZELLEŞTİRİLMİŞ KONTROL</div>
+                <div class="step-title">Etik Yapay Zeka Üretimi</div>
+                <ul class="step-list">
+                    <li>Marka spesifik varlıklarla (örn. özel ürün görselleri, talent benzerlikleri) özel yapay zeka
+                        modellerinin eğitimi (uygulanabilir olduğunda).</li>
+                    <li>Katı etik kuralların ve önyargı azaltma protokollerinin uygulanması.</li>
+                    <li>Veri güvenliği (SOC 2) ve tüm içerik için köken takibi.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="synthesis-step reveal">
+            <div class="step-num">04</div>
+            <div>
+                <div class="step-tag">SİNEMATİK MÜKEMMELİYET</div>
+                <div class="step-title">Kalite Sentezi</div>
+                <ul class="step-list">
+                    <li>Kritik "insan-döngüde" kontrol noktası.</li>
+                    <li>İnsan editörler, VFX sanatçıları, renk uzmanları ve fotoğrafçılar yapay zeka çıktılarını rafine
+                        eder.</li>
+                    <li>Üst düzey zanaat standartlarını karşılayan marka tutarlılığı, duygusal rezonans ve
+                        sinematik/fotoğrafik kalite.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="synthesis-step reveal" style="border-bottom: none;">
+            <div class="step-num">05</div>
+            <div>
+                <div class="step-tag">VERİYE DAYALI SONUÇLAR</div>
+                <div class="step-title">Performans Optimizasyonu</div>
+                <ul class="step-list">
+                    <li>Etkileşim metrikleri ve iş sonuçlarının analizi.</li>
+                    <li>Yapay zeka tarafından üretilen performans verileri kullanılarak gerçek zamanlı kampanya
+                        optimizasyonu.</li>
+                    <li>Ölçülebilir sonuçlara dayalı yinelemeli iyileştirme.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Why It Works ─── -->
+    <section class="section" style="padding-top: 0;">
+        <p class="section-label">Neden İşe Yarar</p>
+        <h2 class="section-headline reveal">Farkin<br>Kaynaiği.</h2>
+        <div class="pillars stagger" style="margin-top: 48px;">
+            <div class="pillar">
+                <div class="pillar-num">Hız</div>
+                <div class="pillar-title">Saatler İçinde Üretim</div>
+                <div class="pillar-body">Geleneksel stüdyolar haftalara ihtiyaç duyar. Orchestrasyon sistemimiz birden
+                    fazla modeli eşzamanlı çalıştırarak üretimi dramatik biçimde hızlandırır.</div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">Kalite</div>
+                <div class="pillar-title">Yapay Zeka + İnsan</div>
+                <div class="pillar-body">Her kritik noktada insan yaratıcı yönetimi. Estetik kararlar deneyimli
+                    sanatçılar tarafından alınır; yapay zeka ise yüksek hacimli üretimi finanse eder.</div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">Ölçek</div>
+                <div class="pillar-title">Sonsuz Varyasyon</div>
+                <div class="pillar-body">Tek bir çekim veya fikir, binlerce pazara özel varyasyona dönüştürülebilir.
+                    Dil, kültür ve kanal uyarlamaları otomatik olarak üretilir.</div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">Etik</div>
+                <div class="pillar-title">Sorumlu Yapay Zeka</div>
+                <div class="pillar-body">SOC 2 veri güvenliği, köken takibi, etik içerik tembelliği ve önyargı azaltma
+                    protokolleri. Teknolojiyi şeffaflıkla kullanıyoruz.</div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num">Tutarlılık</div>
+                <div class="pillar-title">Marka Uyumu</div>
+                <div class="pillar-body">Yapay zeka modelleri marka spesifik varlıklarla eğitilir. Her çıktı marka
+                    standartlarına otomatik olarak uyar — insani hata riski sıfıra yakın.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Marquee ─── -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+            <span>KALİTEDEN ÖDÜN YOK</span>
+            <span>TASARIMLA ÖLÇEKLENİR</span>
+            <span>PERFORMANS ODAKLI</span>
+            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+            <span>LOJİSTİK ORTADAN KALKTI</span>
+            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+            <span>KALİTEDEN ÖDÜN YOK</span>
+            <span>TASARIMLA ÖLÇEKLENİR</span>
+            <span>PERFORMANS ODAKLI</span>
+            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+            <span>LOJİSTİK ORTADAN KALKTI</span>
+        </div>
+    </div>
+
+    <!-- ─── CTA ─── -->
+    <section class="cta-section reveal">
+        <p class="section-label" style="justify-content: center;">Sentezi Deneyimleyin</p>
+        <h2 class="cta-title">
+            Sonrakini<br>
+            <em>Birlikte</em><br>
+            Orkestralayalim.
+        </h2>
+        <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">İletişime Geç →</a>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><img src="media/beyaz.png" alt="ADON Studio" style="height: 28px; width: auto; display: block;"></div>
+                <p class="footer-tagline">İnsan zanaat uzmanlığını yapay zeka orkestrasyonuyla harmanlayarak ölçekte
+                    dönüşüm sunan stratejik bir ortak.</p>
+                <div style="margin-top: 24px; display: flex; gap: 16px;">
+                    <a href="https://www.instagram.com/adon.studio/" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+                    <a href="https://www.linkedin.com/company/adon-studio/" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+                    <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Hızlı Bağlantılar</div>
+                <div class="footer-links">
+                    <a href="index.html">Ana Sayfa</a>
+                    <a href="hakkimizda.html">Hakkımızda</a>
+                    <a href="cozumler.html">Çözümler</a>
+                    <a href="calismalar.html">Çalışmalar</a>
+                    <a href="sentez.html">Sentez</a>
+                    <a href="iletisim.html">İletişim</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Lokasyonlar</div>
+                <div class="footer-links">
+                    <a href="#">İstanbul</a>
+                    <a href="#">Milan</a>
+                    <a href="#">Londra</a>
+                    <a href="#">Lefkoşa</a>
+                </div>
+                <div style="margin-top: 32px;">
+                    <div class="footer-col-title">İletişim</div>
+                    <div class="footer-links">
+                        <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 ADON Studio. Tüm hakları saklıdır.</span>
+            <span>İstanbul · Milan · Londra · Lefkoşa</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

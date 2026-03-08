@@ -1,0 +1,206 @@
+/* =============================================
+   ADON STUDIO — Animations CSS
+   ============================================= */
+
+/* ─── Hero Type Reveal ─── */
+.hero-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(60px) skewY(3deg);
+    animation: char-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes char-in {
+    to {
+        opacity: 1;
+        transform: translateY(0) skewY(0);
+    }
+}
+
+/* ─── Page Load ─── */
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.anim-fade-up {
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Counter Number ─── */
+.counter-num {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Hover Underline Slide ─── */
+.hover-underline {
+    position: relative;
+}
+
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1.5px;
+    background: currentColor;
+    transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-underline:hover::after {
+    width: 100%;
+}
+
+/* ─── Image Parallax ─── */
+.parallax-img {
+    will-change: transform;
+}
+
+/* ─── Stagger Children ─── */
+.stagger>* {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stagger.visible>*:nth-child(1) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+}
+
+.stagger.visible>*:nth-child(2) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.1s;
+}
+
+.stagger.visible>*:nth-child(3) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.2s;
+}
+
+.stagger.visible>*:nth-child(4) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.3s;
+}
+
+.stagger.visible>*:nth-child(5) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.4s;
+}
+
+/* ─── Diagonal Wipe Effect ─── */
+@keyframes wipe-in {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        clip-path: inset(0 0% 0 0);
+    }
+}
+
+.wipe-in {
+    animation: wipe-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─── Scale In ─── */
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scale-in {
+    animation: scale-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Marquee Variants ─── */
+.marquee-track-reverse {
+    animation: marquee-scroll-rev 25s linear infinite;
+}
+
+@keyframes marquee-scroll-rev {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* ─── Pulse Dot ─── */
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+    }
+}
+
+.pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-dot 1.5s ease infinite;
+}
+
+/* ─── Page Overlay Transition ─── */
+@keyframes overlay-in {
+    from {
+        transform: scaleY(0);
+        transform-origin: top;
+    }
+
+    to {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
+}
+
+@keyframes overlay-out {
+    from {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+
+    to {
+        transform: scaleY(0);
+        transform-origin: bottom;
+    }
+}
+
+/* ─── Loading Spinner ─── */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

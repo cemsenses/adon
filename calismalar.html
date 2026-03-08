@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Çalışmalar — ADON Studio Portföy</title>
+    <meta name="description"
+        content="ADON Studio'nun üretken yapay zeka ile gerçekleştirdiği yüksek kaliteli prodüksiyon çalışmalarını keşfedin. Video, görsel ve ses içerikleri." />
+
+    <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="media/favicon-192.png" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/animations.css" />
+    <style>
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            padding: 0 32px 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: none;
+            transition: all var(--fast);
+            cursor: none;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            border-color: var(--black);
+            color: var(--black);
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .work-item {
+            aspect-ratio: 4/3;
+            background: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        /* Color block placeholders for portfolio items */
+        .work-bg-1 {
+            background: linear-gradient(135deg, #c9c5e8, #f2b8c6);
+        }
+
+        .work-bg-2 {
+            background: linear-gradient(135deg, #b8d8e8, #c9e8d0);
+        }
+
+        .work-bg-3 {
+            background: linear-gradient(135deg, #f2e8b8, #f2c8a8);
+        }
+
+        .work-bg-4 {
+            background: linear-gradient(135deg, #e8b8c9, #e8c8f2);
+        }
+
+        .work-bg-5 {
+            background: linear-gradient(135deg, #b8c9e8, #b8e8e0);
+        }
+
+        .work-bg-6 {
+            background: linear-gradient(135deg, #e8d8b8, #e8b8b8);
+        }
+
+        .work-bg-7 {
+            background: linear-gradient(135deg, #d0e8b8, #b8e8c9);
+        }
+
+        .work-bg-8 {
+            background: linear-gradient(135deg, #f2c8e8, #c8c8f2);
+        }
+
+        .work-bg-9 {
+            background: linear-gradient(135deg, #e8c0b8, #f2e0b8);
+        }
+
+        .work-item-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            font-family: var(--font-headline);
+            font-size: 60px;
+            font-weight: 900;
+            color: rgba(8, 8, 8, 0.12);
+            text-transform: uppercase;
+        }
+
+        .work-item:hover .work-item-bg {
+            transform: scale(1.06);
+        }
+
+        .work-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(8, 8, 8, 0.85) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px;
+        }
+
+        .work-item:hover .work-overlay {
+            opacity: 1;
+        }
+
+        .work-title {
+            font-family: var(--font-headline);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .work-cat {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="page-overlay"></div>
+
+    <!-- ─── Navigation ─── -->
+    <nav class="nav nav--dark">
+        <a href="index.html" class="nav-logo"><img src="media/beyaz.png" alt="ADON Studio"
+                style="height: 22px; width: auto; display: block;"></a>
+        <div class="nav-links">
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="cozumler.html">Çözümler</a>
+            <a href="calismalar.html">Çalışmalar</a>
+            <a href="sentez.html">Sentez</a>
+        </div>
+        <a href="iletisim.html" class="nav-cta">İletişim</a>
+        <button class="nav-menu-toggle" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- ─── Page Header ─── -->
+    <header class="page-header page-header--photo">
+        <div class="page-header-bg">
+            <img src="media/calismalar.jpeg" alt="Çalışmalar">
+            <div class="page-header-overlay"></div>
+        </div>
+        <div class="page-header-content">
+            <p class="page-header-label">Portföy</p>
+            <h1 class="page-header-title">
+                Çalişmalar.
+            </h1>
+            <p class="page-header-sub">
+                Üretken yapay zeka ortamı abartı ve belirsizlikle dolu. Biz orkestrasyon sistemimizi etik titizlik ve
+                stratejik berraklık temeli üzerine inşa ettik. Teknolojinin arkasına saklanmıyoruz; ona hâkimiz.
+            </p>
+        </div>
+    </header>
+
+    <!-- ─── Filter Bar ─── -->
+    <div class="filter-bar">
+        <button class="filter-btn active">Tümü</button>
+        <button class="filter-btn">Video Prodüksiyon</button>
+        <button class="filter-btn">Ürün &amp; E-Ticaret</button>
+        <button class="filter-btn">Moda &amp; Yaşam Tarzı</button>
+        <button class="filter-btn">Kurumsal</button>
+    </div>
+
+    <!-- ─── Works Grid ─── -->
+    <div class="works-grid" style="gap: 2px;" id="works-grid">
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-1">AI</div>
+            <div class="work-overlay">
+                <div class="work-title">Küresel Kampanya</div>
+                <div class="work-cat">Video Prodüksiyon · 2025</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-2">V+</div>
+            <div class="work-overlay">
+                <div class="work-title">Ürün Dijital Galeri</div>
+                <div class="work-cat">Ürün &amp; E-Ticaret · 2025</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-3">MF</div>
+            <div class="work-overlay">
+                <div class="work-title">Moda Koleksiyon Lansmanı</div>
+                <div class="work-cat">Moda &amp; Yaşam Tarzı · 2025</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-4">BR</div>
+            <div class="work-overlay">
+                <div class="work-title">Marka Kimliği Filmi</div>
+                <div class="work-cat">Video Prodüksiyon · 2024</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-5">EC</div>
+            <div class="work-overlay">
+                <div class="work-title">E-ticaret Görsel Paketi</div>
+                <div class="work-cat">Ürün &amp; E-Ticaret · 2024</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-6">GL</div>
+            <div class="work-overlay">
+                <div class="work-title">Küresel Lokalizasyon</div>
+                <div class="work-cat">20 Pazar · 2024</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-7">CR</div>
+            <div class="work-overlay">
+                <div class="work-title">Yaratıcı Kampanya</div>
+                <div class="work-cat">Moda &amp; Yaşam Tarzı · 2024</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-8">ST</div>
+            <div class="work-overlay">
+                <div class="work-title">Stüdyo Animasyon Serisi</div>
+                <div class="work-cat">Video Prodüksiyon · 2024</div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-item-bg work-bg-9">PR</div>
+            <div class="work-overlay">
+                <div class="work-title">Ürün Prototipleme</div>
+                <div class="work-cat">Yaratıcı Prototipleme · 2024</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ─── Marquee ─── -->
+    <div class="marquee-section" style="margin-top: 2px;">
+        <div class="marquee-track">
+            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+            <span>KALİTEDEN ÖDÜN YOK</span>
+            <span>TASARIMLA ÖLÇEKLENİR</span>
+            <span>PERFORMANS ODAKLI</span>
+            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+            <span>LOJİSTİK ORTADAN KALKTI</span>
+            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+            <span>KALİTEDEN ÖDÜN YOK</span>
+            <span>TASARIMLA ÖLÇEKLENİR</span>
+            <span>PERFORMANS ODAKLI</span>
+            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+            <span>LOJİSTİK ORTADAN KALKTI</span>
+        </div>
+    </div>
+
+    <!-- ─── CTA ─── -->
+    <section class="cta-section reveal">
+        <p class="section-label" style="justify-content: center;">Bir Sonraki Projeniz</p>
+        <h2 class="cta-title">
+            Sizin<br>
+            Projenizi<br>
+            <em>Birlikte</em><br>
+            Yaratalim.
+        </h2>
+        <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">Konuşmayı Başlat
+            →</a>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><img src="media/beyaz.png" alt="ADON Studio" style="height: 28px; width: auto; display: block;"></div>
+                <p class="footer-tagline">İnsan zanaat uzmanlığını yapay zeka orkestrasyonuyla harmanlayarak ölçekte
+                    dönüşüm sunan stratejik bir ortak.</p>
+                <div style="margin-top: 24px; display: flex; gap: 16px;">
+                    <a href="https://www.instagram.com/adon.studio/" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+                    <a href="https://www.linkedin.com/company/adon-studio/" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+                    <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Hızlı Bağlantılar</div>
+                <div class="footer-links">
+                    <a href="index.html">Ana Sayfa</a>
+                    <a href="hakkimizda.html">Hakkımızda</a>
+                    <a href="cozumler.html">Çözümler</a>
+                    <a href="calismalar.html">Çalışmalar</a>
+                    <a href="sentez.html">Sentez</a>
+                    <a href="iletisim.html">İletişim</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Lokasyonlar</div>
+                <div class="footer-links">
+                    <a href="#">İstanbul</a>
+                    <a href="#">Milan</a>
+                    <a href="#">Londra</a>
+                    <a href="#">Lefkoşa</a>
+                </div>
+                <div style="margin-top: 32px;">
+                    <div class="footer-col-title">İletişim</div>
+                    <div class="footer-links">
+                        <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 ADON Studio. Tüm hakları saklıdır.</span>
+            <span>İstanbul · Milan · Londra · Lefkoşa</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
