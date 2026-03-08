@@ -439,7 +439,7 @@
                 <div class="contact-form-col">
                     <div class="contact-form-title">Mesaj Gönderin</div>
 
-                    <form id="contact-form">
+                    <form id="contact-form" action="https://formspree.io/f/info@adon.com.tr" method="POST">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -568,15 +568,33 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script>
-        document.getElementById('contact-form').addEventListener('submit', function (e) {
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             btn.textContent = 'Gönderiliyor...';
             btn.disabled = true;
-            setTimeout(() => {
-                btn.style.display = 'none';
-                document.getElementById('form-success').style.display = 'block';
-            }, 1000);
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    btn.style.display = 'none';
+                    document.getElementById('form-success').style.display = 'block';
+                    this.reset();
+                } else {
+                    btn.textContent = 'Gönder →';
+                    btn.disabled = false;
+                    alert('Bir hata oluştu. Lütfen info@adon.com.tr adresine doğrudan yazın.');
+                }
+            } catch (err) {
+                btn.textContent = 'Gönder →';
+                btn.disabled = false;
+                alert('Bağlantı hatası. Lütfen info@adon.com.tr adresine doğrudan yazın.');
+            }
         });
 
         const nav = document.querySelector('.nav');
