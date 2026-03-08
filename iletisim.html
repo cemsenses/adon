@@ -33,37 +33,308 @@
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/animations.css" />
     <style>
-        .contact-hero-cta {
-            position: relative;
-            overflow: hidden;
+
+        /* ── Hero ── */
+        .contact-hero {
             background: var(--black);
-            padding: calc(var(--nav-height) + 80px) 32px 80px;
+            padding: calc(var(--nav-height) + 100px) 64px 100px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        .contact-hero-cta h1 {
+        .contact-hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+        }
+
+        .contact-hero h1 {
             font-family: var(--font-headline);
             font-weight: 900;
-            font-size: clamp(60px, 10vw, 170px);
-            line-height: 0.88;
-            letter-spacing: -0.03em;
+            font-size: clamp(64px, 8vw, 140px);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
             text-transform: uppercase;
             color: var(--white);
         }
 
-        .contact-hero-cta h1 em {
+        .contact-hero h1 em {
             font-family: var(--font-serif);
             font-style: italic;
             font-weight: 400;
             text-transform: none;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255,255,255,0.4);
+            display: block;
+            font-size: 0.75em;
+            letter-spacing: 0;
+            margin-top: 8px;
         }
 
-        .contact-hero-cta p {
-            margin-top: 32px;
+        .contact-hero-right {
+            padding-bottom: 8px;
+        }
+
+        .contact-hero-right p {
             font-size: 18px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.6);
-            max-width: 480px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.55);
+            max-width: 420px;
+            margin-bottom: 40px;
+        }
+
+        .contact-hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-hero-meta-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-hero-meta-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.05em;
+        }
+
+        .contact-hero-meta-text strong {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+        }
+
+        /* ── Main content area ── */
+        .contact-body {
+            background: var(--bg);
+            padding: 80px 64px 100px;
+        }
+
+        .contact-body-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        /* ── Left: Info column ── */
+        .contact-info-col {
+            position: sticky;
+            top: calc(var(--nav-height) + 32px);
+        }
+
+        .contact-info-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .contact-info-value {
+            font-family: var(--font-headline);
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: var(--black);
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .contact-info-value a {
+            color: var(--black);
+            transition: color var(--fast);
+        }
+
+        .contact-info-value a:hover {
+            color: var(--accent);
+        }
+
+        .contact-info-value .sub {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .contact-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-link {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            transition: color var(--fast);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-link::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--border);
+            transition: width var(--fast), background var(--fast);
+        }
+
+        .social-link:hover {
+            color: var(--black);
+        }
+
+        .social-link:hover::before {
+            width: 32px;
+            background: var(--black);
+        }
+
+        /* ── Right: Form column ── */
+        .contact-form-col {
+            padding-top: 4px;
+        }
+
+        .contact-form-title {
+            font-family: var(--font-headline);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .form-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 14px 0;
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--black);
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid var(--border);
+            outline: none;
+            transition: border-color var(--fast);
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #b0b0b0;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-bottom-color: var(--black);
+        }
+
+        .form-textarea {
+            resize: none;
+            min-height: 120px;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%235c5c5c'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 20px;
+            cursor: none;
+            color: var(--black);
+        }
+
+        .form-select option {
+            color: var(--black);
+        }
+
+        .form-submit-wrap {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        #form-success {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .contact-hero {
+                padding: calc(var(--nav-height) + 60px) 24px 60px;
+            }
+            .contact-hero-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .contact-body {
+                padding: 60px 24px 80px;
+            }
+            .contact-body-inner {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            .contact-info-col {
+                position: static;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -92,156 +363,156 @@
         </button>
     </nav>
 
-    <!-- ─── Hero (Dark) ─── -->
-    <header class="contact-hero-cta">
-        <h1>
-            SORGUNUZU<br>
-            <em>başlatın.</em>
-        </h1>
-        <p>
-            Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın.
-        </p>
-    </header>
+    <main id="main-content">
 
-    <!-- ─── Contact Grid ─── -->
-    <section class="section">
-        <div class="contact-grid">
+        <!-- ─── Hero ─── -->
+        <header class="contact-hero">
+            <div class="contact-hero-inner">
+                <div>
+                    <h1>
+                        Projenizi<br>
+                        Konuşalım.
+                        <em>Dönüşümü başlatalım.</em>
+                    </h1>
+                </div>
+                <div class="contact-hero-right">
+                    <p>
+                        Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın.
+                        Formu doldurun, 24 saat içinde dönelim.
+                    </p>
+                    <div class="contact-hero-meta">
+                        <div class="contact-hero-meta-item">
+                            <div class="contact-hero-meta-dot"></div>
+                            <div class="contact-hero-meta-text"><strong>İstanbul</strong> — LOTUS Halaskargazi Cd. 38-66</div>
+                        </div>
+                        <div class="contact-hero-meta-item">
+                            <div class="contact-hero-meta-dot"></div>
+                            <div class="contact-hero-meta-text"><strong>Adana</strong> — Türkiye</div>
+                        </div>
+                        <div class="contact-hero-meta-item">
+                            <div class="contact-hero-meta-dot"></div>
+                            <div class="contact-hero-meta-text"><strong>E-posta</strong> — info@adon.com.tr</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-            <!-- Contact Info -->
-            <div>
-                <p class="section-label" style="margin-bottom: 40px;">Bize Ulaşın</p>
+        <!-- ─── Body ─── -->
+        <section class="contact-body">
+            <div class="contact-body-inner">
 
-                <div class="contact-info-item">
-                    <div class="contact-info-label">Stratejik Merkez · İstanbul</div>
+                <!-- Sol: İletişim Bilgileri -->
+                <div class="contact-info-col">
+
+                    <div class="contact-info-label">Ofis · İstanbul</div>
                     <div class="contact-info-value">
                         <a href="https://www.google.com/maps/search/LOTUS+Halaskargazi+Cd.+38-66" target="_blank" rel="noopener noreferrer">
-                            LOTUS Halaskargazi Cd. 38-66<br>
-                            <span
-                                style="font-size: 16px; font-family: var(--font-body); font-weight: 400; text-transform: none; color: var(--muted);">İstanbul,
-                                Türkiye</span>
+                            LOTUS Halaskargazi<br>Cd. 38-66
+                            <span class="sub">İstanbul, Türkiye</span>
                         </a>
                     </div>
-                </div>
 
-                <div class="contact-info-item">
-                    <div class="contact-info-label">Stratejik Merkez · Adana</div>
+                    <div class="contact-info-label">Ofis · Adana</div>
                     <div class="contact-info-value">
-                        <a href="#" target="_blank" rel="noopener noreferrer">
-                            Adana
-                            <span
-                                style="font-size: 16px; font-family: var(--font-body); font-weight: 400; text-transform: none; color: var(--muted);">Türkiye</span>
-                        </a>
+                        Adana
+                        <span class="sub">Türkiye</span>
                     </div>
-                </div>
 
-                <div class="contact-info-item">
                     <div class="contact-info-label">E-Posta</div>
                     <div class="contact-info-value">
                         <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
                     </div>
+
+                    <div class="contact-divider"></div>
+
+                    <div class="contact-info-label" style="margin-bottom: 16px;">Sosyal Medya</div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                        <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer" class="social-link">YouTube</a>
+                    </div>
+
                 </div>
 
-                <div class="contact-info-item">
-                    <div class="contact-info-label">Sosyal Medya</div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
-                        <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
-                            style="font-family: var(--font-body); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s;">
-                            Instagram — @adon.studio
-                        </a>
-                        <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
-                            style="font-family: var(--font-body); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s;">
-                            LinkedIn — Adon Studio
-                        </a>
-                        <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
-                            style="font-family: var(--font-body); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s;">
-                            YouTube — @ADON-AI-Studio
-                        </a>
-                    </div>
+                <!-- Sağ: Form -->
+                <div class="contact-form-col">
+                    <div class="contact-form-title">Mesaj Gönderin</div>
+
+                    <form id="contact-form">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="name">Ad Soyad</label>
+                                <input class="form-input" type="text" id="name" name="name" placeholder="Adınızı girin" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="company">Şirket</label>
+                                <input class="form-input" type="text" id="company" name="company" placeholder="Opsiyonel" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">E-Posta</label>
+                            <input class="form-input" type="email" id="email" name="email" placeholder="ornek@sirket.com" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="service">İlgilendiğiniz Çözüm</label>
+                            <select class="form-select" id="service" name="service">
+                                <option value="">Seçiniz...</option>
+                                <option value="video">AI Destekli Video Prodüksiyon</option>
+                                <option value="ecommerce">Ürün &amp; E-Ticaret Görseli</option>
+                                <option value="fashion">Moda &amp; Yaşam Tarzı İçeriği</option>
+                                <option value="speed">Hız &amp; Ölçek</option>
+                                <option value="consistency">Titizlik &amp; Tutarlılık</option>
+                                <option value="creative">Yaratıcı Atılım</option>
+                                <option value="other">Diğer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Projenizi Anlatın</label>
+                            <textarea class="form-textarea" id="message" name="message" rows="6"
+                                placeholder="Projenizden, hedeflerinizden ve beklentilerinizden bahsedin..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-submit-wrap">
+                            <button type="submit" class="btn btn-filled"
+                                style="padding: 18px 48px; font-size: 14px;">
+                                Gönder →
+                            </button>
+                            <p id="form-success" style="display: none;">
+                                ✓ Mesajınız alındı. En kısa sürede dönüş yapacağız.
+                            </p>
+                        </div>
+
+                    </form>
                 </div>
 
-
             </div>
+        </section>
 
-            <!-- Contact Form -->
-            <div>
-                <p class="section-label" style="margin-bottom: 40px;">Mesaj Gönderin</p>
-
-                <form class="form" id="contact-form">
-                    <div class="form-group">
-                        <label class="form-label" for="name">Adınız Soyadınız</label>
-                        <input class="form-input" type="text" id="name" name="name" placeholder="Adınızı girin"
-                            required />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="company">Şirket</label>
-                        <input class="form-input" type="text" id="company" name="company"
-                            placeholder="Şirket adı (opsiyonel)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="email">E-Posta Adresi</label>
-                        <input class="form-input" type="email" id="email" name="email" placeholder="ornek@sirket.com"
-                            required />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="service">İlgilendiğiniz Çözüm</label>
-                        <select class="form-input" id="service" name="service"
-                            style="appearance: none; background: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path d=%22M7 10l5 5 5-5z%22 fill=%22%23080808%22/></svg>') no-repeat right 0 center; cursor: none;">
-                            <option value="">Seçiniz...</option>
-                            <option value="video">AI Destekli Video Prodüksiyon</option>
-                            <option value="ecommerce">Ürün &amp; E-Ticaret Görseli</option>
-                            <option value="fashion">Moda &amp; Yaşam Tarzı İçeriği</option>
-                            <option value="speed">Hız &amp; Ölçek</option>
-                            <option value="consistency">Titizlik &amp; Tutarlılık</option>
-                            <option value="creative">Yaratıcı Atılım</option>
-                            <option value="other">Diğer</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="message">Projenizi Anlatın</label>
-                        <textarea class="form-textarea" id="message" name="message" rows="5"
-                            placeholder="Projenizden, hedeflerinizden ve beklentilerinizden bahsedin..."
-                            required></textarea>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-filled"
-                            style="width: 100%; justify-content: center; padding: 18px; font-size: 14px;">
-                            Mesajı Gönder →
-                        </button>
-                        <p id="form-success"
-                            style="display: none; margin-top: 20px; font-size: 14px; color: var(--muted); text-align: center;">
-                            ✓ Mesajınız alındı. En kısa sürede dönüş yapacağız.
-                        </p>
-                    </div>
-                </form>
+        <!-- ─── Marquee ─── -->
+        <div class="marquee-section">
+            <div class="marquee-track">
+                <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+                <span>KALİTEDEN ÖDÜN YOK</span>
+                <span>TASARIMLA ÖLÇEKLENİR</span>
+                <span>PERFORMANS ODAKLI</span>
+                <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+                <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+                <span>LOJİSTİK ORTADAN KALKTI</span>
+                <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
+                <span>KALİTEDEN ÖDÜN YOK</span>
+                <span>TASARIMLA ÖLÇEKLENİR</span>
+                <span>PERFORMANS ODAKLI</span>
+                <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
+                <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
+                <span>LOJİSTİK ORTADAN KALKTI</span>
             </div>
-
         </div>
-    </section>
-
-    <!-- ─── Marquee ─── -->
-    <div class="marquee-section">
-        <div class="marquee-track">
-            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
-            <span>KALİTEDEN ÖDÜN YOK</span>
-            <span>TASARIMLA ÖLÇEKLENİR</span>
-            <span>PERFORMANS ODAKLI</span>
-            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
-            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
-            <span>LOJİSTİK ORTADAN KALKTI</span>
-            <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
-            <span>KALİTEDEN ÖDÜN YOK</span>
-            <span>TASARIMLA ÖLÇEKLENİR</span>
-            <span>PERFORMANS ODAKLI</span>
-            <span>KÜRESEL ERİŞİM, YEREL ÖZGÜNLÜK</span>
-            <span>MARKA BÜTÜNLÜĞÜ GÜVENDE</span>
-            <span>LOJİSTİK ORTADAN KALKTI</span>
-        </div>
-    </div>
 
     </main>
 
@@ -297,7 +568,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script>
-        // Contact form handling
         document.getElementById('contact-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
@@ -309,7 +579,6 @@
             }, 1000);
         });
 
-        // Nav color fix on scroll for dark header
         const nav = document.querySelector('.nav');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 80) {
