@@ -141,12 +141,12 @@
         </div>
         <div class="page-header-content">
             <p class="page-header-label">Hakkımızda</p>
-            <h1 class="page-header-title">
+            <h1 class="page-header-title" id="cms-hero-title">
                 Yaratıcılık Bir Ekipten,<br>
                 Zeka Bir Sistemden<br>
                 <em>Gelmez.</em>
             </h1>
-            <p class="page-header-sub">
+            <p class="page-header-sub" id="cms-hero-sub">
                 Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz.
                 Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz.
             </p>
@@ -158,19 +158,19 @@
         <div class="split">
             <div>
                 <p class="section-label">Ekip Bölümü</p>
-                <h2 class="section-headline reveal">
+                <h2 class="section-headline reveal" id="cms-man-headline">
                     Tek Bir Beden,<br>
                     Dört Uzmanlık<br>
                     Alanı.
                 </h2>
             </div>
             <div>
-                <p class="section-body reveal reveal-delay-1">
+                <p class="section-body reveal reveal-delay-1" id="cms-man-body1">
                     Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur.
                     Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.
                 </p>
                 <br>
-                <p class="section-body reveal reveal-delay-2">
+                <p class="section-body reveal reveal-delay-2" id="cms-man-body2">
                     Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır.
                 </p>
             </div>
@@ -180,7 +180,7 @@
     <!-- ─── Team Section ─── -->
     <section class="section" style="padding-top: 0;">
         <p class="section-label" style="padding-bottom: 32px;">Ekibimiz</p>
-        <div class="team-grid stagger">
+        <div class="team-grid stagger" id="cms-team">
             <div class="team-card">
                 <div class="team-avatar">
                     <img src="media/kisiler/cem-adon-1.avif" width="300" height="300" loading="lazy" alt="Cem Şenses">
@@ -215,7 +215,7 @@
     <!-- ─── DNA Section ─── -->
     <section class="section" style="padding-top: 0;">
         <p class="section-label" style="margin-bottom: 32px;">Bizi Farklı Kılan Üç Şey.</p>
-        <div class="dna-grid stagger">
+        <div class="dna-grid stagger" id="cms-dna">
             <div class="dna-item">
                 <div class="dna-icon">⚙</div>
                 <div class="dna-title">Titizlik</div>
@@ -265,12 +265,12 @@
         <canvas class="particles-canvas" id="particlesCanvas"></canvas>
         <div class="cta-section-content">
             <p class="section-label" style="justify-content: center;">Kapanış</p>
-            <h2 class="cta-title">
+            <h2 class="cta-title" id="cms-cta-headline">
                 Ekibimizle<br>
                 Tanışın.<br>
                 <em>Projenizi Konuşalım.</em>
             </h2>
-            <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">→ Görüşme Talep Edin</a>
+            <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;" id="cms-cta-btn">→ Görüşme Talep Edin</a>
         </div>
     </section>
 
@@ -412,6 +412,56 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script>
+    (function(){
+      function html(id,v){ var el=document.getElementById(id); if(el&&v) el.innerHTML=v; }
+      function brHTML(id,v){ if(!v) return; var el=document.getElementById(id); if(!el) return; el.innerHTML=v.replace(/\n/g,'<br>'); }
+      fetch('site.json?v='+Date.now())
+        .then(function(r){ return r.json(); })
+        .then(function(s){
+          var hk=s.hakkimizda||{};
+          var hero=hk.hero||{};
+          var man=hk.manifesto||{};
+          var dna=hk.dna||{};
+          var cta=hk.cta||{};
+
+          brHTML('cms-hero-title', hero.title);
+          html('cms-hero-sub', hero.sub);
+          if(hero.image){ var bg=document.querySelector('.page-header-bg img'); if(bg) bg.src=hero.image; }
+
+          brHTML('cms-man-headline', man.headline);
+          html('cms-man-body1', man.body1);
+          html('cms-man-body2', man.body2);
+
+          // Ekip
+          var tc=document.getElementById('cms-team');
+          if(tc && hk.team && hk.team.length){
+            tc.innerHTML='';
+            hk.team.forEach(function(m){
+              var d=document.createElement('div'); d.className='team-card';
+              d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="lazy" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
+              tc.appendChild(d);
+            });
+          }
+
+          // DNA
+          var dc=document.getElementById('cms-dna');
+          if(dc && dna.items && dna.items.length){
+            dc.innerHTML='';
+            dna.items.forEach(function(item){
+              var d=document.createElement('div'); d.className='dna-item';
+              d.innerHTML='<div class="dna-icon">'+item.icon+'</div><div class="dna-title">'+item.title+'</div><div class="dna-subtitle">'+item.subtitle+'</div><div class="dna-body">'+item.body+'</div>';
+              dc.appendChild(d);
+            });
+          }
+
+          // CTA
+          brHTML('cms-cta-headline', cta.headline);
+          if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
+        })
+        .catch(function(){});
+    })();
+    </script>
 </body>
 
 </html>
