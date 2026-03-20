@@ -146,7 +146,7 @@
 
     <main id="main-content">
     <!-- ─── Page Header ─── -->
-    <header class="page-header page-header--photo">
+    <header class="page-header page-header--photo" id="block-hero" data-cms-block="hero">
         <div class="page-header-bg">
             <img src="media/hero/sentez.jpg" alt="Sentez">
             <div class="page-header-overlay"></div>
@@ -167,7 +167,7 @@
     </header>
 
     <!-- ─── Framework Overview ─── -->
-    <section class="section">
+    <section class="section" id="block-framework" data-cms-block="framework">
         <p class="section-label">5 Adımlı Sentez</p>
         <div class="split" style="margin-bottom: 80px;">
             <h2 class="section-headline reveal" id="cms-fw-headline">
@@ -253,7 +253,7 @@
     </section>
 
     <!-- ─── Why It Works ─── -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section" style="padding-top: 0;" id="block-why" data-cms-block="why">
         <p class="section-label">Neden İşe Yarar</p>
         <h2 class="section-headline reveal" id="cms-why-headline">Farkın<br>Kaynağı.</h2>
         <div class="pillars stagger" style="margin-top: 48px;">
@@ -291,7 +291,7 @@
     </section>
 
     <!-- ─── Marquee ─── -->
-    <div class="marquee-section">
+    <div class="marquee-section" id="block-marquee" data-cms-block="marquee">
         <div class="marquee-track">
             <span>İŞLEM DEĞİL, DÖNÜŞÜM</span>
             <span>ÖLÇEKLENEBİLİR</span>
@@ -311,7 +311,7 @@
     </div>
 
     <!-- ─── CTA ─── -->
-    <section class="cta-section reveal">
+    <section class="cta-section reveal" id="block-cta" data-cms-block="cta">
         <p class="section-label" style="justify-content: center;">Metodolojimiz</p>
         <h2 class="cta-title" id="cms-cta-headline">
             Metodolojimizi<br>
@@ -391,9 +391,18 @@
           brHTML('cms-why-headline', (sz.whyItWorks||{}).headline);
           brHTML('cms-cta-headline', (sz.cta||{}).headline);
           if((sz.cta||{}).ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=sz.cta.ctaText; }
+          applyBlocks((s.sentez||{})._blocks||[]);
         })
         .catch(function(){});
     })();
+    function applyBlocks(blocks){
+      if(!blocks.length) return;
+      var firstEl=document.getElementById(blocks[0].id); if(!firstEl) return;
+      var parent=firstEl.parentElement;
+      var frag=document.createDocumentFragment();
+      blocks.forEach(function(b){ var el=document.getElementById(b.id); if(!el) return; el.style.display=(b.visible===false)?'none':''; frag.appendChild(el); });
+      parent.appendChild(frag);
+    }
     </script>
 </body>
 
