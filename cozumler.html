@@ -326,13 +326,13 @@
           brHTML('cms-hero-title', (cz.hero||{}).title);
           html('cms-hero-sub', (cz.hero||{}).sub);
           if((cz.hero||{}).image){ var bg=document.querySelector('.page-header-bg img'); if(bg) bg.src=cz.hero.image; }
-          txt('cms-craft-label', (cz.byCraft||{}).label);
+          html('cms-craft-label', (cz.byCraft||{}).label);
           brHTML('cms-craft-headline', (cz.byCraft||{}).headline);
-          txt('cms-obj-label', (cz.byObjective||{}).label);
+          html('cms-obj-label', (cz.byObjective||{}).label);
           brHTML('cms-obj-headline', (cz.byObjective||{}).headline);
           brHTML('cms-why-headline', (cz.whyAdon||{}).headline);
           html('cms-why-body', (cz.whyAdon||{}).body);
-          if((cz.whyAdon||{}).ctaText){ var a=document.getElementById('cms-why-cta'); if(a) a.textContent=cz.whyAdon.ctaText; }
+          if((cz.whyAdon||{}).ctaText){ var a=document.getElementById('cms-why-cta'); if(a) a.innerHTML=cz.whyAdon.ctaText; }
           applyBlocks((s.cozumler||{})._blocks||[]);
         })
         .catch(function(){});
