@@ -163,6 +163,11 @@
         "visible": true
       },
       {
+        "id": "block-homepage-videos",
+        "label": "Ana Sayfa Video Grid",
+        "visible": true
+      },
+      {
         "id": "block-carousel",
         "label": "Galeri Carousel",
         "visible": true
@@ -187,7 +192,30 @@
         "label": "SSS",
         "visible": true
       }
-    ]
+    ],
+    "carousel": [
+      {
+        "image": "media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg",
+        "label": "Ürün Fotoğrafçılığı"
+      },
+      {
+        "image": "media/carousel-02.png",
+        "label": "Moda Editoryal"
+      },
+      {
+        "image": "media/carousel-03.png",
+        "label": "Mimari Fotoğrafçılık"
+      },
+      {
+        "image": "media/carousel-04.png",
+        "label": "Yemek Fotoğrafçılığı"
+      },
+      {
+        "image": "media/carousel-05.png",
+        "label": "Saat Fotoğrafçılığı"
+      }
+    ],
+    "homepageVideos": []
   },
   "hakkimizda": {
     "hero": {
