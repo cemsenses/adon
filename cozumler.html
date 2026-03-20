@@ -340,7 +340,7 @@
     function applyBlocks(blocks){
       if(!blocks.length) return;
       var firstEl=document.getElementById(blocks[0].id); if(!firstEl) return;
-      var parent=firstEl.parentElement;
+      var parent=document.getElementById("main-content")||firstEl.parentElement;
       var frag=document.createDocumentFragment();
       blocks.forEach(function(b){ var el=document.getElementById(b.id); if(!el) return; el.style.display=(b.visible===false)?'none':''; frag.appendChild(el); });
       parent.appendChild(frag);
