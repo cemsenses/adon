@@ -1072,7 +1072,7 @@ async function ghPut(path, b64, message){
   const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`;
   const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
   let sha=null;
-  try{ const r=await fetch(url+'?ref='+GH.branch,{headers}); if(r.ok){ const d=await r.json(); sha=d.sha; } }catch{}
+  try{ const r=await fetch(url+'?ref='+GH.branch+'&t='+Date.now(),{headers,cache:'no-store'}); if(r.ok){ const d=await r.json(); sha=d.sha; } }catch{}
   const body={message,content:b64,branch:GH.branch}; if(sha) body.sha=sha;
   const r=await fetch(url,{method:'PUT',headers,body:JSON.stringify(body)});
   if(!r.ok){ const e=await r.json(); throw new Error(e.message||'HTTP '+r.status); }
