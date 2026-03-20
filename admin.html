@@ -5,108 +5,123 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>ADON CMS</title>
 <meta name="robots" content="noindex,nofollow"/>
-<!-- Quill richtext editor -->
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --black:#080808;--white:#f5f5f0;--red:#ff3c31;
-  --border:#e0e0da;--bg:#fafaf7;--card:#fff;--muted:#999;
-  --font:-apple-system,sans-serif;
-}
+:root{--black:#080808;--white:#f5f5f0;--red:#ff3c31;--border:#e0e0da;--bg:#fafaf7;--card:#fff;--muted:#999;--font:-apple-system,sans-serif}
 body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:100vh}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
 .login-box{background:#111;border:1px solid #222;padding:48px;width:100%;max-width:380px}
 .login-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:32px}
 .login-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:32px}
-.login-input{width:100%;padding:14px 16px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px;margin-bottom:16px;outline:none;transition:border-color .2s;font-family:var(--font)}
-.login-input:focus{border-color:#555}
+.login-input{width:100%;padding:14px 16px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px;margin-bottom:16px;outline:none;font-family:var(--font)}
 .login-btn{width:100%;padding:14px;background:var(--red);color:#fff;border:none;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
 .login-error{color:var(--red);font-size:13px;margin-top:12px;display:none}
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 #admin-screen{display:none}
 .admin-header{background:var(--black);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
 .admin-header-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .admin-header-logo span{color:#fff;font-weight:700}
-.btn-logout{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;transition:color .2s}
+.btn-logout{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer}
 .btn-logout:hover{color:#fff}
-
 .cms-layout{display:flex;min-height:calc(100vh - 56px)}
 
-/* ── SIDEBAR ── */
-.cms-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:24px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
-.sidebar-section{padding:0 16px;margin-bottom:8px}
-.sidebar-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:12px 8px 6px}
-.sidebar-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:none;border:none;font-size:13px;font-weight:500;color:#444;cursor:pointer;border-radius:4px;transition:all .15s}
-.sidebar-btn:hover{background:#f0f0ec;color:var(--black)}
+/* SIDEBAR */
+.cms-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:20px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:12px 20px 6px}
+.sidebar-btn{display:block;width:100%;text-align:left;padding:9px 20px;background:none;border:none;font-size:13px;color:#555;cursor:pointer;transition:all .15s}
+.sidebar-btn:hover{background:#f5f5f0;color:var(--black)}
 .sidebar-btn.active{background:var(--black);color:#fff;font-weight:600}
-.sidebar-divider{height:1px;background:var(--border);margin:12px 16px}
+.sidebar-divider{height:1px;background:var(--border);margin:10px 0}
 
-/* ── MAIN ── */
-.cms-main{flex:1;padding:32px;max-width:900px;padding-bottom:100px}
+/* MAIN */
+.cms-main{flex:1;padding:32px;max-width:920px;padding-bottom:120px}
 .panel{display:none}
 .panel.active{display:block}
-.panel-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.panel-title{font-size:22px;font-weight:700;margin-bottom:4px}
 .panel-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:36px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
-/* ── FORM ELEMENTS ── */
-.field-group{margin-bottom:24px}
-.field-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.field-hint{font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none}
-.field-input{width:100%;padding:11px 14px;border:1px solid var(--border);background:#fff;font-size:14px;color:var(--black);outline:none;transition:border-color .2s;font-family:var(--font);resize:vertical}
-.field-input:focus{border-color:var(--black)}
-.field-textarea{min-height:90px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.field-row{grid-template-columns:1fr}}
+/* FIELDS */
+.fg{margin-bottom:20px}
+.fl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.fh{font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none}
+.fi{width:100%;padding:11px 14px;border:1px solid var(--border);background:#fff;font-size:14px;color:var(--black);outline:none;transition:border-color .2s;font-family:var(--font)}
+.fi:focus{border-color:var(--black)}
+textarea.fi{resize:vertical;min-height:80px}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px;padding-right:36px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-/* ── RICHTEXT ── */
-.richtext-wrap .ql-container{font-family:var(--font);font-size:14px;min-height:120px}
-.richtext-wrap .ql-toolbar{border:1px solid var(--border);background:#fafaf7}
-.richtext-wrap .ql-container{border:1px solid var(--border);border-top:none}
-.richtext-wrap .ql-editor{min-height:120px}
+/* RICHTEXT */
+.rw .ql-toolbar{border:1px solid var(--border);background:#fafaf7;border-radius:0}
+.rw .ql-container{border:1px solid var(--border);border-top:none;font-family:var(--font);font-size:14px}
+.rw .ql-editor{min-height:100px}
 
-/* ── IMAGE UPLOAD ── */
-.img-upload-wrap{border:2px dashed var(--border);padding:0;position:relative;transition:border-color .2s;overflow:hidden}
-.img-upload-wrap:hover,.img-upload-wrap.drag-over{border-color:var(--black)}
-.img-upload-wrap input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
-.img-preview{width:100%;display:block;object-fit:cover;max-height:200px}
-.img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;gap:8px;color:var(--muted)}
-.img-placeholder-icon{font-size:28px}
-.img-placeholder-label{font-size:12px;text-align:center;line-height:1.5}
-.img-size-hint{font-size:10px;color:#bbb;margin-top:4px}
+/* IMAGE UPLOAD */
+.iw{border:2px dashed var(--border);position:relative;overflow:hidden;transition:border-color .2s;min-height:80px;cursor:pointer}
+.iw:hover,.iw.drag-over{border-color:var(--black)}
+.iw input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
+.iw-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:6px;color:var(--muted);text-align:center}
+.iw-ph-icon{font-size:24px}
+.iw-ph-label{font-size:12px;line-height:1.5}
+.iw img.preview{width:100%;display:block;max-height:220px;object-fit:cover}
 
-/* ── REPEATER ── */
-.repeater{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
-.repeater-item{background:#fff;border:1px solid var(--border);padding:16px;position:relative}
-.repeater-item-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer;user-select:none}
-.repeater-item-num{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-.repeater-item-title-preview{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.repeater-toggle{font-size:11px;color:var(--muted);transition:transform .2s}
-.repeater-item-body{display:none}
-.repeater-item.open .repeater-item-body{display:block}
-.repeater-item.open .repeater-toggle{transform:rotate(180deg)}
-.repeater-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.btn-sm{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border);background:none;cursor:pointer;transition:all .2s}
-.btn-sm:hover{border-color:var(--black);color:var(--black)}
-.btn-sm.danger{color:var(--red);border-color:var(--red)}
-.btn-sm.danger:hover{background:var(--red);color:#fff}
-.btn-sm.primary{background:var(--black);color:#fff;border-color:var(--black)}
+/* REPEATER */
+.repeater{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.ri{background:#fff;border:1px solid var(--border)}
+.ri-header{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:pointer;user-select:none}
+.ri-num{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);min-width:24px}
+.ri-preview{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-toggle{font-size:10px;color:var(--muted);transition:transform .2s;margin-left:auto}
+.ri.open .ri-toggle{transform:rotate(180deg)}
+.ri-body{display:none;padding:0 14px 14px}
+.ri.open .ri-body{display:block}
+.ri-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 
-/* ── SAVE BAR ── */
+/* BUTTONS */
+.bsm{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border);background:none;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.bsm:hover{border-color:var(--black);color:var(--black)}
+.bsm.danger{color:var(--red);border-color:var(--red)}
+.bsm.danger:hover{background:var(--red);color:#fff}
+.bsm.primary{background:var(--black);color:#fff;border-color:var(--black)}
+.bsm.primary:hover{opacity:.8}
+
+/* ADD BOX */
+.add-box{background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px}
+.add-box-title{font-size:14px;font-weight:700;margin-bottom:16px}
+
+/* WORKS & VIDEOS */
+.wg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.wc{background:#fff;border:1px solid var(--border);overflow:hidden}
+.wc-img{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:rgba(8,8,8,.12);overflow:hidden}
+.wc-img img{width:100%;height:100%;object-fit:cover}
+.wc-info{padding:8px 10px;border-top:1px solid var(--border)}
+.wc-title{font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wc-cat{font-size:10px;color:var(--muted)}
+.wc-actions{padding:6px 10px 8px;display:flex;gap:6px}
+.vl{display:flex;flex-direction:column;gap:10px}
+.vc{background:#fff;border:1px solid var(--border);display:flex;gap:12px;padding:12px;align-items:flex-start}
+.vt{width:120px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden}
+.vt img{width:100%;height:100%;object-fit:cover}
+.vi-info{flex:1}
+.vi-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.vi-url{font-size:10px;color:var(--muted);word-break:break-all}
+.vi-actions{display:flex;gap:6px;margin-top:8px}
+
+/* SAVE BAR */
 .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--black);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;z-index:300;transform:translateY(100%);transition:transform .3s}
 .save-bar.visible{transform:translateY(0)}
 .save-bar-text{color:rgba(255,255,255,.6);font-size:13px}
 .save-bar-text span{color:#fff;font-weight:600}
-.save-bar-right{display:flex;align-items:center;gap:16px}
+.save-right{display:flex;align-items:center;gap:16px}
 .save-status{font-size:12px;color:rgba(255,255,255,.5)}
-.btn-save{padding:12px 28px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
-.btn-save:hover{opacity:.85}
+.btn-save{padding:12px 28px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 .btn-save:disabled{opacity:.5;cursor:not-allowed}
 
-/* ── TOKEN MODAL ── */
+/* TOKEN MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
 .modal{background:#111;border:1px solid #333;padding:40px;width:100%;max-width:480px}
@@ -114,26 +129,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:
 .modal-sub{color:rgba(255,255,255,.4);font-size:13px;margin-bottom:24px;line-height:1.6}
 .modal-input{width:100%;padding:12px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:13px;font-family:monospace;outline:none;margin-bottom:16px}
 .modal-actions{display:flex;gap:12px}
-.btn-modal-ok{flex:1;padding:12px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.btn-modal-cancel{padding:12px 20px;background:none;color:rgba(255,255,255,.4);border:1px solid #333;font-size:12px;cursor:pointer}
+.btn-mok{flex:1;padding:12px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.btn-mcancel{padding:12px 20px;background:none;color:rgba(255,255,255,.4);border:1px solid #333;font-size:12px;cursor:pointer}
 
-/* ── CALISMALAR (works + videos) ── */
-.works-grid-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px}
-.work-card{background:#fff;border:1px solid var(--border);overflow:hidden}
-.work-card-img{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:rgba(8,8,8,.12);text-transform:uppercase;overflow:hidden}
-.work-card-img img{width:100%;height:100%;object-fit:cover}
-.work-card-info{padding:10px 12px;border-top:1px solid var(--border)}
-.work-card-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.work-card-cat{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-.work-card-actions{padding:6px 12px 10px;display:flex;gap:6px}
-.video-list-admin{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.video-card-admin{background:#fff;border:1px solid var(--border);display:flex;gap:12px;padding:12px;align-items:center}
-.video-thumb{width:120px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden}
-.video-thumb img{width:100%;height:100%;object-fit:cover}
-.video-info{flex:1}
-.video-title{font-size:13px;font-weight:600;margin-bottom:2px}
-.video-url{font-size:10px;color:var(--muted);word-break:break-all}
-.video-actions{display:flex;gap:6px;margin-top:8px}
+@media(max-width:640px){.frow{grid-template-columns:1fr}.cms-sidebar{display:none}.cms-main{padding:16px}}
 </style>
 </head>
 <body>
@@ -155,308 +154,261 @@ body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:
     <div class="admin-header-logo">ADON · <span>CMS</span></div>
     <button class="btn-logout" id="btn-logout">Çıkış</button>
   </header>
-
   <div class="cms-layout">
 
     <!-- SIDEBAR -->
     <nav class="cms-sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Sayfalar</div>
-        <button class="sidebar-btn active" data-panel="index">Ana Sayfa</button>
-        <button class="sidebar-btn" data-panel="hakkimizda">Hakkımızda</button>
-        <button class="sidebar-btn" data-panel="sentez">Sentez</button>
-        <button class="sidebar-btn" data-panel="cozumler">Çözümler</button>
-        <button class="sidebar-btn" data-panel="iletisim">İletişim</button>
-      </div>
+      <div class="sidebar-label">Sayfalar</div>
+      <button class="sidebar-btn active" data-panel="index">Ana Sayfa</button>
+      <button class="sidebar-btn" data-panel="hakkimizda">Hakkımızda</button>
+      <button class="sidebar-btn" data-panel="sentez">Sentez</button>
+      <button class="sidebar-btn" data-panel="cozumler">Çözümler</button>
+      <button class="sidebar-btn" data-panel="iletisim">İletişim</button>
       <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Portföy</div>
-        <button class="sidebar-btn" data-panel="calismalar-gorsel">Görseller</button>
-        <button class="sidebar-btn" data-panel="calismalar-video">Videolar</button>
-      </div>
+      <div class="sidebar-label">Portföy</div>
+      <button class="sidebar-btn" data-panel="p-gorsel">Görseller</button>
+      <button class="sidebar-btn" data-panel="p-video">Videolar</button>
     </nav>
 
-    <!-- MAIN -->
     <main class="cms-main">
 
-      <!-- ═══ ANA SAYFA ═══ -->
+      <!-- ══════════════════════════════
+           ANA SAYFA
+      ══════════════════════════════ -->
       <div class="panel active" id="panel-index">
         <div class="panel-title">Ana Sayfa</div>
-        <div class="panel-sub">index.html — Hero, Fark bölümü, Sütunlar, Hız & Ölçek, CTA</div>
+        <div class="panel-sub">index.html</div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:8px">HERO</h3>
-        <div class="field-group">
-          <div class="field-label">Üst Satır <span class="field-hint">örn: "On Yıllık Uzmanlık."</span></div>
-          <input class="field-input" id="idx-hero-top" type="text"/>
+        <div class="section-divider">HERO</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Üst Başlık</div><input class="fi" id="i-hero-top" type="text"></div>
+          <div class="fg"><div class="fl">Alt Başlık <span class="fh">&lt;em&gt; kullanabilirsiniz</span></div><input class="fi" id="i-hero-bottom" type="text"></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Alt Satır <span class="field-hint">italik etiketi kullanabilirsiniz: &lt;em&gt;...&lt;/em&gt;</span></div>
-          <input class="field-input" id="idx-hero-bottom" type="text"/>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama Metni</div>
-          <div class="richtext-wrap" id="idx-hero-desc-wrap"></div>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Arka Plan Videosu <span class="field-hint">mp4 dosya yolu</span></div>
-          <input class="field-input" id="idx-hero-video" type="text"/>
+        <div class="fg"><div class="fl">Açıklama Metni</div><div class="rw" id="i-hero-desc-q"></div></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Arka Plan Video Dosyası</div><input class="fi" id="i-hero-video" type="text" placeholder="media/...mp4"></div>
+          <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="i-hero-cta" type="text"></div>
         </div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">FARKI MIZ BÖLÜMÜ</h3>
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">Etiket</div>
-            <input class="field-input" id="idx-fark-label" type="text"/>
-          </div>
-          <div class="field-group"></div>
+        <div class="section-divider">FARKI MIZ BÖLÜMÜ</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Etiket</div><input class="fi" id="i-fark-label" type="text"></div>
+          <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="i-fark-cta" type="text"></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Başlık <span class="field-hint">Satır kırma için \n, italik için &lt;em&gt;</span></div>
-          <textarea class="field-input field-textarea" id="idx-fark-headline" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama</div>
-          <div class="richtext-wrap" id="idx-fark-body-wrap"></div>
-        </div>
+        <div class="fg"><div class="fl">Başlık <span class="fh">Satır kırma: \n | İtalik: &lt;em&gt;...&lt;/em&gt;</span></div><textarea class="fi" id="i-fark-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="i-fark-body-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">5 SÜTUN</h3>
-        <div class="repeater" id="idx-pillars-repeater"></div>
+        <div class="section-divider">DÖNÜŞÜMÜN 5 TEMEL TAŞI</div>
+        <div class="fg"><div class="fl">Bölüm Etiketi</div><input class="fi" id="i-pillars-label" type="text"></div>
+        <div class="repeater" id="r-pillars"></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">HIZ & ÖLÇEK</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="idx-speed-headline" rows="4"></textarea>
+        <div class="section-divider">HIZ & ÖLÇEK</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-speed-headline" rows="4"></textarea></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Arka Plan Video</div><input class="fi" id="i-speed-video" type="text"></div>
+          <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="i-speed-cta" type="text"></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Arka Plan Videosu</div>
-          <input class="field-input" id="idx-speed-video" type="text"/>
-        </div>
-        <div class="repeater" id="idx-speed-cards-repeater"></div>
+        <div class="repeater" id="r-speed-cards"></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="idx-cta-headline" rows="4"></textarea>
+        <div class="section-divider">ÇÖZÜMLERİMİZ (Kart Grid)</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-sol-headline" rows="3"></textarea></div>
+          <div class="fg"><div class="fl">Açıklama</div><textarea class="fi" id="i-sol-body" rows="3"></textarea></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama</div>
-          <div class="richtext-wrap" id="idx-cta-body-wrap"></div>
+        <div class="repeater" id="r-sol-cards"></div>
+
+        <div class="section-divider">CTA BANNER</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Etiket</div><input class="fi" id="i-cta-label" type="text"></div>
+          <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="i-cta-btn" type="text"></div>
         </div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-cta-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="i-cta-body-q"></div></div>
+
+        <div class="section-divider">SSS (Sıkça Sorulan Sorular)</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-faq-headline" rows="2"></textarea></div>
+          <div class="fg"></div>
+        </div>
+        <div class="repeater" id="r-faq"></div>
       </div>
 
-      <!-- ═══ HAKKIMIZDA ═══ -->
+      <!-- ══════════════════════════════
+           HAKKIMIZDA
+      ══════════════════════════════ -->
       <div class="panel" id="panel-hakkimizda">
         <div class="panel-title">Hakkımızda</div>
-        <div class="panel-sub">hakkimizda.html — Hero, Ekip, Takım üyeleri, CTA</div>
+        <div class="panel-sub">hakkimizda.html</div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
-        <div class="field-group">
-          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
-          <div class="img-upload-wrap" id="hk-hero-img-wrap">
-            <input type="file" id="hk-hero-img-file" accept="image/*"/>
-            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Görseli <span class="fh">Önerilen: 1920×800px</span></div>
+          <div class="iw" id="hk-hero-iw">
+            <input type="file" id="hk-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Görsel seçin veya sürükleyin</div></div>
           </div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="hk-hero-title" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Alt Metin</div>
-          <div class="richtext-wrap" id="hk-hero-sub-wrap"></div>
-        </div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="hk-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Alt Metin</div><div class="rw" id="hk-hero-sub-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">GİRİŞ</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="hk-intro-headline" rows="3"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">1. Paragraf</div>
-          <div class="richtext-wrap" id="hk-intro-body1-wrap"></div>
-        </div>
-        <div class="field-group">
-          <div class="field-label">2. Paragraf</div>
-          <div class="richtext-wrap" id="hk-intro-body2-wrap"></div>
-        </div>
+        <div class="section-divider">MANİFESTO</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="hk-man-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">1. Paragraf</div><div class="rw" id="hk-man-body1-q"></div></div>
+        <div class="fg"><div class="fl">2. Paragraf</div><div class="rw" id="hk-man-body2-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">EKİP ÜYELERİ</h3>
-        <div class="repeater" id="hk-team-repeater"></div>
+        <div class="section-divider">EKİP ÜYELERİ</div>
+        <div class="repeater" id="r-team"></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="hk-cta-headline" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama</div>
-          <div class="richtext-wrap" id="hk-cta-body-wrap"></div>
-        </div>
+        <div class="section-divider">DNA — BİZİ FARKLI KILAN 3 ŞEY</div>
+        <div class="repeater" id="r-dna"></div>
+
+        <div class="section-divider">CTA</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="hk-cta-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="hk-cta-btn" type="text"></div>
       </div>
 
-      <!-- ═══ SENTEZ ═══ -->
+      <!-- ══════════════════════════════
+           SENTEZ
+      ══════════════════════════════ -->
       <div class="panel" id="panel-sentez">
         <div class="panel-title">Sentez</div>
-        <div class="panel-sub">sentez.html — Hero, 5 Adım, CTA</div>
+        <div class="panel-sub">sentez.html</div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
-        <div class="field-group">
-          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
-          <div class="img-upload-wrap" id="sz-hero-img-wrap">
-            <input type="file" id="sz-hero-img-file" accept="image/*"/>
-            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Görseli <span class="fh">Önerilen: 1920×800px</span></div>
+          <div class="iw" id="sz-hero-iw">
+            <input type="file" id="sz-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Görsel seçin veya sürükleyin</div></div>
           </div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="sz-hero-title" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Alt Metin</div>
-          <div class="richtext-wrap" id="sz-hero-sub-wrap"></div>
-        </div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="sz-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Alt Metin</div><div class="rw" id="sz-hero-sub-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">5 ADIM</h3>
-        <div class="repeater" id="sz-steps-repeater"></div>
+        <div class="section-divider">5 ADIMLI SENTEZ</div>
+        <div class="fg"><div class="fl">Bölüm Başlığı</div><textarea class="fi" id="sz-fw-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="sz-fw-body-q"></div></div>
+        <div class="repeater" id="r-steps"></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="sz-cta-headline" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama</div>
-          <div class="richtext-wrap" id="sz-cta-body-wrap"></div>
-        </div>
+        <div class="section-divider">NEDEN İŞE YARAR — FARKLI KAYNAK</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="sz-why-headline" rows="2"></textarea></div>
+        <div class="repeater" id="r-why-pillars"></div>
+
+        <div class="section-divider">CTA</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="sz-cta-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="sz-cta-btn" type="text"></div>
       </div>
 
-      <!-- ═══ ÇÖZÜMLER ═══ -->
+      <!-- ══════════════════════════════
+           ÇÖZÜMLER
+      ══════════════════════════════ -->
       <div class="panel" id="panel-cozumler">
         <div class="panel-title">Çözümler</div>
-        <div class="panel-sub">cozumler.html — Hero, CTA</div>
+        <div class="panel-sub">cozumler.html</div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
-        <div class="field-group">
-          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
-          <div class="img-upload-wrap" id="cz-hero-img-wrap">
-            <input type="file" id="cz-hero-img-file" accept="image/*"/>
-            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Görseli <span class="fh">Önerilen: 1920×800px</span></div>
+          <div class="iw" id="cz-hero-iw">
+            <input type="file" id="cz-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Görsel seçin veya sürükleyin</div></div>
           </div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="cz-hero-title" rows="4"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Alt Metin</div>
-          <div class="richtext-wrap" id="cz-hero-sub-wrap"></div>
-        </div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="cz-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Alt Metin</div><div class="rw" id="cz-hero-sub-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="cz-cta-headline" rows="5"></textarea>
+        <div class="section-divider">ZANAAT'A GÖRE ÇÖZÜMLER</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Bölüm Etiketi</div><input class="fi" id="cz-craft-label" type="text"></div>
+          <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="cz-craft-headline" rows="2"></textarea></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Açıklama</div>
-          <div class="richtext-wrap" id="cz-cta-body-wrap"></div>
+        <div class="repeater" id="r-craft-cards"></div>
+
+        <div class="section-divider">HEDEFE GÖRE ÇÖZÜMLER</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Bölüm Etiketi</div><input class="fi" id="cz-obj-label" type="text"></div>
+          <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="cz-obj-headline" rows="2"></textarea></div>
+        </div>
+        <div class="repeater" id="r-obj-cards"></div>
+
+        <div class="section-divider">NEDEN ADON</div>
+        <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="cz-why-headline" rows="5"></textarea></div>
+        <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="cz-why-body-q"></div></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Arka Plan Video</div><input class="fi" id="cz-why-video" type="text"></div>
+          <div class="fg"><div class="fl">CTA Buton Metni</div><input class="fi" id="cz-why-cta" type="text"></div>
         </div>
       </div>
 
-      <!-- ═══ İLETİŞİM ═══ -->
+      <!-- ══════════════════════════════
+           İLETİŞİM
+      ══════════════════════════════ -->
       <div class="panel" id="panel-iletisim">
         <div class="panel-title">İletişim</div>
-        <div class="panel-sub">iletisim.html — Hero başlık, alt metin, iletişim bilgileri</div>
+        <div class="panel-sub">iletisim.html</div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
-        <div class="field-group">
-          <div class="field-label">Başlık</div>
-          <textarea class="field-input field-textarea" id="il-hero-title" rows="3"></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Alt Metin</div>
-          <div class="richtext-wrap" id="il-hero-sub-wrap"></div>
-        </div>
+        <div class="section-divider">HERO</div>
+        <div class="fg"><div class="fl">Başlık <span class="fh">Satır kırma: \n | İtalik: &lt;em&gt;</span></div><textarea class="fi" id="il-hero-title" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="il-hero-desc-q"></div></div>
 
-        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">İLETİŞİM BİLGİLERİ</h3>
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">İstanbul Adresi</div>
-            <input class="field-input" id="il-istanbul" type="text"/>
-          </div>
-          <div class="field-group">
-            <div class="field-label">Adana Adresi</div>
-            <input class="field-input" id="il-adana" type="text"/>
-          </div>
+        <div class="section-divider">İLETİŞİM BİLGİLERİ</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">İstanbul Adresi</div><input class="fi" id="il-ist" type="text"></div>
+          <div class="fg"><div class="fl">İstanbul Alt Metin</div><input class="fi" id="il-ist-sub" type="text"></div>
         </div>
-        <div class="field-group">
-          <div class="field-label">E-posta</div>
-          <input class="field-input" id="il-email" type="text"/>
+        <div class="frow">
+          <div class="fg"><div class="fl">Adana Adresi</div><input class="fi" id="il-ada" type="text"></div>
+          <div class="fg"><div class="fl">Adana Alt Metin</div><input class="fi" id="il-ada-sub" type="text"></div>
         </div>
+        <div class="fg"><div class="fl">E-Posta</div><input class="fi" id="il-email" type="text"></div>
       </div>
 
-      <!-- ═══ GÖRSELLER ═══ -->
-      <div class="panel" id="panel-calismalar-gorsel">
+      <!-- ══════════════════════════════
+           PORTFÖY — GÖRSELLER
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-p-gorsel">
         <div class="panel-title">Portföy — Görseller</div>
-        <div class="panel-sub">calismalar.html görsel sekmesi · works.json</div>
-
-        <div style="background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px">
-          <div style="font-size:14px;font-weight:700;margin-bottom:16px">Yeni Görsel Ekle</div>
-          <div class="field-row">
-            <div class="field-group">
-              <div class="field-label">Başlık</div>
-              <input class="field-input" id="w-title" type="text" placeholder="Proje adı"/>
-            </div>
-            <div class="field-group">
-              <div class="field-label">Kategori</div>
-              <select class="field-input" id="w-cat">
-                <option>Video Prodüksiyon</option>
-                <option>Ürün & E-Ticaret</option>
-                <option>Moda & Yaşam Tarzı</option>
-                <option>Kurumsal</option>
+        <div class="panel-sub">calismalar.html · works.json</div>
+        <div class="add-box">
+          <div class="add-box-title">Yeni Görsel Ekle</div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Başlık</div><input class="fi" id="w-title" type="text" placeholder="Proje adı"></div>
+            <div class="fg"><div class="fl">Kategori</div>
+              <select class="fi" id="w-cat">
+                <option>Video Prodüksiyon</option><option>Ürün & E-Ticaret</option>
+                <option>Moda & Yaşam Tarzı</option><option>Kurumsal</option>
               </select>
             </div>
           </div>
-          <div class="field-row">
-            <div class="field-group">
-              <div class="field-label">Yıl</div>
-              <input class="field-input" id="w-year" type="text" value="2025"/>
-            </div>
-            <div class="field-group">
-              <div class="field-label">Görsel <span class="field-hint">4:5 önerilen</span></div>
-              <div class="img-upload-wrap" id="w-img-wrap" style="min-height:48px">
-                <input type="file" id="w-img-file" accept="image/*"/>
-                <div class="img-placeholder" style="padding:12px"><div class="img-placeholder-icon" style="font-size:20px">🖼</div><div class="img-placeholder-label" style="font-size:11px">Görsel seç</div></div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Yıl</div><input class="fi" id="w-year" type="text" value="2025"></div>
+            <div class="fg"><div class="fl">Görsel <span class="fh">4:5 önerilen</span></div>
+              <div class="iw" id="w-iw" style="min-height:48px">
+                <input type="file" id="w-if" accept="image/*"/>
+                <div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Seç</div></div>
               </div>
             </div>
           </div>
-          <button class="btn-sm primary" id="btn-add-work" style="margin-top:8px">Ekle →</button>
+          <button class="bsm primary" id="btn-add-work" style="margin-top:4px">Ekle →</button>
         </div>
-
-        <div class="works-grid-admin" id="admin-works-list"></div>
+        <div class="wg" id="admin-works"></div>
       </div>
 
-      <!-- ═══ VİDEOLAR ═══ -->
-      <div class="panel" id="panel-calismalar-video">
+      <!-- ══════════════════════════════
+           PORTFÖY — VİDEOLAR
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-p-video">
         <div class="panel-title">Portföy — Videolar</div>
-        <div class="panel-sub">calismalar.html video sekmesi · videos.json</div>
-
-        <div style="background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px">
-          <div style="font-size:14px;font-weight:700;margin-bottom:16px">Yeni Video Ekle</div>
-          <div class="field-row">
-            <div class="field-group">
-              <div class="field-label">Başlık</div>
-              <input class="field-input" id="v-title" type="text" placeholder="Video başlığı"/>
-            </div>
-            <div class="field-group">
-              <div class="field-label">YouTube URL</div>
-              <input class="field-input" id="v-url" type="text" placeholder="https://youtube.com/watch?v=..."/>
-            </div>
+        <div class="panel-sub">calismalar.html · videos.json</div>
+        <div class="add-box">
+          <div class="add-box-title">Yeni Video Ekle</div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Başlık</div><input class="fi" id="v-title" type="text" placeholder="Video başlığı"></div>
+            <div class="fg"><div class="fl">YouTube URL</div><input class="fi" id="v-url" type="text" placeholder="https://youtube.com/watch?v=..."></div>
           </div>
-          <button class="btn-sm primary" id="btn-add-video" style="margin-top:8px">Ekle →</button>
+          <button class="bsm primary" id="btn-add-video" style="margin-top:4px">Ekle →</button>
         </div>
-
-        <div class="video-list-admin" id="admin-video-list"></div>
+        <div class="vl" id="admin-videos"></div>
       </div>
 
     </main>
@@ -465,7 +417,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:
   <!-- SAVE BAR -->
   <div class="save-bar" id="save-bar">
     <div class="save-bar-text">Kaydedilmemiş değişiklikler var. <span>Yayınlamak ister misiniz?</span></div>
-    <div class="save-bar-right">
+    <div class="save-right">
       <span class="save-status" id="save-status"></span>
       <button class="btn-save" id="btn-save">Yayınla →</button>
     </div>
@@ -476,559 +428,502 @@ body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:
 <div class="modal-bg" id="token-modal">
   <div class="modal">
     <div class="modal-title">GitHub Token Gerekli</div>
-    <div class="modal-sub">Değişiklikleri yayınlamak için GitHub Personal Access Token girin. Tarayıcıda şifreli saklanır.</div>
+    <div class="modal-sub">Değişiklikleri yayınlamak için GitHub Personal Access Token girin. Tarayıcıda güvenli saklanır.</div>
     <input class="modal-input" type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
     <div class="modal-actions">
-      <button class="btn-modal-ok" id="token-ok">Kaydet ve Yayınla →</button>
-      <button class="btn-modal-cancel" id="token-cancel">İptal</button>
+      <button class="btn-mok" id="token-ok">Kaydet ve Yayınla →</button>
+      <button class="btn-mcancel" id="token-cancel">İptal</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 // CONFIG
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 const PASS = 'adon2025';
 const GH = { owner:'cemsenses', repo:'adon', branch:'main' };
-const SITE_PATH  = 'site.json';
-const WORKS_PATH = 'works.json';
-const VIDEOS_PATH= 'videos.json';
-const MEDIA_PATH = 'media/cms/';
-const WORKS_MEDIA= 'media/works/';
+const SITE_PATH   = 'site.json';
+const WORKS_PATH  = 'works.json';
+const VIDEOS_PATH = 'videos.json';
+const MEDIA_CMS   = 'media/cms/';
+const MEDIA_WORKS = 'media/works/';
 
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 // STATE
-// ════════════════════════════════════
-let site   = {};
-let works  = [];
-let videos = [];
-let dirty  = false;
-let ghToken= localStorage.getItem('adon_gh_token')||'';
+// ══════════════════════════════════════════
+let site={}, works=[], videos=[], dirty=false;
+let ghToken = localStorage.getItem('adon_gh_token')||'';
+const QUILLS = {};
 
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 // LOGIN
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 document.getElementById('pw-btn').onclick = tryLogin;
 document.getElementById('pw-input').onkeydown = e=>{ if(e.key==='Enter') tryLogin(); };
 function tryLogin(){
   if(document.getElementById('pw-input').value===PASS){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('admin-screen').style.display='block';
-    initCMS();
+    init();
   } else {
     document.getElementById('login-error').style.display='block';
   }
 }
-document.getElementById('btn-logout').onclick=()=>location.reload();
+document.getElementById('btn-logout').onclick = ()=>location.reload();
 
-// ════════════════════════════════════
-// SIDEBAR NAV
-// ════════════════════════════════════
+// ══════════════════════════════════════════
+// SIDEBAR
+// ══════════════════════════════════════════
 document.querySelectorAll('.sidebar-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
+  btn.onclick=()=>{
     document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('panel-'+btn.dataset.panel).classList.add('active');
-  });
+  };
 });
 
-// ════════════════════════════════════
-// QUILL INSTANCES
-// ════════════════════════════════════
-const toolbarOptions = [
-  ['bold','italic','underline'],
-  [{'size':['small',false,'large','huge']}],
-  [{'list':'ordered'},{'list':'bullet'}],
-  ['clean']
-];
-const quills = {};
-function makeQuill(id){
-  const el = document.getElementById(id);
+// ══════════════════════════════════════════
+// QUILL HELPER
+// ══════════════════════════════════════════
+const TB = [['bold','italic','underline'],[{'size':['small',false,'large','huge']}],[{'list':'ordered'},{'list':'bullet'}],['clean']];
+function makeQ(id, html, onchange){
+  const el=document.getElementById(id);
   if(!el) return null;
-  const q = new Quill(el, { theme:'snow', modules:{ toolbar: toolbarOptions } });
-  q.on('text-change', ()=>setDirty());
-  quills[id] = q;
+  const q=new Quill(el,{theme:'snow',modules:{toolbar:TB}});
+  if(html) q.root.innerHTML=html;
+  q.on('text-change',()=>{ if(onchange) onchange(q.root.innerHTML); setDirty(); });
+  QUILLS[id]=q;
   return q;
 }
 
-// ════════════════════════════════════
-// IMAGE UPLOAD HELPERS
-// ════════════════════════════════════
-function initImgUpload(wrapId, fileId, onFile){
-  const wrap = document.getElementById(wrapId);
-  const file = document.getElementById(fileId);
+// ══════════════════════════════════════════
+// IMAGE UPLOAD HELPER
+// ══════════════════════════════════════════
+function initImg(wrapId, fileId, onFile){
+  const wrap=document.getElementById(wrapId);
+  const file=document.getElementById(fileId);
   if(!wrap||!file) return;
-  file.onchange = ()=>{ if(file.files[0]) handleImgFile(wrap, file.files[0], onFile); };
-  wrap.ondragover = e=>{ e.preventDefault(); wrap.classList.add('drag-over'); };
-  wrap.ondragleave = ()=>wrap.classList.remove('drag-over');
-  wrap.ondrop = e=>{
-    e.preventDefault(); wrap.classList.remove('drag-over');
-    const f = e.dataTransfer.files[0];
-    if(f&&f.type.startsWith('image/')){ const dt=new DataTransfer(); dt.items.add(f); file.files=dt.files; handleImgFile(wrap,f,onFile); }
+  const handle=(f)=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const b64=e.target.result.split(',')[1];
+      // Show preview
+      wrap.innerHTML='';
+      const img=document.createElement('img'); img.src=e.target.result; img.className='preview'; wrap.appendChild(img);
+      const ni=document.createElement('input'); ni.type='file'; ni.accept='image/*';
+      ni.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+      ni.onchange=()=>{ if(ni.files[0]) handle(ni.files[0]); };
+      wrap.appendChild(ni);
+      if(onFile) onFile(f,b64);
+    };
+    r.readAsDataURL(f);
   };
-}
-function handleImgFile(wrap, file, onFile){
-  const reader = new FileReader();
-  reader.onload = e=>{
-    wrap.innerHTML='';
-    const img = document.createElement('img');
-    img.src = e.target.result;
-    img.className = 'img-preview';
-    wrap.appendChild(img);
-    // Re-add file input
-    const input = document.createElement('input');
-    input.type='file'; input.accept='image/*'; input.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
-    input.onchange=()=>{ if(input.files[0]) handleImgFile(wrap,input.files[0],onFile); };
-    wrap.appendChild(input);
-    if(onFile) onFile(file, e.target.result.split(',')[1]);
-  };
-  reader.readAsDataURL(file);
+  file.onchange=()=>{ if(file.files[0]) handle(file.files[0]); };
+  wrap.ondragover=e=>{ e.preventDefault(); wrap.classList.add('drag-over'); };
+  wrap.ondragleave=()=>wrap.classList.remove('drag-over');
+  wrap.ondrop=e=>{ e.preventDefault(); wrap.classList.remove('drag-over'); const f=e.dataTransfer.files[0]; if(f&&f.type.startsWith('image/')){ const dt=new DataTransfer(); dt.items.add(f); file.files=dt.files; handle(f); } };
 }
 
-// ════════════════════════════════════
+function showImgPreview(wrapId, src, onNewFile){
+  const wrap=document.getElementById(wrapId); if(!wrap||!src) return;
+  wrap.innerHTML='';
+  const img=document.createElement('img'); img.src=src; img.className='preview'; wrap.appendChild(img);
+  const ni=document.createElement('input'); ni.type='file'; ni.accept='image/*';
+  ni.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+  ni.onchange=()=>{
+    if(!ni.files[0]) return;
+    const r=new FileReader(); r.onload=e=>{ const b64=e.target.result.split(',')[1]; img.src=e.target.result; if(onNewFile) onNewFile(ni.files[0],b64); };
+    r.readAsDataURL(ni.files[0]);
+  };
+  wrap.appendChild(ni);
+}
+
+// ══════════════════════════════════════════
 // REPEATER HELPER
-// ════════════════════════════════════
-function buildRepeater(containerId, items, fieldDefs, onChange){
-  const container = document.getElementById(containerId);
-  container.innerHTML='';
+// ══════════════════════════════════════════
+function buildRepeater(containerId, items, fields){
+  const c=document.getElementById(containerId); c.innerHTML='';
   items.forEach((item,i)=>{
-    const div = document.createElement('div');
-    div.className='repeater-item open';
-    const header = document.createElement('div');
-    header.className='repeater-item-header';
-    header.innerHTML=`<span class="repeater-item-num">${String(i+1).padStart(2,'0')}</span><span class="repeater-item-title-preview">${item.title||item.name||''}</span><span class="repeater-toggle">▾</span>`;
-    header.onclick=()=>{ div.classList.toggle('open'); };
-    const body = document.createElement('div');
-    body.className='repeater-item-body';
+    const div=document.createElement('div'); div.className='ri open';
+    const hdr=document.createElement('div'); hdr.className='ri-header';
+    hdr.innerHTML=`<span class="ri-num">${String(i+1).padStart(2,'0')}</span><span class="ri-preview">${item.title||item.name||item.question||item.num||''}</span><span class="ri-toggle">▾</span>`;
+    hdr.onclick=()=>div.classList.toggle('open');
+    const body=document.createElement('div'); body.className='ri-body';
 
-    fieldDefs.forEach(f=>{
-      const fg = document.createElement('div');
-      fg.className='field-group';
-      const lbl = document.createElement('div');
-      lbl.className='field-label';
-      lbl.textContent=f.label;
-      fg.appendChild(lbl);
+    fields.forEach(f=>{
+      const fg=document.createElement('div'); fg.className='fg';
+      const lbl=document.createElement('div'); lbl.className='fl'; lbl.textContent=f.label; fg.appendChild(lbl);
+
       if(f.type==='richtext'){
-        const wrap=document.createElement('div');
-        wrap.className='richtext-wrap';
-        wrap.id=`${containerId}-${i}-${f.key}`;
-        fg.appendChild(wrap);
-        body.appendChild(fg);
+        const rw=document.createElement('div'); rw.className='rw'; rw.id=`${containerId}-${i}-${f.key}`; fg.appendChild(rw); body.appendChild(fg);
       } else if(f.type==='img'){
-        const wrap=document.createElement('div');
-        wrap.className='img-upload-wrap';
-        wrap.id=`${containerId}-${i}-${f.key}-wrap`;
-        const inp=document.createElement('input');
-        inp.type='file'; inp.accept='image/*'; inp.id=`${containerId}-${i}-${f.key}-file`;
+        const iw=document.createElement('div'); iw.className='iw'; iw.id=`${containerId}-${i}-${f.key}-iw`;
+        const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.id=`${containerId}-${i}-${f.key}-if`;
         inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
-        if(item[f.key]){
-          const img=document.createElement('img');
-          img.src=item[f.key]; img.className='img-preview';
-          wrap.appendChild(img);
-        } else {
-          wrap.innerHTML='<div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seç</div></div>';
-        }
-        wrap.appendChild(inp);
-        fg.appendChild(wrap);
-        body.appendChild(fg);
-        initImgUpload(`${containerId}-${i}-${f.key}-wrap`, `${containerId}-${i}-${f.key}-file`, (file,b64)=>{
-          item[`_${f.key}Data`]=b64;
-          item[`_${f.key}Filename`]=sanitize(item.name||item.title||'img')+'_'+Date.now()+'.'+file.name.split('.').pop();
-          item[f.key]=MEDIA_PATH+item[`_${f.key}Filename`];
-          setDirty();
+        if(item[f.key]){ const im=document.createElement('img'); im.src=item[f.key]; im.className='preview'; iw.appendChild(im); }
+        else { iw.innerHTML='<div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Görsel seç</div></div>'; }
+        iw.appendChild(inp); fg.appendChild(iw); body.appendChild(fg);
+      } else if(f.type==='bullets'){
+        const arr=item[f.key]||[];
+        arr.forEach((b,bi)=>{
+          const bfg=document.createElement('div'); bfg.className='fg';
+          const blbl=document.createElement('div'); blbl.className='fl'; blbl.textContent=`${f.label} ${bi+1}`; bfg.appendChild(blbl);
+          const inp=document.createElement('textarea'); inp.className='fi'; inp.rows=2; inp.value=b;
+          inp.oninput=()=>{ item[f.key][bi]=inp.value; setDirty(); };
+          bfg.appendChild(inp); body.appendChild(bfg);
         });
+        return;
       } else {
-        const inp=document.createElement(f.rows?'textarea':'input');
-        inp.className='field-input'+(f.rows?' field-textarea':'');
-        if(f.rows) inp.rows=f.rows;
+        const inp=f.rows?document.createElement('textarea'):document.createElement('input');
+        inp.className='fi'; if(f.rows) inp.rows=f.rows;
+        if(!f.rows) inp.type='text';
         inp.value=item[f.key]||'';
-        inp.oninput=()=>{ item[f.key]=inp.value; header.querySelector('.repeater-item-title-preview').textContent=item.title||item.name||''; setDirty(); };
-        fg.appendChild(inp);
-        body.appendChild(fg);
+        inp.oninput=()=>{ item[f.key]=inp.value; hdr.querySelector('.ri-preview').textContent=item.title||item.name||item.question||item.num||''; setDirty(); };
+        fg.appendChild(inp); body.appendChild(fg);
       }
     });
 
-    div.appendChild(header);
-    div.appendChild(body);
-    container.appendChild(div);
+    // Actions
+    const acts=document.createElement('div'); acts.className='ri-actions';
+    if(i>0){ const u=document.createElement('button'); u.className='bsm'; u.textContent='↑'; u.onclick=()=>{ const t=items[i]; items[i]=items[i-1]; items[i-1]=t; setDirty(); buildRepeater(containerId,items,fields); }; acts.appendChild(u); }
+    if(i<items.length-1){ const d=document.createElement('button'); d.className='bsm'; d.textContent='↓'; d.onclick=()=>{ const t=items[i]; items[i]=items[i+1]; items[i+1]=t; setDirty(); buildRepeater(containerId,items,fields); }; acts.appendChild(d); }
+    const del=document.createElement('button'); del.className='bsm danger'; del.textContent='Sil';
+    del.onclick=()=>{ if(confirm('Silinsin mi?')){ items.splice(i,1); setDirty(); buildRepeater(containerId,items,fields); } }; acts.appendChild(del);
+    body.appendChild(acts);
 
-    // Init richtexts after DOM insertion
-    fieldDefs.filter(f=>f.type==='richtext').forEach(f=>{
-      const q=makeQuill(`${containerId}-${i}-${f.key}`);
-      if(q&&item[f.key]) q.root.innerHTML=item[f.key];
-      if(q) q.on('text-change',()=>{ item[f.key]=q.root.innerHTML; setDirty(); });
+    div.appendChild(hdr); div.appendChild(body); c.appendChild(div);
+
+    // Init richtexts
+    fields.filter(f=>f.type==='richtext').forEach(f=>{
+      const q=makeQ(`${containerId}-${i}-${f.key}`, item[f.key], v=>{ item[f.key]=v; });
+    });
+
+    // Init img uploads
+    fields.filter(f=>f.type==='img').forEach(f=>{
+      const wrapId=`${containerId}-${i}-${f.key}-iw`;
+      const fileId=`${containerId}-${i}-${f.key}-if`;
+      initImg(wrapId, fileId, (file,b64)=>{
+        const ext=file.name.split('.').pop();
+        const fn=sanitize(item.name||item.title||'img')+'_'+Date.now()+'.'+ext;
+        item['_'+f.key+'Data']=b64; item['_'+f.key+'Filename']=fn;
+        item[f.key]=MEDIA_CMS+fn;
+        setDirty();
+      });
     });
   });
 }
 
-// ════════════════════════════════════
-// INIT CMS
-// ════════════════════════════════════
-async function initCMS(){
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+async function init(){
   try{ const r=await fetch(SITE_PATH+'?v='+Date.now()); site=await r.json(); }catch{ site={}; }
   try{ const r=await fetch(WORKS_PATH+'?v='+Date.now()); works=await r.json(); }catch{ works=[]; }
   try{ const r=await fetch(VIDEOS_PATH+'?v='+Date.now()); videos=await r.json(); }catch{ videos=[]; }
-
-  populateAll();
+  populate();
 }
 
-function populateAll(){
+function bind(id, setter){ const el=document.getElementById(id); if(el) el.oninput=()=>{ setter(el.value); setDirty(); }; }
+function val(id, v){ const el=document.getElementById(id); if(el&&v!==undefined&&v!==null) el.value=v; }
+
+function populate(){
+  const s=site;
+
   // ── ANA SAYFA ──
-  const idx = site.index||{};
-  const hero = idx.hero||{};
-  setVal('idx-hero-top', hero.textTop);
-  setVal('idx-hero-bottom', hero.textBottom);
-  setVal('idx-hero-video', hero.video);
-  setVal('idx-fark-label', (idx.fark||{}).label);
-  setVal('idx-fark-headline', (idx.fark||{}).headline);
-  setVal('idx-speed-headline', (idx.speedTeaser||{}).headline);
-  setVal('idx-speed-video', (idx.speedTeaser||{}).video);
-  setVal('idx-cta-headline', (idx.cta||{}).headline);
+  const idx=s.index||{};
+  val('i-hero-top',(idx.hero||{}).textTop);
+  val('i-hero-bottom',(idx.hero||{}).textBottom);
+  val('i-hero-video',(idx.hero||{}).video);
+  val('i-hero-cta',(idx.hero||{}).ctaText);
+  val('i-fark-label',(idx.fark||{}).label);
+  val('i-fark-headline',(idx.fark||{}).headline);
+  val('i-fark-cta',(idx.fark||{}).ctaText);
+  val('i-pillars-label',idx.pillarsLabel);
+  val('i-speed-headline',(idx.speedTeaser||{}).headline);
+  val('i-speed-video',(idx.speedTeaser||{}).video);
+  val('i-speed-cta',(idx.speedTeaser||{}).ctaText);
+  val('i-sol-headline',(idx.solutions||{}).headline);
+  val('i-sol-body',(idx.solutions||{}).body);
+  val('i-cta-label',(idx.cta||{}).label);
+  val('i-cta-headline',(idx.cta||{}).headline);
+  val('i-cta-btn',(idx.cta||{}).ctaText);
+  val('i-faq-headline',(idx.faq||{}).headline);
 
-  const qiHeroDesc = makeQuill('idx-hero-desc-wrap');
-  if(qiHeroDesc&&hero.desc) qiHeroDesc.root.innerHTML=hero.desc;
-  if(qiHeroDesc) qiHeroDesc.on('text-change',()=>{ site.index.hero.desc=qiHeroDesc.root.innerHTML; setDirty(); });
+  makeQ('i-hero-desc-q',(idx.hero||{}).desc, v=>{ idx.hero.desc=v; });
+  makeQ('i-fark-body-q',(idx.fark||{}).body, v=>{ idx.fark.body=v; });
+  makeQ('i-cta-body-q',(idx.cta||{}).body, v=>{ idx.cta.body=v; });
 
-  const qiFarkBody = makeQuill('idx-fark-body-wrap');
-  if(qiFarkBody&&(idx.fark||{}).body) qiFarkBody.root.innerHTML=idx.fark.body;
-  if(qiFarkBody) qiFarkBody.on('text-change',()=>{ site.index.fark.body=qiFarkBody.root.innerHTML; setDirty(); });
+  bind('i-hero-top',   v=>idx.hero.textTop=v);
+  bind('i-hero-bottom',v=>idx.hero.textBottom=v);
+  bind('i-hero-video', v=>idx.hero.video=v);
+  bind('i-hero-cta',   v=>idx.hero.ctaText=v);
+  bind('i-fark-label', v=>idx.fark.label=v);
+  bind('i-fark-headline',v=>idx.fark.headline=v);
+  bind('i-fark-cta',   v=>idx.fark.ctaText=v);
+  bind('i-pillars-label',v=>idx.pillarsLabel=v);
+  bind('i-speed-headline',v=>idx.speedTeaser.headline=v);
+  bind('i-speed-video',v=>idx.speedTeaser.video=v);
+  bind('i-speed-cta',  v=>idx.speedTeaser.ctaText=v);
+  bind('i-sol-headline',v=>idx.solutions.headline=v);
+  bind('i-sol-body',   v=>idx.solutions.body=v);
+  bind('i-cta-label',  v=>idx.cta.label=v);
+  bind('i-cta-headline',v=>idx.cta.headline=v);
+  bind('i-cta-btn',    v=>idx.cta.ctaText=v);
+  bind('i-faq-headline',v=>idx.faq.headline=v);
 
-  const qiCtaBody = makeQuill('idx-cta-body-wrap');
-  if(qiCtaBody&&(idx.cta||{}).body) qiCtaBody.root.innerHTML=idx.cta.body;
-  if(qiCtaBody) qiCtaBody.on('text-change',()=>{ site.index.cta.body=qiCtaBody.root.innerHTML; setDirty(); });
-
-  bindInput('idx-hero-top',    v=>{ site.index.hero.textTop=v; });
-  bindInput('idx-hero-bottom', v=>{ site.index.hero.textBottom=v; });
-  bindInput('idx-hero-video',  v=>{ site.index.hero.video=v; });
-  bindInput('idx-fark-label',  v=>{ site.index.fark.label=v; });
-  bindInput('idx-fark-headline',v=>{ site.index.fark.headline=v; });
-  bindInput('idx-speed-headline',v=>{ site.index.speedTeaser.headline=v; });
-  bindInput('idx-speed-video', v=>{ site.index.speedTeaser.video=v; });
-  bindInput('idx-cta-headline',v=>{ site.index.cta.headline=v; });
-
-  buildRepeater('idx-pillars-repeater', site.index.pillars||[], [
-    {key:'title', label:'Başlık'},
-    {key:'body',  label:'Açıklama', rows:3}
-  ]);
-  buildRepeater('idx-speed-cards-repeater', (site.index.speedTeaser||{}).cards||[], [
-    {key:'title', label:'Başlık'},
-    {key:'body',  label:'Açıklama', rows:3}
-  ]);
+  buildRepeater('r-pillars', idx.pillars||[], [{key:'num',label:'No'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
+  buildRepeater('r-speed-cards', (idx.speedTeaser||{}).cards||[], [{key:'num',label:'No'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
+  buildRepeater('r-sol-cards', (idx.solutions||{}).cards||[], [{key:'num',label:'No'},{key:'tag',label:'Etiket'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
+  buildRepeater('r-faq', (idx.faq||{}).items||[], [{key:'question',label:'Soru'},{key:'answer',label:'Cevap',rows:4}]);
 
   // ── HAKKIMIZDA ──
-  const hk = site.hakkimizda||{};
-  setVal('hk-hero-title', (hk.hero||{}).title);
-  setVal('hk-intro-headline', (hk.intro||{}).headline);
-  setVal('hk-cta-headline', (hk.cta||{}).headline);
+  const hk=s.hakkimizda||{};
+  val('hk-hero-title',(hk.hero||{}).title);
+  val('hk-man-headline',(hk.manifesto||{}).headline);
+  val('hk-cta-headline',(hk.cta||{}).headline);
+  val('hk-cta-btn',(hk.cta||{}).ctaText);
 
-  initImgUpload('hk-hero-img-wrap','hk-hero-img-file',(file,b64)=>{
-    site.hakkimizda.hero._imgData=b64;
-    site.hakkimizda.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+file.name.split('.').pop();
-    site.hakkimizda.hero.image=MEDIA_PATH+site.hakkimizda.hero._imgFilename;
-    setDirty();
-  });
-  if((hk.hero||{}).image){ const w=document.getElementById('hk-hero-img-wrap'); w.innerHTML=`<img src="${hk.hero.image}" class="img-preview"/>`; const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.id='hk-hero-img-file'; inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2'; w.appendChild(inp); initImgUpload('hk-hero-img-wrap','hk-hero-img-file',(f,b64)=>{ site.hakkimizda.hero._imgData=b64; site.hakkimizda.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+f.name.split('.').pop(); site.hakkimizda.hero.image=MEDIA_PATH+site.hakkimizda.hero._imgFilename; setDirty(); }); }
+  if((hk.hero||{}).image) showImgPreview('hk-hero-iw', hk.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); hk.hero._imgData=b64; hk.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+ext; hk.hero.image=MEDIA_CMS+hk.hero._imgFilename; setDirty(); });
+  else initImg('hk-hero-iw','hk-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); hk.hero._imgData=b64; hk.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+ext; hk.hero.image=MEDIA_CMS+hk.hero._imgFilename; setDirty(); });
 
-  makeQandBind('hk-hero-sub-wrap',    (hk.hero||{}).sub,    v=>site.hakkimizda.hero.sub=v);
-  makeQandBind('hk-intro-body1-wrap', (hk.intro||{}).body1, v=>site.hakkimizda.intro.body1=v);
-  makeQandBind('hk-intro-body2-wrap', (hk.intro||{}).body2, v=>site.hakkimizda.intro.body2=v);
-  makeQandBind('hk-cta-body-wrap',    (hk.cta||{}).body,    v=>site.hakkimizda.cta.body=v);
-  bindInput('hk-hero-title',     v=>{ site.hakkimizda.hero.title=v; });
-  bindInput('hk-intro-headline', v=>{ site.hakkimizda.intro.headline=v; });
-  bindInput('hk-cta-headline',   v=>{ site.hakkimizda.cta.headline=v; });
+  makeQ('hk-hero-sub-q',(hk.hero||{}).sub, v=>hk.hero.sub=v);
+  makeQ('hk-man-body1-q',(hk.manifesto||{}).body1, v=>hk.manifesto.body1=v);
+  makeQ('hk-man-body2-q',(hk.manifesto||{}).body2, v=>hk.manifesto.body2=v);
 
-  buildRepeater('hk-team-repeater', hk.team||[], [
-    {key:'name',  label:'Ad Soyad'},
-    {key:'role',  label:'Unvan'},
-    {key:'image', label:'Fotoğraf', type:'img'}
-  ]);
+  bind('hk-hero-title',   v=>hk.hero.title=v);
+  bind('hk-man-headline', v=>hk.manifesto.headline=v);
+  bind('hk-cta-headline', v=>hk.cta.headline=v);
+  bind('hk-cta-btn',      v=>hk.cta.ctaText=v);
+
+  buildRepeater('r-team', hk.team||[], [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
+  buildRepeater('r-dna', (hk.dna||{}).items||[], [{key:'icon',label:'İkon'},{key:'title',label:'Başlık'},{key:'subtitle',label:'Alt Başlık'},{key:'body',label:'Açıklama',rows:3}]);
 
   // ── SENTEZ ──
-  const sz = site.sentez||{};
-  setVal('sz-hero-title', (sz.hero||{}).title);
-  setVal('sz-cta-headline', (sz.cta||{}).headline);
-  initHeroImgUpload('sz','sentez');
-  if((sz.hero||{}).image) showImgPreview('sz-hero-img-wrap','sz-hero-img-file',sz.hero.image,'sentez');
-  makeQandBind('sz-hero-sub-wrap', (sz.hero||{}).sub, v=>site.sentez.hero.sub=v);
-  makeQandBind('sz-cta-body-wrap', (sz.cta||{}).body, v=>site.sentez.cta.body=v);
-  bindInput('sz-hero-title',   v=>{ site.sentez.hero.title=v; });
-  bindInput('sz-cta-headline', v=>{ site.sentez.cta.headline=v; });
-  buildRepeater('sz-steps-repeater', sz.steps||[], [
-    {key:'num',   label:'Numara'},
-    {key:'title', label:'Başlık'},
-    {key:'body',  label:'Açıklama', rows:3}
-  ]);
+  const sz=s.sentez||{};
+  val('sz-hero-title',(sz.hero||{}).title);
+  val('sz-fw-headline',(sz.framework||{}).headline);
+  val('sz-why-headline',(sz.whyItWorks||{}).headline);
+  val('sz-cta-headline',(sz.cta||{}).headline);
+  val('sz-cta-btn',(sz.cta||{}).ctaText);
+
+  if((sz.hero||{}).image) showImgPreview('sz-hero-iw', sz.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); sz.hero._imgData=b64; sz.hero._imgFilename='sentez-hero-'+Date.now()+'.'+ext; sz.hero.image=MEDIA_CMS+sz.hero._imgFilename; setDirty(); });
+  else initImg('sz-hero-iw','sz-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); sz.hero._imgData=b64; sz.hero._imgFilename='sentez-hero-'+Date.now()+'.'+ext; sz.hero.image=MEDIA_CMS+sz.hero._imgFilename; setDirty(); });
+
+  makeQ('sz-hero-sub-q',(sz.hero||{}).sub, v=>sz.hero.sub=v);
+  makeQ('sz-fw-body-q',(sz.framework||{}).body, v=>sz.framework.body=v);
+
+  bind('sz-hero-title',   v=>sz.hero.title=v);
+  bind('sz-fw-headline',  v=>sz.framework.headline=v);
+  bind('sz-why-headline', v=>sz.whyItWorks.headline=v);
+  bind('sz-cta-headline', v=>sz.cta.headline=v);
+  bind('sz-cta-btn',      v=>sz.cta.ctaText=v);
+
+  buildRepeater('r-steps', sz.steps||[], [{key:'num',label:'No'},{key:'tag',label:'Etiket'},{key:'title',label:'Başlık'},{key:'bullets',label:'Madde',type:'bullets'}]);
+  buildRepeater('r-why-pillars', (sz.whyItWorks||{}).pillars||[], [{key:'num',label:'Başlık Kısa'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
 
   // ── ÇÖZÜMLER ──
-  const cz = site.cozumler||{};
-  setVal('cz-hero-title', (cz.hero||{}).title);
-  setVal('cz-cta-headline', (cz.cta||{}).headline);
-  initHeroImgUpload('cz','cozumler');
-  if((cz.hero||{}).image) showImgPreview('cz-hero-img-wrap','cz-hero-img-file',cz.hero.image,'cozumler');
-  makeQandBind('cz-hero-sub-wrap', (cz.hero||{}).sub, v=>site.cozumler.hero.sub=v);
-  makeQandBind('cz-cta-body-wrap', (cz.cta||{}).body, v=>site.cozumler.cta.body=v);
-  bindInput('cz-hero-title',   v=>{ site.cozumler.hero.title=v; });
-  bindInput('cz-cta-headline', v=>{ site.cozumler.cta.headline=v; });
+  const cz=s.cozumler||{};
+  val('cz-hero-title',(cz.hero||{}).title);
+  val('cz-craft-label',(cz.byCraft||{}).label);
+  val('cz-craft-headline',(cz.byCraft||{}).headline);
+  val('cz-obj-label',(cz.byObjective||{}).label);
+  val('cz-obj-headline',(cz.byObjective||{}).headline);
+  val('cz-why-headline',(cz.whyAdon||{}).headline);
+  val('cz-why-video',(cz.whyAdon||{}).video);
+  val('cz-why-cta',(cz.whyAdon||{}).ctaText);
+
+  if((cz.hero||{}).image) showImgPreview('cz-hero-iw', cz.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); cz.hero._imgData=b64; cz.hero._imgFilename='cozumler-hero-'+Date.now()+'.'+ext; cz.hero.image=MEDIA_CMS+cz.hero._imgFilename; setDirty(); });
+  else initImg('cz-hero-iw','cz-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); cz.hero._imgData=b64; cz.hero._imgFilename='cozumler-hero-'+Date.now()+'.'+ext; cz.hero.image=MEDIA_CMS+cz.hero._imgFilename; setDirty(); });
+
+  makeQ('cz-hero-sub-q',(cz.hero||{}).sub, v=>cz.hero.sub=v);
+  makeQ('cz-why-body-q',(cz.whyAdon||{}).body, v=>cz.whyAdon.body=v);
+
+  bind('cz-hero-title',     v=>cz.hero.title=v);
+  bind('cz-craft-label',    v=>cz.byCraft.label=v);
+  bind('cz-craft-headline', v=>cz.byCraft.headline=v);
+  bind('cz-obj-label',      v=>cz.byObjective.label=v);
+  bind('cz-obj-headline',   v=>cz.byObjective.headline=v);
+  bind('cz-why-headline',   v=>cz.whyAdon.headline=v);
+  bind('cz-why-video',      v=>cz.whyAdon.video=v);
+  bind('cz-why-cta',        v=>cz.whyAdon.ctaText=v);
+
+  buildRepeater('r-craft-cards', (cz.byCraft||{}).cards||[], [{key:'badge',label:'Rozet'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
+  buildRepeater('r-obj-cards', (cz.byObjective||{}).cards||[], [{key:'num',label:'No'},{key:'tag',label:'Etiket'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
 
   // ── İLETİŞİM ──
-  const il = site.iletisim||{};
-  setVal('il-hero-title', (il.hero||{}).title);
-  setVal('il-istanbul',   (il.info||{}).istanbul);
-  setVal('il-adana',      (il.info||{}).adana);
-  setVal('il-email',      (il.info||{}).email);
-  makeQandBind('il-hero-sub-wrap', (il.hero||{}).sub, v=>site.iletisim.hero.sub=v);
-  bindInput('il-hero-title', v=>{ site.iletisim.hero.title=v; });
-  bindInput('il-istanbul',   v=>{ site.iletisim.info.istanbul=v; });
-  bindInput('il-adana',      v=>{ site.iletisim.info.adana=v; });
-  bindInput('il-email',      v=>{ site.iletisim.info.email=v; });
+  const il=s.iletisim||{};
+  val('il-hero-title',(il.hero||{}).title);
+  val('il-ist',(il.info||{}).istanbul);
+  val('il-ist-sub',(il.info||{}).istanbulSub);
+  val('il-ada',(il.info||{}).adana);
+  val('il-ada-sub',(il.info||{}).adanaSub);
+  val('il-email',(il.info||{}).email);
 
-  // ── GÖRSELLER & VİDEOLAR ──
-  renderWorksList();
-  renderVideoList();
-  initWorkAdd();
-  initVideoAdd();
+  makeQ('il-hero-desc-q',(il.hero||{}).desc, v=>il.hero.desc=v);
+  bind('il-hero-title',v=>il.hero.title=v);
+  bind('il-ist',       v=>il.info.istanbul=v);
+  bind('il-ist-sub',   v=>il.info.istanbulSub=v);
+  bind('il-ada',       v=>il.info.adana=v);
+  bind('il-ada-sub',   v=>il.info.adanaSub=v);
+  bind('il-email',     v=>il.info.email=v);
+
+  // ── PORTFÖY ──
+  renderWorks(); initWorkAdd();
+  renderVideos(); initVideoAdd();
 }
 
-function initHeroImgUpload(prefix, page){
-  initImgUpload(`${prefix}-hero-img-wrap`,`${prefix}-hero-img-file`,(file,b64)=>{
-    site[page].hero._imgData=b64;
-    site[page].hero._imgFilename=`${page}-hero-`+Date.now()+'.'+file.name.split('.').pop();
-    site[page].hero.image=MEDIA_PATH+site[page].hero._imgFilename;
-    setDirty();
-  });
-}
-function showImgPreview(wrapId, fileId, src, page){
-  const w=document.getElementById(wrapId);
-  w.innerHTML=`<img src="${src}" class="img-preview"/>`;
-  const inp=document.createElement('input');
-  inp.type='file';inp.accept='image/*';inp.id=fileId;
-  inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
-  w.appendChild(inp);
-  initImgUpload(wrapId,fileId,(file,b64)=>{
-    site[page].hero._imgData=b64;
-    site[page].hero._imgFilename=`${page}-hero-`+Date.now()+'.'+file.name.split('.').pop();
-    site[page].hero.image=MEDIA_PATH+site[page].hero._imgFilename;
-    setDirty();
-  });
-}
+// ══════════════════════════════════════════
+// WORKS
+// ══════════════════════════════════════════
+const COLORS=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)','linear-gradient(135deg,#e8b8c9,#e8c8f2)','linear-gradient(135deg,#b8c9e8,#b8e8e0)','linear-gradient(135deg,#e8d8b8,#e8b8b8)'];
 
-function makeQandBind(wrapperId, initialHtml, setter){
-  const q=makeQuill(wrapperId);
-  if(q&&initialHtml) q.root.innerHTML=initialHtml;
-  if(q) q.on('text-change',()=>{ setter(q.root.innerHTML); setDirty(); });
-}
-
-function setVal(id, val){ const el=document.getElementById(id); if(el&&val!==undefined) el.value=val; }
-function bindInput(id, setter){
-  const el=document.getElementById(id);
-  if(el) el.oninput=()=>{ setter(el.value); setDirty(); };
-}
-
-// ════════════════════════════════════
-// WORKS LIST
-// ════════════════════════════════════
-function renderWorksList(){
-  const list=document.getElementById('admin-works-list');
-  list.innerHTML='';
-  const colors=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)'];
+function renderWorks(){
+  const c=document.getElementById('admin-works'); c.innerHTML='';
   works.forEach((w,i)=>{
-    const card=document.createElement('div');
-    card.className='work-card';
-    const imgDiv=document.createElement('div');
-    imgDiv.className='work-card-img';
-    imgDiv.style.background=w.color||colors[i%colors.length];
-    if(w.image) imgDiv.innerHTML=`<img src="${w.image}" alt="${w.title}" loading="lazy"/>`;
-    else imgDiv.textContent=w.placeholder||'?';
-    card.innerHTML=`
-      <div class="work-card-info">
-        <div class="work-card-title">${w.title}</div>
-        <div class="work-card-cat">${w.category} · ${w.year}</div>
-      </div>
-      <div class="work-card-actions">
-        <button class="btn-sm danger" data-wi="${i}">Sil</button>
-        ${i>0?`<button class="btn-sm" data-wi="${i}" data-wd="-1">↑</button>`:''}
-        ${i<works.length-1?`<button class="btn-sm" data-wi="${i}" data-wd="1">↓</button>`:''}
-      </div>`;
-    card.prepend(imgDiv);
-    list.appendChild(card);
+    const card=document.createElement('div'); card.className='wc';
+    const img=document.createElement('div'); img.className='wc-img'; img.style.background=w.color||COLORS[i%COLORS.length];
+    if(w.image) img.innerHTML=`<img src="${w.image}" alt="${w.title}" loading="lazy"/>`;
+    else img.textContent=w.placeholder||'?';
+    card.innerHTML=`<div class="wc-info"><div class="wc-title">${w.title}</div><div class="wc-cat">${w.category} · ${w.year}</div></div><div class="wc-actions"><button class="bsm danger" data-wi="${i}">Sil</button>${i>0?`<button class="bsm" data-wu="${i}">↑</button>`:''}${i<works.length-1?`<button class="bsm" data-wd="${i}">↓</button>`:''}</div>`;
+    card.prepend(img); c.appendChild(card);
   });
-  list.querySelectorAll('.btn-sm.danger[data-wi]').forEach(btn=>{
-    btn.onclick=()=>{ if(confirm('Silinsin mi?')){ works.splice(+btn.dataset.wi,1); setDirty(); renderWorksList(); } };
-  });
-  list.querySelectorAll('.btn-sm[data-wd]').forEach(btn=>{
-    btn.onclick=()=>{ const i=+btn.dataset.wi,d=+btn.dataset.wd; [works[i],works[i+d]]=[works[i+d],works[i]]; setDirty(); renderWorksList(); };
-  });
+  c.querySelectorAll('.bsm.danger[data-wi]').forEach(b=>{ b.onclick=()=>{ if(confirm('Silinsin mi?')){ works.splice(+b.dataset.wi,1); setDirty(); renderWorks(); } }; });
+  c.querySelectorAll('[data-wu]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.wu; [works[i],works[i-1]]=[works[i-1],works[i]]; setDirty(); renderWorks(); }; });
+  c.querySelectorAll('[data-wd]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.wd; [works[i],works[i+1]]=[works[i+1],works[i]]; setDirty(); renderWorks(); }; });
 }
 function initWorkAdd(){
-  let pendingB64=null, pendingFilename=null;
-  initImgUpload('w-img-wrap','w-img-file',(file,b64)=>{ pendingB64=b64; pendingFilename=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+file.name.split('.').pop(); });
+  let pb64=null,pfn=null;
+  initImg('w-iw','w-if',(f,b64)=>{ pb64=b64; pfn=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+f.name.split('.').pop(); });
   document.getElementById('btn-add-work').onclick=()=>{
     const title=document.getElementById('w-title').value.trim();
     if(!title){alert('Başlık gerekli');return;}
-    const colors=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)','linear-gradient(135deg,#e8b8c9,#e8c8f2)','linear-gradient(135deg,#b8c9e8,#b8e8e0)'];
-    const w={id:Date.now(),title,category:document.getElementById('w-cat').value,year:document.getElementById('w-year').value,image:'',placeholder:title.substring(0,2).toUpperCase(),color:colors[works.length%colors.length]};
-    if(pendingB64){ w._imgData=pendingB64; w._imgFilename=pendingFilename; w.image=WORKS_MEDIA+pendingFilename; pendingB64=null; pendingFilename=null; }
-    works.unshift(w);
-    setDirty(); renderWorksList();
+    const w={id:Date.now(),title,category:document.getElementById('w-cat').value,year:document.getElementById('w-year').value||'2025',image:'',placeholder:title.substring(0,2).toUpperCase(),color:COLORS[works.length%COLORS.length]};
+    if(pb64){ w._imgData=pb64; w._imgFilename=pfn; w.image=MEDIA_WORKS+pfn; pb64=null; pfn=null; }
+    works.unshift(w); setDirty(); renderWorks();
     document.getElementById('w-title').value='';
-    resetImgWrap('w-img-wrap','w-img-file');
+    resetIw('w-iw','w-if');
   };
 }
-function resetImgWrap(wrapId, fileId){
-  const w=document.getElementById(wrapId);
-  w.innerHTML=`<input type="file" id="${fileId}" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="img-placeholder" style="padding:12px"><div class="img-placeholder-icon" style="font-size:20px">🖼</div><div class="img-placeholder-label" style="font-size:11px">Görsel seç</div></div>`;
-}
+function resetIw(wid,fid){ const w=document.getElementById(wid); w.innerHTML=`<input type="file" id="${fid}" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Seç</div></div>`; }
 
-// ════════════════════════════════════
-// VIDEO LIST
-// ════════════════════════════════════
-function getYTId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/); return m?m[1]:null; }
-function renderVideoList(){
-  const list=document.getElementById('admin-video-list');
-  list.innerHTML='';
-  if(!videos.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi.</p>'; return; }
+// ══════════════════════════════════════════
+// VIDEOS
+// ══════════════════════════════════════════
+function ytId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/); return m?m[1]:null; }
+function renderVideos(){
+  const c=document.getElementById('admin-videos'); c.innerHTML='';
+  if(!videos.length){ c.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi.</p>'; return; }
   videos.forEach((v,i)=>{
-    const id=getYTId(v.url);
-    const thumb=id?`https://img.youtube.com/vi/${id}/mqdefault.jpg`:'';
-    const card=document.createElement('div');
-    card.className='video-card-admin';
-    card.innerHTML=`
-      <div class="video-thumb">${thumb?`<img src="${thumb}" alt="${v.title}"/>`:''}  </div>
-      <div class="video-info">
-        <div class="video-title">${v.title||'Başlıksız'}</div>
-        <div class="video-url">${v.url}</div>
-        <div class="video-actions">
-          <button class="btn-sm danger" data-vi="${i}">Sil</button>
-          ${i>0?`<button class="btn-sm" data-vi="${i}" data-vd="-1">↑</button>`:''}
-          ${i<videos.length-1?`<button class="btn-sm" data-vi="${i}" data-vd="1">↓</button>`:''}
-        </div>
-      </div>`;
-    list.appendChild(card);
+    const id=ytId(v.url); const thumb=id?`https://img.youtube.com/vi/${id}/mqdefault.jpg`:'';
+    const card=document.createElement('div'); card.className='vc';
+    card.innerHTML=`<div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div><div class="vi-info"><div class="vi-title">${v.title||'Başlıksız'}</div><div class="vi-url">${v.url}</div><div class="vi-actions"><button class="bsm danger" data-vi="${i}">Sil</button>${i>0?`<button class="bsm" data-vu="${i}">↑</button>`:''}${i<videos.length-1?`<button class="bsm" data-vd="${i}">↓</button>`:''}</div></div>`;
+    c.appendChild(card);
   });
-  list.querySelectorAll('.btn-sm.danger[data-vi]').forEach(btn=>{
-    btn.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+btn.dataset.vi,1); setDirty(); renderVideoList(); } };
-  });
-  list.querySelectorAll('.btn-sm[data-vd]').forEach(btn=>{
-    btn.onclick=()=>{ const i=+btn.dataset.vi,d=+btn.dataset.vd; [videos[i],videos[i+d]]=[videos[i+d],videos[i]]; setDirty(); renderVideoList(); };
-  });
+  c.querySelectorAll('.bsm.danger[data-vi]').forEach(b=>{ b.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+b.dataset.vi,1); setDirty(); renderVideos(); } }; });
+  c.querySelectorAll('[data-vu]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.vu; [videos[i],videos[i-1]]=[videos[i-1],videos[i]]; setDirty(); renderVideos(); }; });
+  c.querySelectorAll('[data-vd]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.vd; [videos[i],videos[i+1]]=[videos[i+1],videos[i]]; setDirty(); renderVideos(); }; });
 }
 function initVideoAdd(){
   document.getElementById('btn-add-video').onclick=()=>{
     const url=document.getElementById('v-url').value.trim();
     if(!url){alert('YouTube URL gerekli');return;}
-    if(!getYTId(url)){alert('Geçerli YouTube URL girin');return;}
+    if(!ytId(url)){alert('Geçerli YouTube URL girin');return;}
     videos.push({id:Date.now(),title:document.getElementById('v-title').value.trim()||'Video',url});
-    setDirty(); renderVideoList();
-    document.getElementById('v-title').value='';
-    document.getElementById('v-url').value='';
+    setDirty(); renderVideos();
+    document.getElementById('v-title').value=''; document.getElementById('v-url').value='';
   };
 }
 
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 // DIRTY / SAVE BAR
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 function setDirty(){ dirty=true; document.getElementById('save-bar').classList.add('visible'); }
 
-document.getElementById('btn-save').onclick=()=>{
-  if(!ghToken){ document.getElementById('token-modal').classList.add('open'); }
-  else { publish(); }
-};
-document.getElementById('token-ok').onclick=()=>{
-  const t=document.getElementById('token-input').value.trim();
-  if(!t) return;
-  ghToken=t; localStorage.setItem('adon_gh_token',t);
-  document.getElementById('token-modal').classList.remove('open');
-  publish();
-};
+document.getElementById('btn-save').onclick=()=>{ if(!ghToken){ document.getElementById('token-modal').classList.add('open'); } else { publish(); } };
+document.getElementById('token-ok').onclick=()=>{ const t=document.getElementById('token-input').value.trim(); if(!t)return; ghToken=t; localStorage.setItem('adon_gh_token',t); document.getElementById('token-modal').classList.remove('open'); publish(); };
 document.getElementById('token-cancel').onclick=()=>document.getElementById('token-modal').classList.remove('open');
 
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 // PUBLISH
-// ════════════════════════════════════
+// ══════════════════════════════════════════
 async function publish(){
   const btn=document.getElementById('btn-save');
-  const status=document.getElementById('save-status');
-  btn.disabled=true; btn.textContent='Yükleniyor...'; status.textContent='';
+  const st=document.getElementById('save-status');
+  btn.disabled=true; btn.textContent='Yükleniyor...'; st.textContent='';
 
   try{
-    // 1. Görsel dosyalarını yükle (hero images)
-    await uploadPendingImages(site, status);
-
-    // 2. Ekip üyesi fotoğrafları
-    for(const m of (site.hakkimizda||{}).team||[]){
-      if(m._imageData&&m._imageFilename){
-        status.textContent='Fotoğraf: '+m.name;
-        await ghPut(MEDIA_PATH+m._imageFilename, m._imageData, 'media: '+m._imageFilename);
-        m.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_PATH}${m._imageFilename}`;
-        delete m._imageData; delete m._imageFilename;
+    // Hero görselleri
+    for(const page of ['hakkimizda','sentez','cozumler']){
+      const h=(site[page]||{}).hero||{};
+      if(h._imgData&&h._imgFilename){
+        st.textContent='Görsel: '+page;
+        await ghPut(MEDIA_CMS+h._imgFilename, h._imgData, 'media: '+h._imgFilename);
+        h.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_CMS}${h._imgFilename}`;
+        delete h._imgData; delete h._imgFilename;
       }
     }
 
-    // 3. Works görselleri
+    // Ekip fotoğrafları (repeater items)
+    for(const m of (site.hakkimizda||{}).team||[]){
+      for(const key of ['image']){
+        if(m['_'+key+'Data']&&m['_'+key+'Filename']){
+          st.textContent='Fotoğraf: '+m.name;
+          await ghPut(MEDIA_CMS+m['_'+key+'Filename'], m['_'+key+'Data'], 'media: '+m['_'+key+'Filename']);
+          m[key]=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_CMS}${m['_'+key+'Filename']}`;
+          delete m['_'+key+'Data']; delete m['_'+key+'Filename'];
+        }
+      }
+    }
+
+    // Works görselleri
     for(const w of works){
       if(w._imgData&&w._imgFilename){
-        status.textContent='Görsel: '+w.title;
-        await ghPut(WORKS_MEDIA+w._imgFilename, w._imgData, 'media: '+w._imgFilename);
-        w.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${WORKS_MEDIA}${w._imgFilename}`;
+        st.textContent='Görsel: '+w.title;
+        await ghPut(MEDIA_WORKS+w._imgFilename, w._imgData, 'media: '+w._imgFilename);
+        w.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_WORKS}${w._imgFilename}`;
         delete w._imgData; delete w._imgFilename;
       }
     }
 
-    // 4. site.json
-    status.textContent='site.json kaydediliyor...';
-    const cleanSite=JSON.parse(JSON.stringify(site));
-    await ghPut(SITE_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(cleanSite,null,2)))), 'content: site.json güncellendi');
+    // site.json
+    st.textContent='site.json kaydediliyor...';
+    await ghPut(SITE_PATH, toB64(JSON.stringify(site,null,2)), 'content: site.json güncellendi');
 
-    // 5. works.json
-    status.textContent='works.json kaydediliyor...';
-    const cleanWorks=works.map(({_imgData,_imgFilename,...w})=>w);
-    await ghPut(WORKS_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(cleanWorks,null,2)))), 'content: works.json güncellendi');
+    // works.json
+    st.textContent='works.json kaydediliyor...';
+    const cw=works.map(({_imgData,_imgFilename,...w})=>w);
+    await ghPut(WORKS_PATH, toB64(JSON.stringify(cw,null,2)), 'content: works.json güncellendi');
 
-    // 6. videos.json
-    status.textContent='videos.json kaydediliyor...';
-    await ghPut(VIDEOS_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(videos,null,2)))), 'content: videos.json güncellendi');
+    // videos.json
+    st.textContent='videos.json kaydediliyor...';
+    await ghPut(VIDEOS_PATH, toB64(JSON.stringify(videos,null,2)), 'content: videos.json güncellendi');
 
-    status.textContent='✓ Yayınlandı!';
+    st.textContent='✓ Yayınlandı!';
     dirty=false;
-    setTimeout(()=>{ document.getElementById('save-bar').classList.remove('visible'); status.textContent=''; },3000);
+    setTimeout(()=>{ document.getElementById('save-bar').classList.remove('visible'); st.textContent=''; },3000);
 
-  }catch(err){
-    status.textContent='✗ Hata: '+err.message;
-    console.error(err);
-  }
+  }catch(err){ st.textContent='✗ Hata: '+err.message; console.error(err); }
+
   btn.disabled=false; btn.textContent='Yayınla →';
 }
 
-async function uploadPendingImages(obj, status){
-  for(const page of ['hakkimizda','sentez','cozumler']){
-    const hero=(site[page]||{}).hero||{};
-    if(hero._imgData&&hero._imgFilename){
-      status.textContent='Hero görseli: '+page;
-      await ghPut(MEDIA_PATH+hero._imgFilename, hero._imgData, 'media: '+hero._imgFilename);
-      hero.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_PATH}${hero._imgFilename}`;
-      delete hero._imgData; delete hero._imgFilename;
-    }
-  }
-}
+function toB64(str){ return btoa(unescape(encodeURIComponent(str))); }
 
 async function ghPut(path, b64, message){
   const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`;
   const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
   let sha=null;
-  try{ const r=await fetch(url+'?ref='+GH.branch,{headers}); if(r.ok){const d=await r.json();sha=d.sha;} }catch{}
-  const body={message,content:b64,branch:GH.branch};
-  if(sha) body.sha=sha;
+  try{ const r=await fetch(url+'?ref='+GH.branch,{headers}); if(r.ok){ const d=await r.json(); sha=d.sha; } }catch{}
+  const body={message,content:b64,branch:GH.branch}; if(sha) body.sha=sha;
   const r=await fetch(url,{method:'PUT',headers,body:JSON.stringify(body)});
   if(!r.ok){ const e=await r.json(); throw new Error(e.message||'HTTP '+r.status); }
   return r.json();
 }
 
-function sanitize(str){
-  return str.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-}
+function sanitize(s){ return s.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
 </script>
 </body>
 </html>
