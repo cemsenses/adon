@@ -148,6 +148,7 @@
     </button>
   </nav>
 
+  <main id="cms-main">
   <!-- ─── Hero ─── -->
   <section class="hero" id="block-hero" data-cms-block="hero">
 
@@ -447,6 +448,8 @@
     </div>
   </section>
 
+  </main><!-- #cms-main -->
+
   <!-- ─── Footer ─── -->
   <footer>
     <div class="footer-grid">
@@ -556,7 +559,7 @@
         html('cms-cta-body', cta.body);
         if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
 
-        // Carousel
+        // Carousel — güncelle ve yeniden initialize et
         var carouselCards = document.getElementById('cms-carousel-cards');
         if(carouselCards && idx.carousel && idx.carousel.length){
           carouselCards.innerHTML='';
@@ -566,6 +569,8 @@
             li.setAttribute('aria-label', item.label||'');
             carouselCards.appendChild(li);
           });
+          // GSAP carousel yeni li'leri görsün
+          if(typeof window.reinitCarousel === 'function') window.reinitCarousel();
         }
 
         // Homepage video grid
@@ -594,10 +599,9 @@
 
   function applyBlocks(blocks){
     if(!blocks.length) return;
-    var firstEl = document.getElementById(blocks[0].id);
-    if(!firstEl) return;
-    var parent = firstEl.parentElement;
-    // Sırala ve görünürlük uygula
+    // Her zaman #cms-main içinde çalış — footer ve nav dokunulmaz
+    var parent = document.getElementById('cms-main');
+    if(!parent) return;
     var frag = document.createDocumentFragment();
     blocks.forEach(function(b){
       var el = document.getElementById(b.id);
