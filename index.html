@@ -248,38 +248,89 @@
   </section>
 
   <!-- ─── Logo Ticker ─── -->
-  <section class="logo-ticker-section" id="block-logos" data-cms-block="logos">
-    <div class="logo-ticker-track">
-      <!-- Set 1: 1.Beymen 2.İşBankası 3.Tekirdağ 4.Kärcher 5.FilliB. 6.ŞOK 7.Yatsan 8.LastikPark 9.UrbanCare 10.Pastel 11.Tresan 12.Imprimé 13.Purest -->
-      <img src="media/logos/logo-beymen.png"     loading="lazy" alt="Beymen"               class="logo-ticker-item">
-      <img src="media/logos/logo-isbank.png"     loading="lazy" alt="İş Bankası"           class="logo-ticker-item">
-      <img src="media/logos/logo-tekirdağ.png"   loading="lazy" alt="Tekirdağ Rakısı"      class="logo-ticker-item">
-      <img src="media/logos/logo-karcher.png"    loading="lazy" alt="Kärcher"              class="logo-ticker-item">
-      <img src="media/logos/logo-filliboya.png"  loading="lazy" alt="Filli Boya"           class="logo-ticker-item">
-      <img src="media/logos/logo-sok.png"        loading="lazy" alt="ŞOK"                  class="logo-ticker-item">
-      <img src="media/logos/logo-yatsan.png"     loading="lazy" alt="Yatsan"               class="logo-ticker-item">
-      <img src="media/logos/logo-lastikpark.png" loading="lazy" alt="LastikPark"           class="logo-ticker-item">
-      <img src="media/logos/logo-urbancare.png"  loading="lazy" alt="Urban Care"           class="logo-ticker-item">
-      <img src="media/logos/logo-pastel.png"     loading="lazy" alt="Pastel Cosmetics"     class="logo-ticker-item">
-      <img src="media/logos/logo-tresan.png"     loading="lazy" alt="Tresan"               class="logo-ticker-item">
-      <img src="media/logos/logo-imprime.png"    loading="lazy" alt="Imprimé"              class="logo-ticker-item">
-      <img src="media/logos/logo-purest.png"     loading="lazy" alt="The Purest Solutions" class="logo-ticker-item">
-      <!-- Set 2 (seamless loop) -->
-      <img src="media/logos/logo-beymen.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-isbank.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-tekirdağ.png"   loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-karcher.png"    loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-filliboya.png"  loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-sok.png"        loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-yatsan.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-lastikpark.png" loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-urbancare.png"  loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-pastel.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-tresan.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-imprime.png"    loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-      <img src="media/logos/logo-purest.png"     loading="lazy" alt="" aria-hidden="true"  class="logo-ticker-item">
-    </div>
+  <section id="block-logos" data-cms-block="logos" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;overflow:hidden;">
+    <div id="logo-ticker-outer" style="overflow:hidden;width:100%;"></div>
   </section>
+
+  <script>
+  (function(){
+    var logos = [
+      {src:'media/logos/logo-beymen.png',    alt:'Beymen'},
+      {src:'media/logos/logo-isbank.png',    alt:'İş Bankası'},
+      {src:'media/logos/logo-tekirdağ.png',  alt:'Tekirdağ Rakısı'},
+      {src:'media/logos/logo-karcher.png',   alt:'Kärcher'},
+      {src:'media/logos/logo-filliboya.png', alt:'Filli Boya'},
+      {src:'media/logos/logo-sok.png',       alt:'ŞOK'},
+      {src:'media/logos/logo-yatsan.png',    alt:'Yatsan'},
+      {src:'media/logos/logo-lastikpark.png',alt:'LastikPark'},
+      {src:'media/logos/logo-urbancare.png', alt:'Urban Care'},
+      {src:'media/logos/logo-pastel.png',    alt:'Pastel Cosmetics'},
+      {src:'media/logos/logo-tresan.png',    alt:'Tresan'},
+      {src:'media/logos/logo-imprime.png',   alt:'Imprimé'},
+      {src:'media/logos/logo-purest.png',    alt:'The Purest Solutions'}
+    ];
+
+    var GAP = 80; // px arası mesafe
+    var SPEED = 0.6; // px/frame
+
+    var outer = document.getElementById('logo-ticker-outer');
+
+    // İç track — position:relative, yüksekliği imajlardan otomatik gelecek
+    var track = document.createElement('div');
+    track.style.cssText = 'display:flex;align-items:center;position:relative;width:max-content;';
+    outer.appendChild(track);
+
+    // Tüm imajları yükle, gerçek boyutlarını al, sonra başlat
+    var loaded = 0;
+    var items = []; // {img, w, h}
+
+    logos.forEach(function(logo){
+      var img = new Image();
+      img.alt = logo.alt;
+      img.style.cssText = 'height:44px;width:auto;display:block;filter:grayscale(100%) opacity(0.55);flex-shrink:0;';
+      img.onload = function(){
+        loaded++;
+        if(loaded === logos.length) startTicker();
+      };
+      img.onerror = function(){ loaded++; if(loaded===logos.length) startTicker(); };
+      img.src = logo.src;
+      track.appendChild(img);
+      items.push(img);
+    });
+
+    function startTicker(){
+      // Her imajın gerçek genişliğini ölç
+      var widths = items.map(function(img){ return img.offsetWidth; });
+      var totalW = widths.reduce(function(a,b){return a+b;},0) + GAP * logos.length;
+
+      // Gap'leri margin-right olarak uygula
+      items.forEach(function(img){ img.style.marginRight = GAP + 'px'; });
+
+      // Track'i klonla (kesintisiz döngü için)
+      var clone = track.cloneNode(true);
+      outer.appendChild(clone);
+
+      // Outer genişliğini ayarla, track'i flex ile yan yana koy
+      outer.style.cssText = 'overflow:hidden;width:100%;display:flex;';
+
+      var pos = 0;
+      var paused = false;
+      outer.addEventListener('mouseenter', function(){ paused = true; });
+      outer.addEventListener('mouseleave', function(){ paused = false; });
+
+      function tick(){
+        if(!paused){
+          pos += SPEED;
+          if(pos >= totalW) pos -= totalW;
+          track.style.transform = 'translateX(-'+pos+'px)';
+          clone.style.transform = 'translateX(-'+pos+'px)';
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  })();
+  </script>
 
   <!-- ─── Homepage Video Grid ─── -->
   <section id="block-homepage-videos" data-cms-block="homepage-videos" style="display:none;">
