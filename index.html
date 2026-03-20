@@ -249,69 +249,75 @@
 
   <!-- ─── Logo Ticker ─── -->
   <section id="block-logos" data-cms-block="logos" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;overflow:hidden;">
-    <div id="logo-ticker-wrap" style="white-space:nowrap;overflow:hidden;width:100%;"></div>
+    <div class="logo-ticker-outer">
+      <div class="logo-ticker-track">
+        <!-- SET 1 -->
+        <img src="media/logos/logo-beymen.png"    alt="Beymen"           class="logo-ticker-img">
+        <img src="media/logos/logo-isbank.png"    alt="İş Bankası"       class="logo-ticker-img">
+        <img src="media/logos/logo-tekirdağ.png"  alt="Tekirdağ Rakısı"  class="logo-ticker-img">
+        <img src="media/logos/logo-karcher.png"   alt="Kärcher"          class="logo-ticker-img">
+        <img src="media/logos/logo-filliboya.png" alt="Filli Boya"       class="logo-ticker-img">
+        <img src="media/logos/logo-sok.png"       alt="ŞOK"              class="logo-ticker-img">
+        <img src="media/logos/logo-yatsan.png"    alt="Yatsan"           class="logo-ticker-img">
+        <img src="media/logos/logo-lastikpark.png" alt="LastikPark"      class="logo-ticker-img">
+        <img src="media/logos/logo-urbancare.png" alt="Urban Care"       class="logo-ticker-img">
+        <img src="media/logos/logo-pastel.png"    alt="Pastel Cosmetics" class="logo-ticker-img">
+        <img src="media/logos/logo-tresan.png"    alt="Tresan"           class="logo-ticker-img">
+        <img src="media/logos/logo-imprime.png"   alt="Imprimé"          class="logo-ticker-img">
+        <img src="media/logos/logo-purest.png"    alt="The Purest Solutions" class="logo-ticker-img">
+        <!-- SET 2 — tam kopya, kesintisiz döngü için -->
+        <img src="media/logos/logo-beymen.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-isbank.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-tekirdağ.png"  alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-karcher.png"   alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-filliboya.png" alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-sok.png"       alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-yatsan.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-lastikpark.png" alt="" class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-urbancare.png" alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-pastel.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-tresan.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-imprime.png"   alt=""  class="logo-ticker-img" aria-hidden="true">
+        <img src="media/logos/logo-purest.png"    alt=""  class="logo-ticker-img" aria-hidden="true">
+      </div>
+    </div>
   </section>
 
   <style>
-  @keyframes adon-ticker {
+  .logo-ticker-outer {
+    overflow: hidden;
+    width: 100%;
+    /* kenar soluklaşma maskesi */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .logo-ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    width: max-content;
+    animation: logo-scroll 35s linear infinite;
+    will-change: transform;
+  }
+  .logo-ticker-outer:hover .logo-ticker-track {
+    animation-play-state: paused;
+  }
+  @keyframes logo-scroll {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
-  #logo-ticker-inner {
-    display: inline-flex;
-    align-items: center;
-    gap: 80px;
-    animation: adon-ticker 30s linear infinite;
-    will-change: transform;
-  }
-  #logo-ticker-inner img {
+  .logo-ticker-img {
     height: 44px;
     width: auto;
-    display: block;
     flex-shrink: 0;
+    display: block;
     filter: grayscale(100%) opacity(0.55);
+    transition: opacity 0.3s;
   }
-  #logo-ticker-wrap:hover #logo-ticker-inner {
-    animation-play-state: paused;
+  .logo-ticker-outer:hover .logo-ticker-img {
+    filter: grayscale(100%) opacity(0.75);
   }
   </style>
-
-  <script>
-  (function(){
-    var srcs = [
-      'media/logos/logo-beymen.png',
-      'media/logos/logo-isbank.png',
-      'media/logos/logo-tekirdağ.png',
-      'media/logos/logo-karcher.png',
-      'media/logos/logo-filliboya.png',
-      'media/logos/logo-sok.png',
-      'media/logos/logo-yatsan.png',
-      'media/logos/logo-lastikpark.png',
-      'media/logos/logo-urbancare.png',
-      'media/logos/logo-pastel.png',
-      'media/logos/logo-tresan.png',
-      'media/logos/logo-imprime.png',
-      'media/logos/logo-purest.png'
-    ];
-
-    // Tek bir inner div — içinde logolar iki kez (seamless loop için)
-    var inner = document.createElement('div');
-    inner.id = 'logo-ticker-inner';
-
-    // İki set ekle — animasyon tam ortada sıfırlanır, kesintisiz
-    [0,1].forEach(function(){
-      srcs.forEach(function(src){
-        var img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        img.loading = 'lazy';
-        inner.appendChild(img);
-      });
-    });
-
-    document.getElementById('logo-ticker-wrap').appendChild(inner);
-  })();
-  </script>
 
   <!-- ─── Homepage Video Grid ─── -->
   <section id="block-homepage-videos" data-cms-block="homepage-videos" style="display:none;">
