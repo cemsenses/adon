@@ -129,7 +129,7 @@
 
     <main id="main-content">
     <!-- ─── Page Header ─── -->
-    <header class="page-header page-header--photo">
+    <header class="page-header page-header--photo" id="block-hero" data-cms-block="hero">
         <div class="page-header-bg">
             <img src="media/hero/cozumler.jpg" alt="Çözümler">
             <div class="page-header-overlay"></div>
@@ -149,7 +149,7 @@
     </header>
 
     <!-- ─── By Craft ─── -->
-    <section class="section">
+    <section class="section" id="block-craft" data-cms-block="craft">
         <p class="section-label" id="cms-craft-label">Zanaat'a Göre Çözümler</p>
         <h2 class="section-headline reveal" id="cms-craft-headline">Alanları<br>Seçin.</h2>
 
@@ -180,7 +180,7 @@
     </section>
 
     <!-- ─── By Objective ─── -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section" style="padding-top: 0;" id="block-objective" data-cms-block="objective">
         <p class="section-label" id="cms-obj-label">Hedefe Göre Çözümler</p>
         <h2 class="section-headline reveal" id="cms-obj-headline">Ne Elde<br>Etmelisiniz?</h2>
 
@@ -220,7 +220,7 @@
     </section>
 
     <!-- ─── Why Adon ─── -->
-    <section class="why-adon-section">
+    <section class="why-adon-section" id="block-why" data-cms-block="why">
         <video class="why-adon-video" autoplay muted loop playsinline>
             <source src="media/ayi.mp4" type="video/mp4">
         </video>
@@ -242,7 +242,7 @@
     </section>
 
     <!-- ─── Marquee ─── -->
-    <div class="marquee-section">
+    <div class="marquee-section" id="block-marquee" data-cms-block="marquee">
         <div class="marquee-track">
             <span>DÖNÜŞÜM, İŞLEM DEĞİL</span>
             <span>KALİTEDEN ÖDÜN YOK</span>
@@ -333,9 +333,18 @@
           brHTML('cms-why-headline', (cz.whyAdon||{}).headline);
           html('cms-why-body', (cz.whyAdon||{}).body);
           if((cz.whyAdon||{}).ctaText){ var a=document.getElementById('cms-why-cta'); if(a) a.textContent=cz.whyAdon.ctaText; }
+          applyBlocks((s.cozumler||{})._blocks||[]);
         })
         .catch(function(){});
     })();
+    function applyBlocks(blocks){
+      if(!blocks.length) return;
+      var firstEl=document.getElementById(blocks[0].id); if(!firstEl) return;
+      var parent=firstEl.parentElement;
+      var frag=document.createDocumentFragment();
+      blocks.forEach(function(b){ var el=document.getElementById(b.id); if(!el) return; el.style.display=(b.visible===false)?'none':''; frag.appendChild(el); });
+      parent.appendChild(frag);
+    }
     </script>
 </body>
 
