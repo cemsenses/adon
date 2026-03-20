@@ -1,9 +1,9 @@
 {
   "index": {
     "hero": {
-      "textTop": "30 Yıllık Uzmanlık",
+      "textTop": "30 Yıllık Uzmanlık.",
       "textBottom": "Yapay Zekanın Hızıyla.",
-      "desc": "<p>Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız </p><p><em>yeni nesil bir yaratıcı fabrika.</em></p><p> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.</p>",
+      "desc": "Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.",
       "video": "media/Dubaco-demo.mp4",
       "ctaText": "Sentezi İş Başında Görün →",
       "ctaLink": "sentez.html"
@@ -20,7 +20,7 @@
     "fark": {
       "label": "Farkımız",
       "headline": "Bir Araç Size\nHız Verir.\nBiz Sonuç\n<em>Teslim Ederiz.</em>",
-      "body": "<p>Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.</p>",
+      "body": "Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.",
       "ctaText": "Sentezi İnceleyin →",
       "ctaLink": "sentez.html"
     },
@@ -110,7 +110,7 @@
     "cta": {
       "label": "Ölçülebilir İş Etkisi",
       "headline": "Prodüksiyon Hızından\nFazlası:\n<em>Ölçülebilir</em>\nSonuçlar.",
-      "body": "<p>Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.</p>",
+      "body": "Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.",
       "ctaText": "Konuşmaya Başlayalım →",
       "ctaLink": "iletisim.html"
     },
@@ -135,20 +135,72 @@
           "answer": "Çoğu yapay zeka prodüksiyon servisi ya saf otomasyon araçları sunar ya da uzmanlıktan yoksundur. ADON Studio, on yıllık sahadan edinilmiş zanaatkâr birikimini yapay zeka altyapısıyla birleştiren tek hibrit stüdyodur. Sonuç; kör otomasyon değil, insan gözetiminde marka uyumlu, sinematik kalitede içerik üretimidir."
         }
       ]
-    }
+    },
+    "_blocks": [
+      {
+        "id": "block-hero",
+        "label": "Hero",
+        "visible": true
+      },
+      {
+        "id": "block-marquee",
+        "label": "Marquee Şeridi",
+        "visible": true
+      },
+      {
+        "id": "block-fark",
+        "label": "Farkımız",
+        "visible": true
+      },
+      {
+        "id": "block-pillars",
+        "label": "5 Temel Taş",
+        "visible": true
+      },
+      {
+        "id": "block-logos",
+        "label": "Marka Logoları",
+        "visible": true
+      },
+      {
+        "id": "block-carousel",
+        "label": "Galeri Carousel",
+        "visible": true
+      },
+      {
+        "id": "block-speed",
+        "label": "Hız & Ölçek",
+        "visible": true
+      },
+      {
+        "id": "block-solutions",
+        "label": "Çözümler",
+        "visible": true
+      },
+      {
+        "id": "block-cta",
+        "label": "CTA Banner",
+        "visible": true
+      },
+      {
+        "id": "block-faq",
+        "label": "SSS",
+        "visible": true
+      }
+    ]
   },
   "hakkimizda": {
     "hero": {
       "image": "media/hero/adon-hakkında.jpg",
       "label": "Hakkımızda",
       "title": "Yaratıcılık Bir Ekipten,\nZeka Bir Sistemden\n<em>Gelmez.</em>",
-      "sub": "<p>Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz.</p>"
+      "sub": "Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz."
     },
     "manifesto": {
       "label": "Ekip Bölümü",
       "headline": "Tek Bir Beden,\nDört Uzmanlık\nAlanı.",
-      "body1": "<p>Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.</p>",
-      "body2": "<p>Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır.</p>"
+      "body1": "Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.",
+      "body2": "Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır."
     },
     "teamLabel": "Ekibimiz",
     "team": [
@@ -201,19 +253,51 @@
       "headline": "Ekibimizle\nTanışın.\n<em>Projenizi Konuşalım.</em>",
       "ctaText": "→ Görüşme Talep Edin",
       "ctaLink": "iletisim.html"
-    }
+    },
+    "_blocks": [
+      {
+        "id": "block-hero",
+        "label": "Hero",
+        "visible": true
+      },
+      {
+        "id": "block-manifesto",
+        "label": "Manifesto",
+        "visible": true
+      },
+      {
+        "id": "block-team",
+        "label": "Ekip",
+        "visible": true
+      },
+      {
+        "id": "block-dna",
+        "label": "DNA — 3 Fark",
+        "visible": true
+      },
+      {
+        "id": "block-marquee",
+        "label": "Marquee Şeridi",
+        "visible": true
+      },
+      {
+        "id": "block-cta",
+        "label": "CTA",
+        "visible": true
+      }
+    ]
   },
   "sentez": {
     "hero": {
       "image": "media/hero/sentez.jpg",
       "label": "Sentez",
       "title": "Yapay Zekayı\nKullanmıyoruz.\n<em>Yönetiyoruz.</em>",
-      "sub": "<p>Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik.</p>"
+      "sub": "Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik."
     },
     "framework": {
       "label": "5 Adımlı Sentez",
       "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>",
-      "body": "<p>Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü.</p>"
+      "body": "Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü."
     },
     "steps": [
       {
@@ -303,14 +387,41 @@
       "headline": "Metodolojimizi\nProjenize Nasıl\n<em>Uygulayabileceğimizi</em>\nKonuşalım.",
       "ctaText": "→ Görüşme Rezervasyonu Alın",
       "ctaLink": "iletisim.html"
-    }
+    },
+    "_blocks": [
+      {
+        "id": "block-hero",
+        "label": "Hero",
+        "visible": true
+      },
+      {
+        "id": "block-framework",
+        "label": "5 Adımlı Sentez",
+        "visible": true
+      },
+      {
+        "id": "block-why",
+        "label": "Neden İşe Yarar",
+        "visible": true
+      },
+      {
+        "id": "block-marquee",
+        "label": "Marquee Şeridi",
+        "visible": true
+      },
+      {
+        "id": "block-cta",
+        "label": "CTA",
+        "visible": true
+      }
+    ]
   },
   "cozumler": {
     "hero": {
       "image": "media/hero/cozumler.jpg",
       "label": "Çözümler",
       "title": "İş Dönüşümü\nİçin Tasarlanmış\n<em>Çözümler.</em>",
-      "sub": "<p>Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin.</p>"
+      "sub": "Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin."
     },
     "byCraft": {
       "label": "Zanaat'a Göre Çözümler",
@@ -360,16 +471,43 @@
     "whyAdon": {
       "label": "Neden ADON",
       "headline": "Sadece\nOperatör\nDeğil,\n<em>Sonuç</em>\nSatıyoruz.",
-      "body": "<p>Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.</p>",
+      "body": "Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.",
       "video": "media/ayi.mp4",
       "ctaText": "Çözümünüzü Keşfedin →",
       "ctaLink": "iletisim.html"
-    }
+    },
+    "_blocks": [
+      {
+        "id": "block-hero",
+        "label": "Hero",
+        "visible": true
+      },
+      {
+        "id": "block-craft",
+        "label": "Zanaat Çözümleri",
+        "visible": true
+      },
+      {
+        "id": "block-objective",
+        "label": "Hedef Çözümleri",
+        "visible": true
+      },
+      {
+        "id": "block-why",
+        "label": "Neden ADON",
+        "visible": true
+      },
+      {
+        "id": "block-marquee",
+        "label": "Marquee Şeridi",
+        "visible": true
+      }
+    ]
   },
   "iletisim": {
     "hero": {
       "title": "Projenizi\nKonuşalım.\n<em>Dönüşümü başlatalım.</em>",
-      "desc": "<p>Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim.</p>"
+      "desc": "Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim."
     },
     "info": {
       "istanbul": "LOTUS Halaskargazi Cd. 38-66",
@@ -377,6 +515,18 @@
       "adana": "Adana",
       "adanaSub": "Türkiye",
       "email": "info@adon.com.tr"
-    }
+    },
+    "_blocks": [
+      {
+        "id": "block-hero",
+        "label": "Hero",
+        "visible": true
+      },
+      {
+        "id": "block-form",
+        "label": "İletişim Formu",
+        "visible": true
+      }
+    ]
   }
 }
