@@ -3,7 +3,7 @@
     "hero": {
       "textTop": "30 Yıllık Uzmanlık.",
       "textBottom": "Yapay Zekanın Hızıyla.",
-      "desc": "<p>Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız </p><p><em>yeni nesil bir yaratıcı fabrika.</em></p><p> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.</p>",
+      "desc": "Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.",
       "video": "media/Dubaco-demo.mp4",
       "ctaText": "Sentezi İş Başında Görün →",
       "ctaLink": "sentez.html"
@@ -20,7 +20,7 @@
     "fark": {
       "label": "Farkımız",
       "headline": "Bir Araç Size\nHız Verir.\nBiz Sonuç\n<em>Teslim Ederiz.</em>",
-      "body": "<p>Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.</p>",
+      "body": "Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.",
       "ctaText": "Sentezi İnceleyin →",
       "ctaLink": "sentez.html"
     },
@@ -110,7 +110,7 @@
     "cta": {
       "label": "Ölçülebilir İş Etkisi",
       "headline": "Prodüksiyon Hızından\nFazlası:\n<em>Ölçülebilir</em>\nSonuçlar.",
-      "body": "<p>Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.</p>",
+      "body": "Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.",
       "ctaText": "Konuşmaya Başlayalım →",
       "ctaLink": "iletisim.html"
     },
@@ -163,6 +163,11 @@
         "visible": true
       },
       {
+        "id": "block-homepage-videos",
+        "label": "Ana Sayfa Video Grid",
+        "visible": true
+      },
+      {
         "id": "block-carousel",
         "label": "Galeri Carousel",
         "visible": true
@@ -185,40 +190,45 @@
       {
         "id": "block-faq",
         "label": "SSS",
-        "visible": false
+        "visible": true
       }
     ],
     "carousel": [
       {
-        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/carousel/carousel-1774026237781.jpg",
-        "label": "Görsel"
-      }
-    ],
-    "homepageVideos": [
-      {
-        "id": 1774026299825,
-        "title": "Video",
-        "url": "https://youtu.be/CftGxGi2Kac"
+        "image": "media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg",
+        "label": "Ürün Fotoğrafçılığı"
       },
       {
-        "id": 1774026312928,
-        "title": "Video",
-        "url": "https://youtu.be/izB67_KUsis"
+        "image": "media/carousel-02.png",
+        "label": "Moda Editoryal"
+      },
+      {
+        "image": "media/carousel-03.png",
+        "label": "Mimari Fotoğrafçılık"
+      },
+      {
+        "image": "media/carousel-04.png",
+        "label": "Yemek Fotoğrafçılığı"
+      },
+      {
+        "image": "media/carousel-05.png",
+        "label": "Saat Fotoğrafçılığı"
       }
-    ]
+    ],
+    "homepageVideos": []
   },
   "hakkimizda": {
     "hero": {
       "image": "media/hero/adon-hakkında.jpg",
       "label": "Hakkımızda",
       "title": "Yaratıcılık Bir Ekipten,\nZeka Bir Sistemden\n<em>Gelmez.</em>",
-      "sub": "<p>Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz.</p>"
+      "sub": "Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz."
     },
     "manifesto": {
       "label": "Ekip Bölümü",
       "headline": "Tek Bir Beden,\nDört Uzmanlık\nAlanı.",
-      "body1": "<p>Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.</p>",
-      "body2": "<p>Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır.</p>"
+      "body1": "Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.",
+      "body2": "Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır."
     },
     "teamLabel": "Ekibimiz",
     "team": [
@@ -310,12 +320,12 @@
       "image": "media/hero/sentez.jpg",
       "label": "Sentez",
       "title": "Yapay Zekayı\nKullanmıyoruz.\n<em>Yönetiyoruz.</em>",
-      "sub": "<p>Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik.</p>"
+      "sub": "Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik."
     },
     "framework": {
       "label": "5 Adımlı Sentez",
       "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>",
-      "body": "<p>Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü.</p>"
+      "body": "Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü."
     },
     "steps": [
       {
@@ -439,7 +449,7 @@
       "image": "media/hero/cozumler.jpg",
       "label": "Çözümler",
       "title": "İş Dönüşümü\nİçin Tasarlanmış\n<em>Çözümler.</em>",
-      "sub": "<p>Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin.</p>"
+      "sub": "Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin."
     },
     "byCraft": {
       "label": "Zanaat'a Göre Çözümler",
@@ -489,7 +499,7 @@
     "whyAdon": {
       "label": "Neden ADON",
       "headline": "Sadece\nOperatör\nDeğil,\n<em>Sonuç</em>\nSatıyoruz.",
-      "body": "<p>Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.</p>",
+      "body": "Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.",
       "video": "media/ayi.mp4",
       "ctaText": "Çözümünüzü Keşfedin →",
       "ctaLink": "iletisim.html"
@@ -525,7 +535,7 @@
   "iletisim": {
     "hero": {
       "title": "Projenizi\nKonuşalım.\n<em>Dönüşümü başlatalım.</em>",
-      "desc": "<p>Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim.</p>"
+      "desc": "Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim."
     },
     "info": {
       "istanbul": "LOTUS Halaskargazi Cd. 38-66",
