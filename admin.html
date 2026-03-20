@@ -176,6 +176,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 
     <!-- SIDEBAR -->
     <nav class="cms-sidebar">
+      <div class="sidebar-label">Global</div>
+      <button class="sidebar-btn" data-panel="nav">Navigasyon</button>
+      <button class="sidebar-btn" data-panel="footer-edit">Footer</button>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-label">Sayfalar</div>
       <button class="sidebar-btn active" data-panel="index">Ana Sayfa</button>
       <button class="sidebar-btn" data-panel="hakkimizda">Hakkımızda</button>
@@ -193,6 +197,53 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
     </nav>
 
     <main class="cms-main">
+
+      <!-- ══════════════════════════════
+           NAVİGASYON
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-nav">
+        <div class="panel-title">Navigasyon</div>
+        <div class="panel-sub">Tüm sayfalardaki üst menü · site.json → nav</div>
+
+        <div class="section-divider">MENÜ LİNKLERİ</div>
+        <div id="nav-links-list"></div>
+
+        <div class="section-divider">CTA BUTONU</div>
+        <div class="frow">
+          <div class="fg">
+            <div class="fl">Buton Metni</div>
+            <input class="fi" id="nav-cta-label" type="text" placeholder="İletişim"/>
+          </div>
+          <div class="fg">
+            <div class="fl">Bağlantı</div>
+            <input class="fi" id="nav-cta-href" type="text" placeholder="iletisim.html"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           FOOTER
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-footer-edit">
+        <div class="panel-title">Footer</div>
+        <div class="panel-sub">Tüm sayfalardaki alt alan · site.json → footer</div>
+
+        <div class="section-divider">İÇERİK</div>
+        <div class="fg">
+          <div class="fl">Tagline (kısa açıklama)</div>
+          <div class="rw" id="footer-tagline-q"></div>
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <div class="fl">Telif Hakkı Metni</div>
+            <input class="fi" id="footer-copyright-fi" type="text" placeholder="© 2026 ADON Studio..."/>
+          </div>
+          <div class="fg">
+            <div class="fl">Lokasyonlar (alt bar)</div>
+            <input class="fi" id="footer-locations-fi" type="text" placeholder="İstanbul · Milan · ..."/>
+          </div>
+        </div>
+      </div>
 
       <!-- ══════════════════════════════
            ANA SAYFA
@@ -852,6 +903,10 @@ function populate(){
   bind('il-ada-sub',   v=>il.info.adanaSub=v);
   bind('il-email',     v=>il.info.email=v);
 
+  // ── NAV & FOOTER ──
+  populateNav();
+  populateFooter();
+
   // ── PORTFÖY ──
   renderWorks(); initWorkAdd();
   renderVideos(); initVideoAdd();
@@ -1232,6 +1287,57 @@ function renderBlockManager(containerId, pageKey){
     row.appendChild(actions);
     container.appendChild(row);
   });
+}
+
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
+function populateNav(){
+  if(!site.nav) site.nav={ links:[], ctaLabel:'İletişim', ctaHref:'iletisim.html' };
+  const nav = site.nav;
+
+  // Nav link listesi
+  const list = document.getElementById('nav-links-list');
+  if(list){
+    list.innerHTML='';
+    (nav.links||[]).forEach(function(lnk, i){
+      const row = document.createElement('div');
+      row.className='frow'; row.style.marginBottom='12px';
+      row.innerHTML=`
+        <div class="fg"><div class="fl">Menü ${i+1} — Başlık</div>
+          <input class="fi" value="${lnk.label||''}" data-ni="${i}" data-nk="label" type="text"/></div>
+        <div class="fg"><div class="fl">Bağlantı</div>
+          <input class="fi" value="${lnk.href||''}" data-ni="${i}" data-nk="href" type="text"/></div>`;
+      list.appendChild(row);
+    });
+    list.querySelectorAll('input[data-ni]').forEach(inp=>{
+      inp.oninput=()=>{
+        const i=+inp.dataset.ni, k=inp.dataset.nk;
+        nav.links[i][k]=inp.value; setDirty();
+      };
+    });
+  }
+
+  // CTA
+  const ctaLbl = document.getElementById('nav-cta-label');
+  const ctaHrf = document.getElementById('nav-cta-href');
+  if(ctaLbl){ ctaLbl.value=nav.ctaLabel||''; ctaLbl.oninput=()=>{ nav.ctaLabel=ctaLbl.value; setDirty(); }; }
+  if(ctaHrf){ ctaHrf.value=nav.ctaHref||''; ctaHrf.oninput=()=>{ nav.ctaHref=ctaHrf.value; setDirty(); }; }
+}
+
+// ══════════════════════════════════════════
+// FOOTER
+// ══════════════════════════════════════════
+function populateFooter(){
+  if(!site.footer) site.footer={};
+  const ft = site.footer;
+
+  makeQ('footer-tagline-q', ft.tagline, v=>{ ft.tagline=v; setDirty(); });
+
+  const cp = document.getElementById('footer-copyright-fi');
+  const lc = document.getElementById('footer-locations-fi');
+  if(cp){ cp.value=ft.copyright||''; cp.oninput=()=>{ ft.copyright=cp.value; setDirty(); }; }
+  if(lc){ lc.value=ft.locations||''; lc.oninput=()=>{ ft.locations=lc.value; setDirty(); }; }
 }
 
 // Populate sonunda block manager'ları render et
