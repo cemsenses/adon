@@ -160,12 +160,12 @@
     </div>
 
     <h1 class="hero-headlines" id="main-content">
-      <div class="hero-text-top">30 Yıllık Uzmanlık.</div>
-      <div class="hero-text-bottom">Yapay Zekanın Hızıyla.</div>
+      <div class="hero-text-top" id="cms-hero-top">30 Yıllık Uzmanlık.</div>
+      <div class="hero-text-bottom" id="cms-hero-bottom">Yapay Zekanın Hızıyla.</div>
     </h1>
 
     <div class="hero-middle">
-      <div class="hero-desc reveal reveal-delay-2">
+      <div class="hero-desc reveal reveal-delay-2" id="cms-hero-desc">
         Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.
       </div>
       <a href="sentez.html" class="btn reveal reveal-delay-3">Sentezi İş Başında Görün →</a>
@@ -196,8 +196,8 @@
   <section class="section">
     <div class="split">
       <div>
-        <p class="section-label">Farkımız</p>
-        <h2 class="section-headline reveal">
+        <p class="section-label" id="cms-fark-label">Farkımız</p>
+        <h2 class="section-headline reveal" id="cms-fark-headline">
           Bir Araç Size<br>
           Hız Verir.<br>
           Biz Sonuç<br>
@@ -205,7 +205,7 @@
         </h2>
       </div>
       <div>
-        <p class="section-body reveal reveal-delay-2">
+        <p class="section-body reveal reveal-delay-2" id="cms-fark-body">
           Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.
         </p>
         <br><br>
@@ -216,8 +216,8 @@
 
   <!-- ─── 5 Pillars ─── -->
   <section class="section-sm" style="padding-top: 0;">
-    <p class="section-label" style="padding: 0 32px; margin-bottom: 0;">Dönüşümün Beş Temel Taşı</p>
-    <div class="pillars stagger" style="margin-top: 32px;">
+    <p class="section-label" style="padding: 0 32px; margin-bottom: 0;" id="cms-pillars-label">Dönüşümün Beş Temel Taşı</p>
+    <div class="pillars stagger" style="margin-top: 32px;" id="cms-pillars">
       <div class="pillar">
         <div class="pillar-num">01</div>
         <div class="pillar-title">Zanaat ve Kalite Güvencesi</div>
@@ -318,7 +318,7 @@
     <div class="speed-teaser-inner">
       <div class="speed-teaser-left">
         <p class="section-label">Hız &amp; Ölçek</p>
-        <h2 class="speed-teaser-title reveal">
+        <h2 class="speed-teaser-title reveal" id="cms-speed-headline">
           Tek Bir Hikayeyi,<br>
           Binlerce Kusursuz<br>
           <em>Deneyime</em><br>
@@ -326,7 +326,7 @@
         </h2>
         <a href="hiz-ve-olcek.html" class="btn reveal reveal-delay-2">Detayları Keşfet →</a>
       </div>
-      <div class="speed-teaser-right reveal reveal-delay-1">
+      <div class="speed-teaser-right reveal reveal-delay-1" id="cms-speed-cards">
         <div class="speed-teaser-card">
           <div class="stc-num">01</div>
           <div class="stc-title">Yüksek Hızda A/b Testi</div>
@@ -383,17 +383,17 @@
 
   <!-- ─── CTA Banner ─── -->
   <section class="cta-section reveal">
-    <p class="section-label" style="justify-content: center;">Ölçülebilir İş Etkisi</p>
-    <h2 class="cta-title">
+    <p class="section-label" style="justify-content: center;" id="cms-cta-label">Ölçülebilir İş Etkisi</p>
+    <h2 class="cta-title" id="cms-cta-headline">
       Prodüksiyon Hızından<br>
       Fazlası:<br>
       <em>Ölçülebilir</em><br>
       Sonuçlar.
     </h2>
-    <p style="font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7;">
+    <p style="font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7;" id="cms-cta-body">
       Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.
     </p>
-    <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">Konuşmaya Başlayalım →</a>
+    <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;" id="cms-cta-btn">Konuşmaya Başlayalım →</a>
   </section>
 
   <!-- ─── AEO: Conversational Content Block ─── -->
@@ -492,6 +492,68 @@
       <span>İstanbul · Milan · Londra · Lefkoşa</span>
     </div>
   </footer>
+
+  <!-- CMS Loader -->
+  <script>
+  (function(){
+    function txt(id,v){ var el=document.getElementById(id); if(el&&v) el.textContent=v; }
+    function html(id,v){ var el=document.getElementById(id); if(el&&v) el.innerHTML=v; }
+    function brHTML(id,v){ if(!v) return; var el=document.getElementById(id); if(!el) return; el.innerHTML=v.replace(/\n/g,'<br>'); }
+
+    fetch('site.json?v='+Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(s){
+        var idx=s.index||{};
+        var hero=idx.hero||{};
+        var fark=idx.fark||{};
+        var st=idx.speedTeaser||{};
+        var cta=idx.cta||{};
+
+        // Hero
+        txt('cms-hero-top', hero.textTop);
+        txt('cms-hero-bottom', hero.textBottom);
+        html('cms-hero-desc', hero.desc);
+
+        // Fark
+        txt('cms-fark-label', fark.label);
+        brHTML('cms-fark-headline', fark.headline);
+        html('cms-fark-body', fark.body);
+
+        // Pillars label
+        txt('cms-pillars-label', idx.pillarsLabel);
+
+        // Pillars — yeniden render
+        var pc=document.getElementById('cms-pillars');
+        if(pc && idx.pillars && idx.pillars.length){
+          pc.innerHTML='';
+          idx.pillars.forEach(function(p){
+            var d=document.createElement('div'); d.className='pillar';
+            d.innerHTML='<div class="pillar-num">'+p.num+'</div><div class="pillar-title">'+p.title+'</div><div class="pillar-body">'+p.body+'</div>';
+            pc.appendChild(d);
+          });
+        }
+
+        // Speed teaser
+        brHTML('cms-speed-headline', st.headline);
+        var sc=document.getElementById('cms-speed-cards');
+        if(sc && st.cards && st.cards.length){
+          sc.innerHTML='';
+          st.cards.forEach(function(c){
+            var d=document.createElement('div'); d.className='speed-teaser-card';
+            d.innerHTML='<div class="stc-num">'+c.num+'</div><div class="stc-title">'+c.title+'</div><div class="stc-body">'+c.body+'</div>';
+            sc.appendChild(d);
+          });
+        }
+
+        // CTA
+        txt('cms-cta-label', cta.label);
+        brHTML('cms-cta-headline', cta.headline);
+        html('cms-cta-body', cta.body);
+        if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
+      })
+      .catch(function(){});
+  })();
+  </script>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
