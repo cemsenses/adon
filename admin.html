@@ -1029,6 +1029,16 @@ function sanitize(s){ return s.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g
 // ══════════════════════════════════════════
 // CAROUSEL
 // ══════════════════════════════════════════
+function carouselThumbSrc(item){
+  // Yeni eklendi, base64 preview var
+  if(item._previewB64) return 'data:image/jpeg;base64,'+item._previewB64;
+  // Relative path — GitHub raw URL'ye çevir
+  if(item.image && !item.image.startsWith('http')){
+    return `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${item.image}`;
+  }
+  return item.image||'';
+}
+
 function renderCarousel(){
   const list = document.getElementById('admin-carousel-list');
   if(!list) return;
@@ -1037,11 +1047,11 @@ function renderCarousel(){
   if(!items.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz görsel eklenmedi.</p>'; return; }
   items.forEach((item, i)=>{
     const row = document.createElement('div');
-    row.className = 'vc'; // video card stilini reuse ediyoruz
-    row.style.cssText = 'display:flex;gap:12px;padding:12px;background:#fff;border:1px solid var(--border);align-items:center;';
+    row.style.cssText = 'display:flex;gap:12px;padding:12px;background:#fff;border:1px solid var(--border);align-items:center;margin-bottom:2px;';
     const thumb = document.createElement('div');
-    thumb.style.cssText = 'width:140px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden;';
-    thumb.innerHTML = `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" alt="${item.label||''}"/>`;
+    thumb.style.cssText = 'width:120px;flex-shrink:0;aspect-ratio:4/3;background:#eee;overflow:hidden;';
+    const thumbSrc = carouselThumbSrc(item);
+    thumb.innerHTML = thumbSrc ? `<img src="${thumbSrc}" style="width:100%;height:100%;object-fit:cover;" alt="${item.label||''}"/>` : '';
     const info = document.createElement('div');
     info.style.flex='1';
     info.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:4px">${item.label||'Etiketsiz'}</div><div style="font-size:11px;color:var(--muted);word-break:break-all">${item.image}</div>`;
@@ -1067,21 +1077,36 @@ function renderCarousel(){
 }
 
 function initCarouselAdd(){
-  let pendingB64=null, pendingFn=null;
-  initImg('cr-iw','cr-if',(file,b64)=>{
-    pendingB64=b64;
-    pendingFn='carousel-'+Date.now()+'.'+file.name.split('.').pop();
-  });
+  let pendingB64=null, pendingFn=null, pendingPreview=null;
+
+  function bindCarouselImg(){
+    initImg('cr-iw','cr-if',(file,b64)=>{
+      pendingB64=b64;
+      pendingFn='carousel-'+Date.now()+'.'+file.name.split('.').pop();
+      pendingPreview=b64;
+    });
+  }
+  bindCarouselImg();
+
   document.getElementById('btn-add-carousel').onclick=()=>{
     if(!pendingB64){ alert('Lütfen bir görsel seçin.'); return; }
     const label = document.getElementById('cr-label').value.trim()||'Görsel';
     if(!site.index.carousel) site.index.carousel=[];
-    const item = { image: 'media/carousel/'+pendingFn, label, _imgData: pendingB64, _imgFilename: pendingFn };
+    const item = {
+      image: 'media/carousel/'+pendingFn,
+      label,
+      _imgData: pendingB64,
+      _imgFilename: pendingFn,
+      _previewB64: pendingPreview
+    };
     site.index.carousel.push(item);
     setDirty(); renderCarousel();
     document.getElementById('cr-label').value='';
-    pendingB64=null; pendingFn=null;
-    resetIw('cr-iw','cr-if');
+    pendingB64=null; pendingFn=null; pendingPreview=null;
+    // Input'u sıfırla ve yeni event bağla
+    const wrap=document.getElementById('cr-iw');
+    wrap.innerHTML=`<input type="file" id="cr-if" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Görsel seç</div></div>`;
+    bindCarouselImg();
   };
 }
 
