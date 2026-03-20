@@ -394,6 +394,11 @@
     });
   }
 
+  // CMS'ten erişilebilir global reinit
+  window.reinitCarousel = function() {
+    initGSAPCarousel();
+  };
+
   // ─── Init ────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     initLenis();
