@@ -201,6 +201,70 @@
         .lightbox-close:hover {
             color: #fff;
         }
+
+        /* ── Tab Switcher ── */
+        .tab-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 48px 32px 40px;
+        }
+        .tab-btn {
+            font-family: var(--font-headline);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 16px 48px;
+            border: 2px solid var(--border);
+            color: var(--muted);
+            background: none;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .tab-btn.active {
+            border-color: var(--black);
+            background: var(--black);
+            color: var(--white);
+        }
+        .tab-btn:hover:not(.active) {
+            border-color: #999;
+            color: var(--black);
+        }
+
+        /* ── Video Grid ── */
+        .video-section { display: none; }
+        .video-section.active { display: block; }
+        .image-section { display: block; }
+        .image-section.hidden { display: none; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            padding: 0;
+        }
+        .video-item {
+            aspect-ratio: 16/9;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .video-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.15);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -246,18 +310,24 @@
         </div>
     </header>
 
-    <!-- ─── Filter Bar ─── -->
-    <div class="filter-bar">
-        <button class="filter-btn active">Tümü</button>
-        <button class="filter-btn">Video Prodüksiyon</button>
-        <button class="filter-btn">Ürün &amp; E-Ticaret</button>
-        <button class="filter-btn">Moda &amp; Yaşam Tarzı</button>
-        <button class="filter-btn">Kurumsal</button>
+    <!-- ─── Tab Switcher ─── -->
+    <div class="tab-switcher">
+        <button class="tab-btn active" id="tab-gorsel">Görsel</button>
+        <button class="tab-btn" id="tab-video">Video</button>
     </div>
 
-    <!-- ─── Works Grid ─── -->
-    <div class="works-grid" style="gap: 2px;" id="works-grid">
-        <!-- Dinamik olarak works.json'dan yüklenir -->
+    <!-- ─── Görsel Bölümü ─── -->
+    <div class="image-section" id="image-section">
+        <div class="works-grid" style="gap: 2px;" id="works-grid">
+            <!-- Dinamik olarak works.json'dan yüklenir -->
+        </div>
+    </div>
+
+    <!-- ─── Video Bölümü ─── -->
+    <div class="video-section" id="video-section">
+        <div class="video-grid" id="video-grid">
+            <!-- Dinamik olarak videos.json'dan yüklenir -->
+        </div>
     </div>
 
     <!-- ─── Lightbox ─── -->
@@ -361,23 +431,41 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script>
-        // ── Works Grid: works.json'dan yükle ──
-        const grid = document.getElementById('works-grid');
-        const lightbox = document.getElementById('lightbox');
+        // ── Elementler ──
+        const grid          = document.getElementById('works-grid');
+        const videoGrid     = document.getElementById('video-grid');
+        const imageSection  = document.getElementById('image-section');
+        const videoSection  = document.getElementById('video-section');
+        const tabGorsel     = document.getElementById('tab-gorsel');
+        const tabVideo      = document.getElementById('tab-video');
+        const lightbox      = document.getElementById('lightbox');
         const lightboxImgWrap = document.getElementById('lightbox-img-wrap');
         const lightboxTitle = document.getElementById('lightbox-title');
-        const lightboxCat = document.getElementById('lightbox-cat');
+        const lightboxCat   = document.getElementById('lightbox-cat');
         const lightboxClose = document.getElementById('lightbox-close');
 
+        // ── Tab geçişi ──
+        tabGorsel.addEventListener('click', () => {
+            tabGorsel.classList.add('active');
+            tabVideo.classList.remove('active');
+            imageSection.classList.remove('hidden');
+            videoSection.classList.remove('active');
+        });
+        tabVideo.addEventListener('click', () => {
+            tabVideo.classList.add('active');
+            tabGorsel.classList.remove('active');
+            videoSection.classList.add('active');
+            imageSection.classList.add('hidden');
+        });
+
+        // ── Görsel Grid ──
         let allWorks = [];
-        let activeFilter = 'Tümü';
 
         function renderGrid(works) {
             grid.innerHTML = '';
             works.forEach(work => {
                 const item = document.createElement('div');
                 item.className = 'work-item';
-                item.dataset.category = work.category;
 
                 const bg = document.createElement('div');
                 bg.className = 'work-item-bg';
@@ -388,7 +476,6 @@
                     img.src = work.image;
                     img.alt = work.title;
                     img.loading = 'lazy';
-                    bg.innerHTML = '';
                     bg.appendChild(img);
                 } else {
                     bg.textContent = work.placeholder;
@@ -403,23 +490,21 @@
 
                 item.appendChild(bg);
                 item.appendChild(overlay);
-
-                // Lightbox aç
                 item.addEventListener('click', () => openLightbox(work));
                 grid.appendChild(item);
             });
         }
 
+        // ── Lightbox ──
         function openLightbox(work) {
             lightboxImgWrap.innerHTML = '';
+            lightboxImgWrap.style.background = work.color;
             if (work.image) {
                 const img = document.createElement('img');
                 img.src = work.image;
                 img.alt = work.title;
-                lightboxImgWrap.style.background = work.color;
                 lightboxImgWrap.appendChild(img);
             } else {
-                lightboxImgWrap.style.background = work.color;
                 const ph = document.createElement('div');
                 ph.className = 'lightbox-placeholder';
                 ph.textContent = work.placeholder;
@@ -437,36 +522,50 @@
         }
 
         lightboxClose.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-        });
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-        // ── Filter ──
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                activeFilter = btn.textContent.trim();
-                const filtered = activeFilter === 'Tümü'
-                    ? allWorks
-                    : allWorks.filter(w => w.category === activeFilter);
-                renderGrid(filtered);
+        // ── Video Grid ──
+        function getYouTubeId(url) {
+            const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
+            return m ? m[1] : null;
+        }
+
+        function renderVideoGrid(videos) {
+            videoGrid.innerHTML = '';
+            // Çift sayıya tamamla (boş alan için)
+            const items = [...videos];
+            if (items.length % 2 !== 0) items.push(null);
+
+            items.forEach(v => {
+                const cell = document.createElement('div');
+                cell.className = 'video-item';
+                if (v) {
+                    const id = getYouTubeId(v.url);
+                    if (id) {
+                        cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen loading="lazy"></iframe>`;
+                    }
+                } else {
+                    cell.classList.add('video-empty');
+                }
+                videoGrid.appendChild(cell);
             });
-        });
+        }
 
         // ── Yükle ──
         fetch('works.json?v=' + Date.now())
             .then(r => r.json())
-            .then(data => {
-                allWorks = data;
-                renderGrid(allWorks);
-            })
+            .then(data => { allWorks = data; renderGrid(allWorks); })
             .catch(() => {
                 grid.innerHTML = '<p style="color:var(--muted);padding:32px;">İçerik yüklenemedi.</p>';
             });
+
+        fetch('videos.json?v=' + Date.now())
+            .then(r => r.json())
+            .then(data => renderVideoGrid(data))
+            .catch(() => { videoGrid.innerHTML = ''; });
     </script>
 </body>
 
