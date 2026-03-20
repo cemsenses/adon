@@ -153,12 +153,12 @@
         </div>
         <div class="page-header-content">
             <p class="page-header-label">Sentez</p>
-            <h1 class="page-header-title">
+            <h1 class="page-header-title" id="cms-hero-title">
                 Yapay Zekayı<br>
                 Kullanmıyoruz.<br>
                 <em>Yönetiyoruz.</em>
             </h1>
-            <p class="page-header-sub">
+            <p class="page-header-sub" id="cms-hero-sub">
                 Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden
                 bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen
                 bir metodoloji geliştirdik.
@@ -170,13 +170,13 @@
     <section class="section">
         <p class="section-label">5 Adımlı Sentez</p>
         <div class="split" style="margin-bottom: 80px;">
-            <h2 class="section-headline reveal">
+            <h2 class="section-headline reveal" id="cms-fw-headline">
                 Bu Metodoloji,<br>
                 5 Adımda<br>
                 <em>İşliyor.</em>
             </h2>
             <div>
-                <p class="section-body reveal reveal-delay-1">
+                <p class="section-body reveal reveal-delay-1" id="cms-fw-body">
                     Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen
                     bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü.
                 </p>
@@ -255,7 +255,7 @@
     <!-- ─── Why It Works ─── -->
     <section class="section" style="padding-top: 0;">
         <p class="section-label">Neden İşe Yarar</p>
-        <h2 class="section-headline reveal">Farkın<br>Kaynağı.</h2>
+        <h2 class="section-headline reveal" id="cms-why-headline">Farkın<br>Kaynağı.</h2>
         <div class="pillars stagger" style="margin-top: 48px;">
             <div class="pillar">
                 <div class="pillar-num">Hız</div>
@@ -313,13 +313,13 @@
     <!-- ─── CTA ─── -->
     <section class="cta-section reveal">
         <p class="section-label" style="justify-content: center;">Metodolojimiz</p>
-        <h2 class="cta-title">
+        <h2 class="cta-title" id="cms-cta-headline">
             Metodolojimizi<br>
             Projenize Nasıl<br>
             <em>Uygulayabileceğimizi</em><br>
             Konuşalım.
         </h2>
-        <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">→ Görüşme Rezervasyonu Alın</a>
+        <a href="iletisim.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;" id="cms-cta-btn">→ Görüşme Rezervasyonu Alın</a>
     </section>
 
     </main>
@@ -375,6 +375,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script>
+    (function(){
+      function html(id,v){ var el=document.getElementById(id); if(el&&v) el.innerHTML=v; }
+      function brHTML(id,v){ if(!v) return; var el=document.getElementById(id); if(!el) return; el.innerHTML=v.replace(/\n/g,'<br>'); }
+      fetch('site.json?v='+Date.now())
+        .then(function(r){ return r.json(); })
+        .then(function(s){
+          var sz=s.sentez||{};
+          brHTML('cms-hero-title', (sz.hero||{}).title);
+          html('cms-hero-sub', (sz.hero||{}).sub);
+          if((sz.hero||{}).image){ var bg=document.querySelector('.page-header-bg img'); if(bg) bg.src=sz.hero.image; }
+          brHTML('cms-fw-headline', (sz.framework||{}).headline);
+          html('cms-fw-body', (sz.framework||{}).body);
+          brHTML('cms-why-headline', (sz.whyItWorks||{}).headline);
+          brHTML('cms-cta-headline', (sz.cta||{}).headline);
+          if((sz.cta||{}).ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=sz.cta.ctaText; }
+        })
+        .catch(function(){});
+    })();
+    </script>
 </body>
 
 </html>
