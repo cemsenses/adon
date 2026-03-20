@@ -219,6 +219,57 @@
         .btn-add:hover { opacity: 0.75; }
         .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* ── Admin Tabs ── */
+        .admin-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 32px;
+        }
+        .admin-tab {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.2s;
+        }
+        .admin-tab.active {
+            color: var(--black);
+            border-bottom-color: var(--black);
+        }
+        .admin-tab-panel { display: none; }
+        .admin-tab-panel.active { display: block; }
+
+        /* ── Video Card ── */
+        .video-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            align-items: flex-start;
+        }
+        .video-card-thumb {
+            width: 160px;
+            flex-shrink: 0;
+            aspect-ratio: 16/9;
+            background: #111;
+            overflow: hidden;
+        }
+        .video-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .video-card-info { flex: 1; }
+        .video-card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+        .video-card-url { font-size: 11px; color: var(--muted); word-break: break-all; }
+        .video-list { display: flex; flex-direction: column; gap: 12px; }
+
         /* ── Works List ── */
         .works-list {
             display: grid;
@@ -419,53 +470,81 @@
 
     <div class="admin-body">
 
-        <!-- Yeni Çalışma Ekle -->
-        <div class="add-form">
-            <div class="add-form-title">Yeni Çalışma Ekle</div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Başlık</label>
-                    <input class="form-input" type="text" id="f-title" placeholder="Proje adı" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Kategori</label>
-                    <select class="form-select" id="f-cat">
-                        <option value="Video Prodüksiyon">Video Prodüksiyon</option>
-                        <option value="Ürün & E-Ticaret">Ürün & E-Ticaret</option>
-                        <option value="Moda & Yaşam Tarzı">Moda & Yaşam Tarzı</option>
-                        <option value="Kurumsal">Kurumsal</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Yıl</label>
-                    <input class="form-input" type="text" id="f-year" placeholder="2025" value="2025" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Kısa Kod (placeholder)</label>
-                    <input class="form-input" type="text" id="f-placeholder" placeholder="AB" maxlength="3" />
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-bottom:16px;">
-                <label class="form-label">Görsel</label>
-                <div class="upload-area" id="upload-area">
-                    <input type="file" id="f-image" accept="image/*" />
-                    <div class="upload-icon">🖼</div>
-                    <div class="upload-label">Görsel seçin veya sürükleyin<br><small style="font-size:11px;color:#bbb;">JPG, PNG, WEBP · Önerilen: 4:5 oran</small></div>
-                    <img class="upload-preview" id="upload-preview" alt="Önizleme" />
-                </div>
-            </div>
-
-            <button class="btn-add" id="btn-add">Ekle →</button>
+        <!-- Admin Tabs -->
+        <div class="admin-tabs">
+            <button class="admin-tab active" id="atab-gorsel">Görsel</button>
+            <button class="admin-tab" id="atab-video">Video</button>
         </div>
 
-        <!-- Mevcut Çalışmalar -->
-        <div class="admin-section-title">Mevcut Çalışmalar</div>
-        <div class="works-list" id="admin-works-list"></div>
+        <!-- ── Görsel Paneli ── -->
+        <div class="admin-tab-panel active" id="apanel-gorsel">
+            <div class="add-form">
+                <div class="add-form-title">Yeni Görsel Ekle</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Başlık</label>
+                        <input class="form-input" type="text" id="f-title" placeholder="Proje adı" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <select class="form-select" id="f-cat">
+                            <option value="Video Prodüksiyon">Video Prodüksiyon</option>
+                            <option value="Ürün & E-Ticaret">Ürün & E-Ticaret</option>
+                            <option value="Moda & Yaşam Tarzı">Moda & Yaşam Tarzı</option>
+                            <option value="Kurumsal">Kurumsal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Yıl</label>
+                        <input class="form-input" type="text" id="f-year" placeholder="2025" value="2025" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kısa Kod (placeholder)</label>
+                        <input class="form-input" type="text" id="f-placeholder" placeholder="AB" maxlength="3" />
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label class="form-label">Görsel</label>
+                    <div class="upload-area" id="upload-area">
+                        <input type="file" id="f-image" accept="image/*" />
+                        <div class="upload-icon">🖼</div>
+                        <div class="upload-label">Görsel seçin veya sürükleyin<br><small style="font-size:11px;color:#bbb;">JPG, PNG, WEBP · Önerilen: 4:5 oran</small></div>
+                        <img class="upload-preview" id="upload-preview" alt="Önizleme" />
+                    </div>
+                </div>
+
+                <button class="btn-add" id="btn-add">Ekle →</button>
+            </div>
+
+            <div class="admin-section-title">Mevcut Görseller</div>
+            <div class="works-list" id="admin-works-list"></div>
+        </div>
+
+        <!-- ── Video Paneli ── -->
+        <div class="admin-tab-panel" id="apanel-video">
+            <div class="add-form">
+                <div class="add-form-title">Yeni Video Ekle</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Başlık</label>
+                        <input class="form-input" type="text" id="v-title" placeholder="Video başlığı" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">YouTube URL</label>
+                        <input class="form-input" type="text" id="v-url" placeholder="https://youtube.com/watch?v=..." />
+                    </div>
+                </div>
+                <button class="btn-add" id="btn-add-video">Ekle →</button>
+            </div>
+
+            <div class="admin-section-title">Mevcut Videolar</div>
+            <div class="video-list" id="admin-video-list"></div>
+        </div>
 
     </div>
 
@@ -500,12 +579,28 @@ const GITHUB_OWNER   = 'cemsenses';
 const GITHUB_REPO    = 'adon';
 const GITHUB_BRANCH  = 'main';
 const WORKS_PATH     = 'works.json';
+const VIDEOS_PATH    = 'videos.json';
 const MEDIA_PATH     = 'media/works/';
 
 // ── State ──
 let works = [];
+let videos = [];
 let dirty = false;
 let ghToken = localStorage.getItem('adon_gh_token') || '';
+
+// ── Admin Tab Geçişi ──
+document.getElementById('atab-gorsel').addEventListener('click', () => {
+    document.getElementById('atab-gorsel').classList.add('active');
+    document.getElementById('atab-video').classList.remove('active');
+    document.getElementById('apanel-gorsel').classList.add('active');
+    document.getElementById('apanel-video').classList.remove('active');
+});
+document.getElementById('atab-video').addEventListener('click', () => {
+    document.getElementById('atab-video').classList.add('active');
+    document.getElementById('atab-gorsel').classList.remove('active');
+    document.getElementById('apanel-video').classList.add('active');
+    document.getElementById('apanel-gorsel').classList.remove('active');
+});
 
 // ── Login ──
 document.getElementById('pw-btn').addEventListener('click', tryLogin);
@@ -526,16 +621,83 @@ document.getElementById('btn-logout').addEventListener('click', () => {
     location.reload();
 });
 
-// ── Load works.json ──
+// ── Load ──
 async function loadWorks() {
     try {
         const r = await fetch('works.json?v=' + Date.now());
         works = await r.json();
-    } catch {
-        works = [];
-    }
+    } catch { works = []; }
     renderAdminList();
+
+    try {
+        const r2 = await fetch('videos.json?v=' + Date.now());
+        videos = await r2.json();
+    } catch { videos = []; }
+    renderVideoList();
 }
+
+// ── Render Video List ──
+function getYouTubeId(url) {
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
+    return m ? m[1] : null;
+}
+
+function renderVideoList() {
+    const list = document.getElementById('admin-video-list');
+    list.innerHTML = '';
+    if (!videos.length) {
+        list.innerHTML = '<p style="color:var(--muted);font-size:13px;">Henüz video eklenmedi.</p>';
+        return;
+    }
+    videos.forEach((v, i) => {
+        const id = getYouTubeId(v.url);
+        const thumb = id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+            <div class="video-card-thumb">${thumb ? `<img src="${thumb}" alt="${v.title}" />` : ''}</div>
+            <div class="video-card-info">
+                <div class="video-card-title">${v.title || 'Başlıksız'}</div>
+                <div class="video-card-url">${v.url}</div>
+                <div class="work-card-actions" style="padding:8px 0 0;">
+                    <button class="btn-delete" data-vi="${i}">Sil</button>
+                    ${i > 0 ? `<button class="btn-move" data-vi="${i}" data-vdir="-1">↑</button>` : ''}
+                    ${i < videos.length-1 ? `<button class="btn-move" data-vi="${i}" data-vdir="1">↓</button>` : ''}
+                </div>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+
+    list.querySelectorAll('.btn-delete[data-vi]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (confirm('Bu videoyu silmek istiyor musunuz?')) {
+                videos.splice(parseInt(btn.dataset.vi), 1);
+                setDirty(); renderVideoList();
+            }
+        });
+    });
+    list.querySelectorAll('.btn-move[data-vdir]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const i = parseInt(btn.dataset.vi);
+            const d = parseInt(btn.dataset.vdir);
+            [videos[i], videos[i+d]] = [videos[i+d], videos[i]];
+            setDirty(); renderVideoList();
+        });
+    });
+}
+
+// ── Add Video ──
+document.getElementById('btn-add-video').addEventListener('click', () => {
+    const title = document.getElementById('v-title').value.trim();
+    const url   = document.getElementById('v-url').value.trim();
+    if (!url) { alert('YouTube URL gerekli.'); return; }
+    if (!getYouTubeId(url)) { alert('Geçerli bir YouTube URL girin.'); return; }
+    videos.push({ id: Date.now(), title: title || 'Video', url });
+    setDirty(); renderVideoList();
+    document.getElementById('v-title').value = '';
+    document.getElementById('v-url').value = '';
+});
 
 // ── Render admin list ──
 function renderAdminList() {
@@ -754,6 +916,11 @@ async function publishChanges() {
         const cleanWorks = works.map(({ _fileData, _fileName, ...w }) => w);
         const jsonB64 = btoa(unescape(encodeURIComponent(JSON.stringify(cleanWorks, null, 2))));
         await githubPutFile(WORKS_PATH, jsonB64, 'content: works.json güncellendi');
+
+        // 3. videos.json'u güncelle
+        status.textContent = 'videos.json güncelleniyor...';
+        const videosB64 = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
+        await githubPutFile(VIDEOS_PATH, videosB64, 'content: videos.json güncellendi');
 
         status.textContent = '✓ Yayınlandı!';
         dirty = false;
