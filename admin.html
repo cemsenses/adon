@@ -183,6 +183,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <button class="sidebar-btn" data-panel="cozumler">Çözümler</button>
       <button class="sidebar-btn" data-panel="iletisim">İletişim</button>
       <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Ana Sayfa Medya</div>
+      <button class="sidebar-btn" data-panel="carousel">Carousel</button>
+      <button class="sidebar-btn" data-panel="hp-videos">Video Grid</button>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-label">Portföy</div>
       <button class="sidebar-btn" data-panel="p-gorsel">Görseller</button>
       <button class="sidebar-btn" data-panel="p-video">Videolar</button>
@@ -384,6 +388,61 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
           <div class="fg"><div class="fl">Adana Alt Metin</div><input class="fi" id="il-ada-sub" type="text"></div>
         </div>
         <div class="fg"><div class="fl">E-Posta</div><input class="fi" id="il-email" type="text"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           CAROUSEL
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-carousel">
+        <div class="panel-title">Ana Sayfa Carousel</div>
+        <div class="panel-sub">index.html · site.json → index.carousel</div>
+
+        <div class="add-box">
+          <div class="add-box-title">Yeni Görsel Ekle</div>
+          <div class="frow">
+            <div class="fg">
+              <div class="fl">Etiket <span class="fh">Alt metin / açıklama</span></div>
+              <input class="fi" id="cr-label" type="text" placeholder="Ürün Fotoğrafçılığı"/>
+            </div>
+            <div class="fg">
+              <div class="fl">Görsel <span class="fh">Serbest oran, tam ekran görünür</span></div>
+              <div class="iw" id="cr-iw" style="min-height:48px">
+                <input type="file" id="cr-if" accept="image/*"/>
+                <div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Görsel seç</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="bsm primary" id="btn-add-carousel" style="margin-top:4px">Ekle →</button>
+        </div>
+
+        <div class="admin-section-title" style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Mevcut Carousel Görselleri</div>
+        <div id="admin-carousel-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           ANA SAYFA VIDEO GRID
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-hp-videos">
+        <div class="panel-title">Ana Sayfa Video Grid</div>
+        <div class="panel-sub">index.html · site.json → index.homepageVideos · Carousel'in üstünde, 16:9 ikişerli sıra</div>
+
+        <div class="add-box">
+          <div class="add-box-title">Yeni Video Ekle</div>
+          <div class="frow">
+            <div class="fg">
+              <div class="fl">Başlık</div>
+              <input class="fi" id="hv-title" type="text" placeholder="Video başlığı (opsiyonel)"/>
+            </div>
+            <div class="fg">
+              <div class="fl">YouTube URL</div>
+              <input class="fi" id="hv-url" type="text" placeholder="https://youtube.com/watch?v=..."/>
+            </div>
+          </div>
+          <button class="bsm primary" id="btn-add-hpvideo" style="margin-top:4px">Ekle →</button>
+        </div>
+
+        <div class="admin-section-title" style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Mevcut Videolar</div>
+        <div class="vl" id="admin-hp-videos"></div>
       </div>
 
       <!-- ══════════════════════════════
@@ -799,6 +858,12 @@ function populate(){
 
   // ── BLOK YÖNETİCİLERİ ──
   initBlockManagers();
+
+  // ── CAROUSEL & HP VIDEOS ──
+  renderCarousel();
+  initCarouselAdd();
+  renderHpVideos();
+  initHpVideoAdd();
 }
 
 // ══════════════════════════════════════════
@@ -904,6 +969,16 @@ async function publish(){
       }
     }
 
+    // Carousel görselleri
+    for(const item of (site.index||{}).carousel||[]){
+      if(item._imgData&&item._imgFilename){
+        st.textContent='Carousel görsel: '+item.label;
+        await ghPut('media/carousel/'+item._imgFilename, item._imgData, 'media: carousel/'+item._imgFilename);
+        item.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/media/carousel/${item._imgFilename}`;
+        delete item._imgData; delete item._imgFilename;
+      }
+    }
+
     // Works görselleri
     for(const w of works){
       if(w._imgData&&w._imgFilename){
@@ -950,6 +1025,108 @@ async function ghPut(path, b64, message){
 }
 
 function sanitize(s){ return s.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
+
+// ══════════════════════════════════════════
+// CAROUSEL
+// ══════════════════════════════════════════
+function renderCarousel(){
+  const list = document.getElementById('admin-carousel-list');
+  if(!list) return;
+  const items = (site.index||{}).carousel||[];
+  list.innerHTML = '';
+  if(!items.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz görsel eklenmedi.</p>'; return; }
+  items.forEach((item, i)=>{
+    const row = document.createElement('div');
+    row.className = 'vc'; // video card stilini reuse ediyoruz
+    row.style.cssText = 'display:flex;gap:12px;padding:12px;background:#fff;border:1px solid var(--border);align-items:center;';
+    const thumb = document.createElement('div');
+    thumb.style.cssText = 'width:140px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden;';
+    thumb.innerHTML = `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" alt="${item.label||''}"/>`;
+    const info = document.createElement('div');
+    info.style.flex='1';
+    info.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:4px">${item.label||'Etiketsiz'}</div><div style="font-size:11px;color:var(--muted);word-break:break-all">${item.image}</div>`;
+    const acts = document.createElement('div');
+    acts.style.cssText='display:flex;gap:6px;flex-shrink:0;';
+    acts.innerHTML = `
+      ${i>0?`<button class="bsm" data-cui="${i}" data-cud="-1">↑</button>`:''}
+      ${i<items.length-1?`<button class="bsm" data-cui="${i}" data-cud="1">↓</button>`:''}
+      <button class="bsm danger" data-cdel="${i}">Sil</button>`;
+    row.appendChild(thumb); row.appendChild(info); row.appendChild(acts);
+    list.appendChild(row);
+  });
+  list.querySelectorAll('[data-cud]').forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.cui, d=+btn.dataset.cud;
+      [items[i],items[i+d]]=[items[i+d],items[i]];
+      setDirty(); renderCarousel();
+    };
+  });
+  list.querySelectorAll('[data-cdel]').forEach(btn=>{
+    btn.onclick=()=>{ if(confirm('Bu görseli carousel\'den silmek istiyor musunuz?')){ items.splice(+btn.dataset.cdel,1); setDirty(); renderCarousel(); } };
+  });
+}
+
+function initCarouselAdd(){
+  let pendingB64=null, pendingFn=null;
+  initImg('cr-iw','cr-if',(file,b64)=>{
+    pendingB64=b64;
+    pendingFn='carousel-'+Date.now()+'.'+file.name.split('.').pop();
+  });
+  document.getElementById('btn-add-carousel').onclick=()=>{
+    if(!pendingB64){ alert('Lütfen bir görsel seçin.'); return; }
+    const label = document.getElementById('cr-label').value.trim()||'Görsel';
+    if(!site.index.carousel) site.index.carousel=[];
+    const item = { image: 'media/carousel/'+pendingFn, label, _imgData: pendingB64, _imgFilename: pendingFn };
+    site.index.carousel.push(item);
+    setDirty(); renderCarousel();
+    document.getElementById('cr-label').value='';
+    pendingB64=null; pendingFn=null;
+    resetIw('cr-iw','cr-if');
+  };
+}
+
+// ══════════════════════════════════════════
+// HOMEPAGE VIDEO GRID
+// ══════════════════════════════════════════
+function renderHpVideos(){
+  const list = document.getElementById('admin-hp-videos');
+  if(!list) return;
+  const videos = (site.index||{}).homepageVideos||[];
+  list.innerHTML='';
+  if(!videos.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi. Videolar carousel\'in üstünde 2\'li sıra halinde gösterilir.</p>'; return; }
+  videos.forEach((v,i)=>{
+    const id=ytId(v.url); const thumb=id?`https://img.youtube.com/vi/${id}/mqdefault.jpg`:'';
+    const card=document.createElement('div'); card.className='vc';
+    card.innerHTML=`
+      <div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div>
+      <div class="vi-info">
+        <div class="vi-title">${v.title||'Başlıksız'}</div>
+        <div class="vi-url">${v.url}</div>
+        <div class="vi-actions">
+          <button class="bsm danger" data-hvdel="${i}">Sil</button>
+          ${i>0?`<button class="bsm" data-hvup="${i}">↑</button>`:''}
+          ${i<videos.length-1?`<button class="bsm" data-hvdn="${i}">↓</button>`:''}
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('[data-hvdel]').forEach(b=>{ b.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+b.dataset.hvdel,1); setDirty(); renderHpVideos(); } }; });
+  list.querySelectorAll('[data-hvup]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.hvup; [videos[i],videos[i-1]]=[videos[i-1],videos[i]]; setDirty(); renderHpVideos(); }; });
+  list.querySelectorAll('[data-hvdn]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.hvdn; [videos[i],videos[i+1]]=[videos[i+1],videos[i]]; setDirty(); renderHpVideos(); }; });
+}
+
+function initHpVideoAdd(){
+  document.getElementById('btn-add-hpvideo').onclick=()=>{
+    const url=document.getElementById('hv-url').value.trim();
+    if(!url){ alert('YouTube URL gerekli'); return; }
+    if(!ytId(url)){ alert('Geçerli YouTube URL girin'); return; }
+    if(!site.index.homepageVideos) site.index.homepageVideos=[];
+    site.index.homepageVideos.push({id:Date.now(), title:document.getElementById('hv-title').value.trim()||'Video', url});
+    setDirty(); renderHpVideos();
+    document.getElementById('hv-title').value='';
+    document.getElementById('hv-url').value='';
+  };
+}
 
 // ══════════════════════════════════════════
 // BLOCK MANAGER
