@@ -215,33 +215,65 @@
     </div>
   </section>
 
-  <!-- ─── Logo Grid ─── -->
-  <section id="block-logos" data-cms-block="logos" style="padding: 60px 32px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg);">
-    <div style="max-width: 960px; margin: 0 auto;">
-      <!-- Satır 1 -->
-      <div style="display: flex; align-items: center; justify-content: center; gap: 64px; margin-bottom: 48px; flex-wrap: wrap;">
-        <img src="media/logos/01-beymen.jpg"           alt="Beymen"          style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/02-is-bankasi.jpg"       alt="İş Bankası"      style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/03-tekirdag-raki.jpg"    alt="Tekirdağ Rakısı" style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-      </div>
-      <!-- Satır 2 -->
-      <div style="display: flex; align-items: center; justify-content: center; gap: 48px; margin-bottom: 48px; flex-wrap: wrap;">
-        <img src="media/logos/04-karcher.jpg"          alt="Kärcher"     style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/05-filli-boya.jpg"       alt="Filli Boya"  style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/06-sok-market.jpg"       alt="ŞOK"         style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/07-yatsan.jpg"           alt="Yatsan"      style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/08-lastikpark.jpg"       alt="LastikPark"  style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-      </div>
-      <!-- Satır 3 -->
-      <div style="display: flex; align-items: center; justify-content: center; gap: 56px; flex-wrap: wrap;">
-        <img src="media/logos/09-urban-care.jpg"       alt="Urban Care"           style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/10-pastel-kozmetik.jpg"  alt="Pastel Cosmetics"     style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/11-tresan.jpg"           alt="Tresan"               style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/12-imprime-perfume.jpg"  alt="Imprimé"              style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
-        <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" style="height:48px; width:auto; filter:grayscale(100%) opacity(0.6);">
+  <!-- ─── Logo Ticker ─── -->
+  <section id="block-logos" data-cms-block="logos" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;clip-path:inset(0);position:relative;">
+    <div class="lt-wrap">
+      <div class="lt-track">
+        <img src="media/logos/01-beymen.jpg"              alt="Beymen"              class="lt-img">
+        <img src="media/logos/02-is-bankasi.jpg"          alt="İş Bankası"          class="lt-img">
+        <img src="media/logos/03-tekirdag-raki.jpg"       alt="Tekirdağ Rakısı"     class="lt-img">
+        <img src="media/logos/04-karcher.jpg"             alt="Kärcher"             class="lt-img">
+        <img src="media/logos/05-filli-boya.jpg"          alt="Filli Boya"          class="lt-img">
+        <img src="media/logos/06-sok-market.jpg"          alt="ŞOK"                 class="lt-img">
+        <img src="media/logos/07-yatsan.jpg"              alt="Yatsan"              class="lt-img">
+        <img src="media/logos/08-lastikpark.jpg"          alt="LastikPark"          class="lt-img">
+        <img src="media/logos/09-urban-care.jpg"          alt="Urban Care"          class="lt-img">
+        <img src="media/logos/10-pastel-kozmetik.jpg"     alt="Pastel Cosmetics"    class="lt-img">
+        <img src="media/logos/11-tresan.jpg"              alt="Tresan"              class="lt-img">
+        <img src="media/logos/12-imprime-perfume.jpg"     alt="Imprimé"             class="lt-img">
+        <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" class="lt-img">
+        <!-- SET 2 — kopya -->
+        <img src="media/logos/01-beymen.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/02-is-bankasi.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/03-tekirdag-raki.jpg"       alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/04-karcher.jpg"             alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/05-filli-boya.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/06-sok-market.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/07-yatsan.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/08-lastikpark.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/09-urban-care.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/10-pastel-kozmetik.jpg"     alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/11-tresan.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/12-imprime-perfume.jpg"     alt="" aria-hidden="true" class="lt-img">
+        <img src="media/logos/13-the-purest-solutions.jpg" alt="" aria-hidden="true" class="lt-img">
       </div>
     </div>
   </section>
+  <style>
+  .lt-wrap {
+    clip-path: inset(0);
+    width: 100%;
+  }
+  .lt-track {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    width: max-content;
+    animation: lt-scroll 35s linear infinite;
+  }
+  .lt-wrap:hover .lt-track { animation-play-state: paused; }
+  @keyframes lt-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .lt-img {
+    height: 40px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+    filter: grayscale(100%) opacity(0.55);
+  }
+  </style>
 
   <!-- ─── 5 Pillars ─── -->
   <section class="section-sm" style="padding-top: 0;" id="block-pillars" data-cms-block="pillars">
