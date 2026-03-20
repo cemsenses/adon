@@ -1077,36 +1077,56 @@ function renderCarousel(){
 }
 
 function initCarouselAdd(){
-  let pendingB64=null, pendingFn=null, pendingPreview=null;
+  // Pending state — doğrudan file input'u dinle, wrap rebuild etme
+  let pendingB64=null, pendingFn=null;
 
-  function bindCarouselImg(){
-    initImg('cr-iw','cr-if',(file,b64)=>{
-      pendingB64=b64;
-      pendingFn='carousel-'+Date.now()+'.'+file.name.split('.').pop();
-      pendingPreview=b64;
-    });
-  }
-  bindCarouselImg();
+  // Event delegation: wrap içindeki input değişince yakala
+  document.getElementById('cr-iw').addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      pendingB64 = ev.target.result.split(',')[1];
+      pendingFn = 'carousel-'+Date.now()+'.'+file.name.split('.').pop();
+      // Önizleme göster
+      const wrap = document.getElementById('cr-iw');
+      // Var olan preview'u kaldır, yeni ekle
+      const existingImg = wrap.querySelector('img.cr-preview');
+      if(existingImg) existingImg.remove();
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.className = 'cr-preview';
+      img.style.cssText = 'width:100%;height:60px;object-fit:cover;display:block;';
+      wrap.insertBefore(img, wrap.firstChild);
+    };
+    reader.readAsDataURL(file);
+  });
 
   document.getElementById('btn-add-carousel').onclick=()=>{
     if(!pendingB64){ alert('Lütfen bir görsel seçin.'); return; }
     const label = document.getElementById('cr-label').value.trim()||'Görsel';
     if(!site.index.carousel) site.index.carousel=[];
-    const item = {
+    site.index.carousel.push({
       image: 'media/carousel/'+pendingFn,
       label,
       _imgData: pendingB64,
       _imgFilename: pendingFn,
-      _previewB64: pendingPreview
-    };
-    site.index.carousel.push(item);
+      _previewB64: pendingB64
+    });
     setDirty(); renderCarousel();
+
+    // Formu sıfırla
     document.getElementById('cr-label').value='';
-    pendingB64=null; pendingFn=null; pendingPreview=null;
-    // Input'u sıfırla ve yeni event bağla
-    const wrap=document.getElementById('cr-iw');
-    wrap.innerHTML=`<input type="file" id="cr-if" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Görsel seç</div></div>`;
-    bindCarouselImg();
+    pendingB64=null; pendingFn=null;
+
+    // Input value'yu sıfırla (aynı dosyayı tekrar seçilebilsin diye)
+    const inp = document.getElementById('cr-if');
+    if(inp) inp.value='';
+
+    // Preview'u kaldır
+    const wrap = document.getElementById('cr-iw');
+    const existingImg = wrap.querySelector('img.cr-preview');
+    if(existingImg) existingImg.remove();
   };
 }
 
