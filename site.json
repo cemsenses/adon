@@ -187,6 +187,12 @@
         "label": "SSS",
         "visible": false
       }
+    ],
+    "carousel": [
+      {
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/carousel/carousel-1774026237781.jpg",
+        "label": "Görsel"
+      }
     ]
   },
   "hakkimizda": {
