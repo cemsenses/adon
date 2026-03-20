@@ -1,9 +1,9 @@
 {
   "index": {
     "hero": {
-      "textTop": "On Yıllık Uzmanlık.",
+      "textTop": "30 Yıllık Uzmanlık.",
       "textBottom": "Yapay Zekanın Hızıyla.",
-      "desc": "Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.",
+      "desc": "<p>Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız </p><p><em>yeni nesil bir yaratıcı fabrika.</em></p><p> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.</p>",
       "video": "media/Dubaco-demo.mp4",
       "ctaText": "Sentezi İş Başında Görün →",
       "ctaLink": "sentez.html"
@@ -20,7 +20,7 @@
     "fark": {
       "label": "Farkımız",
       "headline": "Bir Araç Size\nHız Verir.\nBiz Sonuç\n<em>Teslim Ederiz.</em>",
-      "body": "Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.",
+      "body": "<p>Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.</p>",
       "ctaText": "Sentezi İnceleyin →",
       "ctaLink": "sentez.html"
     },
@@ -81,16 +81,36 @@
       "headline": "Hedefinize Göre\nDoğru Çözümü\nSeçin.",
       "body": "Yeteneklerimizi kullandığımız araçlara göre değil, çözmek istediğiniz iş sorununa göre paketledik.",
       "cards": [
-        { "num": "01", "tag": "Büyüme Pazarlamacıları İçin", "title": "Hız ve Ölçek", "body": "48 saat içinde 50 reklam varyantı. Birden fazla pazarda. Kaliteden ödün vermeden. Büyüme hedefli pazarlamacılar için tasarlandı." },
-        { "num": "02", "tag": "Kurumsal Liderler İçin", "title": "Disiplin ve Tutarlılık", "body": "Marka standartlarınızı koruyarak iç iletişim, eğitim ve kurumsal içerikleri ölçeklenebilir biçimde üretin. Büyük organizasyonların içerik kaosuna sistematik çözüm." },
-        { "num": "03", "tag": "E-Ticaret Markaları İçin", "title": "Ürün ve E-Ticaret", "body": "Bir ürün fotoğrafını alıp her pazar için farklılaştırılmış yüzlerce yaşam tarzı sahnesine dönüştürüyoruz. Tek çekim, sınırsız bağlam." },
-        { "num": "04", "tag": "Moda & Yaşam Tarzı", "title": "Moda ve Yaşam Tarzı", "body": "Editoryal kaliteyi hızla prototiplemenizi sağlıyoruz. Fotogerçekçi kampanya görselleri, geleneksel set maliyetinin çok altında." }
+        {
+          "num": "01",
+          "tag": "Büyüme Pazarlamacıları İçin",
+          "title": "Hız ve Ölçek",
+          "body": "48 saat içinde 50 reklam varyantı. Birden fazla pazarda. Kaliteden ödün vermeden. Büyüme hedefli pazarlamacılar için tasarlandı."
+        },
+        {
+          "num": "02",
+          "tag": "Kurumsal Liderler İçin",
+          "title": "Disiplin ve Tutarlılık",
+          "body": "Marka standartlarınızı koruyarak iç iletişim, eğitim ve kurumsal içerikleri ölçeklenebilir biçimde üretin. Büyük organizasyonların içerik kaosuna sistematik çözüm."
+        },
+        {
+          "num": "03",
+          "tag": "E-Ticaret Markaları İçin",
+          "title": "Ürün ve E-Ticaret",
+          "body": "Bir ürün fotoğrafını alıp her pazar için farklılaştırılmış yüzlerce yaşam tarzı sahnesine dönüştürüyoruz. Tek çekim, sınırsız bağlam."
+        },
+        {
+          "num": "04",
+          "tag": "Moda & Yaşam Tarzı",
+          "title": "Moda ve Yaşam Tarzı",
+          "body": "Editoryal kaliteyi hızla prototiplemenizi sağlıyoruz. Fotogerçekçi kampanya görselleri, geleneksel set maliyetinin çok altında."
+        }
       ]
     },
     "cta": {
       "label": "Ölçülebilir İş Etkisi",
       "headline": "Prodüksiyon Hızından\nFazlası:\n<em>Ölçülebilir</em>\nSonuçlar.",
-      "body": "Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.",
+      "body": "<p>Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.</p>",
       "ctaText": "Konuşmaya Başlayalım →",
       "ctaLink": "iletisim.html"
     },
@@ -122,27 +142,58 @@
       "image": "media/hero/adon-hakkında.jpg",
       "label": "Hakkımızda",
       "title": "Yaratıcılık Bir Ekipten,\nZeka Bir Sistemden\n<em>Gelmez.</em>",
-      "sub": "Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz."
+      "sub": "<p>Bir yapay zeka şirketi değiliz. Kendini dönüştürmüş, dünya standartlarında bir prodüksiyon stüdyosuyuz. Yapay zekayı bizi ikame etmesi için değil, yeteneklerimizi çarpan etkisiyle büyütmesi için kullanıyoruz.</p>"
     },
     "manifesto": {
       "label": "Ekip Bölümü",
       "headline": "Tek Bir Beden,\nDört Uzmanlık\nAlanı.",
-      "body1": "Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.",
-      "body2": "Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır."
+      "body1": "<p>Adon Studio'da yaratıcı ekip ile teknoloji ekibi arasında duvar yoktur. Zanaatkârlar, mühendisler, stratejistler ve yaratıcı yönetmenler aynı masada oturur.</p>",
+      "body2": "<p>Bu entegrasyon, sizi gerçekten anlayan biri gibi düşünen bir stüdyo deneyimi yaratır.</p>"
     },
     "teamLabel": "Ekibimiz",
     "team": [
-      { "name": "Cem Şenses", "role": "Kurucu", "image": "media/kisiler/cem-adon-1.avif" },
-      { "name": "Murat Özoral", "role": "Stratejik Ortak", "image": "media/kisiler/murat-adon-1.avif" },
-      { "name": "Ulvi Yaman", "role": "Stratejist", "image": "media/kisiler/ulvi-yaman-adon.avif" },
-      { "name": "Ercüment Subaşı", "role": "Yaratıcı Ses Yönetmeni", "image": "media/kisiler/ercument-adon-3.avif" }
+      {
+        "name": "Cem Şenses",
+        "role": "Kurucu",
+        "image": "media/kisiler/cem-adon-1.avif"
+      },
+      {
+        "name": "Murat Özoral",
+        "role": "Stratejik Ortak",
+        "image": "media/kisiler/murat-adon-1.avif"
+      },
+      {
+        "name": "Ulvi Yaman",
+        "role": "Stratejist",
+        "image": "media/kisiler/ulvi-yaman-adon.avif"
+      },
+      {
+        "name": "Ercüment Subaşı",
+        "role": "Yaratıcı Ses Yönetmeni",
+        "image": "media/kisiler/ercument-adon-3.avif"
+      }
     ],
     "dna": {
       "label": "Bizi Farklı Kılan Üç Şey.",
       "items": [
-        { "icon": "⚙", "title": "Titizlik", "subtitle": "Mühendis DNA'mız", "body": "Her çıktıda tutarlılığı sağlayan disiplin ve veri odaklı süreç yönetimi. Kalite; şansa değil, sisteme bırakılır." },
-        { "icon": "✦", "title": "Yaratıcılık", "subtitle": "Zanaatkâr DNA'mız", "body": "Sürece yön veren insani estetik ve vizyon. Hiçbir algoritma bunu taklit edemez; bu yüzden insan kararı her adımda süreçte kalır." },
-        { "icon": "◈", "title": "Sentez", "subtitle": "Stüdyo DNA'mız", "body": "Titizlik ile yaratıcılığın kesiştiği nokta. Uzmanlarımızın ve ekibinizin bir sonraki adımı birlikte kurguladığı, insanı sürecin merkezinde tutan yapı." }
+        {
+          "icon": "⚙",
+          "title": "Titizlik",
+          "subtitle": "Mühendis DNA'mız",
+          "body": "Her çıktıda tutarlılığı sağlayan disiplin ve veri odaklı süreç yönetimi. Kalite; şansa değil, sisteme bırakılır."
+        },
+        {
+          "icon": "✦",
+          "title": "Yaratıcılık",
+          "subtitle": "Zanaatkâr DNA'mız",
+          "body": "Sürece yön veren insani estetik ve vizyon. Hiçbir algoritma bunu taklit edemez; bu yüzden insan kararı her adımda süreçte kalır."
+        },
+        {
+          "icon": "◈",
+          "title": "Sentez",
+          "subtitle": "Stüdyo DNA'mız",
+          "body": "Titizlik ile yaratıcılığın kesiştiği nokta. Uzmanlarımızın ve ekibinizin bir sonraki adımı birlikte kurguladığı, insanı sürecin merkezinde tutan yapı."
+        }
       ]
     },
     "cta": {
@@ -157,12 +208,12 @@
       "image": "media/hero/sentez.jpg",
       "label": "Sentez",
       "title": "Yapay Zekayı\nKullanmıyoruz.\n<em>Yönetiyoruz.</em>",
-      "sub": "Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik."
+      "sub": "<p>Her yapay zeka projesi, kullanılan araçla başlar ve çoğunlukla orada biter. Biz farklı bir çerçeveden bakıyoruz: hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir metodoloji geliştirdik.</p>"
     },
     "framework": {
       "label": "5 Adımlı Sentez",
       "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>",
-      "body": "Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü."
+      "body": "<p>Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü.</p>"
     },
     "steps": [
       {
@@ -220,11 +271,31 @@
       "label": "Neden İşe Yarar",
       "headline": "Farkın\nKaynağı.",
       "pillars": [
-        { "num": "Hız", "title": "Saatler İçinde Üretim", "body": "Geleneksel stüdyolar haftalara ihtiyaç duyar. Orkestrasyon sistemimiz birden fazla modeli eşzamanlı çalıştırarak üretimi dramatik biçimde hızlandırır." },
-        { "num": "Kalite", "title": "Yapay Zeka + İnsan", "body": "Her kritik noktada insan yaratıcı yönetimi. Estetik kararlar deneyimli sanatçılar tarafından alınır; yapay zeka ise yüksek hacimli üretimi finanse eder." },
-        { "num": "Ölçek", "title": "Sonsuz Varyasyon", "body": "Tek bir çekim veya fikir, binlerce pazara özel varyasyona dönüştürülebilir. Dil, kültür ve kanal uyarlamaları otomatik olarak üretilir." },
-        { "num": "Etik", "title": "Sorumlu Yapay Zeka", "body": "SOC 2 veri güvenliği, köken takibi, etik içerik tembelliği ve önyargı azaltma protokolleri. Teknolojiyi şeffaflıkla kullanıyoruz." },
-        { "num": "Tutarlılık", "title": "Marka Uyumu", "body": "Yapay zeka modelleri marka spesifik varlıklarla eğitilir. Her çıktı marka standartlarına otomatik olarak uyar — insani hata riski sıfıra yakın." }
+        {
+          "num": "Hız",
+          "title": "Saatler İçinde Üretim",
+          "body": "Geleneksel stüdyolar haftalara ihtiyaç duyar. Orkestrasyon sistemimiz birden fazla modeli eşzamanlı çalıştırarak üretimi dramatik biçimde hızlandırır."
+        },
+        {
+          "num": "Kalite",
+          "title": "Yapay Zeka + İnsan",
+          "body": "Her kritik noktada insan yaratıcı yönetimi. Estetik kararlar deneyimli sanatçılar tarafından alınır; yapay zeka ise yüksek hacimli üretimi finanse eder."
+        },
+        {
+          "num": "Ölçek",
+          "title": "Sonsuz Varyasyon",
+          "body": "Tek bir çekim veya fikir, binlerce pazara özel varyasyona dönüştürülebilir. Dil, kültür ve kanal uyarlamaları otomatik olarak üretilir."
+        },
+        {
+          "num": "Etik",
+          "title": "Sorumlu Yapay Zeka",
+          "body": "SOC 2 veri güvenliği, köken takibi, etik içerik tembelliği ve önyargı azaltma protokolleri. Teknolojiyi şeffaflıkla kullanıyoruz."
+        },
+        {
+          "num": "Tutarlılık",
+          "title": "Marka Uyumu",
+          "body": "Yapay zeka modelleri marka spesifik varlıklarla eğitilir. Her çıktı marka standartlarına otomatik olarak uyar — insani hata riski sıfıra yakın."
+        }
       ]
     },
     "cta": {
@@ -239,30 +310,57 @@
       "image": "media/hero/cozumler.jpg",
       "label": "Çözümler",
       "title": "İş Dönüşümü\nİçin Tasarlanmış\n<em>Çözümler.</em>",
-      "sub": "Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin."
+      "sub": "<p>Kalite ile ölçek arasındaki dengeyi ortadan kaldırıyoruz. Çözmeniz gereken zorluğu veya ölçeklendirmeniz gereken zanaatı seçin.</p>"
     },
     "byCraft": {
       "label": "Zanaat'a Göre Çözümler",
       "headline": "Alanları\nSeçin.",
       "cards": [
-        { "badge": "Video Prodüksiyon", "title": "AI Destekli\nVideo\nProdüksiyon", "body": "Prodüksiyon haftalarını, sinematik kaliteden ödün vermeksizin saatlere sıkıştırıyoruz. Reklamdan kurumsal içeriğe her format." },
-        { "badge": "Görsel & E-Ticaret", "title": "Ürün &\nE-Ticaret\nGörseli", "body": "Tek bir ürün çekimini yüzlerce benzersiz, lokalize edilmiş yaşam tarzı sahnesine dönüştürüyoruz. Fotogerçekçi, marka uyumlu ve ölçeklenebilir." },
-        { "badge": "Moda & Editoryal", "title": "Moda &\nYaşam Tarzı\nİçeriği", "body": "Editoryal vizyonu hızlandırın. Pahalı stüdyo çekimlerine bağlı kalmadan kavramları, koleksiyonları ve kampanyaları fotogerçekçi sonuçlarla prototipleyin." }
+        {
+          "badge": "Video Prodüksiyon",
+          "title": "AI Destekli\nVideo\nProdüksiyon",
+          "body": "Prodüksiyon haftalarını, sinematik kaliteden ödün vermeksizin saatlere sıkıştırıyoruz. Reklamdan kurumsal içeriğe her format."
+        },
+        {
+          "badge": "Görsel & E-Ticaret",
+          "title": "Ürün &\nE-Ticaret\nGörseli",
+          "body": "Tek bir ürün çekimini yüzlerce benzersiz, lokalize edilmiş yaşam tarzı sahnesine dönüştürüyoruz. Fotogerçekçi, marka uyumlu ve ölçeklenebilir."
+        },
+        {
+          "badge": "Moda & Editoryal",
+          "title": "Moda &\nYaşam Tarzı\nİçeriği",
+          "body": "Editoryal vizyonu hızlandırın. Pahalı stüdyo çekimlerine bağlı kalmadan kavramları, koleksiyonları ve kampanyaları fotogerçekçi sonuçlarla prototipleyin."
+        }
       ]
     },
     "byObjective": {
       "label": "Hedefe Göre Çözümler",
       "headline": "Ne Elde\nEtmelisiniz?",
       "cards": [
-        { "num": "01", "tag": "Büyüme Pazarlamacıları İçin", "title": "Hız & Ölçek", "body": "Kaliteden ödün vermeden birden fazla pazarda 48 saat içinde 50 reklam varyantı test etmesi gereken büyüme pazarlamacısı için. Sitemiz birden fazla yapay zeka modelini eşzamanlı olarak orkestralayarak inanılmaz hacimde içerik üretir." },
-        { "num": "02", "tag": "Kurumsal Liderler İçin", "title": "Titizlik & Tutarlılık", "body": "Garantili, katı marka uyumu ile ölçeklenebilir dahili iletişim ve eğitime ihtiyaç duyan kurumsal lider için. Marka standartları tüm platformlarda ve dillerde otomatik olarak uygulanır." },
-        { "num": "03", "tag": "Yenilikçiler İçin", "title": "Yaratıcı Atılım", "body": "Pahalı prodüksiyona geçmeden önce cesur konseptleri test etmek, imkânsızı görselleştirmek ve yaratıcı fikirleri doğrulamak isteyen yenilikçiler için. Fikir ile gerçekleştirme arasındaki sürtüşme ortadan kalkar." }
+        {
+          "num": "01",
+          "tag": "Büyüme Pazarlamacıları İçin",
+          "title": "Hız & Ölçek",
+          "body": "Kaliteden ödün vermeden birden fazla pazarda 48 saat içinde 50 reklam varyantı test etmesi gereken büyüme pazarlamacısı için. Sitemiz birden fazla yapay zeka modelini eşzamanlı olarak orkestralayarak inanılmaz hacimde içerik üretir."
+        },
+        {
+          "num": "02",
+          "tag": "Kurumsal Liderler İçin",
+          "title": "Titizlik & Tutarlılık",
+          "body": "Garantili, katı marka uyumu ile ölçeklenebilir dahili iletişim ve eğitime ihtiyaç duyan kurumsal lider için. Marka standartları tüm platformlarda ve dillerde otomatik olarak uygulanır."
+        },
+        {
+          "num": "03",
+          "tag": "Yenilikçiler İçin",
+          "title": "Yaratıcı Atılım",
+          "body": "Pahalı prodüksiyona geçmeden önce cesur konseptleri test etmek, imkânsızı görselleştirmek ve yaratıcı fikirleri doğrulamak isteyen yenilikçiler için. Fikir ile gerçekleştirme arasındaki sürtüşme ortadan kalkar."
+        }
       ]
     },
     "whyAdon": {
       "label": "Neden ADON",
       "headline": "Sadece\nOperatör\nDeğil,\n<em>Sonuç</em>\nSatıyoruz.",
-      "body": "Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.",
+      "body": "<p>Piyasa, stratejik titizlik veya estetik ustalıktan yoksun yapay zeka \"fabrikalarıyla\" dolup taşmaktadır. Biz evrimleşmiş bir stüdyoyuz. Üst düzey prodüksiyon uzmanlığımızın mirasını özel bir yapay zeka orkestrasyon sistemiyle sentezliyoruz.</p>",
       "video": "media/ayi.mp4",
       "ctaText": "Çözümünüzü Keşfedin →",
       "ctaLink": "iletisim.html"
@@ -271,7 +369,7 @@
   "iletisim": {
     "hero": {
       "title": "Projenizi\nKonuşalım.\n<em>Dönüşümü başlatalım.</em>",
-      "desc": "Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim."
+      "desc": "<p>Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim.</p>"
     },
     "info": {
       "istanbul": "LOTUS Halaskargazi Cd. 38-66",
