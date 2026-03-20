@@ -134,7 +134,7 @@
 
     <main id="main-content">
     <!-- ─── Page Header ─── -->
-    <header class="page-header page-header--photo">
+    <header class="page-header page-header--photo" id="block-hero" data-cms-block="hero">
         <div class="page-header-bg">
             <img src="media/hero/adon-hakkında.jpg" alt="Hakkımızda">
             <div class="page-header-overlay"></div>
@@ -154,7 +154,7 @@
     </header>
 
     <!-- ─── Manifesto ─── -->
-    <section class="section">
+    <section class="section" id="block-manifesto" data-cms-block="manifesto">
         <div class="split">
             <div>
                 <p class="section-label">Ekip Bölümü</p>
@@ -178,7 +178,7 @@
     </section>
 
     <!-- ─── Team Section ─── -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section" style="padding-top: 0;" id="block-team" data-cms-block="team">
         <p class="section-label" style="padding-bottom: 32px;">Ekibimiz</p>
         <div class="team-grid stagger" id="cms-team">
             <div class="team-card">
@@ -213,7 +213,7 @@
     </section>
 
     <!-- ─── DNA Section ─── -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section" style="padding-top: 0;" id="block-dna" data-cms-block="dna">
         <p class="section-label" style="margin-bottom: 32px;">Bizi Farklı Kılan Üç Şey.</p>
         <div class="dna-grid stagger" id="cms-dna">
             <div class="dna-item">
@@ -241,7 +241,7 @@
     </section>
 
     <!-- ─── Marquee ─── -->
-    <div class="marquee-section">
+    <div class="marquee-section" id="block-marquee" data-cms-block="marquee">
         <div class="marquee-track">
             <span>İŞLEM DEĞİL, DÖNÜŞÜM</span>
             <span>ÖLÇEKLENEBİLİR</span>
@@ -261,7 +261,7 @@
     </div>
 
     <!-- ─── CTA ─── -->
-    <section class="cta-section cta-section--particles reveal">
+    <section class="cta-section cta-section--particles reveal" id="block-cta" data-cms-block="cta">
         <canvas class="particles-canvas" id="particlesCanvas"></canvas>
         <div class="cta-section-content">
             <p class="section-label" style="justify-content: center;">Kapanış</p>
@@ -458,9 +458,27 @@
           // CTA
           brHTML('cms-cta-headline', cta.headline);
           if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
+
+          // Blok sırası & görünürlük
+          applyBlocks((s.hakkimizda||{})._blocks||[]);
         })
         .catch(function(){});
     })();
+
+    function applyBlocks(blocks){
+      if(!blocks.length) return;
+      var firstEl = document.getElementById(blocks[0].id);
+      if(!firstEl) return;
+      var parent = firstEl.parentElement;
+      var frag = document.createDocumentFragment();
+      blocks.forEach(function(b){
+        var el = document.getElementById(b.id);
+        if(!el) return;
+        el.style.display = (b.visible===false) ? 'none' : '';
+        frag.appendChild(el);
+      });
+      parent.appendChild(frag);
+    }
     </script>
 </body>
 
