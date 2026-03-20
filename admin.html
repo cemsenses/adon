@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADON Admin — Çalışmalar</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --black: #080808;
+            --white: #f5f5f0;
+            --red: #ff3c31;
+            --border: #e0e0da;
+            --bg: #fafaf7;
+            --card: #ffffff;
+            --muted: #999;
+            --font: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--black);
+            min-height: 100vh;
+        }
+
+        /* ── Login ── */
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+        }
+        .login-box {
+            background: #111;
+            border: 1px solid #222;
+            padding: 48px;
+            width: 100%;
+            max-width: 380px;
+        }
+        .login-logo {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 32px;
+        }
+        .login-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: #555; }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .login-btn:hover { opacity: 0.85; }
+        .login-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ── Admin Layout ── */
+        #admin-screen { display: none; }
+        .admin-header {
+            background: var(--black);
+            padding: 0 32px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-header-logo {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .admin-header-logo span { color: #fff; font-weight: 700; }
+        .btn-logout {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .btn-logout:hover { color: #fff; }
+
+        .admin-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .admin-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* ── Add Work Form ── */
+        .add-form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+        .add-form-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .form-input, .form-select {
+            padding: 11px 14px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-size: 14px;
+            color: var(--black);
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: var(--font);
+        }
+        .form-input:focus, .form-select:focus { border-color: var(--black); }
+
+        /* ── Image Upload ── */
+        .upload-area {
+            border: 2px dashed var(--border);
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .upload-area:hover, .upload-area.drag-over {
+            border-color: var(--black);
+            background: #f0f0ec;
+        }
+        .upload-area input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-icon { font-size: 32px; margin-bottom: 8px; }
+        .upload-label { font-size: 14px; color: var(--muted); }
+        .upload-preview {
+            display: none;
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin-top: 12px;
+        }
+
+        .btn-add {
+            padding: 14px 32px;
+            background: var(--black);
+            color: #fff;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-add:hover { opacity: 0.75; }
+        .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ── Works List ── */
+        .works-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .work-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+        .work-card-img {
+            aspect-ratio: 4/5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 900;
+            color: rgba(8,8,8,0.15);
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+        .work-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .work-card-info {
+            padding: 12px 14px;
+            border-top: 1px solid var(--border);
+        }
+        .work-card-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .work-card-cat {
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .work-card-actions {
+            display: flex;
+            gap: 8px;
+            padding: 8px 14px 12px;
+        }
+        .btn-delete {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: none;
+            border: 1px solid var(--red);
+            padding: 5px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-delete:hover { background: var(--red); color: #fff; }
+        .btn-move {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            background: none;
+            border: 1px solid var(--border);
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-move:hover { border-color: var(--black); color: var(--black); }
+
+        /* ── Push Bar ── */
+        .push-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--black);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 200;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        .push-bar.visible { transform: translateY(0); }
+        .push-bar-text { color: rgba(255,255,255,0.6); font-size: 13px; }
+        .push-bar-text span { color: #fff; font-weight: 600; }
+        .btn-push {
+            padding: 12px 28px;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-push:hover { opacity: 0.85; }
+        .btn-push:disabled { opacity: 0.5; cursor: not-allowed; }
+        .push-status {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-left: 16px;
+        }
+
+        /* ── Token Modal ── */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-bg.open { display: flex; }
+        .modal {
+            background: #111;
+            border: 1px solid #333;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+        }
+        .modal-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .modal-sub { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 24px; line-height: 1.6; }
+        .modal-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 13px;
+            font-family: monospace;
+            outline: none;
+            margin-bottom: 16px;
+        }
+        .modal-actions { display: flex; gap: 12px; }
+        .btn-modal-ok {
+            flex: 1;
+            padding: 12px;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .btn-modal-cancel {
+            padding: 12px 20px;
+            background: none;
+            color: rgba(255,255,255,0.4);
+            border: 1px solid #333;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .admin-body { padding: 24px 16px; }
+            .add-form { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div id="login-screen">
+    <div class="login-box">
+        <div class="login-logo">ADON Studio · <span style="color:rgba(255,255,255,0.7)">Admin</span></div>
+        <div class="login-title">Giriş Yapın</div>
+        <input class="login-input" type="password" id="pw-input" placeholder="Şifre" />
+        <button class="login-btn" id="pw-btn">Giriş →</button>
+        <div class="login-error" id="login-error">Şifre hatalı.</div>
+    </div>
+</div>
+
+<!-- ── Admin ── -->
+<div id="admin-screen">
+
+    <header class="admin-header">
+        <div class="admin-header-logo">ADON · <span>Çalışmalar Yönetimi</span></div>
+        <button class="btn-logout" id="btn-logout">Çıkış</button>
+    </header>
+
+    <div class="admin-body">
+
+        <!-- Yeni Çalışma Ekle -->
+        <div class="add-form">
+            <div class="add-form-title">Yeni Çalışma Ekle</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Başlık</label>
+                    <input class="form-input" type="text" id="f-title" placeholder="Proje adı" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kategori</label>
+                    <select class="form-select" id="f-cat">
+                        <option value="Video Prodüksiyon">Video Prodüksiyon</option>
+                        <option value="Ürün & E-Ticaret">Ürün & E-Ticaret</option>
+                        <option value="Moda & Yaşam Tarzı">Moda & Yaşam Tarzı</option>
+                        <option value="Kurumsal">Kurumsal</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Yıl</label>
+                    <input class="form-input" type="text" id="f-year" placeholder="2025" value="2025" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kısa Kod (placeholder)</label>
+                    <input class="form-input" type="text" id="f-placeholder" placeholder="AB" maxlength="3" />
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+                <label class="form-label">Görsel</label>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="f-image" accept="image/*" />
+                    <div class="upload-icon">🖼</div>
+                    <div class="upload-label">Görsel seçin veya sürükleyin<br><small style="font-size:11px;color:#bbb;">JPG, PNG, WEBP · Önerilen: 4:5 oran</small></div>
+                    <img class="upload-preview" id="upload-preview" alt="Önizleme" />
+                </div>
+            </div>
+
+            <button class="btn-add" id="btn-add">Ekle →</button>
+        </div>
+
+        <!-- Mevcut Çalışmalar -->
+        <div class="admin-section-title">Mevcut Çalışmalar</div>
+        <div class="works-list" id="admin-works-list"></div>
+
+    </div>
+
+    <!-- Push Bar -->
+    <div class="push-bar" id="push-bar">
+        <div class="push-bar-text">Kaydedilmemiş değişiklikler var. <span>Yayınlamak ister misiniz?</span></div>
+        <div style="display:flex;align-items:center;gap:16px;">
+            <span class="push-status" id="push-status"></span>
+            <button class="btn-push" id="btn-push">Yayınla →</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Token Modal -->
+<div class="modal-bg" id="token-modal">
+    <div class="modal">
+        <div class="modal-title">GitHub Token Gerekli</div>
+        <div class="modal-sub">Değişiklikleri yayınlamak için bir GitHub Personal Access Token girin. Token bu tarayıcıda şifreli saklanır, hiçbir yere gönderilmez.</div>
+        <input class="modal-input" type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+        <div class="modal-actions">
+            <button class="btn-modal-ok" id="token-ok">Kaydet ve Yayınla →</button>
+            <button class="btn-modal-cancel" id="token-cancel">İptal</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── Config ──
+const ADMIN_PASSWORD = 'adon2025';
+const GITHUB_OWNER   = 'cemsenses';
+const GITHUB_REPO    = 'adon';
+const GITHUB_BRANCH  = 'main';
+const WORKS_PATH     = 'works.json';
+const MEDIA_PATH     = 'media/works/';
+
+// ── State ──
+let works = [];
+let dirty = false;
+let ghToken = localStorage.getItem('adon_gh_token') || '';
+
+// ── Login ──
+document.getElementById('pw-btn').addEventListener('click', tryLogin);
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+function tryLogin() {
+    const val = document.getElementById('pw-input').value;
+    if (val === ADMIN_PASSWORD) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-screen').style.display = 'block';
+        loadWorks();
+    } else {
+        document.getElementById('login-error').style.display = 'block';
+    }
+}
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+    location.reload();
+});
+
+// ── Load works.json ──
+async function loadWorks() {
+    try {
+        const r = await fetch('works.json?v=' + Date.now());
+        works = await r.json();
+    } catch {
+        works = [];
+    }
+    renderAdminList();
+}
+
+// ── Render admin list ──
+function renderAdminList() {
+    const list = document.getElementById('admin-works-list');
+    list.innerHTML = '';
+    works.forEach((w, i) => {
+        const card = document.createElement('div');
+        card.className = 'work-card';
+
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'work-card-img';
+        imgDiv.style.background = w.color;
+        if (w.image) {
+            imgDiv.innerHTML = `<img src="${w.image}" alt="${w.title}" loading="lazy" />`;
+        } else {
+            imgDiv.textContent = w.placeholder || '?';
+        }
+
+        card.innerHTML = `
+            <div class="work-card-img" style="background:${w.color}">${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy" />` : (w.placeholder || '?')}</div>
+            <div class="work-card-info">
+                <div class="work-card-title">${w.title}</div>
+                <div class="work-card-cat">${w.category} · ${w.year}</div>
+            </div>
+            <div class="work-card-actions">
+                <button class="btn-delete" data-i="${i}">Sil</button>
+                ${i > 0 ? `<button class="btn-move" data-i="${i}" data-dir="-1">↑</button>` : ''}
+                ${i < works.length - 1 ? `<button class="btn-move" data-i="${i}" data-dir="1">↓</button>` : ''}
+            </div>
+        `;
+
+        list.appendChild(card);
+    });
+
+    list.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (confirm('Bu çalışmayı silmek istiyor musunuz?')) {
+                works.splice(parseInt(btn.dataset.i), 1);
+                setDirty();
+                renderAdminList();
+            }
+        });
+    });
+
+    list.querySelectorAll('.btn-move').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const i = parseInt(btn.dataset.i);
+            const dir = parseInt(btn.dataset.dir);
+            const temp = works[i];
+            works[i] = works[i + dir];
+            works[i + dir] = temp;
+            setDirty();
+            renderAdminList();
+        });
+    });
+}
+
+// ── Image Upload Preview ──
+const fileInput = document.getElementById('f-image');
+const uploadArea = document.getElementById('upload-area');
+const preview = document.getElementById('upload-preview');
+
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        uploadArea.querySelector('.upload-icon').style.display = 'none';
+        uploadArea.querySelector('.upload-label').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+});
+
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+uploadArea.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadArea.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+        fileInput.dispatchEvent(new Event('change'));
+    }
+});
+
+// ── Add work ──
+document.getElementById('btn-add').addEventListener('click', async () => {
+    const title = document.getElementById('f-title').value.trim();
+    const cat   = document.getElementById('f-cat').value;
+    const year  = document.getElementById('f-year').value.trim() || '2025';
+    const ph    = document.getElementById('f-placeholder').value.trim().toUpperCase() || '??';
+    const file  = fileInput.files[0];
+
+    if (!title) { alert('Başlık gerekli.'); return; }
+
+    const btn = document.getElementById('btn-add');
+    btn.disabled = true;
+    btn.textContent = 'Ekleniyor...';
+
+    const colors = [
+        'linear-gradient(135deg, #c9c5e8, #f2b8c6)',
+        'linear-gradient(135deg, #b8d8e8, #c9e8d0)',
+        'linear-gradient(135deg, #f2e8b8, #f2c8a8)',
+        'linear-gradient(135deg, #e8b8c9, #e8c8f2)',
+        'linear-gradient(135deg, #b8c9e8, #b8e8e0)',
+        'linear-gradient(135deg, #e8d8b8, #e8b8b8)',
+        'linear-gradient(135deg, #d0e8b8, #b8e8c9)',
+    ];
+
+    const newWork = {
+        id: Date.now(),
+        title,
+        category: cat,
+        year,
+        image: '',
+        placeholder: ph,
+        color: colors[works.length % colors.length]
+    };
+
+    if (file) {
+        // Görseli base64'e çevir, GitHub'a yüklenecek
+        newWork._fileData = await fileToBase64(file);
+        newWork._fileName = sanitizeFilename(title) + '_' + Date.now() + '.' + file.name.split('.').pop();
+        newWork.image = MEDIA_PATH + newWork._fileName; // GitHub raw URL sonra set edilecek
+    }
+
+    works.unshift(newWork);
+    setDirty();
+    renderAdminList();
+
+    // Form sıfırla
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-placeholder').value = '';
+    preview.style.display = 'none';
+    preview.src = '';
+    uploadArea.querySelector('.upload-icon').style.display = 'block';
+    uploadArea.querySelector('.upload-label').style.display = 'block';
+    fileInput.value = '';
+    btn.disabled = false;
+    btn.textContent = 'Ekle →';
+});
+
+function fileToBase64(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result.split(',')[1]);
+        reader.readAsDataURL(file);
+    });
+}
+
+function sanitizeFilename(str) {
+    return str.toLowerCase()
+        .replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u')
+        .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
+        .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+
+// ── Dirty state ──
+function setDirty() {
+    dirty = true;
+    document.getElementById('push-bar').classList.add('visible');
+}
+
+// ── Publish ──
+document.getElementById('btn-push').addEventListener('click', () => {
+    if (!ghToken) {
+        document.getElementById('token-modal').classList.add('open');
+    } else {
+        publishChanges();
+    }
+});
+
+document.getElementById('token-ok').addEventListener('click', () => {
+    const t = document.getElementById('token-input').value.trim();
+    if (!t) return;
+    ghToken = t;
+    localStorage.setItem('adon_gh_token', t);
+    document.getElementById('token-modal').classList.remove('open');
+    publishChanges();
+});
+
+document.getElementById('token-cancel').addEventListener('click', () => {
+    document.getElementById('token-modal').classList.remove('open');
+});
+
+async function publishChanges() {
+    const btn = document.getElementById('btn-push');
+    const status = document.getElementById('push-status');
+    btn.disabled = true;
+    btn.textContent = 'Yükleniyor...';
+    status.textContent = '';
+
+    try {
+        // 1. Görselleri yükle
+        for (const work of works) {
+            if (work._fileData && work._fileName) {
+                status.textContent = `Görsel yükleniyor: ${work._fileName}`;
+                await githubPutFile(
+                    MEDIA_PATH + work._fileName,
+                    work._fileData,
+                    `media: ${work._fileName} eklendi`
+                );
+                // Raw URL ata
+                work.image = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${MEDIA_PATH}${work._fileName}`;
+                delete work._fileData;
+                delete work._fileName;
+            }
+        }
+
+        // 2. works.json'u güncelle
+        status.textContent = 'works.json güncelleniyor...';
+        const cleanWorks = works.map(({ _fileData, _fileName, ...w }) => w);
+        const jsonB64 = btoa(unescape(encodeURIComponent(JSON.stringify(cleanWorks, null, 2))));
+        await githubPutFile(WORKS_PATH, jsonB64, 'content: works.json güncellendi');
+
+        status.textContent = '✓ Yayınlandı!';
+        dirty = false;
+        setTimeout(() => {
+            document.getElementById('push-bar').classList.remove('visible');
+            status.textContent = '';
+        }, 2500);
+
+    } catch (err) {
+        status.textContent = '✗ Hata: ' + err.message;
+        console.error(err);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Yayınla →';
+}
+
+async function githubPutFile(path, base64Content, message) {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+    const headers = {
+        'Authorization': `token ${ghToken}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    };
+
+    // Mevcut SHA'yı al
+    let sha = null;
+    try {
+        const r = await fetch(`${url}?ref=${GITHUB_BRANCH}`, { headers });
+        if (r.ok) {
+            const d = await r.json();
+            sha = d.sha;
+        }
+    } catch {}
+
+    const body = { message, content: base64Content, branch: GITHUB_BRANCH };
+    if (sha) body.sha = sha;
+
+    const r = await fetch(url, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(body)
+    });
+
+    if (!r.ok) {
+        const err = await r.json();
+        throw new Error(err.message || `HTTP ${r.status}`);
+    }
+    return r.json();
+}
+</script>
+
+</body>
+</html>
