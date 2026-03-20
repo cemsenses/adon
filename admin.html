@@ -133,6 +133,24 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .btn-mcancel{padding:12px 20px;background:none;color:rgba(255,255,255,.4);border:1px solid #333;font-size:12px;cursor:pointer}
 
 @media(max-width:640px){.frow{grid-template-columns:1fr}.cms-sidebar{display:none}.cms-main{padding:16px}}
+
+/* ── BLOCK MANAGER ── */
+.block-manager{background:#fff;border:1px solid var(--border);margin-bottom:32px}
+.block-manager-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.block-manager-title svg{opacity:.5}
+.block-list{display:flex;flex-direction:column}
+.block-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0ec;transition:background .15s}
+.block-row:last-child{border-bottom:none}
+.block-row:hover{background:#fafaf7}
+.block-row.hidden-block{opacity:.45}
+.block-row-label{flex:1;font-size:13px;font-weight:500;color:var(--black)}
+.block-row.hidden-block .block-row-label{text-decoration:line-through;color:var(--muted)}
+.block-row-actions{display:flex;gap:4px;align-items:center}
+.btn-block{background:none;border:1px solid var(--border);padding:4px 8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;line-height:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px}
+.btn-block:hover{border-color:var(--black);color:var(--black)}
+.btn-block.btn-hide{color:var(--muted)}
+.btn-block.btn-hide.active{background:var(--black);border-color:var(--black);color:#fff}
+.btn-block:disabled{opacity:.25;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -178,6 +196,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="panel active" id="panel-index">
         <div class="panel-title">Ana Sayfa</div>
         <div class="panel-sub">index.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Blok Sırası &amp; Görünürlük</div><div class="block-list" id="bm-index"></div></div>
 
         <div class="section-divider">HERO</div>
         <div class="frow">
@@ -239,6 +258,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="panel" id="panel-hakkimizda">
         <div class="panel-title">Hakkımızda</div>
         <div class="panel-sub">hakkimizda.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Blok Sırası &amp; Görünürlük</div><div class="block-list" id="bm-hakkimizda"></div></div>
 
         <div class="section-divider">HERO</div>
         <div class="fg">
@@ -273,6 +293,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="panel" id="panel-sentez">
         <div class="panel-title">Sentez</div>
         <div class="panel-sub">sentez.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Blok Sırası &amp; Görünürlük</div><div class="block-list" id="bm-sentez"></div></div>
 
         <div class="section-divider">HERO</div>
         <div class="fg">
@@ -305,6 +326,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="panel" id="panel-cozumler">
         <div class="panel-title">Çözümler</div>
         <div class="panel-sub">cozumler.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Blok Sırası &amp; Görünürlük</div><div class="block-list" id="bm-cozumler"></div></div>
 
         <div class="section-divider">HERO</div>
         <div class="fg">
@@ -346,6 +368,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="panel" id="panel-iletisim">
         <div class="panel-title">İletişim</div>
         <div class="panel-sub">iletisim.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Blok Sırası &amp; Görünürlük</div><div class="block-list" id="bm-iletisim"></div></div>
 
         <div class="section-divider">HERO</div>
         <div class="fg"><div class="fl">Başlık <span class="fh">Satır kırma: \n | İtalik: &lt;em&gt;</span></div><textarea class="fi" id="il-hero-title" rows="3"></textarea></div>
@@ -773,6 +796,9 @@ function populate(){
   // ── PORTFÖY ──
   renderWorks(); initWorkAdd();
   renderVideos(); initVideoAdd();
+
+  // ── BLOK YÖNETİCİLERİ ──
+  initBlockManagers();
 }
 
 // ══════════════════════════════════════════
@@ -924,6 +950,76 @@ async function ghPut(path, b64, message){
 }
 
 function sanitize(s){ return s.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
+
+// ══════════════════════════════════════════
+// BLOCK MANAGER
+// ══════════════════════════════════════════
+function renderBlockManager(containerId, pageKey){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const blocks = (site[pageKey]||{})._blocks||[];
+  container.innerHTML='';
+
+  blocks.forEach((block, i)=>{
+    const row = document.createElement('div');
+    row.className = 'block-row' + (block.visible===false ? ' hidden-block' : '');
+
+    const label = document.createElement('div');
+    label.className = 'block-row-label';
+    label.textContent = block.label;
+
+    const actions = document.createElement('div');
+    actions.className = 'block-row-actions';
+
+    // Up button
+    const upBtn = document.createElement('button');
+    upBtn.className = 'btn-block';
+    upBtn.innerHTML = '↑';
+    upBtn.title = 'Yukarı taşı';
+    upBtn.disabled = (i === 0);
+    upBtn.onclick = ()=>{
+      const tmp = blocks[i]; blocks[i] = blocks[i-1]; blocks[i-1] = tmp;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    // Down button
+    const downBtn = document.createElement('button');
+    downBtn.className = 'btn-block';
+    downBtn.innerHTML = '↓';
+    downBtn.title = 'Aşağı taşı';
+    downBtn.disabled = (i === blocks.length - 1);
+    downBtn.onclick = ()=>{
+      const tmp = blocks[i]; blocks[i] = blocks[i+1]; blocks[i+1] = tmp;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    // Hide/Show toggle
+    const hideBtn = document.createElement('button');
+    hideBtn.className = 'btn-block btn-hide' + (block.visible===false ? ' active' : '');
+    hideBtn.innerHTML = block.visible===false ? '🙈' : '👁';
+    hideBtn.title = block.visible===false ? 'Göster' : 'Gizle';
+    hideBtn.onclick = ()=>{
+      block.visible = (block.visible===false) ? true : false;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    actions.appendChild(upBtn);
+    actions.appendChild(downBtn);
+    actions.appendChild(hideBtn);
+    row.appendChild(label);
+    row.appendChild(actions);
+    container.appendChild(row);
+  });
+}
+
+// Populate sonunda block manager'ları render et
+function initBlockManagers(){
+  renderBlockManager('bm-index',      'index');
+  renderBlockManager('bm-hakkimizda', 'hakkimizda');
+  renderBlockManager('bm-sentez',     'sentez');
+  renderBlockManager('bm-cozumler',   'cozumler');
+  renderBlockManager('bm-iletisim',   'iletisim');
+}
 </script>
 </body>
 </html>
