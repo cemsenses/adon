@@ -1,0 +1,106 @@
+{
+  "index": {
+    "hero": {
+      "textTop": "On Yıllık Uzmanlık.",
+      "textBottom": "Yapay Zekanın Hızıyla.",
+      "desc": "Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.",
+      "video": "media/Dubaco-demo.mp4"
+    },
+    "fark": {
+      "label": "Farkımız",
+      "headline": "Bir Araç Size\nHız Verir.\nBiz Sonuç\n<em>Teslim Ederiz.</em>",
+      "body": "On yıllık prodüksiyon deneyimimizi yapay zeka ile birleştirerek markaların içerik ihtiyaçlarını daha hızlı, daha tutarlı ve daha ölçeklenebilir biçimde karşılıyoruz."
+    },
+    "pillars": [
+      { "num": "01", "title": "Zanaat ve Kalite Güvencesi", "body": "Yapay zeka çıktıları asla ham hâliyle teslim edilmez. Yaratıcı yönetmenlerimiz estetik standartları belirler; son aşamada uzman editörler, renk uzmanları ve VFX sanatçıları her kareyi marka kimliğinizle örtüşene kadar işler." },
+      { "num": "02", "title": "Geleneksele Kıyasla 10x Hız", "body": "Geleneksel prodüksiyonda haftalar süren içerik üretimini saatlere sıkıştırıyoruz. Paralel çalışan yapay zeka modelleri sayesinde 48 saat içinde yüzlerce varyant üretip A/B testine hazır kampanya paketleri teslim edebiliyoruz." },
+      { "num": "03", "title": "Kılavuzunuza Tam Uyum, Her Seferinde", "body": "İçerik ölçeklendiğinde marka tutarlılığı çoğu zaman ilk feda edilendir. Metodolojimiz; renk paletinden ton of voice'a, tipografiden fotoğrafik stile kadar tüm marka değerlerini her içerik parçasına işler." },
+      { "num": "04", "title": "Fikirden Onaya: Risk Almadan Prototipleme", "body": "Büyük bütçeleri sahaya sürmeden önce konseptlerinizi test edin. Yaratıcı fikir aşamasında ürettiğimiz görsel prototipler, hem onay süreçlerini hızlandırır hem de nihai üretimde sürpriz maliyetleri ortadan kaldırır." },
+      { "num": "05", "title": "Global Ölçek, Yerel Dokunuş", "body": "Sadece metni çevirmiyoruz; görselleri, modelleri ve atmosferi her pazarın kültürel dokusuna göre yeniden kurguluyoruz. Tek bir üretim süreciyle 20'den fazla ülkede yerel gibi görünen içerikleri eş zamanlı teslim ediyoruz." }
+    ],
+    "speedTeaser": {
+      "label": "Hız & Ölçek",
+      "headline": "Tek Bir Hikayeyi,\nBinlerce Kusursuz\n<em>Deneyime</em>\nDönüştürüyoruz.",
+      "video": "media/Adon-imprime.mp4",
+      "cards": [
+        { "num": "01", "title": "Yüksek Hızda A/B Testi", "body": "Tek bir konseptten 48 saatte 50'den fazla yüksek etkili reklam varyasyonu. Rakipleriniz kreatif onay sürecini tamamlamadan kazanan kombinasyonu çoktan buldunuz." },
+        { "num": "02", "title": "Global Lokalleşme", "body": "Kampanyanızı 20'den fazla pazarda ölçeklendirin. Görseller, ton ve bağlam kültürel dokuya uygun hale gelir — sadece tercüme değil, gerçek bağ." },
+        { "num": "03", "title": "Gerçek Zamanlı Optimizasyon", "body": "Yapay zeka destekli içgörüler anlık olarak akar. Ekibiniz ne işe yaradığını görür ve hemen harekete geçer." }
+      ]
+    },
+    "cta": {
+      "label": "Ölçülebilir İş Etkisi",
+      "headline": "Prodüksiyon Hızından\nFazlası:\n<em>Ölçülebilir</em>\nSonuçlar.",
+      "body": "Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz."
+    }
+  },
+  "hakkimizda": {
+    "hero": {
+      "image": "media/hero/adon-hakkında.jpg",
+      "title": "İnsan Zanaatı\nYapay Zekayla\n<em>Buluşunca.</em>",
+      "sub": "ADON Studio; on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanlayan yeni nesil bir yaratıcı fabrikadır."
+    },
+    "intro": {
+      "label": "Ekip Bölümü",
+      "headline": "Yaratıcılığı\nÖlçeklendiren\n<em>Ekip.</em>",
+      "body1": "ADON Studio; tasarımcılar, yönetmenler, yazarlar ve yapay zeka mühendislerinden oluşan disiplinlerarası bir ekip tarafından yönetilmektedir. Her projeye getirdiğimiz deneyim, sadece teknik değil — estetik, stratejik ve insani.",
+      "body2": "Bizi farklı kılan şey, yapay zekayı bir araç olarak değil, bir ortak olarak kullanmamız. Sistemimiz öğrenir, gelişir ve her çıktıda marka kimliğinizi korur."
+    },
+    "team": [
+      { "name": "Cem Şenses", "role": "Kurucu", "image": "media/kisiler/cem-adon-1.avif" },
+      { "name": "Murat Özoral", "role": "Stratejik Ortak", "image": "media/kisiler/murat-adon-1.avif" },
+      { "name": "Ulvi Yaman", "role": "Yaratıcı Direktör", "image": "media/kisiler/ulvi-yaman-adon.avif" },
+      { "name": "Ercüment Subaşı", "role": "Prodüksiyon Direktörü", "image": "media/kisiler/ercument-adon-3.avif" }
+    ],
+    "cta": {
+      "label": "Kapanış",
+      "headline": "Projenizi\nBirlikte\n<em>Büyütelim.</em>",
+      "body": "ADON Studio ekibiyle tanışmak ve markanızın hikayesini birlikte yazmaya başlamak için bize ulaşın."
+    }
+  },
+  "sentez": {
+    "hero": {
+      "image": "media/hero/sentez.jpg",
+      "title": "Yapay Zekayı\nKullanmıyoruz.\n<em>Yönetiyoruz.</em>",
+      "sub": "Sentez, ADON'un beş adımlı yapay zeka orkestrasyon metodolojisidir. Her adımda insan kararı, her çıktıda marka bütünlüğü."
+    },
+    "steps": [
+      { "num": "01", "title": "Briefing & Strateji", "body": "Projenin hedeflerini, hedef kitlesini ve başarı kriterlerini netleştiriyoruz. Bu adım, yapay zekanın doğru yönlendirilmesi için temel oluşturur." },
+      { "num": "02", "title": "Konsept Geliştirme", "body": "İnsan yaratıcılığı ile yapay zeka hızını birleştirerek çoklu konsept alternatifleri üretiyoruz. En güçlü fikirler seçilir ve geliştirilir." },
+      { "num": "03", "title": "Orkestrasyon & Üretim", "body": "Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen sistemimiz devreye girer." },
+      { "num": "04", "title": "Kalite Güvencesi", "body": "Her çıktı, marka kılavuzuna ve estetik standartlara göre uzman ekibimiz tarafından denetlenir ve rafine edilir." },
+      { "num": "05", "title": "Teslimat & Optimizasyon", "body": "Son çıktılar teslim edilir ve performans verileri bir sonraki üretim döngüsüne beslenir." }
+    ],
+    "cta": {
+      "label": "Metodolojimiz",
+      "headline": "Metodolojimizi\nProjenize Nasıl\n<em>Uygulayabileceğimizi</em>\nKonuşalım.",
+      "body": "Sentez metodolojisinin markanıza nasıl uyarlanacağını keşfetmek için bir görüşme ayarlayalım."
+    }
+  },
+  "cozumler": {
+    "hero": {
+      "image": "media/hero/cozumler.jpg",
+      "title": "Hedefinize Göre\nDoğru\n<em>Çözüm.</em>",
+      "sub": "Yeteneklerimizi kullandığımız araçlara göre değil, çözmek istediğiniz iş sorununa göre paketledik."
+    },
+    "cta": {
+      "label": "Neden ADON",
+      "headline": "Sadece\nOperatör\nDeğil,\n<em>Sonuç</em>\nSatıyoruz.",
+      "body": "İçerik teknolojisinin bu kadar hızlı evrimleştiği bir dönemde, geç kalanlara ait teknoloji kullanmak geç kalmak demektir."
+    }
+  },
+  "iletisim": {
+    "hero": {
+      "title": "Projenizi\n<em>Konuşalım.</em>",
+      "sub": "Bir fikir, bir brief veya sadece bir soru — hepsi için buradayız.",
+      "city1": "İstanbul",
+      "city2": "Adana",
+      "email": "info@adon.com.tr"
+    },
+    "info": {
+      "istanbul": "Levent, İstanbul",
+      "adana": "Seyhan, Adana",
+      "email": "info@adon.com.tr"
+    }
+  }
+}
