@@ -193,6 +193,18 @@
         "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/carousel/carousel-1774026237781.jpg",
         "label": "Görsel"
       }
+    ],
+    "homepageVideos": [
+      {
+        "id": 1774026299825,
+        "title": "Video",
+        "url": "https://youtu.be/CftGxGi2Kac"
+      },
+      {
+        "id": 1774026312928,
+        "title": "Video",
+        "url": "https://youtu.be/izB67_KUsis"
+      }
     ]
   },
   "hakkimizda": {
