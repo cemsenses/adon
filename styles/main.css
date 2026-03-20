@@ -420,62 +420,7 @@ button {
 }
 
 /* ─── Logo Ticker ─── */
-.logo-ticker-section {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 40px 0;
-  overflow: hidden;
-  background: var(--bg);
-  /* Kenar fade — logolar yumuşakça girer/çıkar */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
-}
-
-.logo-ticker-track {
-  display: flex;
-  align-items: center;
-  gap: 80px;
-  width: max-content;
-  animation: logo-ticker 40s linear infinite;
-}
-
-.logo-ticker-track:hover {
-  animation-play-state: paused;
-}
-
-.logo-ticker-item {
-  display: block;
-  max-height: 44px;
-  max-width: 140px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-  flex-shrink: 0;
-  filter: grayscale(100%) opacity(0.55);
-  transition: filter 0.3s ease;
-}
-
-.logo-ticker-item:hover {
-  filter: grayscale(100%) opacity(1);
-}
-
-@keyframes logo-ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+/* Logo ticker — JS ile kontrol edilir, CSS animasyonu yok */
 
 /* ─── Hız & Ölçek Sayfası ─── */
 .hs-services {
