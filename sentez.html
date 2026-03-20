@@ -390,7 +390,7 @@
           html('cms-fw-body', (sz.framework||{}).body);
           brHTML('cms-why-headline', (sz.whyItWorks||{}).headline);
           brHTML('cms-cta-headline', (sz.cta||{}).headline);
-          if((sz.cta||{}).ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=sz.cta.ctaText; }
+          if((sz.cta||{}).ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.innerHTML=sz.cta.ctaText; }
           applyBlocks((s.sentez||{})._blocks||[]);
         })
         .catch(function(){});
