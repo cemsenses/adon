@@ -133,16 +133,16 @@
   <div class="page-overlay"></div>
 
   <!-- ─── Navigation ─── -->
-  <nav class="nav nav--dark">
+  <nav class="nav nav--dark" id="block-nav" data-cms-block="nav">
     <a href="index.html" class="nav-logo"><img src="media/beyaz.png" alt="ADON Studio"
         style="height: 22px; width: auto; display: block;"></a>
     <div class="nav-links">
-      <a href="hakkimizda.html">Hakkımızda</a>
-      <a href="cozumler.html">Çözümler</a>
-      <a href="calismalar.html">Çalışmalar</a>
-      <a href="sentez.html">Sentez</a>
+      <a href="hakkimizda.html" id="nav-link-1">Hakkımızda</a>
+      <a href="cozumler.html" id="nav-link-2">Çözümler</a>
+      <a href="calismalar.html" id="nav-link-3">Çalışmalar</a>
+      <a href="sentez.html" id="nav-link-4">Sentez</a>
     </div>
-    <a href="iletisim.html" class="nav-cta">İletişim</a>
+    <a href="iletisim.html" class="nav-cta" id="nav-cta">İletişim</a>
     <button class="nav-menu-toggle" aria-label="Menü">
       <span></span><span></span><span></span>
     </button>
@@ -448,14 +448,12 @@
     </div>
   </section>
 
-  </main><!-- #cms-main -->
-
   <!-- ─── Footer ─── -->
-  <footer>
+  <footer id="block-footer" data-cms-block="footer">
     <div class="footer-grid">
       <div>
         <div class="footer-logo"><img src="media/beyaz.png" alt="ADON Studio" width="112" height="28" style="height: 28px; width: auto; display: block;"></div>
-        <p class="footer-tagline">
+        <p class="footer-tagline" id="footer-tagline">
           İşte yeni standart: İnsan zanaatını yapay zeka orkestrasyonuyla birleştiren ve dönüşümü ölçeklendirerek
           gerçeğe dönüştüren stratejik bir partner. Dönüşüme var mısınız?
         </p>
@@ -496,10 +494,12 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 ADON Studio. Tüm hakları saklıdır.</span>
-      <span>İstanbul · Milan · Londra · Lefkoşa</span>
+      <span id="footer-copyright">© 2026 ADON Studio. Tüm hakları saklıdır.</span>
+      <span id="footer-locations">İstanbul · Milan · Londra · Lefkoşa</span>
     </div>
   </footer>
+
+  </main><!-- #cms-main -->
 
   <!-- CMS Loader -->
   <script>
@@ -590,6 +590,21 @@
           });
           if(hvBlock) hvBlock.style.display='';
         }
+
+        // Nav menü linkleri
+        var nav = s.nav||{};
+        var links = nav.links||[];
+        links.forEach(function(lnk, i){
+          var el = document.getElementById('nav-link-'+(i+1));
+          if(el){ if(lnk.label) el.textContent=lnk.label; if(lnk.href) el.href=lnk.href; }
+        });
+        if(nav.ctaLabel){ var nc=document.getElementById('nav-cta'); if(nc) nc.textContent=nav.ctaLabel; }
+
+        // Footer
+        var ft = s.footer||{};
+        if(ft.tagline) txt('footer-tagline', ft.tagline);
+        if(ft.copyright) txt('footer-copyright', ft.copyright);
+        if(ft.locations) txt('footer-locations', ft.locations);
 
         // Blok sırası & görünürlük
         applyBlocks((s.index||{})._blocks||[]);
