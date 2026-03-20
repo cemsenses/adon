@@ -249,86 +249,67 @@
 
   <!-- ─── Logo Ticker ─── -->
   <section id="block-logos" data-cms-block="logos" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;overflow:hidden;">
-    <div id="logo-ticker-outer" style="overflow:hidden;width:100%;"></div>
+    <div id="logo-ticker-wrap" style="white-space:nowrap;overflow:hidden;width:100%;"></div>
   </section>
+
+  <style>
+  @keyframes adon-ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  #logo-ticker-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 80px;
+    animation: adon-ticker 30s linear infinite;
+    will-change: transform;
+  }
+  #logo-ticker-inner img {
+    height: 44px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    filter: grayscale(100%) opacity(0.55);
+  }
+  #logo-ticker-wrap:hover #logo-ticker-inner {
+    animation-play-state: paused;
+  }
+  </style>
 
   <script>
   (function(){
-    var logos = [
-      {src:'media/logos/logo-beymen.png',    alt:'Beymen'},
-      {src:'media/logos/logo-isbank.png',    alt:'İş Bankası'},
-      {src:'media/logos/logo-tekirdağ.png',  alt:'Tekirdağ Rakısı'},
-      {src:'media/logos/logo-karcher.png',   alt:'Kärcher'},
-      {src:'media/logos/logo-filliboya.png', alt:'Filli Boya'},
-      {src:'media/logos/logo-sok.png',       alt:'ŞOK'},
-      {src:'media/logos/logo-yatsan.png',    alt:'Yatsan'},
-      {src:'media/logos/logo-lastikpark.png',alt:'LastikPark'},
-      {src:'media/logos/logo-urbancare.png', alt:'Urban Care'},
-      {src:'media/logos/logo-pastel.png',    alt:'Pastel Cosmetics'},
-      {src:'media/logos/logo-tresan.png',    alt:'Tresan'},
-      {src:'media/logos/logo-imprime.png',   alt:'Imprimé'},
-      {src:'media/logos/logo-purest.png',    alt:'The Purest Solutions'}
+    var srcs = [
+      'media/logos/logo-beymen.png',
+      'media/logos/logo-isbank.png',
+      'media/logos/logo-tekirdağ.png',
+      'media/logos/logo-karcher.png',
+      'media/logos/logo-filliboya.png',
+      'media/logos/logo-sok.png',
+      'media/logos/logo-yatsan.png',
+      'media/logos/logo-lastikpark.png',
+      'media/logos/logo-urbancare.png',
+      'media/logos/logo-pastel.png',
+      'media/logos/logo-tresan.png',
+      'media/logos/logo-imprime.png',
+      'media/logos/logo-purest.png'
     ];
 
-    var GAP = 80; // px arası mesafe
-    var SPEED = 0.6; // px/frame
+    // Tek bir inner div — içinde logolar iki kez (seamless loop için)
+    var inner = document.createElement('div');
+    inner.id = 'logo-ticker-inner';
 
-    var outer = document.getElementById('logo-ticker-outer');
-
-    // İç track — position:relative, yüksekliği imajlardan otomatik gelecek
-    var track = document.createElement('div');
-    track.style.cssText = 'display:flex;align-items:center;position:relative;width:max-content;';
-    outer.appendChild(track);
-
-    // Tüm imajları yükle, gerçek boyutlarını al, sonra başlat
-    var loaded = 0;
-    var items = []; // {img, w, h}
-
-    logos.forEach(function(logo){
-      var img = new Image();
-      img.alt = logo.alt;
-      img.style.cssText = 'height:44px;width:auto;display:block;filter:grayscale(100%) opacity(0.55);flex-shrink:0;';
-      img.onload = function(){
-        loaded++;
-        if(loaded === logos.length) startTicker();
-      };
-      img.onerror = function(){ loaded++; if(loaded===logos.length) startTicker(); };
-      img.src = logo.src;
-      track.appendChild(img);
-      items.push(img);
+    // İki set ekle — animasyon tam ortada sıfırlanır, kesintisiz
+    [0,1].forEach(function(){
+      srcs.forEach(function(src){
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        inner.appendChild(img);
+      });
     });
 
-    function startTicker(){
-      // Her imajın gerçek genişliğini ölç
-      var widths = items.map(function(img){ return img.offsetWidth; });
-      var totalW = widths.reduce(function(a,b){return a+b;},0) + GAP * logos.length;
-
-      // Gap'leri margin-right olarak uygula
-      items.forEach(function(img){ img.style.marginRight = GAP + 'px'; });
-
-      // Track'i klonla (kesintisiz döngü için)
-      var clone = track.cloneNode(true);
-      outer.appendChild(clone);
-
-      // Outer genişliğini ayarla, track'i flex ile yan yana koy
-      outer.style.cssText = 'overflow:hidden;width:100%;display:flex;';
-
-      var pos = 0;
-      var paused = false;
-      outer.addEventListener('mouseenter', function(){ paused = true; });
-      outer.addEventListener('mouseleave', function(){ paused = false; });
-
-      function tick(){
-        if(!paused){
-          pos += SPEED;
-          if(pos >= totalW) pos -= totalW;
-          track.style.transform = 'translateX(-'+pos+'px)';
-          clone.style.transform = 'translateX(-'+pos+'px)';
-        }
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
+    document.getElementById('logo-ticker-wrap').appendChild(inner);
   })();
   </script>
 
