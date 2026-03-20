@@ -1,977 +1,1034 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ADON Admin — Çalışmalar</title>
-    <meta name="robots" content="noindex, nofollow" />
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ADON CMS</title>
+<meta name="robots" content="noindex,nofollow"/>
+<!-- Quill richtext editor -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--white:#f5f5f0;--red:#ff3c31;
+  --border:#e0e0da;--bg:#fafaf7;--card:#fff;--muted:#999;
+  --font:-apple-system,sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:100vh}
 
-        :root {
-            --black: #080808;
-            --white: #f5f5f0;
-            --red: #ff3c31;
-            --border: #e0e0da;
-            --bg: #fafaf7;
-            --card: #ffffff;
-            --muted: #999;
-            --font: 'Inter', -apple-system, sans-serif;
-        }
+/* ── LOGIN ── */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
+.login-box{background:#111;border:1px solid #222;padding:48px;width:100%;max-width:380px}
+.login-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:32px}
+.login-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:32px}
+.login-input{width:100%;padding:14px 16px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px;margin-bottom:16px;outline:none;transition:border-color .2s;font-family:var(--font)}
+.login-input:focus{border-color:#555}
+.login-btn{width:100%;padding:14px;background:var(--red);color:#fff;border:none;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.login-error{color:var(--red);font-size:13px;margin-top:12px;display:none}
 
-        body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--black);
-            min-height: 100vh;
-        }
+/* ── LAYOUT ── */
+#admin-screen{display:none}
+.admin-header{background:var(--black);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.admin-header-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.admin-header-logo span{color:#fff;font-weight:700}
+.btn-logout{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;transition:color .2s}
+.btn-logout:hover{color:#fff}
 
-        /* ── Login ── */
-        #login-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--black);
-        }
-        .login-box {
-            background: #111;
-            border: 1px solid #222;
-            padding: 48px;
-            width: 100%;
-            max-width: 380px;
-        }
-        .login-logo {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 32px;
-        }
-        .login-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 32px;
-        }
-        .login-input {
-            width: 100%;
-            padding: 14px 16px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #fff;
-            font-size: 15px;
-            margin-bottom: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .login-input:focus { border-color: #555; }
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--red);
-            color: #fff;
-            border: none;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .login-btn:hover { opacity: 0.85; }
-        .login-error {
-            color: var(--red);
-            font-size: 13px;
-            margin-top: 12px;
-            display: none;
-        }
+.cms-layout{display:flex;min-height:calc(100vh - 56px)}
 
-        /* ── Admin Layout ── */
-        #admin-screen { display: none; }
-        .admin-header {
-            background: var(--black);
-            padding: 0 32px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .admin-header-logo {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-        }
-        .admin-header-logo span { color: #fff; font-weight: 700; }
-        .btn-logout {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .btn-logout:hover { color: #fff; }
+/* ── SIDEBAR ── */
+.cms-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:24px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sidebar-section{padding:0 16px;margin-bottom:8px}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:12px 8px 6px}
+.sidebar-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:none;border:none;font-size:13px;font-weight:500;color:#444;cursor:pointer;border-radius:4px;transition:all .15s}
+.sidebar-btn:hover{background:#f0f0ec;color:var(--black)}
+.sidebar-btn.active{background:var(--black);color:#fff;font-weight:600}
+.sidebar-divider{height:1px;background:var(--border);margin:12px 16px}
 
-        .admin-body {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
+/* ── MAIN ── */
+.cms-main{flex:1;padding:32px;max-width:900px;padding-bottom:100px}
+.panel{display:none}
+.panel.active{display:block}
+.panel-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.panel-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
 
-        .admin-section-title {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 24px;
-        }
+/* ── FORM ELEMENTS ── */
+.field-group{margin-bottom:24px}
+.field-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.field-hint{font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none}
+.field-input{width:100%;padding:11px 14px;border:1px solid var(--border);background:#fff;font-size:14px;color:var(--black);outline:none;transition:border-color .2s;font-family:var(--font);resize:vertical}
+.field-input:focus{border-color:var(--black)}
+.field-textarea{min-height:90px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.field-row{grid-template-columns:1fr}}
 
-        /* ── Add Work Form ── */
-        .add-form {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 32px;
-            margin-bottom: 48px;
-        }
-        .add-form-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-label {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-        .form-input, .form-select {
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            font-size: 14px;
-            color: var(--black);
-            outline: none;
-            transition: border-color 0.2s;
-            font-family: var(--font);
-        }
-        .form-input:focus, .form-select:focus { border-color: var(--black); }
+/* ── RICHTEXT ── */
+.richtext-wrap .ql-container{font-family:var(--font);font-size:14px;min-height:120px}
+.richtext-wrap .ql-toolbar{border:1px solid var(--border);background:#fafaf7}
+.richtext-wrap .ql-container{border:1px solid var(--border);border-top:none}
+.richtext-wrap .ql-editor{min-height:120px}
 
-        /* ── Image Upload ── */
-        .upload-area {
-            border: 2px dashed var(--border);
-            padding: 32px;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
-            position: relative;
-            margin-bottom: 16px;
-        }
-        .upload-area:hover, .upload-area.drag-over {
-            border-color: var(--black);
-            background: #f0f0ec;
-        }
-        .upload-area input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        .upload-icon { font-size: 32px; margin-bottom: 8px; }
-        .upload-label { font-size: 14px; color: var(--muted); }
-        .upload-preview {
-            display: none;
-            width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            margin-top: 12px;
-        }
+/* ── IMAGE UPLOAD ── */
+.img-upload-wrap{border:2px dashed var(--border);padding:0;position:relative;transition:border-color .2s;overflow:hidden}
+.img-upload-wrap:hover,.img-upload-wrap.drag-over{border-color:var(--black)}
+.img-upload-wrap input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
+.img-preview{width:100%;display:block;object-fit:cover;max-height:200px}
+.img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;gap:8px;color:var(--muted)}
+.img-placeholder-icon{font-size:28px}
+.img-placeholder-label{font-size:12px;text-align:center;line-height:1.5}
+.img-size-hint{font-size:10px;color:#bbb;margin-top:4px}
 
-        .btn-add {
-            padding: 14px 32px;
-            background: var(--black);
-            color: #fff;
-            border: none;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .btn-add:hover { opacity: 0.75; }
-        .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
+/* ── REPEATER ── */
+.repeater{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.repeater-item{background:#fff;border:1px solid var(--border);padding:16px;position:relative}
+.repeater-item-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer;user-select:none}
+.repeater-item-num{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.repeater-item-title-preview{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.repeater-toggle{font-size:11px;color:var(--muted);transition:transform .2s}
+.repeater-item-body{display:none}
+.repeater-item.open .repeater-item-body{display:block}
+.repeater-item.open .repeater-toggle{transform:rotate(180deg)}
+.repeater-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.btn-sm{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border);background:none;cursor:pointer;transition:all .2s}
+.btn-sm:hover{border-color:var(--black);color:var(--black)}
+.btn-sm.danger{color:var(--red);border-color:var(--red)}
+.btn-sm.danger:hover{background:var(--red);color:#fff}
+.btn-sm.primary{background:var(--black);color:#fff;border-color:var(--black)}
 
-        /* ── Admin Tabs ── */
-        .admin-tabs {
-            display: flex;
-            gap: 0;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 32px;
-        }
-        .admin-tab {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 14px 32px;
-            background: none;
-            border: none;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            cursor: pointer;
-            color: var(--muted);
-            transition: all 0.2s;
-        }
-        .admin-tab.active {
-            color: var(--black);
-            border-bottom-color: var(--black);
-        }
-        .admin-tab-panel { display: none; }
-        .admin-tab-panel.active { display: block; }
+/* ── SAVE BAR ── */
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--black);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;z-index:300;transform:translateY(100%);transition:transform .3s}
+.save-bar.visible{transform:translateY(0)}
+.save-bar-text{color:rgba(255,255,255,.6);font-size:13px}
+.save-bar-text span{color:#fff;font-weight:600}
+.save-bar-right{display:flex;align-items:center;gap:16px}
+.save-status{font-size:12px;color:rgba(255,255,255,.5)}
+.btn-save{padding:12px 28px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
+.btn-save:hover{opacity:.85}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
 
-        /* ── Video Card ── */
-        .video-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            display: flex;
-            gap: 16px;
-            padding: 16px;
-            align-items: flex-start;
-        }
-        .video-card-thumb {
-            width: 160px;
-            flex-shrink: 0;
-            aspect-ratio: 16/9;
-            background: #111;
-            overflow: hidden;
-        }
-        .video-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .video-card-info { flex: 1; }
-        .video-card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-        .video-card-url { font-size: 11px; color: var(--muted); word-break: break-all; }
-        .video-list { display: flex; flex-direction: column; gap: 12px; }
+/* ── TOKEN MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#111;border:1px solid #333;padding:40px;width:100%;max-width:480px}
+.modal-title{color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
+.modal-sub{color:rgba(255,255,255,.4);font-size:13px;margin-bottom:24px;line-height:1.6}
+.modal-input{width:100%;padding:12px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:13px;font-family:monospace;outline:none;margin-bottom:16px}
+.modal-actions{display:flex;gap:12px}
+.btn-modal-ok{flex:1;padding:12px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.btn-modal-cancel{padding:12px 20px;background:none;color:rgba(255,255,255,.4);border:1px solid #333;font-size:12px;cursor:pointer}
 
-        /* ── Works List ── */
-        .works-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-        }
-        .work-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            position: relative;
-        }
-        .work-card-img {
-            aspect-ratio: 4/5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            font-weight: 900;
-            color: rgba(8,8,8,0.15);
-            text-transform: uppercase;
-            overflow: hidden;
-        }
-        .work-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .work-card-info {
-            padding: 12px 14px;
-            border-top: 1px solid var(--border);
-        }
-        .work-card-title {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .work-card-cat {
-            font-size: 10px;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .work-card-actions {
-            display: flex;
-            gap: 8px;
-            padding: 8px 14px 12px;
-        }
-        .btn-delete {
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--red);
-            background: none;
-            border: 1px solid var(--red);
-            padding: 5px 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-delete:hover { background: var(--red); color: #fff; }
-        .btn-move {
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            background: none;
-            border: 1px solid var(--border);
-            padding: 5px 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-move:hover { border-color: var(--black); color: var(--black); }
-
-        /* ── Push Bar ── */
-        .push-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--black);
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 200;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .push-bar.visible { transform: translateY(0); }
-        .push-bar-text { color: rgba(255,255,255,0.6); font-size: 13px; }
-        .push-bar-text span { color: #fff; font-weight: 600; }
-        .btn-push {
-            padding: 12px 28px;
-            background: var(--red);
-            color: #fff;
-            border: none;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .btn-push:hover { opacity: 0.85; }
-        .btn-push:disabled { opacity: 0.5; cursor: not-allowed; }
-        .push-status {
-            font-size: 12px;
-            color: rgba(255,255,255,0.5);
-            margin-left: 16px;
-        }
-
-        /* ── Token Modal ── */
-        .modal-bg {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 300;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-bg.open { display: flex; }
-        .modal {
-            background: #111;
-            border: 1px solid #333;
-            padding: 40px;
-            width: 100%;
-            max-width: 480px;
-        }
-        .modal-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-        .modal-sub { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 24px; line-height: 1.6; }
-        .modal-input {
-            width: 100%;
-            padding: 12px 14px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #fff;
-            font-size: 13px;
-            font-family: monospace;
-            outline: none;
-            margin-bottom: 16px;
-        }
-        .modal-actions { display: flex; gap: 12px; }
-        .btn-modal-ok {
-            flex: 1;
-            padding: 12px;
-            background: var(--red);
-            color: #fff;
-            border: none;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-        .btn-modal-cancel {
-            padding: 12px 20px;
-            background: none;
-            color: rgba(255,255,255,0.4);
-            border: 1px solid #333;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 600px) {
-            .form-row { grid-template-columns: 1fr; }
-            .admin-body { padding: 24px 16px; }
-            .add-form { padding: 20px; }
-        }
-    </style>
+/* ── CALISMALAR (works + videos) ── */
+.works-grid-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.work-card{background:#fff;border:1px solid var(--border);overflow:hidden}
+.work-card-img{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:rgba(8,8,8,.12);text-transform:uppercase;overflow:hidden}
+.work-card-img img{width:100%;height:100%;object-fit:cover}
+.work-card-info{padding:10px 12px;border-top:1px solid var(--border)}
+.work-card-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.work-card-cat{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.work-card-actions{padding:6px 12px 10px;display:flex;gap:6px}
+.video-list-admin{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.video-card-admin{background:#fff;border:1px solid var(--border);display:flex;gap:12px;padding:12px;align-items:center}
+.video-thumb{width:120px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover}
+.video-info{flex:1}
+.video-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.video-url{font-size:10px;color:var(--muted);word-break:break-all}
+.video-actions{display:flex;gap:6px;margin-top:8px}
+</style>
 </head>
 <body>
 
-<!-- ── Login ── -->
+<!-- LOGIN -->
 <div id="login-screen">
-    <div class="login-box">
-        <div class="login-logo">ADON Studio · <span style="color:rgba(255,255,255,0.7)">Admin</span></div>
-        <div class="login-title">Giriş Yapın</div>
-        <input class="login-input" type="password" id="pw-input" placeholder="Şifre" />
-        <button class="login-btn" id="pw-btn">Giriş →</button>
-        <div class="login-error" id="login-error">Şifre hatalı.</div>
-    </div>
+  <div class="login-box">
+    <div class="login-logo">ADON Studio · <span style="color:rgba(255,255,255,.7)">CMS</span></div>
+    <div class="login-title">Yönetim Paneli</div>
+    <input class="login-input" type="password" id="pw-input" placeholder="Şifre"/>
+    <button class="login-btn" id="pw-btn">Giriş →</button>
+    <div class="login-error" id="login-error">Şifre hatalı.</div>
+  </div>
 </div>
 
-<!-- ── Admin ── -->
+<!-- ADMIN -->
 <div id="admin-screen">
+  <header class="admin-header">
+    <div class="admin-header-logo">ADON · <span>CMS</span></div>
+    <button class="btn-logout" id="btn-logout">Çıkış</button>
+  </header>
 
-    <header class="admin-header">
-        <div class="admin-header-logo">ADON · <span>Çalışmalar Yönetimi</span></div>
-        <button class="btn-logout" id="btn-logout">Çıkış</button>
-    </header>
+  <div class="cms-layout">
 
-    <div class="admin-body">
+    <!-- SIDEBAR -->
+    <nav class="cms-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Sayfalar</div>
+        <button class="sidebar-btn active" data-panel="index">Ana Sayfa</button>
+        <button class="sidebar-btn" data-panel="hakkimizda">Hakkımızda</button>
+        <button class="sidebar-btn" data-panel="sentez">Sentez</button>
+        <button class="sidebar-btn" data-panel="cozumler">Çözümler</button>
+        <button class="sidebar-btn" data-panel="iletisim">İletişim</button>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Portföy</div>
+        <button class="sidebar-btn" data-panel="calismalar-gorsel">Görseller</button>
+        <button class="sidebar-btn" data-panel="calismalar-video">Videolar</button>
+      </div>
+    </nav>
 
-        <!-- Admin Tabs -->
-        <div class="admin-tabs">
-            <button class="admin-tab active" id="atab-gorsel">Görsel</button>
-            <button class="admin-tab" id="atab-video">Video</button>
+    <!-- MAIN -->
+    <main class="cms-main">
+
+      <!-- ═══ ANA SAYFA ═══ -->
+      <div class="panel active" id="panel-index">
+        <div class="panel-title">Ana Sayfa</div>
+        <div class="panel-sub">index.html — Hero, Fark bölümü, Sütunlar, Hız & Ölçek, CTA</div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:8px">HERO</h3>
+        <div class="field-group">
+          <div class="field-label">Üst Satır <span class="field-hint">örn: "On Yıllık Uzmanlık."</span></div>
+          <input class="field-input" id="idx-hero-top" type="text"/>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Alt Satır <span class="field-hint">italik etiketi kullanabilirsiniz: &lt;em&gt;...&lt;/em&gt;</span></div>
+          <input class="field-input" id="idx-hero-bottom" type="text"/>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama Metni</div>
+          <div class="richtext-wrap" id="idx-hero-desc-wrap"></div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Arka Plan Videosu <span class="field-hint">mp4 dosya yolu</span></div>
+          <input class="field-input" id="idx-hero-video" type="text"/>
         </div>
 
-        <!-- ── Görsel Paneli ── -->
-        <div class="admin-tab-panel active" id="apanel-gorsel">
-            <div class="add-form">
-                <div class="add-form-title">Yeni Görsel Ekle</div>
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">FARKI MIZ BÖLÜMÜ</h3>
+        <div class="field-row">
+          <div class="field-group">
+            <div class="field-label">Etiket</div>
+            <input class="field-input" id="idx-fark-label" type="text"/>
+          </div>
+          <div class="field-group"></div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Başlık <span class="field-hint">Satır kırma için \n, italik için &lt;em&gt;</span></div>
+          <textarea class="field-input field-textarea" id="idx-fark-headline" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama</div>
+          <div class="richtext-wrap" id="idx-fark-body-wrap"></div>
+        </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Başlık</label>
-                        <input class="form-input" type="text" id="f-title" placeholder="Proje adı" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Kategori</label>
-                        <select class="form-select" id="f-cat">
-                            <option value="Video Prodüksiyon">Video Prodüksiyon</option>
-                            <option value="Ürün & E-Ticaret">Ürün & E-Ticaret</option>
-                            <option value="Moda & Yaşam Tarzı">Moda & Yaşam Tarzı</option>
-                            <option value="Kurumsal">Kurumsal</option>
-                        </select>
-                    </div>
-                </div>
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">5 SÜTUN</h3>
+        <div class="repeater" id="idx-pillars-repeater"></div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Yıl</label>
-                        <input class="form-input" type="text" id="f-year" placeholder="2025" value="2025" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Kısa Kod (placeholder)</label>
-                        <input class="form-input" type="text" id="f-placeholder" placeholder="AB" maxlength="3" />
-                    </div>
-                </div>
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">HIZ & ÖLÇEK</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="idx-speed-headline" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Arka Plan Videosu</div>
+          <input class="field-input" id="idx-speed-video" type="text"/>
+        </div>
+        <div class="repeater" id="idx-speed-cards-repeater"></div>
 
-                <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label">Görsel</label>
-                    <div class="upload-area" id="upload-area">
-                        <input type="file" id="f-image" accept="image/*" />
-                        <div class="upload-icon">🖼</div>
-                        <div class="upload-label">Görsel seçin veya sürükleyin<br><small style="font-size:11px;color:#bbb;">JPG, PNG, WEBP · Önerilen: 4:5 oran</small></div>
-                        <img class="upload-preview" id="upload-preview" alt="Önizleme" />
-                    </div>
-                </div>
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="idx-cta-headline" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama</div>
+          <div class="richtext-wrap" id="idx-cta-body-wrap"></div>
+        </div>
+      </div>
 
-                <button class="btn-add" id="btn-add">Ekle →</button>
+      <!-- ═══ HAKKIMIZDA ═══ -->
+      <div class="panel" id="panel-hakkimizda">
+        <div class="panel-title">Hakkımızda</div>
+        <div class="panel-sub">hakkimizda.html — Hero, Ekip, Takım üyeleri, CTA</div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
+        <div class="field-group">
+          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
+          <div class="img-upload-wrap" id="hk-hero-img-wrap">
+            <input type="file" id="hk-hero-img-file" accept="image/*"/>
+            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="hk-hero-title" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Alt Metin</div>
+          <div class="richtext-wrap" id="hk-hero-sub-wrap"></div>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">GİRİŞ</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="hk-intro-headline" rows="3"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">1. Paragraf</div>
+          <div class="richtext-wrap" id="hk-intro-body1-wrap"></div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">2. Paragraf</div>
+          <div class="richtext-wrap" id="hk-intro-body2-wrap"></div>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">EKİP ÜYELERİ</h3>
+        <div class="repeater" id="hk-team-repeater"></div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="hk-cta-headline" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama</div>
+          <div class="richtext-wrap" id="hk-cta-body-wrap"></div>
+        </div>
+      </div>
+
+      <!-- ═══ SENTEZ ═══ -->
+      <div class="panel" id="panel-sentez">
+        <div class="panel-title">Sentez</div>
+        <div class="panel-sub">sentez.html — Hero, 5 Adım, CTA</div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
+        <div class="field-group">
+          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
+          <div class="img-upload-wrap" id="sz-hero-img-wrap">
+            <input type="file" id="sz-hero-img-file" accept="image/*"/>
+            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="sz-hero-title" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Alt Metin</div>
+          <div class="richtext-wrap" id="sz-hero-sub-wrap"></div>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">5 ADIM</h3>
+        <div class="repeater" id="sz-steps-repeater"></div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="sz-cta-headline" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama</div>
+          <div class="richtext-wrap" id="sz-cta-body-wrap"></div>
+        </div>
+      </div>
+
+      <!-- ═══ ÇÖZÜMLER ═══ -->
+      <div class="panel" id="panel-cozumler">
+        <div class="panel-title">Çözümler</div>
+        <div class="panel-sub">cozumler.html — Hero, CTA</div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
+        <div class="field-group">
+          <div class="field-label">Hero Görseli <span class="field-hint">Önerilen: 1920×800px</span></div>
+          <div class="img-upload-wrap" id="cz-hero-img-wrap">
+            <input type="file" id="cz-hero-img-file" accept="image/*"/>
+            <div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seçin veya sürükleyin</div></div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="cz-hero-title" rows="4"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Alt Metin</div>
+          <div class="richtext-wrap" id="cz-hero-sub-wrap"></div>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">CTA</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="cz-cta-headline" rows="5"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Açıklama</div>
+          <div class="richtext-wrap" id="cz-cta-body-wrap"></div>
+        </div>
+      </div>
+
+      <!-- ═══ İLETİŞİM ═══ -->
+      <div class="panel" id="panel-iletisim">
+        <div class="panel-title">İletişim</div>
+        <div class="panel-sub">iletisim.html — Hero başlık, alt metin, iletişim bilgileri</div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">HERO</h3>
+        <div class="field-group">
+          <div class="field-label">Başlık</div>
+          <textarea class="field-input field-textarea" id="il-hero-title" rows="3"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Alt Metin</div>
+          <div class="richtext-wrap" id="il-hero-sub-wrap"></div>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:32px">İLETİŞİM BİLGİLERİ</h3>
+        <div class="field-row">
+          <div class="field-group">
+            <div class="field-label">İstanbul Adresi</div>
+            <input class="field-input" id="il-istanbul" type="text"/>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Adana Adresi</div>
+            <input class="field-input" id="il-adana" type="text"/>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">E-posta</div>
+          <input class="field-input" id="il-email" type="text"/>
+        </div>
+      </div>
+
+      <!-- ═══ GÖRSELLER ═══ -->
+      <div class="panel" id="panel-calismalar-gorsel">
+        <div class="panel-title">Portföy — Görseller</div>
+        <div class="panel-sub">calismalar.html görsel sekmesi · works.json</div>
+
+        <div style="background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:16px">Yeni Görsel Ekle</div>
+          <div class="field-row">
+            <div class="field-group">
+              <div class="field-label">Başlık</div>
+              <input class="field-input" id="w-title" type="text" placeholder="Proje adı"/>
             </div>
-
-            <div class="admin-section-title">Mevcut Görseller</div>
-            <div class="works-list" id="admin-works-list"></div>
-        </div>
-
-        <!-- ── Video Paneli ── -->
-        <div class="admin-tab-panel" id="apanel-video">
-            <div class="add-form">
-                <div class="add-form-title">Yeni Video Ekle</div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Başlık</label>
-                        <input class="form-input" type="text" id="v-title" placeholder="Video başlığı" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">YouTube URL</label>
-                        <input class="form-input" type="text" id="v-url" placeholder="https://youtube.com/watch?v=..." />
-                    </div>
-                </div>
-                <button class="btn-add" id="btn-add-video">Ekle →</button>
+            <div class="field-group">
+              <div class="field-label">Kategori</div>
+              <select class="field-input" id="w-cat">
+                <option>Video Prodüksiyon</option>
+                <option>Ürün & E-Ticaret</option>
+                <option>Moda & Yaşam Tarzı</option>
+                <option>Kurumsal</option>
+              </select>
             </div>
-
-            <div class="admin-section-title">Mevcut Videolar</div>
-            <div class="video-list" id="admin-video-list"></div>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <div class="field-label">Yıl</div>
+              <input class="field-input" id="w-year" type="text" value="2025"/>
+            </div>
+            <div class="field-group">
+              <div class="field-label">Görsel <span class="field-hint">4:5 önerilen</span></div>
+              <div class="img-upload-wrap" id="w-img-wrap" style="min-height:48px">
+                <input type="file" id="w-img-file" accept="image/*"/>
+                <div class="img-placeholder" style="padding:12px"><div class="img-placeholder-icon" style="font-size:20px">🖼</div><div class="img-placeholder-label" style="font-size:11px">Görsel seç</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-sm primary" id="btn-add-work" style="margin-top:8px">Ekle →</button>
         </div>
 
-    </div>
+        <div class="works-grid-admin" id="admin-works-list"></div>
+      </div>
 
-    <!-- Push Bar -->
-    <div class="push-bar" id="push-bar">
-        <div class="push-bar-text">Kaydedilmemiş değişiklikler var. <span>Yayınlamak ister misiniz?</span></div>
-        <div style="display:flex;align-items:center;gap:16px;">
-            <span class="push-status" id="push-status"></span>
-            <button class="btn-push" id="btn-push">Yayınla →</button>
+      <!-- ═══ VİDEOLAR ═══ -->
+      <div class="panel" id="panel-calismalar-video">
+        <div class="panel-title">Portföy — Videolar</div>
+        <div class="panel-sub">calismalar.html video sekmesi · videos.json</div>
+
+        <div style="background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:16px">Yeni Video Ekle</div>
+          <div class="field-row">
+            <div class="field-group">
+              <div class="field-label">Başlık</div>
+              <input class="field-input" id="v-title" type="text" placeholder="Video başlığı"/>
+            </div>
+            <div class="field-group">
+              <div class="field-label">YouTube URL</div>
+              <input class="field-input" id="v-url" type="text" placeholder="https://youtube.com/watch?v=..."/>
+            </div>
+          </div>
+          <button class="btn-sm primary" id="btn-add-video" style="margin-top:8px">Ekle →</button>
         </div>
-    </div>
 
+        <div class="video-list-admin" id="admin-video-list"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar" id="save-bar">
+    <div class="save-bar-text">Kaydedilmemiş değişiklikler var. <span>Yayınlamak ister misiniz?</span></div>
+    <div class="save-bar-right">
+      <span class="save-status" id="save-status"></span>
+      <button class="btn-save" id="btn-save">Yayınla →</button>
+    </div>
+  </div>
 </div>
 
-<!-- Token Modal -->
+<!-- TOKEN MODAL -->
 <div class="modal-bg" id="token-modal">
-    <div class="modal">
-        <div class="modal-title">GitHub Token Gerekli</div>
-        <div class="modal-sub">Değişiklikleri yayınlamak için bir GitHub Personal Access Token girin. Token bu tarayıcıda şifreli saklanır, hiçbir yere gönderilmez.</div>
-        <input class="modal-input" type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
-        <div class="modal-actions">
-            <button class="btn-modal-ok" id="token-ok">Kaydet ve Yayınla →</button>
-            <button class="btn-modal-cancel" id="token-cancel">İptal</button>
-        </div>
+  <div class="modal">
+    <div class="modal-title">GitHub Token Gerekli</div>
+    <div class="modal-sub">Değişiklikleri yayınlamak için GitHub Personal Access Token girin. Tarayıcıda şifreli saklanır.</div>
+    <input class="modal-input" type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+    <div class="modal-actions">
+      <button class="btn-modal-ok" id="token-ok">Kaydet ve Yayınla →</button>
+      <button class="btn-modal-cancel" id="token-cancel">İptal</button>
     </div>
+  </div>
 </div>
 
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>
-// ── Config ──
-const ADMIN_PASSWORD = 'adon2025';
-const GITHUB_OWNER   = 'cemsenses';
-const GITHUB_REPO    = 'adon';
-const GITHUB_BRANCH  = 'main';
-const WORKS_PATH     = 'works.json';
-const VIDEOS_PATH    = 'videos.json';
-const MEDIA_PATH     = 'media/works/';
+// ════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════
+const PASS = 'adon2025';
+const GH = { owner:'cemsenses', repo:'adon', branch:'main' };
+const SITE_PATH  = 'site.json';
+const WORKS_PATH = 'works.json';
+const VIDEOS_PATH= 'videos.json';
+const MEDIA_PATH = 'media/cms/';
+const WORKS_MEDIA= 'media/works/';
 
-// ── State ──
-let works = [];
+// ════════════════════════════════════
+// STATE
+// ════════════════════════════════════
+let site   = {};
+let works  = [];
 let videos = [];
-let dirty = false;
-let ghToken = localStorage.getItem('adon_gh_token') || '';
+let dirty  = false;
+let ghToken= localStorage.getItem('adon_gh_token')||'';
 
-// ── Admin Tab Geçişi ──
-document.getElementById('atab-gorsel').addEventListener('click', () => {
-    document.getElementById('atab-gorsel').classList.add('active');
-    document.getElementById('atab-video').classList.remove('active');
-    document.getElementById('apanel-gorsel').classList.add('active');
-    document.getElementById('apanel-video').classList.remove('active');
-});
-document.getElementById('atab-video').addEventListener('click', () => {
-    document.getElementById('atab-video').classList.add('active');
-    document.getElementById('atab-gorsel').classList.remove('active');
-    document.getElementById('apanel-video').classList.add('active');
-    document.getElementById('apanel-gorsel').classList.remove('active');
-});
-
-// ── Login ──
-document.getElementById('pw-btn').addEventListener('click', tryLogin);
-document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-
-function tryLogin() {
-    const val = document.getElementById('pw-input').value;
-    if (val === ADMIN_PASSWORD) {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('admin-screen').style.display = 'block';
-        loadWorks();
-    } else {
-        document.getElementById('login-error').style.display = 'block';
-    }
+// ════════════════════════════════════
+// LOGIN
+// ════════════════════════════════════
+document.getElementById('pw-btn').onclick = tryLogin;
+document.getElementById('pw-input').onkeydown = e=>{ if(e.key==='Enter') tryLogin(); };
+function tryLogin(){
+  if(document.getElementById('pw-input').value===PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-screen').style.display='block';
+    initCMS();
+  } else {
+    document.getElementById('login-error').style.display='block';
+  }
 }
+document.getElementById('btn-logout').onclick=()=>location.reload();
 
-document.getElementById('btn-logout').addEventListener('click', () => {
-    location.reload();
+// ════════════════════════════════════
+// SIDEBAR NAV
+// ════════════════════════════════════
+document.querySelectorAll('.sidebar-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.panel).classList.add('active');
+  });
 });
 
-// ── Load ──
-async function loadWorks() {
-    try {
-        const r = await fetch('works.json?v=' + Date.now());
-        works = await r.json();
-    } catch { works = []; }
-    renderAdminList();
-
-    try {
-        const r2 = await fetch('videos.json?v=' + Date.now());
-        videos = await r2.json();
-    } catch { videos = []; }
-    renderVideoList();
+// ════════════════════════════════════
+// QUILL INSTANCES
+// ════════════════════════════════════
+const toolbarOptions = [
+  ['bold','italic','underline'],
+  [{'size':['small',false,'large','huge']}],
+  [{'list':'ordered'},{'list':'bullet'}],
+  ['clean']
+];
+const quills = {};
+function makeQuill(id){
+  const el = document.getElementById(id);
+  if(!el) return null;
+  const q = new Quill(el, { theme:'snow', modules:{ toolbar: toolbarOptions } });
+  q.on('text-change', ()=>setDirty());
+  quills[id] = q;
+  return q;
 }
 
-// ── Render Video List ──
-function getYouTubeId(url) {
-    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
-    return m ? m[1] : null;
+// ════════════════════════════════════
+// IMAGE UPLOAD HELPERS
+// ════════════════════════════════════
+function initImgUpload(wrapId, fileId, onFile){
+  const wrap = document.getElementById(wrapId);
+  const file = document.getElementById(fileId);
+  if(!wrap||!file) return;
+  file.onchange = ()=>{ if(file.files[0]) handleImgFile(wrap, file.files[0], onFile); };
+  wrap.ondragover = e=>{ e.preventDefault(); wrap.classList.add('drag-over'); };
+  wrap.ondragleave = ()=>wrap.classList.remove('drag-over');
+  wrap.ondrop = e=>{
+    e.preventDefault(); wrap.classList.remove('drag-over');
+    const f = e.dataTransfer.files[0];
+    if(f&&f.type.startsWith('image/')){ const dt=new DataTransfer(); dt.items.add(f); file.files=dt.files; handleImgFile(wrap,f,onFile); }
+  };
+}
+function handleImgFile(wrap, file, onFile){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    wrap.innerHTML='';
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    img.className = 'img-preview';
+    wrap.appendChild(img);
+    // Re-add file input
+    const input = document.createElement('input');
+    input.type='file'; input.accept='image/*'; input.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+    input.onchange=()=>{ if(input.files[0]) handleImgFile(wrap,input.files[0],onFile); };
+    wrap.appendChild(input);
+    if(onFile) onFile(file, e.target.result.split(',')[1]);
+  };
+  reader.readAsDataURL(file);
 }
 
-function renderVideoList() {
-    const list = document.getElementById('admin-video-list');
-    list.innerHTML = '';
-    if (!videos.length) {
-        list.innerHTML = '<p style="color:var(--muted);font-size:13px;">Henüz video eklenmedi.</p>';
-        return;
-    }
-    videos.forEach((v, i) => {
-        const id = getYouTubeId(v.url);
-        const thumb = id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
-        const card = document.createElement('div');
-        card.className = 'video-card';
-        card.innerHTML = `
-            <div class="video-card-thumb">${thumb ? `<img src="${thumb}" alt="${v.title}" />` : ''}</div>
-            <div class="video-card-info">
-                <div class="video-card-title">${v.title || 'Başlıksız'}</div>
-                <div class="video-card-url">${v.url}</div>
-                <div class="work-card-actions" style="padding:8px 0 0;">
-                    <button class="btn-delete" data-vi="${i}">Sil</button>
-                    ${i > 0 ? `<button class="btn-move" data-vi="${i}" data-vdir="-1">↑</button>` : ''}
-                    ${i < videos.length-1 ? `<button class="btn-move" data-vi="${i}" data-vdir="1">↓</button>` : ''}
-                </div>
-            </div>
-        `;
-        list.appendChild(card);
-    });
+// ════════════════════════════════════
+// REPEATER HELPER
+// ════════════════════════════════════
+function buildRepeater(containerId, items, fieldDefs, onChange){
+  const container = document.getElementById(containerId);
+  container.innerHTML='';
+  items.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='repeater-item open';
+    const header = document.createElement('div');
+    header.className='repeater-item-header';
+    header.innerHTML=`<span class="repeater-item-num">${String(i+1).padStart(2,'0')}</span><span class="repeater-item-title-preview">${item.title||item.name||''}</span><span class="repeater-toggle">▾</span>`;
+    header.onclick=()=>{ div.classList.toggle('open'); };
+    const body = document.createElement('div');
+    body.className='repeater-item-body';
 
-    list.querySelectorAll('.btn-delete[data-vi]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (confirm('Bu videoyu silmek istiyor musunuz?')) {
-                videos.splice(parseInt(btn.dataset.vi), 1);
-                setDirty(); renderVideoList();
-            }
-        });
-    });
-    list.querySelectorAll('.btn-move[data-vdir]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const i = parseInt(btn.dataset.vi);
-            const d = parseInt(btn.dataset.vdir);
-            [videos[i], videos[i+d]] = [videos[i+d], videos[i]];
-            setDirty(); renderVideoList();
-        });
-    });
-}
-
-// ── Add Video ──
-document.getElementById('btn-add-video').addEventListener('click', () => {
-    const title = document.getElementById('v-title').value.trim();
-    const url   = document.getElementById('v-url').value.trim();
-    if (!url) { alert('YouTube URL gerekli.'); return; }
-    if (!getYouTubeId(url)) { alert('Geçerli bir YouTube URL girin.'); return; }
-    videos.push({ id: Date.now(), title: title || 'Video', url });
-    setDirty(); renderVideoList();
-    document.getElementById('v-title').value = '';
-    document.getElementById('v-url').value = '';
-});
-
-// ── Render admin list ──
-function renderAdminList() {
-    const list = document.getElementById('admin-works-list');
-    list.innerHTML = '';
-    works.forEach((w, i) => {
-        const card = document.createElement('div');
-        card.className = 'work-card';
-
-        const imgDiv = document.createElement('div');
-        imgDiv.className = 'work-card-img';
-        imgDiv.style.background = w.color;
-        if (w.image) {
-            imgDiv.innerHTML = `<img src="${w.image}" alt="${w.title}" loading="lazy" />`;
+    fieldDefs.forEach(f=>{
+      const fg = document.createElement('div');
+      fg.className='field-group';
+      const lbl = document.createElement('div');
+      lbl.className='field-label';
+      lbl.textContent=f.label;
+      fg.appendChild(lbl);
+      if(f.type==='richtext'){
+        const wrap=document.createElement('div');
+        wrap.className='richtext-wrap';
+        wrap.id=`${containerId}-${i}-${f.key}`;
+        fg.appendChild(wrap);
+        body.appendChild(fg);
+      } else if(f.type==='img'){
+        const wrap=document.createElement('div');
+        wrap.className='img-upload-wrap';
+        wrap.id=`${containerId}-${i}-${f.key}-wrap`;
+        const inp=document.createElement('input');
+        inp.type='file'; inp.accept='image/*'; inp.id=`${containerId}-${i}-${f.key}-file`;
+        inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+        if(item[f.key]){
+          const img=document.createElement('img');
+          img.src=item[f.key]; img.className='img-preview';
+          wrap.appendChild(img);
         } else {
-            imgDiv.textContent = w.placeholder || '?';
+          wrap.innerHTML='<div class="img-placeholder"><div class="img-placeholder-icon">🖼</div><div class="img-placeholder-label">Görsel seç</div></div>';
         }
-
-        card.innerHTML = `
-            <div class="work-card-img" style="background:${w.color}">${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy" />` : (w.placeholder || '?')}</div>
-            <div class="work-card-info">
-                <div class="work-card-title">${w.title}</div>
-                <div class="work-card-cat">${w.category} · ${w.year}</div>
-            </div>
-            <div class="work-card-actions">
-                <button class="btn-delete" data-i="${i}">Sil</button>
-                ${i > 0 ? `<button class="btn-move" data-i="${i}" data-dir="-1">↑</button>` : ''}
-                ${i < works.length - 1 ? `<button class="btn-move" data-i="${i}" data-dir="1">↓</button>` : ''}
-            </div>
-        `;
-
-        list.appendChild(card);
-    });
-
-    list.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (confirm('Bu çalışmayı silmek istiyor musunuz?')) {
-                works.splice(parseInt(btn.dataset.i), 1);
-                setDirty();
-                renderAdminList();
-            }
+        wrap.appendChild(inp);
+        fg.appendChild(wrap);
+        body.appendChild(fg);
+        initImgUpload(`${containerId}-${i}-${f.key}-wrap`, `${containerId}-${i}-${f.key}-file`, (file,b64)=>{
+          item[`_${f.key}Data`]=b64;
+          item[`_${f.key}Filename`]=sanitize(item.name||item.title||'img')+'_'+Date.now()+'.'+file.name.split('.').pop();
+          item[f.key]=MEDIA_PATH+item[`_${f.key}Filename`];
+          setDirty();
         });
+      } else {
+        const inp=document.createElement(f.rows?'textarea':'input');
+        inp.className='field-input'+(f.rows?' field-textarea':'');
+        if(f.rows) inp.rows=f.rows;
+        inp.value=item[f.key]||'';
+        inp.oninput=()=>{ item[f.key]=inp.value; header.querySelector('.repeater-item-title-preview').textContent=item.title||item.name||''; setDirty(); };
+        fg.appendChild(inp);
+        body.appendChild(fg);
+      }
     });
 
-    list.querySelectorAll('.btn-move').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const i = parseInt(btn.dataset.i);
-            const dir = parseInt(btn.dataset.dir);
-            const temp = works[i];
-            works[i] = works[i + dir];
-            works[i + dir] = temp;
-            setDirty();
-            renderAdminList();
-        });
+    div.appendChild(header);
+    div.appendChild(body);
+    container.appendChild(div);
+
+    // Init richtexts after DOM insertion
+    fieldDefs.filter(f=>f.type==='richtext').forEach(f=>{
+      const q=makeQuill(`${containerId}-${i}-${f.key}`);
+      if(q&&item[f.key]) q.root.innerHTML=item[f.key];
+      if(q) q.on('text-change',()=>{ item[f.key]=q.root.innerHTML; setDirty(); });
     });
+  });
 }
 
-// ── Image Upload Preview ──
-const fileInput = document.getElementById('f-image');
-const uploadArea = document.getElementById('upload-area');
-const preview = document.getElementById('upload-preview');
+// ════════════════════════════════════
+// INIT CMS
+// ════════════════════════════════════
+async function initCMS(){
+  try{ const r=await fetch(SITE_PATH+'?v='+Date.now()); site=await r.json(); }catch{ site={}; }
+  try{ const r=await fetch(WORKS_PATH+'?v='+Date.now()); works=await r.json(); }catch{ works=[]; }
+  try{ const r=await fetch(VIDEOS_PATH+'?v='+Date.now()); videos=await r.json(); }catch{ videos=[]; }
 
-fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-        uploadArea.querySelector('.upload-icon').style.display = 'none';
-        uploadArea.querySelector('.upload-label').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-});
+  populateAll();
+}
 
-uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
-uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
-uploadArea.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadArea.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        fileInput.files = dt.files;
-        fileInput.dispatchEvent(new Event('change'));
-    }
-});
+function populateAll(){
+  // ── ANA SAYFA ──
+  const idx = site.index||{};
+  const hero = idx.hero||{};
+  setVal('idx-hero-top', hero.textTop);
+  setVal('idx-hero-bottom', hero.textBottom);
+  setVal('idx-hero-video', hero.video);
+  setVal('idx-fark-label', (idx.fark||{}).label);
+  setVal('idx-fark-headline', (idx.fark||{}).headline);
+  setVal('idx-speed-headline', (idx.speedTeaser||{}).headline);
+  setVal('idx-speed-video', (idx.speedTeaser||{}).video);
+  setVal('idx-cta-headline', (idx.cta||{}).headline);
 
-// ── Add work ──
-document.getElementById('btn-add').addEventListener('click', async () => {
-    const title = document.getElementById('f-title').value.trim();
-    const cat   = document.getElementById('f-cat').value;
-    const year  = document.getElementById('f-year').value.trim() || '2025';
-    const ph    = document.getElementById('f-placeholder').value.trim().toUpperCase() || '??';
-    const file  = fileInput.files[0];
+  const qiHeroDesc = makeQuill('idx-hero-desc-wrap');
+  if(qiHeroDesc&&hero.desc) qiHeroDesc.root.innerHTML=hero.desc;
+  if(qiHeroDesc) qiHeroDesc.on('text-change',()=>{ site.index.hero.desc=qiHeroDesc.root.innerHTML; setDirty(); });
 
-    if (!title) { alert('Başlık gerekli.'); return; }
+  const qiFarkBody = makeQuill('idx-fark-body-wrap');
+  if(qiFarkBody&&(idx.fark||{}).body) qiFarkBody.root.innerHTML=idx.fark.body;
+  if(qiFarkBody) qiFarkBody.on('text-change',()=>{ site.index.fark.body=qiFarkBody.root.innerHTML; setDirty(); });
 
-    const btn = document.getElementById('btn-add');
-    btn.disabled = true;
-    btn.textContent = 'Ekleniyor...';
+  const qiCtaBody = makeQuill('idx-cta-body-wrap');
+  if(qiCtaBody&&(idx.cta||{}).body) qiCtaBody.root.innerHTML=idx.cta.body;
+  if(qiCtaBody) qiCtaBody.on('text-change',()=>{ site.index.cta.body=qiCtaBody.root.innerHTML; setDirty(); });
 
-    const colors = [
-        'linear-gradient(135deg, #c9c5e8, #f2b8c6)',
-        'linear-gradient(135deg, #b8d8e8, #c9e8d0)',
-        'linear-gradient(135deg, #f2e8b8, #f2c8a8)',
-        'linear-gradient(135deg, #e8b8c9, #e8c8f2)',
-        'linear-gradient(135deg, #b8c9e8, #b8e8e0)',
-        'linear-gradient(135deg, #e8d8b8, #e8b8b8)',
-        'linear-gradient(135deg, #d0e8b8, #b8e8c9)',
-    ];
+  bindInput('idx-hero-top',    v=>{ site.index.hero.textTop=v; });
+  bindInput('idx-hero-bottom', v=>{ site.index.hero.textBottom=v; });
+  bindInput('idx-hero-video',  v=>{ site.index.hero.video=v; });
+  bindInput('idx-fark-label',  v=>{ site.index.fark.label=v; });
+  bindInput('idx-fark-headline',v=>{ site.index.fark.headline=v; });
+  bindInput('idx-speed-headline',v=>{ site.index.speedTeaser.headline=v; });
+  bindInput('idx-speed-video', v=>{ site.index.speedTeaser.video=v; });
+  bindInput('idx-cta-headline',v=>{ site.index.cta.headline=v; });
 
-    const newWork = {
-        id: Date.now(),
-        title,
-        category: cat,
-        year,
-        image: '',
-        placeholder: ph,
-        color: colors[works.length % colors.length]
-    };
+  buildRepeater('idx-pillars-repeater', site.index.pillars||[], [
+    {key:'title', label:'Başlık'},
+    {key:'body',  label:'Açıklama', rows:3}
+  ]);
+  buildRepeater('idx-speed-cards-repeater', (site.index.speedTeaser||{}).cards||[], [
+    {key:'title', label:'Başlık'},
+    {key:'body',  label:'Açıklama', rows:3}
+  ]);
 
-    if (file) {
-        // Görseli base64'e çevir, GitHub'a yüklenecek
-        newWork._fileData = await fileToBase64(file);
-        newWork._fileName = sanitizeFilename(title) + '_' + Date.now() + '.' + file.name.split('.').pop();
-        newWork.image = MEDIA_PATH + newWork._fileName; // GitHub raw URL sonra set edilecek
-    }
+  // ── HAKKIMIZDA ──
+  const hk = site.hakkimizda||{};
+  setVal('hk-hero-title', (hk.hero||{}).title);
+  setVal('hk-intro-headline', (hk.intro||{}).headline);
+  setVal('hk-cta-headline', (hk.cta||{}).headline);
 
-    works.unshift(newWork);
+  initImgUpload('hk-hero-img-wrap','hk-hero-img-file',(file,b64)=>{
+    site.hakkimizda.hero._imgData=b64;
+    site.hakkimizda.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+file.name.split('.').pop();
+    site.hakkimizda.hero.image=MEDIA_PATH+site.hakkimizda.hero._imgFilename;
     setDirty();
-    renderAdminList();
+  });
+  if((hk.hero||{}).image){ const w=document.getElementById('hk-hero-img-wrap'); w.innerHTML=`<img src="${hk.hero.image}" class="img-preview"/>`; const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.id='hk-hero-img-file'; inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2'; w.appendChild(inp); initImgUpload('hk-hero-img-wrap','hk-hero-img-file',(f,b64)=>{ site.hakkimizda.hero._imgData=b64; site.hakkimizda.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+f.name.split('.').pop(); site.hakkimizda.hero.image=MEDIA_PATH+site.hakkimizda.hero._imgFilename; setDirty(); }); }
 
-    // Form sıfırla
-    document.getElementById('f-title').value = '';
-    document.getElementById('f-placeholder').value = '';
-    preview.style.display = 'none';
-    preview.src = '';
-    uploadArea.querySelector('.upload-icon').style.display = 'block';
-    uploadArea.querySelector('.upload-label').style.display = 'block';
-    fileInput.value = '';
-    btn.disabled = false;
-    btn.textContent = 'Ekle →';
-});
+  makeQandBind('hk-hero-sub-wrap',    (hk.hero||{}).sub,    v=>site.hakkimizda.hero.sub=v);
+  makeQandBind('hk-intro-body1-wrap', (hk.intro||{}).body1, v=>site.hakkimizda.intro.body1=v);
+  makeQandBind('hk-intro-body2-wrap', (hk.intro||{}).body2, v=>site.hakkimizda.intro.body2=v);
+  makeQandBind('hk-cta-body-wrap',    (hk.cta||{}).body,    v=>site.hakkimizda.cta.body=v);
+  bindInput('hk-hero-title',     v=>{ site.hakkimizda.hero.title=v; });
+  bindInput('hk-intro-headline', v=>{ site.hakkimizda.intro.headline=v; });
+  bindInput('hk-cta-headline',   v=>{ site.hakkimizda.cta.headline=v; });
 
-function fileToBase64(file) {
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result.split(',')[1]);
-        reader.readAsDataURL(file);
-    });
+  buildRepeater('hk-team-repeater', hk.team||[], [
+    {key:'name',  label:'Ad Soyad'},
+    {key:'role',  label:'Unvan'},
+    {key:'image', label:'Fotoğraf', type:'img'}
+  ]);
+
+  // ── SENTEZ ──
+  const sz = site.sentez||{};
+  setVal('sz-hero-title', (sz.hero||{}).title);
+  setVal('sz-cta-headline', (sz.cta||{}).headline);
+  initHeroImgUpload('sz','sentez');
+  if((sz.hero||{}).image) showImgPreview('sz-hero-img-wrap','sz-hero-img-file',sz.hero.image,'sentez');
+  makeQandBind('sz-hero-sub-wrap', (sz.hero||{}).sub, v=>site.sentez.hero.sub=v);
+  makeQandBind('sz-cta-body-wrap', (sz.cta||{}).body, v=>site.sentez.cta.body=v);
+  bindInput('sz-hero-title',   v=>{ site.sentez.hero.title=v; });
+  bindInput('sz-cta-headline', v=>{ site.sentez.cta.headline=v; });
+  buildRepeater('sz-steps-repeater', sz.steps||[], [
+    {key:'num',   label:'Numara'},
+    {key:'title', label:'Başlık'},
+    {key:'body',  label:'Açıklama', rows:3}
+  ]);
+
+  // ── ÇÖZÜMLER ──
+  const cz = site.cozumler||{};
+  setVal('cz-hero-title', (cz.hero||{}).title);
+  setVal('cz-cta-headline', (cz.cta||{}).headline);
+  initHeroImgUpload('cz','cozumler');
+  if((cz.hero||{}).image) showImgPreview('cz-hero-img-wrap','cz-hero-img-file',cz.hero.image,'cozumler');
+  makeQandBind('cz-hero-sub-wrap', (cz.hero||{}).sub, v=>site.cozumler.hero.sub=v);
+  makeQandBind('cz-cta-body-wrap', (cz.cta||{}).body, v=>site.cozumler.cta.body=v);
+  bindInput('cz-hero-title',   v=>{ site.cozumler.hero.title=v; });
+  bindInput('cz-cta-headline', v=>{ site.cozumler.cta.headline=v; });
+
+  // ── İLETİŞİM ──
+  const il = site.iletisim||{};
+  setVal('il-hero-title', (il.hero||{}).title);
+  setVal('il-istanbul',   (il.info||{}).istanbul);
+  setVal('il-adana',      (il.info||{}).adana);
+  setVal('il-email',      (il.info||{}).email);
+  makeQandBind('il-hero-sub-wrap', (il.hero||{}).sub, v=>site.iletisim.hero.sub=v);
+  bindInput('il-hero-title', v=>{ site.iletisim.hero.title=v; });
+  bindInput('il-istanbul',   v=>{ site.iletisim.info.istanbul=v; });
+  bindInput('il-adana',      v=>{ site.iletisim.info.adana=v; });
+  bindInput('il-email',      v=>{ site.iletisim.info.email=v; });
+
+  // ── GÖRSELLER & VİDEOLAR ──
+  renderWorksList();
+  renderVideoList();
+  initWorkAdd();
+  initVideoAdd();
 }
 
-function sanitizeFilename(str) {
-    return str.toLowerCase()
-        .replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u')
-        .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
-        .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+function initHeroImgUpload(prefix, page){
+  initImgUpload(`${prefix}-hero-img-wrap`,`${prefix}-hero-img-file`,(file,b64)=>{
+    site[page].hero._imgData=b64;
+    site[page].hero._imgFilename=`${page}-hero-`+Date.now()+'.'+file.name.split('.').pop();
+    site[page].hero.image=MEDIA_PATH+site[page].hero._imgFilename;
+    setDirty();
+  });
+}
+function showImgPreview(wrapId, fileId, src, page){
+  const w=document.getElementById(wrapId);
+  w.innerHTML=`<img src="${src}" class="img-preview"/>`;
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';inp.id=fileId;
+  inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+  w.appendChild(inp);
+  initImgUpload(wrapId,fileId,(file,b64)=>{
+    site[page].hero._imgData=b64;
+    site[page].hero._imgFilename=`${page}-hero-`+Date.now()+'.'+file.name.split('.').pop();
+    site[page].hero.image=MEDIA_PATH+site[page].hero._imgFilename;
+    setDirty();
+  });
 }
 
-// ── Dirty state ──
-function setDirty() {
-    dirty = true;
-    document.getElementById('push-bar').classList.add('visible');
+function makeQandBind(wrapperId, initialHtml, setter){
+  const q=makeQuill(wrapperId);
+  if(q&&initialHtml) q.root.innerHTML=initialHtml;
+  if(q) q.on('text-change',()=>{ setter(q.root.innerHTML); setDirty(); });
 }
 
-// ── Publish ──
-document.getElementById('btn-push').addEventListener('click', () => {
-    if (!ghToken) {
-        document.getElementById('token-modal').classList.add('open');
-    } else {
-        publishChanges();
+function setVal(id, val){ const el=document.getElementById(id); if(el&&val!==undefined) el.value=val; }
+function bindInput(id, setter){
+  const el=document.getElementById(id);
+  if(el) el.oninput=()=>{ setter(el.value); setDirty(); };
+}
+
+// ════════════════════════════════════
+// WORKS LIST
+// ════════════════════════════════════
+function renderWorksList(){
+  const list=document.getElementById('admin-works-list');
+  list.innerHTML='';
+  const colors=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)'];
+  works.forEach((w,i)=>{
+    const card=document.createElement('div');
+    card.className='work-card';
+    const imgDiv=document.createElement('div');
+    imgDiv.className='work-card-img';
+    imgDiv.style.background=w.color||colors[i%colors.length];
+    if(w.image) imgDiv.innerHTML=`<img src="${w.image}" alt="${w.title}" loading="lazy"/>`;
+    else imgDiv.textContent=w.placeholder||'?';
+    card.innerHTML=`
+      <div class="work-card-info">
+        <div class="work-card-title">${w.title}</div>
+        <div class="work-card-cat">${w.category} · ${w.year}</div>
+      </div>
+      <div class="work-card-actions">
+        <button class="btn-sm danger" data-wi="${i}">Sil</button>
+        ${i>0?`<button class="btn-sm" data-wi="${i}" data-wd="-1">↑</button>`:''}
+        ${i<works.length-1?`<button class="btn-sm" data-wi="${i}" data-wd="1">↓</button>`:''}
+      </div>`;
+    card.prepend(imgDiv);
+    list.appendChild(card);
+  });
+  list.querySelectorAll('.btn-sm.danger[data-wi]').forEach(btn=>{
+    btn.onclick=()=>{ if(confirm('Silinsin mi?')){ works.splice(+btn.dataset.wi,1); setDirty(); renderWorksList(); } };
+  });
+  list.querySelectorAll('.btn-sm[data-wd]').forEach(btn=>{
+    btn.onclick=()=>{ const i=+btn.dataset.wi,d=+btn.dataset.wd; [works[i],works[i+d]]=[works[i+d],works[i]]; setDirty(); renderWorksList(); };
+  });
+}
+function initWorkAdd(){
+  let pendingB64=null, pendingFilename=null;
+  initImgUpload('w-img-wrap','w-img-file',(file,b64)=>{ pendingB64=b64; pendingFilename=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+file.name.split('.').pop(); });
+  document.getElementById('btn-add-work').onclick=()=>{
+    const title=document.getElementById('w-title').value.trim();
+    if(!title){alert('Başlık gerekli');return;}
+    const colors=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)','linear-gradient(135deg,#e8b8c9,#e8c8f2)','linear-gradient(135deg,#b8c9e8,#b8e8e0)'];
+    const w={id:Date.now(),title,category:document.getElementById('w-cat').value,year:document.getElementById('w-year').value,image:'',placeholder:title.substring(0,2).toUpperCase(),color:colors[works.length%colors.length]};
+    if(pendingB64){ w._imgData=pendingB64; w._imgFilename=pendingFilename; w.image=WORKS_MEDIA+pendingFilename; pendingB64=null; pendingFilename=null; }
+    works.unshift(w);
+    setDirty(); renderWorksList();
+    document.getElementById('w-title').value='';
+    resetImgWrap('w-img-wrap','w-img-file');
+  };
+}
+function resetImgWrap(wrapId, fileId){
+  const w=document.getElementById(wrapId);
+  w.innerHTML=`<input type="file" id="${fileId}" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="img-placeholder" style="padding:12px"><div class="img-placeholder-icon" style="font-size:20px">🖼</div><div class="img-placeholder-label" style="font-size:11px">Görsel seç</div></div>`;
+}
+
+// ════════════════════════════════════
+// VIDEO LIST
+// ════════════════════════════════════
+function getYTId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/); return m?m[1]:null; }
+function renderVideoList(){
+  const list=document.getElementById('admin-video-list');
+  list.innerHTML='';
+  if(!videos.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi.</p>'; return; }
+  videos.forEach((v,i)=>{
+    const id=getYTId(v.url);
+    const thumb=id?`https://img.youtube.com/vi/${id}/mqdefault.jpg`:'';
+    const card=document.createElement('div');
+    card.className='video-card-admin';
+    card.innerHTML=`
+      <div class="video-thumb">${thumb?`<img src="${thumb}" alt="${v.title}"/>`:''}  </div>
+      <div class="video-info">
+        <div class="video-title">${v.title||'Başlıksız'}</div>
+        <div class="video-url">${v.url}</div>
+        <div class="video-actions">
+          <button class="btn-sm danger" data-vi="${i}">Sil</button>
+          ${i>0?`<button class="btn-sm" data-vi="${i}" data-vd="-1">↑</button>`:''}
+          ${i<videos.length-1?`<button class="btn-sm" data-vi="${i}" data-vd="1">↓</button>`:''}
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('.btn-sm.danger[data-vi]').forEach(btn=>{
+    btn.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+btn.dataset.vi,1); setDirty(); renderVideoList(); } };
+  });
+  list.querySelectorAll('.btn-sm[data-vd]').forEach(btn=>{
+    btn.onclick=()=>{ const i=+btn.dataset.vi,d=+btn.dataset.vd; [videos[i],videos[i+d]]=[videos[i+d],videos[i]]; setDirty(); renderVideoList(); };
+  });
+}
+function initVideoAdd(){
+  document.getElementById('btn-add-video').onclick=()=>{
+    const url=document.getElementById('v-url').value.trim();
+    if(!url){alert('YouTube URL gerekli');return;}
+    if(!getYTId(url)){alert('Geçerli YouTube URL girin');return;}
+    videos.push({id:Date.now(),title:document.getElementById('v-title').value.trim()||'Video',url});
+    setDirty(); renderVideoList();
+    document.getElementById('v-title').value='';
+    document.getElementById('v-url').value='';
+  };
+}
+
+// ════════════════════════════════════
+// DIRTY / SAVE BAR
+// ════════════════════════════════════
+function setDirty(){ dirty=true; document.getElementById('save-bar').classList.add('visible'); }
+
+document.getElementById('btn-save').onclick=()=>{
+  if(!ghToken){ document.getElementById('token-modal').classList.add('open'); }
+  else { publish(); }
+};
+document.getElementById('token-ok').onclick=()=>{
+  const t=document.getElementById('token-input').value.trim();
+  if(!t) return;
+  ghToken=t; localStorage.setItem('adon_gh_token',t);
+  document.getElementById('token-modal').classList.remove('open');
+  publish();
+};
+document.getElementById('token-cancel').onclick=()=>document.getElementById('token-modal').classList.remove('open');
+
+// ════════════════════════════════════
+// PUBLISH
+// ════════════════════════════════════
+async function publish(){
+  const btn=document.getElementById('btn-save');
+  const status=document.getElementById('save-status');
+  btn.disabled=true; btn.textContent='Yükleniyor...'; status.textContent='';
+
+  try{
+    // 1. Görsel dosyalarını yükle (hero images)
+    await uploadPendingImages(site, status);
+
+    // 2. Ekip üyesi fotoğrafları
+    for(const m of (site.hakkimizda||{}).team||[]){
+      if(m._imageData&&m._imageFilename){
+        status.textContent='Fotoğraf: '+m.name;
+        await ghPut(MEDIA_PATH+m._imageFilename, m._imageData, 'media: '+m._imageFilename);
+        m.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_PATH}${m._imageFilename}`;
+        delete m._imageData; delete m._imageFilename;
+      }
     }
-});
 
-document.getElementById('token-ok').addEventListener('click', () => {
-    const t = document.getElementById('token-input').value.trim();
-    if (!t) return;
-    ghToken = t;
-    localStorage.setItem('adon_gh_token', t);
-    document.getElementById('token-modal').classList.remove('open');
-    publishChanges();
-});
-
-document.getElementById('token-cancel').addEventListener('click', () => {
-    document.getElementById('token-modal').classList.remove('open');
-});
-
-async function publishChanges() {
-    const btn = document.getElementById('btn-push');
-    const status = document.getElementById('push-status');
-    btn.disabled = true;
-    btn.textContent = 'Yükleniyor...';
-    status.textContent = '';
-
-    try {
-        // 1. Görselleri yükle
-        for (const work of works) {
-            if (work._fileData && work._fileName) {
-                status.textContent = `Görsel yükleniyor: ${work._fileName}`;
-                await githubPutFile(
-                    MEDIA_PATH + work._fileName,
-                    work._fileData,
-                    `media: ${work._fileName} eklendi`
-                );
-                // Raw URL ata
-                work.image = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${MEDIA_PATH}${work._fileName}`;
-                delete work._fileData;
-                delete work._fileName;
-            }
-        }
-
-        // 2. works.json'u güncelle
-        status.textContent = 'works.json güncelleniyor...';
-        const cleanWorks = works.map(({ _fileData, _fileName, ...w }) => w);
-        const jsonB64 = btoa(unescape(encodeURIComponent(JSON.stringify(cleanWorks, null, 2))));
-        await githubPutFile(WORKS_PATH, jsonB64, 'content: works.json güncellendi');
-
-        // 3. videos.json'u güncelle
-        status.textContent = 'videos.json güncelleniyor...';
-        const videosB64 = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
-        await githubPutFile(VIDEOS_PATH, videosB64, 'content: videos.json güncellendi');
-
-        status.textContent = '✓ Yayınlandı!';
-        dirty = false;
-        setTimeout(() => {
-            document.getElementById('push-bar').classList.remove('visible');
-            status.textContent = '';
-        }, 2500);
-
-    } catch (err) {
-        status.textContent = '✗ Hata: ' + err.message;
-        console.error(err);
+    // 3. Works görselleri
+    for(const w of works){
+      if(w._imgData&&w._imgFilename){
+        status.textContent='Görsel: '+w.title;
+        await ghPut(WORKS_MEDIA+w._imgFilename, w._imgData, 'media: '+w._imgFilename);
+        w.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${WORKS_MEDIA}${w._imgFilename}`;
+        delete w._imgData; delete w._imgFilename;
+      }
     }
 
-    btn.disabled = false;
-    btn.textContent = 'Yayınla →';
+    // 4. site.json
+    status.textContent='site.json kaydediliyor...';
+    const cleanSite=JSON.parse(JSON.stringify(site));
+    await ghPut(SITE_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(cleanSite,null,2)))), 'content: site.json güncellendi');
+
+    // 5. works.json
+    status.textContent='works.json kaydediliyor...';
+    const cleanWorks=works.map(({_imgData,_imgFilename,...w})=>w);
+    await ghPut(WORKS_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(cleanWorks,null,2)))), 'content: works.json güncellendi');
+
+    // 6. videos.json
+    status.textContent='videos.json kaydediliyor...';
+    await ghPut(VIDEOS_PATH, btoa(unescape(encodeURIComponent(JSON.stringify(videos,null,2)))), 'content: videos.json güncellendi');
+
+    status.textContent='✓ Yayınlandı!';
+    dirty=false;
+    setTimeout(()=>{ document.getElementById('save-bar').classList.remove('visible'); status.textContent=''; },3000);
+
+  }catch(err){
+    status.textContent='✗ Hata: '+err.message;
+    console.error(err);
+  }
+  btn.disabled=false; btn.textContent='Yayınla →';
 }
 
-async function githubPutFile(path, base64Content, message) {
-    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
-    const headers = {
-        'Authorization': `token ${ghToken}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-    };
-
-    // Mevcut SHA'yı al
-    let sha = null;
-    try {
-        const r = await fetch(`${url}?ref=${GITHUB_BRANCH}`, { headers });
-        if (r.ok) {
-            const d = await r.json();
-            sha = d.sha;
-        }
-    } catch {}
-
-    const body = { message, content: base64Content, branch: GITHUB_BRANCH };
-    if (sha) body.sha = sha;
-
-    const r = await fetch(url, {
-        method: 'PUT',
-        headers,
-        body: JSON.stringify(body)
-    });
-
-    if (!r.ok) {
-        const err = await r.json();
-        throw new Error(err.message || `HTTP ${r.status}`);
+async function uploadPendingImages(obj, status){
+  for(const page of ['hakkimizda','sentez','cozumler']){
+    const hero=(site[page]||{}).hero||{};
+    if(hero._imgData&&hero._imgFilename){
+      status.textContent='Hero görseli: '+page;
+      await ghPut(MEDIA_PATH+hero._imgFilename, hero._imgData, 'media: '+hero._imgFilename);
+      hero.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_PATH}${hero._imgFilename}`;
+      delete hero._imgData; delete hero._imgFilename;
     }
-    return r.json();
+  }
+}
+
+async function ghPut(path, b64, message){
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`;
+  const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+  let sha=null;
+  try{ const r=await fetch(url+'?ref='+GH.branch,{headers}); if(r.ok){const d=await r.json();sha=d.sha;} }catch{}
+  const body={message,content:b64,branch:GH.branch};
+  if(sha) body.sha=sha;
+  const r=await fetch(url,{method:'PUT',headers,body:JSON.stringify(body)});
+  if(!r.ok){ const e=await r.json(); throw new Error(e.message||'HTTP '+r.status); }
+  return r.json();
+}
+
+function sanitize(str){
+  return str.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
 }
 </script>
-
 </body>
 </html>
