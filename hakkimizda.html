@@ -457,7 +457,7 @@
 
           // CTA
           brHTML('cms-cta-headline', cta.headline);
-          if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
+          if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.innerHTML=cta.ctaText; }
 
           // Blok sırası & görünürlük
           applyBlocks((s.hakkimizda||{})._blocks||[]);
