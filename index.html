@@ -149,7 +149,7 @@
   </nav>
 
   <!-- ─── Hero ─── -->
-  <section class="hero">
+  <section class="hero" id="block-hero" data-cms-block="hero">
 
     <!-- Video Background -->
     <div class="hero-video-bg">
@@ -173,7 +173,7 @@
   </section>
 
   <!-- ─── Marquee ─── -->
-  <div class="marquee-section">
+  <div class="marquee-section" id="block-marquee" data-cms-block="marquee">
     <div class="marquee-track">
       <span>İşlem Değil, Dönüşüm</span>
       <span>Ödünsüz Kalite</span>
@@ -193,7 +193,7 @@
   </div>
 
   <!-- ─── Transformation Section ─── -->
-  <section class="section">
+  <section class="section" id="block-fark" data-cms-block="fark">
     <div class="split">
       <div>
         <p class="section-label" id="cms-fark-label">Farkımız</p>
@@ -215,7 +215,7 @@
   </section>
 
   <!-- ─── 5 Pillars ─── -->
-  <section class="section-sm" style="padding-top: 0;">
+  <section class="section-sm" style="padding-top: 0;" id="block-pillars" data-cms-block="pillars">
     <p class="section-label" style="padding: 0 32px; margin-bottom: 0;" id="cms-pillars-label">Dönüşümün Beş Temel Taşı</p>
     <div class="pillars stagger" style="margin-top: 32px;" id="cms-pillars">
       <div class="pillar">
@@ -247,7 +247,7 @@
   </section>
 
   <!-- ─── Logo Ticker ─── -->
-  <section class="logo-ticker-section">
+  <section class="logo-ticker-section" id="block-logos" data-cms-block="logos">
     <div class="logo-ticker-track">
       <!-- Set 1 -->
       <img src="media/logos/logo-beymen.png" width="120" height="40" loading="lazy" alt="Beymen" class="logo-ticker-item">
@@ -281,7 +281,7 @@
   </section>
 
   <!-- ─── Carousel ─── -->
-  <section class="carousel-section">
+  <section class="carousel-section" id="block-carousel" data-cms-block="carousel">
     <div class="gallery">
       <ul class="cards">
         <li style="background-image: url('media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg');" aria-label="Ürün Fotoğrafçılığı"></li>
@@ -309,7 +309,7 @@
   </section>
 
   <!-- ─── Speed & Scale Teaser ─── -->
-  <section class="speed-teaser-section">
+  <section class="speed-teaser-section" id="block-speed" data-cms-block="speed">
     <!-- Video Background -->
     <video class="speed-teaser-video" autoplay muted loop playsinline>
       <source src="media/Adon-imprime.mp4" type="video/mp4">
@@ -348,7 +348,7 @@
 
   <!-- ─── Solutions Section ─── -->
 
-  <section class="section">
+  <section class="section" id="block-solutions" data-cms-block="solutions">
     <p class="section-label">Çözümlerimiz</p>
     <h2 class="section-headline reveal">Hedefinize Göre<br>Doğru Çözümü<br>Seçin.</h2>
     <p class="section-body reveal reveal-delay-1" style="max-width: 560px; margin-top: 24px;">Yeteneklerimizi kullandığımız araçlara göre değil, çözmek istediğiniz iş sorununa göre paketledik.</p>
@@ -382,7 +382,7 @@
   </section>
 
   <!-- ─── CTA Banner ─── -->
-  <section class="cta-section reveal">
+  <section class="cta-section reveal" id="block-cta" data-cms-block="cta">
     <p class="section-label" style="justify-content: center;" id="cms-cta-label">Ölçülebilir İş Etkisi</p>
     <h2 class="cta-title" id="cms-cta-headline">
       Prodüksiyon Hızından<br>
@@ -397,7 +397,7 @@
   </section>
 
   <!-- ─── AEO: Conversational Content Block ─── -->
-  <section class="section" style="padding: 80px 32px; background: var(--bg);" aria-label="Sıkça Sorulan Sorular">
+  <section class="section" style="padding: 80px 32px; background: var(--bg);" aria-label="Sıkça Sorulan Sorular" id="block-faq" data-cms-block="faq">
     <p class="section-label">Sık Sorulan Sorular</p>
     <h2 class="section-headline" style="margin-bottom: 48px;">ADON Studio<br>Hakkında.</h2>
 
@@ -550,9 +550,28 @@
         brHTML('cms-cta-headline', cta.headline);
         html('cms-cta-body', cta.body);
         if(cta.ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.textContent=cta.ctaText; }
+
+        // Blok sırası & görünürlük
+        applyBlocks((s.index||{})._blocks||[]);
       })
       .catch(function(){});
   })();
+
+  function applyBlocks(blocks){
+    if(!blocks.length) return;
+    var firstEl = document.getElementById(blocks[0].id);
+    if(!firstEl) return;
+    var parent = firstEl.parentElement;
+    // Sırala ve görünürlük uygula
+    var frag = document.createDocumentFragment();
+    blocks.forEach(function(b){
+      var el = document.getElementById(b.id);
+      if(!el) return;
+      el.style.display = (b.visible===false) ? 'none' : '';
+      frag.appendChild(el);
+    });
+    parent.appendChild(frag);
+  }
   </script>
 
   <!-- Scripts -->
