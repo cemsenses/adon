@@ -1086,24 +1086,27 @@ async function publish(){
   btn.disabled=true; btn.textContent='Yükleniyor...'; st.textContent='';
 
   try{
-    // GitHub'dan güncel site.json çek — ekip üyelerini koru
+    // GitHub API'den taze site.json çek — ekibi her zaman güncel tut
     try{
-      st.textContent='Güncel veri alınıyor...';
-      const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
-      const rr=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${SITE_PATH}?ref=${GH.branch}&t=${Date.now()}`,{headers,cache:'no-store'});
+      st.textContent='Güncel ekip verisi alınıyor...';
+      const ghHeaders={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
+      const rr=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${SITE_PATH}?ref=${GH.branch}&t=${Date.now()}`,{headers:ghHeaders,cache:'no-store'});
       if(rr.ok){
         const rd=await rr.json();
         const remoteObj=JSON.parse(atob(rd.content.replace(/\n/g,'')));
         const remoteTeam=(remoteObj.hakkimizda||{}).team||[];
+        // Uzak ekipteki tüm üyeleri koru; admin'de bu oturumda eklenen yeni üyeleri de ekle
         const localTeam=(site.hakkimizda||{}).team||[];
-        // Uzaktaki ekipte admin'de görünmeyen üye varsa koru
-        if(remoteTeam.length>localTeam.length){
-          if(!site.hakkimizda) site.hakkimizda={};
-          site.hakkimizda.team=remoteTeam;
-          buildRepeater('r-team', remoteTeam, [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
+        const remoteNames=new Set(remoteTeam.map(function(m){return m.name;}));
+        const localNew=localTeam.filter(function(m){return !remoteNames.has(m.name);});
+        const mergedTeam=[...remoteTeam,...localNew];
+        if(!site.hakkimizda) site.hakkimizda={};
+        site.hakkimizda.team=mergedTeam;
+        if(mergedTeam.length!==localTeam.length){
+          buildRepeater('r-team', mergedTeam, [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
         }
       }
-    }catch(e){ console.warn('Team merge skip:',e); }
+    }catch(e){ console.warn('Team sync skip:',e); }
 
     // Hero görselleri
     for(const page of ['hakkimizda','sentez','cozumler']){
