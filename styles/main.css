@@ -1865,24 +1865,9 @@ footer {
     grid-template-columns: 1fr !important;
   }
 
-  /* ── Ekip kartları: mobilde grid-column/row sıfırla ── */
-  #cms-team .team-card:nth-child(5),
-  #cms-team .team-card:nth-child(6) {
+  /* ── Ekip kartları: mobilde auto sıfırla ── */
+  #cms-team .team-card {
     grid-column: auto !important;
     grid-row: auto !important;
-  }
-}
-
-/* ── Ekip: 6 kişi → 4 sütun grid'de son 2 kart ortalı (sadece masaüstü) ── */
-@media (min-width: 769px) {
-  #cms-team .team-card:nth-child(5) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row: 2;
-  }
-  #cms-team .team-card:nth-child(6) {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row: 2;
   }
 }

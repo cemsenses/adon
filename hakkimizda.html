@@ -446,6 +446,24 @@
               d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="lazy" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
               tc.appendChild(d);
             });
+            // Son satırı ortala (JS inline style — CSS önbelleğinden etkilenmez)
+            var allCards=tc.querySelectorAll('.team-card');
+            var cols=window.innerWidth>768?4:1;
+            var rem=allCards.length%cols;
+            if(cols>1&&rem>0){
+              var startCol=Math.floor((cols-rem)/2)+1;
+              var row=Math.ceil(allCards.length/cols);
+              Array.from(allCards).slice(-rem).forEach(function(c,i){
+                c.style.gridColumnStart=String(startCol+i);
+                c.style.gridColumnEnd=String(startCol+i+1);
+                c.style.gridRow=String(row);
+              });
+            } else {
+              // Mobil: tüm kartları sıfırla
+              Array.from(allCards).forEach(function(c){
+                c.style.gridColumnStart='';c.style.gridColumnEnd='';c.style.gridRow='';
+              });
+            }
           }
 
           // DNA
