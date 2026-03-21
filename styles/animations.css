@@ -102,6 +102,12 @@
     transition-delay: 0.4s;
 }
 
+.stagger.visible>*:nth-child(6) {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.5s;
+}
+
 /* ─── Diagonal Wipe Effect ─── */
 @keyframes wipe-in {
     from {
