@@ -1866,14 +1866,16 @@ footer {
   }
 }
 
-/* ── Ekip: 6 kişi → 4 sütun grid'de son 2 kart ortalı ── */
-#cms-team .team-card:nth-child(5) {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row: 2;
-}
-#cms-team .team-card:nth-child(6) {
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row: 2;
+/* ── Ekip: 6 kişi → 4 sütun grid'de son 2 kart ortalı (sadece masaüstü) ── */
+@media (min-width: 769px) {
+  #cms-team .team-card:nth-child(5) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row: 2;
+  }
+  #cms-team .team-card:nth-child(6) {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row: 2;
+  }
 }
