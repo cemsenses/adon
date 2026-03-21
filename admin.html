@@ -1015,7 +1015,13 @@ function renderWorks(){
 }
 function initWorkAdd(){
   let pb64=null,pfn=null;
-  initImg('w-iw','w-if',(f,b64)=>{ pb64=b64; pfn=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+f.name.split('.').pop(); });
+  function bindImgPicker(){
+    initImg('w-iw','w-if',(f,b64)=>{
+      pb64=b64;
+      pfn=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+f.name.split('.').pop();
+    });
+  }
+  bindImgPicker();
   document.getElementById('btn-add-work').onclick=()=>{
     const title=document.getElementById('w-title').value.trim();
     if(!title){alert('Başlık gerekli');return;}
@@ -1024,6 +1030,7 @@ function initWorkAdd(){
     works.unshift(w); setDirty(); renderWorks();
     document.getElementById('w-title').value='';
     resetIw('w-iw','w-if');
+    bindImgPicker(); // Sıfırlama sonrası yeni input'a event listener bağla
   };
 }
 function resetIw(wid,fid){ const w=document.getElementById(wid); w.innerHTML=`<input type="file" id="${fid}" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Seç</div></div>`; }
