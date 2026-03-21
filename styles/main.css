@@ -1649,17 +1649,19 @@ footer {
     flex-direction: column;
     position: fixed;
     inset: 0;
-    background: var(--bg);
+    background: #ffffff;
     justify-content: center;
     align-items: center;
     gap: 32px;
-    z-index: 999;
+    z-index: 1100;
   }
 
-  .nav-links.open a {
+  .nav-links.open a,
+  .nav--dark .nav-links.open a {
     font-size: 32px;
     font-family: var(--font-headline);
     font-weight: 800;
+    color: #0a0a0a !important;
   }
 
   .nav-cta {
