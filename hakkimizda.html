@@ -213,6 +213,20 @@
                 <div class="team-name">Ercüment Subaşı</div>
                 <div class="team-role">Yaratıcı Ses Yönetmeni</div>
             </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="media/kisiler/Dilara ama hafif gülen.png" width="300" height="300" loading="lazy" alt="Dilara Turna">
+                </div>
+                <div class="team-name">Dilara Turna</div>
+                <div class="team-role">Kreatif Direktör</div>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="media/kisiler/Berkant ama hafif gülen.png" width="300" height="300" loading="lazy" alt="Berkant Zafer Kulaksız">
+                </div>
+                <div class="team-name">Berkant Zafer Kulaksız</div>
+                <div class="team-role">Görsel Tasarımcı</div>
+            </div>
         </div>
     </section>
 
@@ -440,29 +454,28 @@
           // Ekip
           var tc=document.getElementById('cms-team');
           if(tc && hk.team && hk.team.length){
-            tc.innerHTML='';
+            // Mevcut isimleri al — hardcoded kartları koru, sadece eksik olanları ekle
+            var existing=new Set(Array.from(tc.querySelectorAll('.team-name')).map(function(n){return n.textContent.trim();}));
             hk.team.forEach(function(m){
-              var d=document.createElement('div'); d.className='team-card';
-              d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="lazy" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
-              tc.appendChild(d);
+              if(!existing.has(m.name)){
+                var d=document.createElement('div'); d.className='team-card';
+                d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="lazy" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
+                tc.appendChild(d);
+              }
             });
-            // Son satırı ortala (JS inline style — CSS önbelleğinden etkilenmez)
-            var allCards=tc.querySelectorAll('.team-card');
-            var cols=window.innerWidth>768?4:1;
-            var rem=allCards.length%cols;
-            if(cols>1&&rem>0){
-              var startCol=Math.floor((cols-rem)/2)+1;
-              var row=Math.ceil(allCards.length/cols);
-              Array.from(allCards).slice(-rem).forEach(function(c,i){
-                c.style.gridColumnStart=String(startCol+i);
-                c.style.gridColumnEnd=String(startCol+i+1);
-                c.style.gridRow=String(row);
-              });
-            } else {
-              // Mobil: tüm kartları sıfırla
-              Array.from(allCards).forEach(function(c){
-                c.style.gridColumnStart='';c.style.gridColumnEnd='';c.style.gridRow='';
-              });
+            // Masaüstünde son satırı ortala
+            if(window.innerWidth>768){
+              var allCards=tc.querySelectorAll('.team-card');
+              var cols=4, rem=allCards.length%cols;
+              if(rem>0){
+                var startCol=Math.floor((cols-rem)/2)+1;
+                var row=Math.ceil(allCards.length/cols);
+                Array.from(allCards).slice(-rem).forEach(function(c,i){
+                  c.style.gridColumnStart=String(startCol+i);
+                  c.style.gridColumnEnd=String(startCol+i+1);
+                  c.style.gridRow=String(row);
+                });
+              }
             }
           }
 
