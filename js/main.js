@@ -332,6 +332,8 @@
 
       this.bind();
       this.loop();
+      // Marquee hazır — görünür yap
+      this.el.classList.add('marquee-ready');
     }
 
     bind() {
