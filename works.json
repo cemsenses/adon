@@ -1,5 +1,23 @@
 [
   {
+    "id": 1774110465611,
+    "title": "Beymen.com",
+    "category": "Ürün & E-Ticaret",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png",
+    "placeholder": "BE",
+    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+  },
+  {
+    "id": 1774110432974,
+    "title": "Urban Care",
+    "category": "Ürün & E-Ticaret",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg",
+    "placeholder": "UR",
+    "color": "linear-gradient(135deg,#b8c9e8,#b8e8e0)"
+  },
+  {
     "id": 1774110413173,
     "title": "Hawaian Tropic",
     "category": "Ürün & E-Ticaret",
