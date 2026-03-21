@@ -216,30 +216,59 @@
       this.toggle = document.querySelector('.nav-menu-toggle');
       this.links = document.querySelector('.nav-links');
       if (!this.toggle || !this.links) return;
+      this.navParent = this.links.parentElement; // nav elementi
       this.bind();
+    }
+
+    _open() {
+      // Nav'ın backdrop-filter/stacking context'inden kaçmak için body'e taşı
+      document.body.appendChild(this.links);
+      this.links.classList.add('open');
+      // Inline style ile garantile — CSS cascade sorunlarını bypass eder
+      Object.assign(this.links.style, {
+        display: 'flex', flexDirection: 'column', position: 'fixed',
+        inset: '0', background: '#ffffff', justifyContent: 'center',
+        alignItems: 'center', gap: '40px', zIndex: '9999'
+      });
+      this.links.querySelectorAll('a').forEach(a => {
+        Object.assign(a.style, {
+          fontSize: '28px', fontFamily: 'var(--font-headline)',
+          fontWeight: '800', color: '#0a0a0a', textDecoration: 'none',
+          letterSpacing: '0.05em', textTransform: 'uppercase'
+        });
+      });
+      const spans = this.toggle.querySelectorAll('span');
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      document.body.style.overflow = 'hidden';
+    }
+
+    _close() {
+      this.links.classList.remove('open');
+      this.links.style.cssText = '';
+      this.links.querySelectorAll('a').forEach(a => { a.style.cssText = ''; });
+      // Geri nav'a yerleştir
+      this.navParent.appendChild(this.links);
+      const spans = this.toggle.querySelectorAll('span');
+      spans[0].style.transform = '';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = '';
+      document.body.style.overflow = '';
     }
 
     bind() {
       this.toggle.addEventListener('click', () => {
-        this.links.classList.toggle('open');
-        const spans = this.toggle.querySelectorAll('span');
-        const isOpen = this.links.classList.contains('open');
-        if (isOpen) {
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-          spans[1].style.opacity = '0';
-          spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        if (this.links.classList.contains('open')) {
+          this._close();
         } else {
-          spans[0].style.transform = '';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = '';
+          this._open();
         }
       });
 
-      // Close on link click
+      // Link'e tıklayınca kapat
       this.links.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          this.links.classList.remove('open');
-        });
+        a.addEventListener('click', () => this._close());
       });
     }
   }
