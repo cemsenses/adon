@@ -1,5 +1,23 @@
 [
   {
+    "id": 1774110027980,
+    "title": "The Purest Solutions",
+    "category": "Ürün & E-Ticaret",
+    "year": "2024",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110014273.png",
+    "placeholder": "TH",
+    "color": "linear-gradient(135deg,#f2e8b8,#f2c8a8)"
+  },
+  {
+    "id": 1774109971666,
+    "title": "Imprime Perfume",
+    "category": "Ürün & E-Ticaret",
+    "year": "2026",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109962331.jpeg",
+    "placeholder": "IM",
+    "color": "linear-gradient(135deg,#b8d8e8,#c9e8d0)"
+  },
+  {
     "id": 1774109893405,
     "title": "Imprime Perfume",
     "category": "Ürün & E-Ticaret",
