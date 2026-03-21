@@ -322,6 +322,30 @@
     </div>
   </section>
 
+  <!-- ─── Hizmet Kartları ─── -->
+  <section id="block-service-cards" data-cms-block="service-cards" style="background:var(--bg);padding:80px 32px 100px;border-top:1px solid var(--border);">
+    <p class="section-label" id="cms-sc-label" style="margin-bottom:48px;">Hizmetlerimiz</p>
+    <div class="sc-grid" id="cms-sc-grid">
+      <!-- JS ile doldurulur -->
+    </div>
+  </section>
+  <style>
+  .sc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; max-width:1400px; margin:0 auto; }
+  .sc-card { display:flex; flex-direction:column; background:#fff; border:1px solid var(--border); overflow:hidden; transition:box-shadow .2s; }
+  .sc-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.1); }
+  .sc-card-img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:#111; }
+  .sc-card-img-placeholder { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#111 0%,#222 50%,#111 100%); display:flex; align-items:center; justify-content:center; }
+  .sc-card-img-placeholder span { font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.2); }
+  .sc-card-body { padding:28px 24px; flex:1; display:flex; flex-direction:column; gap:10px; }
+  .sc-card-title { font-family:var(--font-headline); font-size:clamp(16px,1.5vw,22px); font-weight:900; text-transform:uppercase; letter-spacing:.02em; line-height:1.1; color:var(--black); }
+  .sc-card-subtitle { font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--accent); text-transform:uppercase; }
+  .sc-card-desc { font-size:14px; line-height:1.7; color:var(--muted); flex:1; margin-top:4px; }
+  .sc-card-btn { margin-top:24px; align-self:flex-start; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:12px 20px; border:1.5px solid var(--black); color:var(--black); background:transparent; transition:background .15s,color .15s; text-decoration:none; display:inline-block; }
+  .sc-card-btn:hover { background:var(--black); color:#fff; }
+  @media(max-width:900px){ .sc-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:560px){ .sc-grid{ grid-template-columns:1fr; } }
+  </style>
+
   <!-- ─── Speed & Scale Teaser ─── -->
   <section class="speed-teaser-section" id="block-speed" data-cms-block="speed">
     <!-- Video Background -->
@@ -613,6 +637,31 @@
         if(ft.tagline) html('footer-tagline', ft.tagline);
         if(ft.copyright) txt('footer-copyright', ft.copyright);
         if(ft.locations) txt('footer-locations', ft.locations);
+
+        // Hizmet Kartları
+        var sc = idx.serviceCards||{};
+        if(sc.label) html('cms-sc-label', sc.label);
+        var scGrid = document.getElementById('cms-sc-grid');
+        if(scGrid && sc.cards && sc.cards.length){
+          scGrid.innerHTML='';
+          sc.cards.forEach(function(card){
+            var el=document.createElement('div'); el.className='sc-card reveal';
+            var imgHtml = card.image
+              ? '<img class="sc-card-img" src="'+card.image+'" alt="'+card.title+'" loading="lazy">'
+              : '<div class="sc-card-img-placeholder"><span>Fotoğraf</span></div>';
+            var btnHtml = card.btnLink
+              ? '<a class="sc-card-btn" href="'+card.btnLink+'">'+( card.btnText||'İncele →')+'</a>'
+              : '<a class="sc-card-btn" href="iletisim.html">'+(card.btnText||'İncele →')+'</a>';
+            el.innerHTML = imgHtml +
+              '<div class="sc-card-body">'+
+                '<div class="sc-card-subtitle">'+(card.subtitle||'')+'</div>'+
+                '<div class="sc-card-title">'+(card.title||'')+'</div>'+
+                '<div class="sc-card-desc">'+(card.desc||'')+'</div>'+
+                btnHtml+
+              '</div>';
+            scGrid.appendChild(el);
+          });
+        }
 
         // Blok sırası & görünürlük
         applyBlocks((s.index||{})._blocks||[]);

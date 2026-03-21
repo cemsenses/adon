@@ -330,6 +330,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-cta-headline" rows="4"></textarea></div>
         <div class="fg"><div class="fl">Açıklama</div><div class="rw" id="i-cta-body-q"></div></div>
 
+        <div class="section-divider">HİZMET KARTLARI (4'lü Grid)</div>
+        <div class="fg"><div class="fl">Bölüm Etiketi</div><input class="fi" id="i-sc-label" type="text" placeholder="Hizmetlerimiz"/></div>
+        <div id="r-service-cards"></div>
+
         <div class="section-divider">SSS (Sıkça Sorulan Sorular)</div>
         <div class="frow">
           <div class="fg"><div class="fl">Başlık</div><textarea class="fi" id="i-faq-headline" rows="2"></textarea></div>
@@ -857,6 +861,17 @@ function populate(){
   bind('i-cta-headline',v=>idx.cta.headline=v);
   bind('i-cta-btn',    v=>idx.cta.ctaText=v);
   bind('i-faq-headline',v=>idx.faq.headline=v);
+
+  // Hizmet Kartları
+  val('i-sc-label',(idx.serviceCards||{}).label);
+  bind('i-sc-label', v=>{ if(!idx.serviceCards) idx.serviceCards={}; idx.serviceCards.label=v; setDirty(); });
+  buildRepeater('r-service-cards', (idx.serviceCards||{}).cards||[], [
+    {key:'title',   label:'Ana Başlık'},
+    {key:'subtitle',label:'Alt Başlık'},
+    {key:'desc',    label:'Kısa Açıklama', rows:4},
+    {key:'btnText', label:'Buton Metni'},
+    {key:'btnLink', label:'Buton Linki'}
+  ], arr=>{ if(!idx.serviceCards) idx.serviceCards={}; idx.serviceCards.cards=arr; });
 
   buildRepeater('r-pillars', idx.pillars||[], [{key:'num',label:'No'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
   buildRepeater('r-speed-cards', (idx.speedTeaser||{}).cards||[], [{key:'num',label:'No'},{key:'title',label:'Başlık'},{key:'body',label:'Açıklama',rows:3}]);
