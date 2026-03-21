@@ -30,6 +30,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <link rel="stylesheet" href="styles/main.css?v=2" />
     <link rel="stylesheet" href="styles/animations.css" />
     <style>
@@ -211,10 +212,10 @@
         }
 
         /* ── Video Grid ── */
-        .video-section { display: none; }
-        .video-section.active { display: block; }
-        .image-section { display: block; }
-        .image-section.hidden { display: none; }
+        .video-section { display: block; }
+        .video-section.hidden { display: none; }
+        .image-section { display: none; }
+        .image-section.active { display: block; }
 
         .video-grid {
             display: grid;
@@ -355,8 +356,14 @@
 
     <!-- ─── Tab Switcher ─── -->
     <div class="tab-switcher">
-        <button class="tab-btn active" id="tab-gorsel">Görsel</button>
-        <button class="tab-btn" id="tab-video">Video</button>
+        <button class="tab-btn active" id="tab-video">Video</button>
+        <button class="tab-btn" id="tab-gorsel">Görsel</button>
+    </div>
+
+    <!-- ─── Video Bölümü ─── -->
+    <div class="video-section" id="video-section">
+        <div class="video-grid" id="video-grid"></div>
+        <div class="video-grid video-grid--vertical" id="video-grid-vertical" style="margin-top:2px;display:none;"></div>
     </div>
 
     <!-- ─── Görsel Bölümü ─── -->
@@ -364,12 +371,6 @@
         <div class="works-grid" style="gap: 2px;" id="works-grid">
             <!-- Dinamik olarak works.json'dan yüklenir -->
         </div>
-    </div>
-
-    <!-- ─── Video Bölümü ─── -->
-    <div class="video-section" id="video-section">
-        <div class="video-grid" id="video-grid"></div>
-        <div class="video-grid video-grid--vertical" id="video-grid-vertical" style="margin-top:2px;display:none;"></div>
     </div>
 
     <!-- ─── Lightbox ─── -->
@@ -490,14 +491,14 @@
         tabGorsel.addEventListener('click', () => {
             tabGorsel.classList.add('active');
             tabVideo.classList.remove('active');
-            imageSection.classList.remove('hidden');
-            videoSection.classList.remove('active');
+            imageSection.classList.add('active');
+            videoSection.classList.add('hidden');
         });
         tabVideo.addEventListener('click', () => {
             tabVideo.classList.add('active');
             tabGorsel.classList.remove('active');
-            videoSection.classList.add('active');
-            imageSection.classList.add('hidden');
+            videoSection.classList.remove('hidden');
+            imageSection.classList.remove('active');
         });
 
         // ── Görsel Grid ──
@@ -567,7 +568,9 @@
         lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-        // ── Video Grid ──
+        // ── Video Player Yönetimi ──
+        const vimeoPlayers = [];  // tüm Vimeo player örnekleri
+
         function getYouTubeId(url) {
             const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
             return m ? m[1] : null;
@@ -587,9 +590,30 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen loading="lazy"></iframe>`;
             } else if (vmId) {
-                cell.innerHTML = `<iframe src="https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowfullscreen loading="lazy"></iframe>`;
+                // autopause=0: diğer videoları Vimeo'nun kendi mekanizması yerine biz yönetiyoruz
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0`;
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                iframe.allowFullscreen = true;
+                iframe.loading = 'lazy';
+                cell.appendChild(iframe);
+
+                // Player API ile olayları dinle
+                const player = new Vimeo.Player(iframe);
+
+                // Bitince: başa sar ve durdur
+                player.on('ended', () => {
+                    player.setCurrentTime(0).then(() => player.pause());
+                });
+
+                // Oynatılınca: diğer tüm oynatıcıları durdur
+                player.on('play', () => {
+                    vimeoPlayers.forEach(p => {
+                        if (p !== player) p.pause();
+                    });
+                });
+
+                vimeoPlayers.push(player);
             }
             return cell;
         }
