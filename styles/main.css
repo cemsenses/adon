@@ -1860,3 +1860,7 @@ footer {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ── Ekip: 6 kişi → 4 sütun grid'de son 2 kart ortalı ── */
+#cms-team .team-card:nth-child(5) { grid-column: 2; }
+#cms-team .team-card:nth-child(6) { grid-column: 3; }
