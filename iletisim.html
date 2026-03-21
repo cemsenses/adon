@@ -439,7 +439,7 @@
                 <div class="contact-form-col">
                     <div class="contact-form-title">Mesaj Gönderin</div>
 
-                    <form id="contact-form" action="https://formspree.io/f/info@adon.com.tr" method="POST">
+                    <form id="contact-form" action="https://formspree.io/f/xreydnlw" method="POST">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -582,6 +582,21 @@
                 });
 
                 if (response.ok) {
+                    // Lead'i localStorage'a kaydet
+                    const lead = {
+                        id: Date.now(),
+                        date: new Date().toISOString(),
+                        name: document.getElementById('name').value.trim(),
+                        company: document.getElementById('company').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        service: document.getElementById('service').value,
+                        message: document.getElementById('message').value.trim(),
+                        status: 'new'
+                    };
+                    const leads = JSON.parse(localStorage.getItem('adon_leads') || '[]');
+                    leads.unshift(lead);
+                    localStorage.setItem('adon_leads', JSON.stringify(leads));
+
                     btn.style.display = 'none';
                     document.getElementById('form-success').style.display = 'block';
                     this.reset();

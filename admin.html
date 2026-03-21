@@ -151,6 +151,34 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .btn-block.btn-hide{color:var(--muted)}
 .btn-block.btn-hide.active{background:var(--black);border-color:var(--black);color:#fff}
 .btn-block:disabled{opacity:.25;cursor:not-allowed}
+
+/* ── LEADS ── */
+.leads-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.leads-filter{display:flex;gap:6px}
+.leads-filter-btn{padding:6px 14px;border:1px solid var(--border);background:none;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .15s}
+.leads-filter-btn.active{background:var(--black);border-color:var(--black);color:#fff}
+.leads-count{font-size:12px;color:var(--muted);margin-left:auto}
+.leads-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:13px}
+.leads-empty-icon{font-size:32px;margin-bottom:12px}
+.lead-card{background:#fff;border:1px solid var(--border);margin-bottom:12px;transition:box-shadow .15s}
+.lead-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.lead-card.status-contacted{border-left:3px solid #22c55e}
+.lead-card.status-new{border-left:3px solid var(--red)}
+.lead-header{display:flex;align-items:flex-start;gap:16px;padding:16px 16px 12px}
+.lead-avatar{width:40px;height:40px;border-radius:50%;background:var(--black);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;letter-spacing:.02em}
+.lead-meta{flex:1;min-width:0}
+.lead-name{font-size:14px;font-weight:700;color:var(--black);margin-bottom:2px}
+.lead-company{font-size:12px;color:var(--muted)}
+.lead-email{font-size:12px;color:var(--red);font-weight:600;margin-top:2px}
+.lead-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.lead-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);color:var(--muted)}
+.lead-badge.new{background:#fff0ee;border-color:#fca5a5;color:#dc2626}
+.lead-badge.contacted{background:#f0fdf4;border-color:#86efac;color:#16a34a}
+.lead-date{font-size:11px;color:var(--muted)}
+.lead-service-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:#f5f5f0;color:var(--muted)}
+.lead-body{padding:0 16px 12px;border-top:1px solid #f0f0ec;margin:0 16px}
+.lead-message{font-size:13px;color:#444;line-height:1.6;margin-top:10px;white-space:pre-line}
+.lead-actions{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #f0f0ec}
 </style>
 </head>
 <body>
@@ -194,6 +222,9 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div class="sidebar-label">Portföy</div>
       <button class="sidebar-btn" data-panel="p-gorsel">Görseller</button>
       <button class="sidebar-btn" data-panel="p-video">Videolar</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">CRM</div>
+      <button class="sidebar-btn" data-panel="leads">Başvurular <span id="leads-sidebar-count" style="background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;display:none"></span></button>
     </nav>
 
     <main class="cms-main">
@@ -542,6 +573,26 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
           <button class="bsm primary" id="btn-add-video" style="margin-top:4px">Ekle →</button>
         </div>
         <div class="vl" id="admin-videos"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           BAŞVURULAR (LEADS)
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-leads">
+        <div class="panel-title">Başvurular</div>
+        <div class="panel-sub">İletişim formundan gelen başvurular · Bu tarayıcıda saklanır</div>
+
+        <div class="leads-toolbar">
+          <div class="leads-filter">
+            <button class="leads-filter-btn active" data-lf="all">Tümü</button>
+            <button class="leads-filter-btn" data-lf="new">Yeni</button>
+            <button class="leads-filter-btn" data-lf="contacted">İletişim Kuruldu</button>
+          </div>
+          <span class="leads-count" id="leads-count-label"></span>
+          <button class="bsm danger" id="btn-clear-leads" style="margin-left:auto">Tümünü Sil</button>
+        </div>
+
+        <div id="leads-list"></div>
       </div>
 
     </main>
@@ -919,6 +970,9 @@ function populate(){
   initCarouselAdd();
   renderHpVideos();
   initHpVideoAdd();
+
+  // ── LEADS ──
+  initLeads();
 }
 
 // ══════════════════════════════════════════
@@ -1347,6 +1401,118 @@ function initBlockManagers(){
   renderBlockManager('bm-sentez',     'sentez');
   renderBlockManager('bm-cozumler',   'cozumler');
   renderBlockManager('bm-iletisim',   'iletisim');
+}
+
+// ══════════════════════════════════════════
+// LEADS (BAŞVURULAR)
+// ══════════════════════════════════════════
+const SERVICE_LABELS = {
+  'video': 'AI Video Prodüksiyon',
+  'ecommerce': 'Ürün & E-Ticaret',
+  'fashion': 'Moda & Yaşam Tarzı',
+  'speed': 'Hız & Ölçek',
+  'consistency': 'Titizlik & Tutarlılık',
+  'creative': 'Yaratıcı Atılım',
+  'other': 'Diğer',
+  '': 'Belirtilmemiş'
+};
+
+let leadsFilter = 'all';
+
+function getLeads(){ return JSON.parse(localStorage.getItem('adon_leads')||'[]'); }
+function saveLeads(leads){ localStorage.setItem('adon_leads', JSON.stringify(leads)); }
+
+function updateLeadsBadge(){
+  const leads = getLeads();
+  const newCount = leads.filter(l=>l.status==='new').length;
+  const badge = document.getElementById('leads-sidebar-count');
+  if(badge){
+    if(newCount > 0){ badge.textContent = newCount; badge.style.display='inline'; }
+    else { badge.style.display='none'; }
+  }
+}
+
+function renderLeads(){
+  const all = getLeads();
+  const filtered = leadsFilter === 'all' ? all : all.filter(l => l.status === leadsFilter);
+  const list = document.getElementById('leads-list');
+  const countLabel = document.getElementById('leads-count-label');
+  if(!list) return;
+
+  countLabel.textContent = filtered.length + ' başvuru';
+
+  if(!filtered.length){
+    list.innerHTML = `<div class="leads-empty"><div class="leads-empty-icon">📭</div>${leadsFilter==='all'?'Henüz başvuru yok. İletişim formundan gelen başvurular burada görünecek.':'Bu kategoride başvuru yok.'}</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  filtered.forEach(function(lead){
+    const initials = (lead.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    const dateStr = lead.date ? new Date(lead.date).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const card = document.createElement('div');
+    card.className = 'lead-card status-' + (lead.status||'new');
+    card.innerHTML = `
+      <div class="lead-header">
+        <div class="lead-avatar">${initials}</div>
+        <div class="lead-meta">
+          <div class="lead-name">${lead.name||'—'}</div>
+          ${lead.company?`<div class="lead-company">${lead.company}</div>`:''}
+          <div class="lead-email">${lead.email||'—'}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="lead-badge ${lead.status==='contacted'?'contacted':'new'}">${lead.status==='contacted'?'İletişim Kuruldu':'Yeni'}</span>
+          <span class="lead-date">${dateStr}</span>
+          ${lead.service?`<span class="lead-service-tag">${SERVICE_LABELS[lead.service]||lead.service}</span>`:''}
+        </div>
+      </div>
+      ${lead.message?`<div class="lead-body"><div class="lead-message">${lead.message}</div></div>`:''}
+      <div class="lead-actions">
+        <a class="bsm" href="mailto:${lead.email}?subject=ADON Studio — Başvurunuz Hakkında&body=Merhaba ${lead.name},%0A%0A" target="_blank">✉ Yanıtla</a>
+        <button class="bsm" data-lead-toggle="${lead.id}">${lead.status==='contacted'?'Yeni Olarak İşaretle':'✓ İletişim Kuruldu'}</button>
+        <button class="bsm danger" data-lead-del="${lead.id}" style="margin-left:auto">Sil</button>
+      </div>`;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('[data-lead-toggle]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const leads = getLeads();
+      const id = +btn.dataset.leadToggle;
+      const lead = leads.find(l=>l.id===id);
+      if(lead){ lead.status = lead.status==='contacted' ? 'new' : 'contacted'; saveLeads(leads); renderLeads(); updateLeadsBadge(); }
+    };
+  });
+
+  list.querySelectorAll('[data-lead-del]').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(!confirm('Bu başvuru silinsin mi?')) return;
+      const leads = getLeads().filter(l=>l.id !== +btn.dataset.leadDel);
+      saveLeads(leads); renderLeads(); updateLeadsBadge();
+    };
+  });
+}
+
+function initLeads(){
+  document.querySelectorAll('[data-lf]').forEach(btn=>{
+    btn.onclick = ()=>{
+      document.querySelectorAll('[data-lf]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      leadsFilter = btn.dataset.lf;
+      renderLeads();
+    };
+  });
+
+  const clearBtn = document.getElementById('btn-clear-leads');
+  if(clearBtn){
+    clearBtn.onclick = ()=>{
+      if(!confirm('Tüm başvurular silinsin mi? Bu işlem geri alınamaz.')) return;
+      saveLeads([]); renderLeads(); updateLeadsBadge();
+    };
+  }
+
+  renderLeads();
+  updateLeadsBadge();
 }
 </script>
 </body>
