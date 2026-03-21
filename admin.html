@@ -1086,6 +1086,25 @@ async function publish(){
   btn.disabled=true; btn.textContent='Yükleniyor...'; st.textContent='';
 
   try{
+    // GitHub'dan güncel site.json çek — ekip üyelerini koru
+    try{
+      st.textContent='Güncel veri alınıyor...';
+      const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
+      const rr=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${SITE_PATH}?ref=${GH.branch}&t=${Date.now()}`,{headers,cache:'no-store'});
+      if(rr.ok){
+        const rd=await rr.json();
+        const remoteObj=JSON.parse(atob(rd.content.replace(/\n/g,'')));
+        const remoteTeam=(remoteObj.hakkimizda||{}).team||[];
+        const localTeam=(site.hakkimizda||{}).team||[];
+        // Uzaktaki ekipte admin'de görünmeyen üye varsa koru
+        if(remoteTeam.length>localTeam.length){
+          if(!site.hakkimizda) site.hakkimizda={};
+          site.hakkimizda.team=remoteTeam;
+          buildRepeater('r-team', remoteTeam, [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
+        }
+      }
+    }catch(e){ console.warn('Team merge skip:',e); }
+
     // Hero görselleri
     for(const page of ['hakkimizda','sentez','cozumler']){
       const h=(site[page]||{}).hero||{};
