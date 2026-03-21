@@ -222,6 +222,9 @@
             gap: 2px;
             padding: 0;
         }
+        @media (max-width: 768px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
         .video-item {
             aspect-ratio: 16/9;
             background: #0a0a0a;
@@ -565,21 +568,31 @@
             const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
             return m ? m[1] : null;
         }
+        function getVimeoId(url) {
+            const m = url.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/|album\/[^/]+\/video\/)?(\d+)/);
+            return m ? m[1] : null;
+        }
 
         function renderVideoGrid(videos) {
             videoGrid.innerHTML = '';
-            // Çift sayıya tamamla (boş alan için)
+            // Masaüstünde çift sayıya tamamla
+            const isMobile = window.innerWidth <= 768;
             const items = [...videos];
-            if (items.length % 2 !== 0) items.push(null);
+            if (!isMobile && items.length % 2 !== 0) items.push(null);
 
             items.forEach(v => {
                 const cell = document.createElement('div');
                 cell.className = 'video-item';
                 if (v) {
-                    const id = getYouTubeId(v.url);
-                    if (id) {
-                        cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
+                    const ytId = getYouTubeId(v.url);
+                    const vmId = getVimeoId(v.url);
+                    if (ytId) {
+                        cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen loading="lazy"></iframe>`;
+                    } else if (vmId) {
+                        cell.innerHTML = `<iframe src="https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0"
+                            allow="autoplay; fullscreen; picture-in-picture"
                             allowfullscreen loading="lazy"></iframe>`;
                     }
                 } else {
