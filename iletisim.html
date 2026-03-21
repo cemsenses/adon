@@ -37,17 +37,62 @@
         /* ── Hero ── */
         .contact-hero {
             background: var(--black);
-            padding: calc(var(--nav-height) + 100px) 64px 100px;
+            padding: calc(var(--nav-height) + 100px) 64px 120px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
         }
 
         .contact-hero-inner {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: end;
+        }
+
+        /* ── Scroll arrow (çalışmalar ile aynı) ── */
+        .scroll-down-btn {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            z-index: 10;
+            animation: sd-fadein 1.2s ease 1s both;
+            padding: 0;
+        }
+        .scroll-down-btn:hover { color: #fff; }
+        .scroll-down-line {
+            display: block;
+            width: 1px;
+            height: 48px;
+            background: currentColor;
+            transform-origin: top;
+            animation: sd-line 2s ease-in-out infinite;
+        }
+        .scroll-down-arrow {
+            width: 20px;
+            height: 20px;
+            animation: sd-arrow 2s ease-in-out infinite;
+        }
+        @keyframes sd-fadein {
+            from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes sd-line {
+            0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+            40%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+            80%  { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
+            100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+        }
+        @keyframes sd-arrow {
+            0%, 35% { opacity: 0; transform: translateY(-8px); }
+            65%     { opacity: 1; transform: translateY(4px); }
+            100%    { opacity: 0; transform: translateY(10px); }
         }
 
         .contact-hero h1 {
@@ -164,6 +209,14 @@
 
         .contact-info-value a:hover {
             color: var(--accent);
+        }
+
+        /* E-posta küçük harf */
+        #cms-email-link {
+            text-transform: none;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0;
         }
 
         .contact-info-value .sub {
@@ -316,11 +369,7 @@
         /* ── Responsive ── */
         @media (max-width: 900px) {
             .contact-hero {
-                padding: calc(var(--nav-height) + 60px) 24px 60px;
-            }
-            .contact-hero-inner {
-                grid-template-columns: 1fr;
-                gap: 40px;
+                padding: calc(var(--nav-height) + 60px) 24px 100px;
             }
             .contact-body {
                 padding: 60px 24px 80px;
@@ -368,34 +417,20 @@
         <!-- ─── Hero ─── -->
         <header class="contact-hero" id="block-hero" data-cms-block="hero">
             <div class="contact-hero-inner">
-                <div>
-                    <h1 id="cms-hero-title">
-                        Projenizi<br>
-                        Konuşalım.
-                        <em>Dönüşümü başlatalım.</em>
-                    </h1>
-                </div>
-                <div class="contact-hero-right">
-                    <p id="cms-hero-desc">
-                        Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın.
-                        Formu doldurun, 24 saat içinde dönelim.
-                    </p>
-                    <div class="contact-hero-meta">
-                        <div class="contact-hero-meta-item">
-                            <div class="contact-hero-meta-dot"></div>
-                            <div class="contact-hero-meta-text"><strong>İstanbul</strong> — <span id="cms-ist">LOTUS Halaskargazi Cd. 38-66</span></div>
-                        </div>
-                        <div class="contact-hero-meta-item">
-                            <div class="contact-hero-meta-dot"></div>
-                            <div class="contact-hero-meta-text"><strong>Adana</strong> — <span id="cms-ada">Türkiye</span></div>
-                        </div>
-                        <div class="contact-hero-meta-item">
-                            <div class="contact-hero-meta-dot"></div>
-                            <div class="contact-hero-meta-text"><strong>E-posta</strong> — <span id="cms-email-hero">info@adon.com.tr</span></div>
-                        </div>
-                    </div>
-                </div>
+                <h1 id="cms-hero-title">
+                    Projenizi<br>
+                    Konuşalım.
+                    <em>Dönüşümü başlatalım.</em>
+                </h1>
             </div>
+
+            <!-- Scroll ok -->
+            <button class="scroll-down-btn" onclick="document.getElementById('block-form').scrollIntoView({behavior:'smooth'})" aria-label="Aşağı kaydır">
+                <span class="scroll-down-line"></span>
+                <svg class="scroll-down-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </header>
 
         <!-- ─── Body ─── -->
