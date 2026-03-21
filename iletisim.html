@@ -643,6 +643,10 @@
             }
         });
 
+        // Sayfa yüklenirken scroll'u en üste kilitle
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+
         const nav = document.querySelector('.nav');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 80) {
