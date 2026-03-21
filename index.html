@@ -332,8 +332,8 @@
     .sc-card-img-placeholder { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#111 0%,#222 50%,#111 100%); display:flex; align-items:center; justify-content:center; }
     .sc-card-img-placeholder span { font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.2); }
     .sc-card-body { padding:28px 24px; flex:1; display:flex; flex-direction:column; gap:10px; }
-    .sc-card-title { font-family:var(--font-headline); font-size:clamp(16px,1.5vw,22px); font-weight:900; text-transform:uppercase; letter-spacing:.02em; line-height:1.1; color:var(--black); }
-    .sc-card-subtitle { font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--accent); text-transform:uppercase; }
+    .sc-card-title { font-family:var(--font-headline); font-size:clamp(16px,1.5vw,22px); font-weight:900; text-transform:uppercase; letter-spacing:.08em; line-height:1.1; color:var(--black); }
+    .sc-card-subtitle { font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; margin-top:6px; }
     .sc-card-desc { font-size:14px; line-height:1.7; color:var(--muted); flex:1; margin-top:4px; }
     .sc-card-btn { margin-top:24px; align-self:flex-start; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:12px 20px; border:1.5px solid var(--black); color:var(--black); background:transparent; transition:background .15s,color .15s; text-decoration:none; display:inline-block; }
     .sc-card-btn:hover { background:var(--black); color:#fff; }
@@ -656,8 +656,8 @@
               : '<a class="sc-card-btn" href="iletisim.html">'+(card.btnText||'İncele →')+'</a>';
             el.innerHTML = imgHtml +
               '<div class="sc-card-body">'+
-                '<div class="sc-card-subtitle">'+(card.subtitle||'')+'</div>'+
                 '<div class="sc-card-title">'+(card.title||'')+'</div>'+
+                '<div class="sc-card-subtitle">'+(card.subtitle||'')+'</div>'+
                 '<div class="sc-card-desc">'+(card.desc||'')+'</div>'+
                 btnHtml+
               '</div>';

@@ -866,6 +866,7 @@ function populate(){
   val('i-sc-label',(idx.serviceCards||{}).label);
   bind('i-sc-label', v=>{ if(!idx.serviceCards) idx.serviceCards={}; idx.serviceCards.label=v; setDirty(); });
   buildRepeater('r-service-cards', (idx.serviceCards||{}).cards||[], [
+    {key:'image',   label:'Kart Görseli', type:'img'},
     {key:'title',   label:'Ana Başlık'},
     {key:'subtitle',label:'Alt Başlık'},
     {key:'desc',    label:'Kısa Açıklama', rows:4},
@@ -1104,6 +1105,16 @@ async function publish(){
         await ghPut('media/carousel/'+item._imgFilename, item._imgData, 'media: carousel/'+item._imgFilename);
         item.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/media/carousel/${item._imgFilename}`;
         delete item._imgData; delete item._imgFilename;
+      }
+    }
+
+    // Hizmet kartı görselleri
+    for(const card of (site.index||{}).serviceCards?.cards||[]){
+      if(card._imageData&&card._imageFilename){
+        st.textContent='Kart görseli: '+card.title;
+        await ghPut('media/services/'+card._imageFilename, card._imageData, 'media: services/'+card._imageFilename);
+        card.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/media/services/${card._imageFilename}`;
+        delete card._imageData; delete card._imageFilename;
       }
     }
 
