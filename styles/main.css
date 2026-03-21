@@ -1778,4 +1778,79 @@ footer {
   .pillar {
     border-right: none;
   }
+}}
+
+/* ══════════════════════════════════════════
+   MOBİL — kapsamlı düzeltmeler
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Video grid: yan yana → alt alta ── */
+  #homepage-video-grid {
+    grid-template-columns: 1fr !important;
+  }
+  #homepage-video-grid > div {
+    aspect-ratio: 16 / 9;
+    height: auto !important;
+  }
+
+  /* ── Çözümler: dörtlü kart & video ── */
+  #block-craft .solutions-by-craft {
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+  }
+  #block-craft .solution-title {
+    font-size: clamp(36px, 8vw, 52px) !important;
+    min-height: auto !important;
+  }
+  #block-craft-video {
+    padding: 24px 0 48px !important;
+  }
+  #block-craft-video > div {
+    width: 100% !important;
+    padding-bottom: 56.25% !important;
+  }
+
+  /* ── İletişim sayfası ── */
+  .contact-body {
+    padding: 48px 20px 64px !important;
+  }
+  .contact-body-inner {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .contact-info-col {
+    position: static !important;
+  }
+
+  /* ── Hero başlık minimum boyutu ── */
+  .hero-text-top,
+  .hero-text-bottom {
+    font-size: clamp(44px, 11vw, 100px) !important;
+  }
+
+  /* ── Section headline (tüm sayfalarda) ── */
+  .section-headline {
+    font-size: clamp(40px, 9vw, 120px) !important;
+  }
+
+  /* ── Hız & Ölçek ── */
+  .speed-teaser-section {
+    padding: 64px 20px !important;
+  }
+
+  /* ── Çözümler by-objective kart grid ── */
+  .card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Why Adon içerik ── */
+  .why-adon-content {
+    padding: 64px 20px !important;
+  }
+
+  /* ── Calismalar grid ── */
+  .works-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
