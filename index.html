@@ -645,7 +645,7 @@
         if(scGrid && sc.cards && sc.cards.length){
           scGrid.innerHTML='';
           sc.cards.forEach(function(card){
-            var el=document.createElement('div'); el.className='sc-card reveal';
+            var el=document.createElement('div'); el.className='sc-card';
             var imgHtml = card.image
               ? '<img class="sc-card-img" src="'+card.image+'" alt="'+card.title+'" loading="lazy">'
               : '<div class="sc-card-img-placeholder"><span>Fotoğraf</span></div>';
