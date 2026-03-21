@@ -520,8 +520,8 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
               <input class="fi" id="hv-title" type="text" placeholder="Video başlığı (opsiyonel)"/>
             </div>
             <div class="fg">
-              <div class="fl">YouTube URL</div>
-              <input class="fi" id="hv-url" type="text" placeholder="https://youtube.com/watch?v=..."/>
+              <div class="fl">Vimeo URL</div>
+              <input class="fi" id="hv-url" type="text" placeholder="https://vimeo.com/123456789"/>
             </div>
           </div>
           <button class="bsm primary" id="btn-add-hpvideo" style="margin-top:4px">Ekle →</button>
@@ -1028,6 +1028,10 @@ function resetIw(wid,fid){ const w=document.getElementById(wid); w.innerHTML=`<i
 // VIDEOS
 // ══════════════════════════════════════════
 function ytId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/); return m?m[1]:null; }
+function vimeoId(url){ const m=url.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/|album\/[^/]+\/video\/)?(\d+)/); return m?m[1]:null; }
+function videoId(url){ return ytId(url)||vimeoId(url)||null; }
+function thumbSrc(url){ const yt=ytId(url); if(yt) return `https://img.youtube.com/vi/${yt}/mqdefault.jpg`; return ''; }
+async function vimeoThumb(id){ try{ const r=await fetch(`https://vimeo.com/api/v2/video/${id}.json`); const d=await r.json(); return d[0]?.thumbnail_medium||''; }catch(e){ return ''; } }
 function renderVideos(){
   const c=document.getElementById('admin-videos'); c.innerHTML='';
   if(!videos.length){ c.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi.</p>'; return; }
@@ -1264,12 +1268,14 @@ function renderHpVideos(){
   list.innerHTML='';
   if(!videos.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi. Videolar carousel\'in üstünde 2\'li sıra halinde gösterilir.</p>'; return; }
   videos.forEach((v,i)=>{
-    const id=ytId(v.url); const thumb=id?`https://img.youtube.com/vi/${id}/mqdefault.jpg`:'';
     const card=document.createElement('div'); card.className='vc';
+    const isVimeo = !!vimeoId(v.url);
+    const vid = isVimeo ? vimeoId(v.url) : ytId(v.url);
+    const ytThumb = !isVimeo && vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : '';
     card.innerHTML=`
-      <div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div>
+      <div class="vt" id="hv-thumb-${i}">${ytThumb?`<img src="${ytThumb}" alt="">`:'<div style="width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Vimeo</div>'}</div>
       <div class="vi-info">
-        <div class="vi-title">${v.title||'Başlıksız'}</div>
+        <div class="vi-title">${v.title||'Başlıksız'} <span style="font-size:10px;color:var(--muted);font-weight:400">${isVimeo?'· Vimeo':'· YouTube'}</span></div>
         <div class="vi-url">${v.url}</div>
         <div class="vi-actions">
           <button class="bsm danger" data-hvdel="${i}">Sil</button>
@@ -1278,6 +1284,10 @@ function renderHpVideos(){
         </div>
       </div>`;
     list.appendChild(card);
+    // Vimeo thumbnail'i async yükle
+    if(isVimeo && vid){
+      vimeoThumb(vid).then(src=>{ if(src){ const t=document.getElementById(`hv-thumb-${i}`); if(t) t.innerHTML=`<img src="${src}" alt="">`; } });
+    }
   });
   list.querySelectorAll('[data-hvdel]').forEach(b=>{ b.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+b.dataset.hvdel,1); setDirty(); renderHpVideos(); } }; });
   list.querySelectorAll('[data-hvup]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.hvup; [videos[i],videos[i-1]]=[videos[i-1],videos[i]]; setDirty(); renderHpVideos(); }; });
@@ -1287,8 +1297,8 @@ function renderHpVideos(){
 function initHpVideoAdd(){
   document.getElementById('btn-add-hpvideo').onclick=()=>{
     const url=document.getElementById('hv-url').value.trim();
-    if(!url){ alert('YouTube URL gerekli'); return; }
-    if(!ytId(url)){ alert('Geçerli YouTube URL girin'); return; }
+    if(!url){ alert('Vimeo URL gerekli'); return; }
+    if(!vimeoId(url) && !ytId(url)){ alert('Geçerli Vimeo veya YouTube URL girin'); return; }
     if(!site.index.homepageVideos) site.index.homepageVideos=[];
     site.index.homepageVideos.push({id:Date.now(), title:document.getElementById('hv-title').value.trim()||'Video', url});
     setDirty(); renderHpVideos();
