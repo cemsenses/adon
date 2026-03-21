@@ -1184,6 +1184,10 @@ footer {
   gap: 2px;
 }
 
+.team-card-spacer {
+  background: transparent;
+}
+
 .team-card {
   background: var(--card-bg);
   padding: 0;
