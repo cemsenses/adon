@@ -1864,6 +1864,13 @@ footer {
   .works-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* ── Ekip kartları: mobilde grid-column/row sıfırla ── */
+  #cms-team .team-card:nth-child(5),
+  #cms-team .team-card:nth-child(6) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
 }
 
 /* ── Ekip: 6 kişi → 4 sütun grid'de son 2 kart ortalı (sadece masaüstü) ── */
