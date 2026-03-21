@@ -187,42 +187,42 @@
         <div class="team-grid stagger" id="cms-team">
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/cem-adon-1.avif" width="300" height="300" loading="lazy" alt="Cem Şenses">
+                    <img src="media/kisiler/cem-adon-1.avif" width="300" height="300" loading="eager" alt="Cem Şenses">
                 </div>
                 <div class="team-name">Cem Şenses</div>
                 <div class="team-role">Kurucu</div>
             </div>
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/murat-adon-1.avif" width="300" height="300" loading="lazy" alt="Murat Özoral">
+                    <img src="media/kisiler/murat-adon-1.avif" width="300" height="300" loading="eager" alt="Murat Özoral">
                 </div>
                 <div class="team-name">Murat Özoral</div>
                 <div class="team-role">Stratejik Ortak</div>
             </div>
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/ulvi-yaman-adon.avif" width="300" height="300" loading="lazy" alt="Ulvi Yaman">
+                    <img src="media/kisiler/ulvi-yaman-adon.avif" width="300" height="300" loading="eager" alt="Ulvi Yaman">
                 </div>
                 <div class="team-name">Ulvi Yaman</div>
                 <div class="team-role">Stratejist</div>
             </div>
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/ercument-adon-3.avif" width="300" height="300" loading="lazy" alt="Ercüment Subaşı">
+                    <img src="media/kisiler/ercument-adon-3.avif" width="300" height="300" loading="eager" alt="Ercüment Subaşı">
                 </div>
                 <div class="team-name">Ercüment Subaşı</div>
                 <div class="team-role">Yaratıcı Ses Yönetmeni</div>
             </div>
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/Dilara%20ama%20hafif%20g%C3%BClen.png" width="300" height="300" loading="lazy" alt="Dilara Turna">
+                    <img src="media/kisiler/Dilara%20ama%20hafif%20g%C3%BClen.png" width="300" height="300" loading="eager" alt="Dilara Turna">
                 </div>
                 <div class="team-name">Dilara Turna</div>
                 <div class="team-role">Kreatif Direktör</div>
             </div>
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="media/kisiler/Berkant%20ama%20hafif%20g%C3%BClen.png" width="300" height="300" loading="lazy" alt="Berkant Zafer Kulaksız">
+                    <img src="media/kisiler/Berkant%20ama%20hafif%20g%C3%BClen.png" width="300" height="300" loading="eager" alt="Berkant Zafer Kulaksız">
                 </div>
                 <div class="team-name">Berkant Zafer Kulaksız</div>
                 <div class="team-role">Görsel Tasarımcı</div>
@@ -459,7 +459,7 @@
             hk.team.forEach(function(m){
               if(!existing.has(m.name)){
                 var d=document.createElement('div'); d.className='team-card';
-                d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="lazy" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
+                d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="eager" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
                 tc.appendChild(d);
               }
             });
