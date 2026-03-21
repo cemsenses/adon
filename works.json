@@ -1,12 +1,21 @@
 [
   {
-    "id": 1774021642284,
-    "title": "sdsdd",
+    "id": 1774109307997,
+    "title": "Rossmann",
     "category": "Ürün & E-Ticaret",
     "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/sdsdd_1774021642294.jpg",
-    "placeholder": "??",
-    "color": "linear-gradient(135deg, #f2e8b8, #f2c8a8)"
+    "image": "",
+    "placeholder": "RO",
+    "color": "linear-gradient(135deg,#b8c9e8,#b8e8e0)"
+  },
+  {
+    "id": 1774109282659,
+    "title": "Rossmann",
+    "category": "Ürün & E-Ticaret",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/rossmann_1774109277324.png",
+    "placeholder": "RO",
+    "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
   },
   {
     "id": 1,
