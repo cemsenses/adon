@@ -181,6 +181,11 @@ button {
   color: var(--black);
 }
 
+/* ─── Logo swap on scroll ─── */
+.nav .logo-scrolled { display: none !important; }
+.nav.scrolled .logo-default { display: none !important; }
+.nav.scrolled .logo-scrolled { display: block !important; }
+
 .nav-links {
   display: flex;
   gap: 40px;
