@@ -222,14 +222,20 @@
             gap: 2px;
             padding: 0;
         }
+        .video-grid--vertical {
+            grid-template-columns: repeat(3, 1fr);
+        }
         @media (max-width: 768px) {
-            .video-grid { grid-template-columns: 1fr; }
+            .video-grid, .video-grid--vertical { grid-template-columns: 1fr; }
         }
         .video-item {
             aspect-ratio: 16/9;
             background: #0a0a0a;
             position: relative;
             overflow: hidden;
+        }
+        .video-item--vertical {
+            aspect-ratio: 9/16;
         }
         .video-item iframe {
             width: 100%;
@@ -363,9 +369,8 @@
 
     <!-- ─── Video Bölümü ─── -->
     <div class="video-section" id="video-section">
-        <div class="video-grid" id="video-grid">
-            <!-- Dinamik olarak videos.json'dan yüklenir -->
-        </div>
+        <div class="video-grid" id="video-grid"></div>
+        <div class="video-grid video-grid--vertical" id="video-grid-vertical" style="margin-top:2px;display:none;"></div>
     </div>
 
     <!-- ─── Lightbox ─── -->
@@ -573,33 +578,52 @@
             return m ? m[1] : null;
         }
 
-        function renderVideoGrid(videos) {
-            videoGrid.innerHTML = '';
-            // Masaüstünde çift sayıya tamamla
-            const isMobile = window.innerWidth <= 768;
-            const items = [...videos];
-            if (!isMobile && items.length % 2 !== 0) items.push(null);
+        function makeVideoCell(v, vertical) {
+            const cell = document.createElement('div');
+            cell.className = 'video-item' + (vertical ? ' video-item--vertical' : '');
+            const ytId = getYouTubeId(v.url);
+            const vmId = getVimeoId(v.url);
+            if (ytId) {
+                cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>`;
+            } else if (vmId) {
+                cell.innerHTML = `<iframe src="https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>`;
+            }
+            return cell;
+        }
 
-            items.forEach(v => {
-                const cell = document.createElement('div');
-                cell.className = 'video-item';
-                if (v) {
-                    const ytId = getYouTubeId(v.url);
-                    const vmId = getVimeoId(v.url);
-                    if (ytId) {
-                        cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen loading="lazy"></iframe>`;
-                    } else if (vmId) {
-                        cell.innerHTML = `<iframe src="https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowfullscreen loading="lazy"></iframe>`;
-                    }
-                } else {
-                    cell.classList.add('video-empty');
-                }
-                videoGrid.appendChild(cell);
+        function renderVideoGrid(videos) {
+            const hGrid = document.getElementById('video-grid');
+            const vGrid = document.getElementById('video-grid-vertical');
+            hGrid.innerHTML = ''; vGrid.innerHTML = '';
+
+            const horizontal = videos.filter(v => !v.vertical);
+            const vertical   = videos.filter(v => v.vertical);
+
+            // Yatay grid — çift sayıya tamamla masaüstünde
+            const isMobile = window.innerWidth <= 768;
+            const hItems = [...horizontal];
+            if (!isMobile && hItems.length % 2 !== 0) hItems.push(null);
+            hItems.forEach(v => {
+                if (v) hGrid.appendChild(makeVideoCell(v, false));
+                else { const e=document.createElement('div'); e.className='video-item video-empty'; hGrid.appendChild(e); }
             });
+            hGrid.style.display = horizontal.length ? 'grid' : 'none';
+
+            // Dikey grid — 3'e tamamla masaüstünde
+            const vItems = [...vertical];
+            if (!isMobile && vItems.length % 3 !== 0) {
+                const pad = 3 - (vItems.length % 3);
+                for (let i=0;i<pad;i++) vItems.push(null);
+            }
+            vItems.forEach(v => {
+                if (v) vGrid.appendChild(makeVideoCell(v, true));
+                else { const e=document.createElement('div'); e.className='video-item video-item--vertical video-empty'; vGrid.appendChild(e); }
+            });
+            vGrid.style.display = vertical.length ? 'grid' : 'none';
         }
 
         // ── Yükle ──
@@ -613,7 +637,7 @@
         fetch('videos.json?v=' + Date.now())
             .then(r => r.json())
             .then(data => renderVideoGrid(data))
-            .catch(() => { videoGrid.innerHTML = ''; });
+            .catch(() => { document.getElementById('video-grid').innerHTML = ''; });
     </script>
 </body>
 

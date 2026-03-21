@@ -574,6 +574,9 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
             <div class="fg"><div class="fl">Başlık</div><input class="fi" id="v-title" type="text" placeholder="Video başlığı"></div>
             <div class="fg"><div class="fl">Video URL (YouTube veya Vimeo)</div><input class="fi" id="v-url" type="text" placeholder="https://vimeo.com/123456789 veya https://youtube.com/watch?v=..."></div>
           </div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:8px 0 4px;cursor:pointer;">
+            <input type="checkbox" id="v-vertical" style="width:16px;height:16px;cursor:pointer;"> Dikey video (9:16)
+          </label>
           <button class="bsm primary" id="btn-add-video" style="margin-top:4px">Ekle →</button>
         </div>
         <div class="vl" id="admin-videos"></div>
@@ -1043,7 +1046,8 @@ async function renderVideos(){
     if(ytid) thumb=`https://img.youtube.com/vi/${ytid}/mqdefault.jpg`;
     else if(vmid) thumb=await vimeoThumb(vmid);
     const card=document.createElement('div'); card.className='vc';
-    card.innerHTML=`<div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div><div class="vi-info"><div class="vi-title">${v.title||'Başlıksız'}</div><div class="vi-url">${v.url}</div><div class="vi-actions"><button class="bsm danger" data-vi="${i}">Sil</button>${i>0?`<button class="bsm" data-vu="${i}">↑</button>`:''}${i<videos.length-1?`<button class="bsm" data-vd="${i}">↓</button>`:''}</div></div>`;
+    const orient=v.vertical?'<span style="font-size:10px;background:#f0f0f0;padding:2px 6px;border-radius:2px;margin-left:6px;">DİKEY</span>':'';
+    card.innerHTML=`<div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div><div class="vi-info"><div class="vi-title">${v.title||'Başlıksız'}${orient}</div><div class="vi-url">${v.url}</div><div class="vi-actions"><button class="bsm danger" data-vi="${i}">Sil</button>${i>0?`<button class="bsm" data-vu="${i}">↑</button>`:''}${i<videos.length-1?`<button class="bsm" data-vd="${i}">↓</button>`:''}</div></div>`;
     c.appendChild(card);
   }
   c.querySelectorAll('.bsm.danger[data-vi]').forEach(b=>{ b.onclick=()=>{ if(confirm('Silinsin mi?')){ videos.splice(+b.dataset.vi,1); setDirty(); renderVideos(); } }; });
@@ -1055,9 +1059,12 @@ function initVideoAdd(){
     const url=document.getElementById('v-url').value.trim();
     if(!url){alert('Video URL gerekli');return;}
     if(!ytId(url)&&!vimeoId(url)){alert('Geçerli YouTube veya Vimeo URL girin');return;}
-    videos.push({id:Date.now(),title:document.getElementById('v-title').value.trim()||'Video',url});
+    const vertical=document.getElementById('v-vertical').checked;
+    videos.push({id:Date.now(),title:document.getElementById('v-title').value.trim()||'Video',url,vertical});
     setDirty(); renderVideos();
-    document.getElementById('v-title').value=''; document.getElementById('v-url').value='';
+    document.getElementById('v-title').value='';
+    document.getElementById('v-url').value='';
+    document.getElementById('v-vertical').checked=false;
   };
 }
 
