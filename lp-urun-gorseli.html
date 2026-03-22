@@ -64,6 +64,16 @@
       background: var(--black); color: var(--white);
       padding: 120px 48px 80px; overflow: hidden;
     }
+    .lp-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .lp-hero-bg img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.3;
+    }
+    .lp-hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.45) 50%, rgba(8,8,8,0.88) 100%);
+    }
     .lp-hero-content {
       max-width: 860px; text-align: center; position: relative; z-index: 2;
     }
@@ -348,6 +358,9 @@
 
   <!-- ─── HERO ─── -->
   <section class="lp-hero">
+    <div class="lp-hero-bg">
+      <img src="media/ai-gorsel-LP.jpeg" alt="AI ile ürün görseli" />
+    </div>
     <div class="lp-hero-content">
       <div class="lp-hero-label">AI Destekli Ürün Fotoğrafçılığı</div>
       <h1>
