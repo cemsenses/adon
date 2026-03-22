@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI ile Ürün Fotoğrafı Üretimi — ADON Studio</title>
+  <meta name="description" content="Tek bir ürün çekimini yüzlerce benzersiz sahneye dönüştürün. Stüdyo kalitesi, AI hızı. ADON Studio ile tanışın." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://adon.com.tr/lp-urun-gorseli.html" />
+  <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://adon.com.tr/lp-urun-gorseli.html" />
+  <meta property="og:title" content="AI ile Ürün Fotoğrafı Üretimi — ADON Studio" />
+  <meta property="og:description" content="Tek bir ürün çekimini yüzlerce benzersiz sahneye dönüştürün. Stüdyo kalitesi, AI hızı." />
+  <meta property="og:image" content="https://adon.com.tr/media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg" />
+  <meta property="og:locale" content="tr_TR" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #080808;
+      --accent: #ff3c31;
+      --white: #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-mid: #888;
+      --font-headline: 'Bebas Neue', 'Impact', sans-serif;
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAVBAR ─── */
+    .lp-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(8,8,8,0.92); backdrop-filter: blur(12px);
+    }
+    .lp-nav img { height: 20px; }
+    .lp-nav-cta {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--white); background: var(--accent);
+      padding: 12px 28px; border: none; cursor: pointer; transition: opacity 0.2s;
+    }
+    .lp-nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ─── */
+    .lp-hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: var(--black); color: var(--white);
+      padding: 140px 48px 80px; position: relative; overflow: hidden;
+    }
+    .lp-hero-inner {
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .lp-hero-badge {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+      border: 1px solid rgba(255,60,49,0.3); padding: 6px 16px;
+    }
+    .lp-hero h1 {
+      font-family: var(--font-headline); font-size: clamp(52px, 6vw, 88px);
+      line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 28px;
+    }
+    .lp-hero h1 em {
+      font-family: var(--font-serif); font-style: italic;
+      color: var(--accent); display: block;
+    }
+    .lp-hero-desc {
+      font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.7);
+      max-width: 480px; margin-bottom: 40px;
+    }
+    .lp-hero-img {
+      border-radius: 4px; box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+    .btn-primary {
+      display: inline-block; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); background: var(--accent);
+      padding: 16px 40px; border: none; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline {
+      display: inline-block; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      padding: 16px 40px; cursor: pointer; margin-left: 16px;
+      transition: border-color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--white); }
+
+    /* ─── STATS BAR ─── */
+    .lp-stats {
+      background: var(--white); padding: 64px 48px;
+      border-bottom: 1px solid #eee;
+    }
+    .lp-stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;
+    }
+    .lp-stat-num {
+      font-family: var(--font-headline); font-size: 56px;
+      color: var(--accent); line-height: 1;
+    }
+    .lp-stat-label {
+      font-size: 14px; color: var(--gray-mid); margin-top: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── PROBLEM / SOLUTION ─── */
+    .lp-problem {
+      padding: 100px 48px; background: var(--gray-light);
+    }
+    .lp-problem-inner {
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .section-headline {
+      font-family: var(--font-headline); font-size: clamp(36px, 4vw, 60px);
+      line-height: 1.05; margin-bottom: 28px;
+    }
+    .section-desc {
+      font-size: 17px; line-height: 1.8; color: #555; max-width: 700px; margin: 0 auto;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .lp-how {
+      padding: 100px 48px; background: var(--white);
+    }
+    .lp-how-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .lp-how-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 64px;
+    }
+    .lp-how-step {
+      text-align: center; padding: 40px 24px;
+      border: 1px solid #eee; transition: border-color 0.3s;
+    }
+    .lp-how-step:hover { border-color: var(--accent); }
+    .step-num {
+      font-family: var(--font-headline); font-size: 64px;
+      color: rgba(255,60,49,0.15); line-height: 1; margin-bottom: 16px;
+    }
+    .step-title {
+      font-family: var(--font-headline); font-size: 28px;
+      margin-bottom: 12px; line-height: 1.1;
+    }
+    .step-desc {
+      font-size: 15px; line-height: 1.7; color: #666;
+    }
+
+    /* ─── BENEFITS ─── */
+    .lp-benefits {
+      padding: 100px 48px; background: var(--black); color: var(--white);
+    }
+    .lp-benefits-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .lp-benefits-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 64px;
+    }
+    .benefit-card {
+      padding: 40px; border: 1px solid rgba(255,255,255,0.1);
+      transition: border-color 0.3s;
+    }
+    .benefit-card:hover { border-color: var(--accent); }
+    .benefit-icon {
+      font-size: 32px; margin-bottom: 16px; color: var(--accent);
+    }
+    .benefit-title {
+      font-family: var(--font-headline); font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .benefit-desc {
+      font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6);
+    }
+
+    /* ─── SHOWCASE ─── */
+    .lp-showcase {
+      padding: 100px 48px; background: var(--gray-light);
+    }
+    .lp-showcase-inner {
+      max-width: 1200px; margin: 0 auto; text-align: center;
+    }
+    .lp-showcase-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px;
+    }
+    .lp-showcase-grid img {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+    }
+
+    /* ─── LOGOS ─── */
+    .lp-logos {
+      padding: 64px 48px; background: var(--white);
+      border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+    }
+    .lp-logos-inner {
+      max-width: 1200px; margin: 0 auto; text-align: center;
+    }
+    .lp-logos-grid {
+      display: flex; align-items: center; justify-content: center;
+      gap: 48px; flex-wrap: wrap; margin-top: 32px;
+    }
+    .lp-logos-grid img {
+      height: 36px; filter: grayscale(100%) opacity(0.5);
+      transition: filter 0.3s;
+    }
+    .lp-logos-grid img:hover { filter: grayscale(0%) opacity(1); }
+
+    /* ─── CTA / FORM ─── */
+    .lp-form-section {
+      padding: 100px 48px; background: var(--black); color: var(--white);
+    }
+    .lp-form-inner {
+      max-width: 800px; margin: 0 auto;
+    }
+    .lp-form-inner .section-headline { color: var(--white); }
+    .lp-form {
+      margin-top: 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .lp-form input, .lp-form select, .lp-form textarea {
+      width: 100%; padding: 16px 20px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white); font-family: var(--font-body); font-size: 15px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .lp-form input::placeholder, .lp-form textarea::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+    .lp-form input:focus, .lp-form select:focus, .lp-form textarea:focus {
+      border-color: var(--accent);
+    }
+    .lp-form select { appearance: none; -webkit-appearance: none; }
+    .lp-form select option { background: var(--black); color: var(--white); }
+    .lp-form .full { grid-column: 1 / -1; }
+    .lp-form textarea { min-height: 120px; resize: vertical; }
+    .lp-form .btn-primary { grid-column: 1 / -1; text-align: center; }
+
+    /* ─── FOOTER ─── */
+    .lp-footer {
+      padding: 32px 48px; background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center; font-size: 13px; color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── FAQ ─── */
+    .lp-faq {
+      padding: 100px 48px; background: var(--white);
+    }
+    .lp-faq-inner {
+      max-width: 800px; margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid #eee; padding: 24px 0; cursor: pointer;
+    }
+    .faq-question {
+      font-family: var(--font-body); font-size: 17px; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-question::after {
+      content: '+'; font-size: 24px; color: var(--accent); transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question::after { content: '−'; }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+      font-size: 15px; line-height: 1.7; color: #666;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-top: 16px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .lp-nav { padding: 16px 24px; }
+      .lp-hero { padding: 120px 24px 64px; }
+      .lp-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .lp-hero h1 { font-size: 48px; }
+      .lp-stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .lp-how-grid { grid-template-columns: 1fr; }
+      .lp-benefits-grid { grid-template-columns: 1fr; }
+      .lp-showcase-grid { grid-template-columns: 1fr 1fr; }
+      .lp-form { grid-template-columns: 1fr; }
+      .lp-problem, .lp-how, .lp-benefits, .lp-showcase, .lp-form-section, .lp-faq, .lp-logos, .lp-stats {
+        padding-left: 24px; padding-right: 24px;
+      }
+      .btn-outline { margin-left: 0; margin-top: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav class="lp-nav">
+    <img src="media/beyaz.png" alt="ADON Studio" />
+    <a href="#form" class="lp-nav-cta">Teklif Al</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="lp-hero">
+    <div class="lp-hero-inner">
+      <div>
+        <div class="lp-hero-badge">AI Destekli Ürün Fotoğrafçılığı</div>
+        <h1>
+          Tek Çekimden<br>
+          <em>Sınırsız Sahne.</em>
+        </h1>
+        <p class="lp-hero-desc">
+          Ürünlerinizin profesyonel stüdyo çekimini yapıyor, yapay zeka orkestrasyon sistemimizle her bir kareyi yüzlerce benzersiz, fotogerçekçi yaşam tarzı sahnesine dönüştürüyoruz. Marka uyumlu, kampanyaya hazır, ölçeklenebilir.
+        </p>
+        <a href="#form" class="btn-primary">Ücretsiz Demo Talep Et</a>
+        <a href="#how" class="btn-outline">Nasıl Çalışır?</a>
+      </div>
+      <div>
+        <img src="media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg" alt="AI ile oluşturulmuş ürün görseli — Hawaiian Tropic" class="lp-hero-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STATS ─── -->
+  <section class="lp-stats">
+    <div class="lp-stats-inner">
+      <div>
+        <div class="lp-stat-num">10x</div>
+        <div class="lp-stat-label">Daha Hızlı Teslimat</div>
+      </div>
+      <div>
+        <div class="lp-stat-num">%80</div>
+        <div class="lp-stat-label">Daha Düşük Maliyet</div>
+      </div>
+      <div>
+        <div class="lp-stat-num">500+</div>
+        <div class="lp-stat-label">Sahne Varyantı / Proje</div>
+      </div>
+      <div>
+        <div class="lp-stat-num">48s</div>
+        <div class="lp-stat-label">Ortalama Teslimat Süresi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROBLEM ─── -->
+  <section class="lp-problem">
+    <div class="lp-problem-inner">
+      <div class="section-label">Problem</div>
+      <h2 class="section-headline">Geleneksel Ürün Çekimi Artık Yetmiyor</h2>
+      <p class="section-desc">
+        Her kampanya için ayrı set, ayrı ekip, ayrı bütçe. Lokalizasyon ihtiyaçları, sezonluk değişiklikler ve kanal çeşitliliği geleneksel prodüksiyonu sürdürülemez hale getiriyor. E-ticaret markaları haftalar süren süreçlere ve yüksek maliyetlere mahkum kalıyor.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <section class="lp-how" id="how">
+    <div class="lp-how-inner">
+      <div style="text-align:center;">
+        <div class="section-label">Süreç</div>
+        <h2 class="section-headline">3 Adımda Sınırsız Görsel</h2>
+      </div>
+      <div class="lp-how-grid">
+        <div class="lp-how-step">
+          <div class="step-num">01</div>
+          <div class="step-title">Profesyonel Çekim</div>
+          <p class="step-desc">Ürünleriniz stüdyomuzda kontrollü ışık ve kalibreli ekipmanla çekiliyor. Pack-shot, detay ve 360° açılar tek seansta tamamlanıyor.</p>
+        </div>
+        <div class="lp-how-step">
+          <div class="step-num">02</div>
+          <div class="step-title">AI Sahne Üretimi</div>
+          <p class="step-desc">Çekim sonrası, yapay zeka orkestrasyon sistemimiz ürününüzü yüzlerce farklı yaşam tarzı sahnesine, arka plana ve ortama yerleştiriyor.</p>
+        </div>
+        <div class="lp-how-step">
+          <div class="step-num">03</div>
+          <div class="step-title">Kampanyaya Hazır Teslimat</div>
+          <p class="step-desc">Tüm görseller marka kılavuzunuza uygun, kanal bazlı boyutlandırılmış ve kampanyaya hazır şekilde teslim ediliyor. 48 saat içinde.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BENEFITS ─── -->
+  <section class="lp-benefits">
+    <div class="lp-benefits-inner">
+      <div style="text-align:center;">
+        <div class="section-label">Avantajlar</div>
+        <h2 class="section-headline" style="color:#fff;">Neden AI ile Ürün Görseli?</h2>
+      </div>
+      <div class="lp-benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-title">10x Hız</div>
+          <p class="benefit-desc">Geleneksel prodüksiyonla haftalar süren süreçler, AI ile saatlere iniyor. Kampanya takvimlerinize yetişmek artık sorun değil.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-title">%80 Maliyet Tasarrufu</div>
+          <p class="benefit-desc">Set kurulumu, ekstra ekip ve lokasyon masrafları ortadan kalkıyor. Aynı bütçeyle 10 kat daha fazla içerik üretiyorsunuz.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+          <div class="benefit-title">Marka Tutarlılığı</div>
+          <p class="benefit-desc">Her görsel marka kılavuzunuza tam uyumlu. Renk paleti, ton ve stil her karede tutarlı. Marka algınız güçleniyor.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🌍</div>
+          <div class="benefit-title">Global Lokalizasyon</div>
+          <p class="benefit-desc">Aynı ürünü farklı pazarlar için lokalize edin. Kültürel uyum, yerel sahneler ve bölgesel estetik tek tuşla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SHOWCASE ─── -->
+  <section class="lp-showcase">
+    <div class="lp-showcase-inner">
+      <div class="section-label">Portföy</div>
+      <h2 class="section-headline">Çalışmalarımızdan Örnekler</h2>
+      <div class="lp-showcase-grid">
+        <img src="media/works/img_1774110359406.jpg" alt="ADON Studio AI ürün görseli örneği 1" />
+        <img src="media/works/img_1774110398749.jpg" alt="ADON Studio AI ürün görseli örneği 2" />
+        <img src="media/works/img_1774110425841.jpg" alt="ADON Studio AI ürün görseli örneği 3" />
+        <img src="media/works/img_1774110663011.jpg" alt="ADON Studio AI ürün görseli örneği 4" />
+        <img src="media/works/sdsdd_1774021642294.jpg" alt="ADON Studio AI ürün görseli örneği 5" />
+        <img src="media/works/rossmann_1774109277324.png" alt="ADON Studio AI ürün görseli örneği 6" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LOGOS ─── -->
+  <section class="lp-logos">
+    <div class="lp-logos-inner">
+      <div class="section-label">Güvenen Markalar</div>
+      <div class="lp-logos-grid">
+        <img src="media/logos/01-beymen.jpg" alt="Beymen" />
+        <img src="media/logos/02-is-bankasi.jpg" alt="İş Bankası" />
+        <img src="media/logos/03-tekirdag-raki.jpg" alt="Tekirdağ Rakısı" />
+        <img src="media/logos/04-karcher.jpg" alt="Kärcher" />
+        <img src="media/logos/05-filli-boya.jpg" alt="Filli Boya" />
+        <img src="media/logos/06-sok-market.jpg" alt="ŞOK" />
+        <img src="media/logos/09-urban-care.jpg" alt="Urban Care" />
+        <img src="media/logos/10-pastel-kozmetik.jpg" alt="Pastel Cosmetics" />
+        <img src="media/logos/12-imprime-perfume.jpg" alt="Imprimé" />
+        <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section class="lp-faq">
+    <div class="lp-faq-inner">
+      <div style="text-align:center;">
+        <div class="section-label">Sıkça Sorulan Sorular</div>
+        <h2 class="section-headline">Merak Edilenler</h2>
+      </div>
+      <div style="margin-top:48px;">
+        <div class="faq-item">
+          <div class="faq-question">AI ile üretilen görseller gerçekçi görünüyor mu?</div>
+          <div class="faq-answer">Evet, fotogerçekçi kalitededir. Profesyonel stüdyo çekiminden elde edilen ham görseller üzerine AI sahne üretimi yapıldığı için ürünün kendisi %100 gerçektir. Sahneler ise insan gözünün ayırt edemeyeceği kalitede üretilir.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Teslimat süresi ne kadar?</div>
+          <div class="faq-answer">Standart projeler 48 saat içinde teslim edilir. Büyük ölçekli kampanyalar için proje bazlı takvim oluşturulur ancak geleneksel prodüksiyona kıyasla en az 10 kat daha hızlıdır.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Marka kılavuzumuza uyum sağlanıyor mu?</div>
+          <div class="faq-answer">Kesinlikle. Proje başlangıcında marka kılavuzunuz, renk paletizniz ve stil tercihleriniz sistemimize aktarılır. Tüm çıktılar bu standartlara göre üretilir ve onay sürecinizden geçer.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Minimum sipariş miktarı var mı?</div>
+          <div class="faq-answer">Minimum sipariş bulunmuyor. Tek ürün için bile hizmet verebiliyoruz. Ancak toplu projelerde birim maliyet önemli ölçüde düşmektedir.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Hangi sektörlere hizmet veriyorsunuz?</div>
+          <div class="faq-answer">E-ticaret, FMCG, kozmetik, moda, gıda, elektronik ve daha birçok sektöre hizmet veriyoruz. Her sektörün görsel ihtiyaçlarına göre özelleştirilmiş çözümler sunuyoruz.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FORM ─── -->
+  <section class="lp-form-section" id="form">
+    <div class="lp-form-inner">
+      <div style="text-align:center;">
+        <div class="section-label">İletişim</div>
+        <h2 class="section-headline" style="color:#fff;">Ücretsiz Demo Talep Edin</h2>
+        <p style="color:rgba(255,255,255,0.5); margin-bottom:16px; font-size:16px;">
+          Ürününüzün AI destekli görsellerini görmek ister misiniz? Formu doldurun, size özel bir demo hazırlayalım.
+        </p>
+      </div>
+      <form class="lp-form" action="https://formsubmit.co/cemsenses@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Yeni Landing Page Talebi: AI Ürün Görseli" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://adon.com.tr/lp-urun-gorseli.html#form" />
+        <input type="text" name="name" placeholder="Ad Soyad" required />
+        <input type="email" name="email" placeholder="E-posta Adresi" required />
+        <input type="text" name="company" placeholder="Şirket Adı" />
+        <input type="tel" name="phone" placeholder="Telefon Numarası" />
+        <select name="sector" class="full">
+          <option value="" disabled selected>Sektörünüz</option>
+          <option value="E-ticaret">E-ticaret</option>
+          <option value="FMCG">FMCG</option>
+          <option value="Kozmetik">Kozmetik</option>
+          <option value="Moda">Moda</option>
+          <option value="Gıda">Gıda</option>
+          <option value="Elektronik">Elektronik</option>
+          <option value="Diğer">Diğer</option>
+        </select>
+        <textarea name="message" class="full" placeholder="Projeniz hakkında kısa bilgi verin..."></textarea>
+        <button type="submit" class="btn-primary full">Demo Talep Et →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="lp-footer">
+    &copy; 2026 ADON Studio. Tüm hakları saklıdır.
+  </footer>
+
+  <!-- ─── FAQ Toggle Script ─── -->
+  <script>
+    document.querySelectorAll('.faq-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        this.classList.toggle('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
