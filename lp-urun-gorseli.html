@@ -3,306 +3,327 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI ile Ürün Fotoğrafı Üretimi — ADON Studio</title>
+  <title>AI ile Ürün Görseli Üretimi — ADON Studio</title>
   <meta name="description" content="Tek bir ürün çekimini yüzlerce benzersiz sahneye dönüştürün. Stüdyo kalitesi, AI hızı. ADON Studio ile tanışın." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://adon.com.tr/lp-urun-gorseli.html" />
   <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png" />
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://adon.com.tr/lp-urun-gorseli.html" />
-  <meta property="og:title" content="AI ile Ürün Fotoğrafı Üretimi — ADON Studio" />
+  <meta property="og:title" content="AI ile Ürün Görseli Üretimi — ADON Studio" />
   <meta property="og:description" content="Tek bir ürün çekimini yüzlerce benzersiz sahneye dönüştürün. Stüdyo kalitesi, AI hızı." />
   <meta property="og:image" content="https://adon.com.tr/media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg" />
   <meta property="og:locale" content="tr_TR" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --black: #080808;
-      --accent: #ff3c31;
       --white: #ffffff;
-      --gray-light: #f5f5f5;
-      --gray-mid: #888;
-      --font-headline: 'Bebas Neue', 'Impact', sans-serif;
-      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --accent: #ff3c31;
+      --muted: #5c5c5c;
+      --card-bg: #e8e9e9;
+      --font-headline: 'Bebas Neue', 'Barlow Condensed', 'Impact', sans-serif;
       --font-serif: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --transition: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); color: var(--black); background: var(--white); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
 
-    /* ─── NAVBAR ─── */
+    /* ─── NAV ─── */
     .lp-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      background: rgba(8,8,8,0.92); backdrop-filter: blur(12px);
+      padding: 0 48px; height: 64px;
+      background: rgba(8,8,8,0.95); backdrop-filter: blur(16px);
     }
-    .lp-nav img { height: 20px; }
+    .lp-nav-logo { height: 20px; }
     .lp-nav-cta {
-      font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--white); background: var(--accent);
-      padding: 12px 28px; border: none; cursor: pointer; transition: opacity 0.2s;
-    }
-    .lp-nav-cta:hover { opacity: 0.85; }
-
-    /* ─── HERO ─── */
-    .lp-hero {
-      min-height: 100vh; display: flex; align-items: center;
-      background: var(--black); color: var(--white);
-      padding: 140px 48px 80px; position: relative; overflow: hidden;
-    }
-    .lp-hero-inner {
-      max-width: 1200px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-    }
-    .lp-hero-badge {
-      display: inline-block; font-size: 11px; font-weight: 600;
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
       letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 24px;
-      border: 1px solid rgba(255,60,49,0.3); padding: 6px 16px;
+      color: var(--white); background: var(--accent);
+      padding: 10px 28px; border: none; cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    .lp-nav-cta:hover { opacity: 0.8; }
+
+    /* ─── HERO — Full viewport, dark ─── */
+    .lp-hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--black); color: var(--white);
+      padding: 120px 48px 80px; overflow: hidden;
+    }
+    .lp-hero-content {
+      max-width: 860px; text-align: center; position: relative; z-index: 2;
+    }
+    .lp-hero-label {
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 32px;
     }
     .lp-hero h1 {
-      font-family: var(--font-headline); font-size: clamp(52px, 6vw, 88px);
-      line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 28px;
+      font-family: var(--font-headline); font-size: clamp(56px, 8vw, 120px);
+      line-height: 0.92; letter-spacing: -0.01em; margin-bottom: 32px;
     }
     .lp-hero h1 em {
       font-family: var(--font-serif); font-style: italic;
-      color: var(--accent); display: block;
+      color: var(--accent); display: block; margin-top: 8px;
     }
     .lp-hero-desc {
-      font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.7);
-      max-width: 480px; margin-bottom: 40px;
+      font-size: 17px; line-height: 1.75; color: rgba(255,255,255,0.55);
+      max-width: 560px; margin: 0 auto 48px;
     }
-    .lp-hero-img {
-      border-radius: 4px; box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-    }
-    .btn-primary {
-      display: inline-block; font-size: 13px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
+    .lp-hero-cta {
+      display: inline-block; font-family: var(--font-body);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--white); background: var(--accent);
-      padding: 16px 40px; border: none; cursor: pointer;
-      transition: opacity 0.2s;
+      padding: 18px 48px; border: none; cursor: pointer;
+      transition: opacity var(--transition);
     }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-outline {
-      display: inline-block; font-size: 13px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--white); background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.3);
-      padding: 16px 40px; cursor: pointer; margin-left: 16px;
-      transition: border-color 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--white); }
+    .lp-hero-cta:hover { opacity: 0.8; }
 
-    /* ─── STATS BAR ─── */
-    .lp-stats {
-      background: var(--white); padding: 64px 48px;
-      border-bottom: 1px solid #eee;
+    /* ─── MARQUEE (Ana sitedeki gibi) ─── */
+    .lp-marquee {
+      background: var(--black); padding: 48px 0; overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .lp-stats-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;
+    .lp-marquee-track {
+      display: flex; align-items: center; gap: 64px;
+      width: max-content; animation: lp-scroll 20s linear infinite;
     }
-    .lp-stat-num {
-      font-family: var(--font-headline); font-size: 56px;
-      color: var(--accent); line-height: 1;
+    .lp-marquee-track img {
+      height: 32px; width: auto; flex-shrink: 0;
+      filter: grayscale(100%) brightness(1.8) opacity(0.35);
     }
-    .lp-stat-label {
-      font-size: 14px; color: var(--gray-mid); margin-top: 8px;
-      letter-spacing: 0.03em;
-    }
+    @keyframes lp-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ─── PROBLEM / SOLUTION ─── */
-    .lp-problem {
-      padding: 100px 48px; background: var(--gray-light);
+    /* ─── IMAGE SHOWCASE (Placeholder grid) ─── */
+    .lp-showcase {
+      padding: 0; background: var(--black);
     }
-    .lp-problem-inner {
-      max-width: 900px; margin: 0 auto; text-align: center;
+    .lp-showcase-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
     }
-    .section-label {
+    .lp-showcase-grid .img-slot {
+      aspect-ratio: 1; background: #111; position: relative; overflow: hidden;
+    }
+    .lp-showcase-grid .img-slot img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .lp-showcase-grid .img-slot:hover img { transform: scale(1.04); }
+
+    /* ─── SECTION COMMON ─── */
+    .lp-section { padding: 120px 48px; }
+    .lp-section-inner { max-width: 1100px; margin: 0 auto; }
+    .lp-label {
       font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
     }
-    .section-headline {
-      font-family: var(--font-headline); font-size: clamp(36px, 4vw, 60px);
-      line-height: 1.05; margin-bottom: 28px;
+    .lp-headline {
+      font-family: var(--font-headline); font-size: clamp(40px, 5vw, 72px);
+      line-height: 1; margin-bottom: 24px;
     }
-    .section-desc {
-      font-size: 17px; line-height: 1.8; color: #555; max-width: 700px; margin: 0 auto;
+    .lp-subtext {
+      font-size: 16px; line-height: 1.8; color: var(--muted);
+      max-width: 600px;
     }
 
-    /* ─── HOW IT WORKS ─── */
-    .lp-how {
-      padding: 100px 48px; background: var(--white);
+    /* ─── PROBLEM — Light gray bg ─── */
+    .lp-problem { background: #f4f4f4; }
+    .lp-problem .lp-section-inner { text-align: center; }
+    .lp-problem .lp-subtext { margin: 0 auto; max-width: 680px; }
+
+    /* ─── PROCESS (3 columns, clean) ─── */
+    .lp-process { background: var(--white); }
+    .lp-process-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; margin-top: 80px;
     }
-    .lp-how-inner {
-      max-width: 1200px; margin: 0 auto;
+    .lp-process-item {
+      padding: 48px 40px; border-right: 1px solid #e0e0e0;
+      position: relative;
     }
-    .lp-how-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 64px;
+    .lp-process-item:last-child { border-right: none; }
+    .lp-process-num {
+      font-family: var(--font-headline); font-size: 80px;
+      color: rgba(255,60,49,0.08); line-height: 1; margin-bottom: 24px;
     }
-    .lp-how-step {
-      text-align: center; padding: 40px 24px;
-      border: 1px solid #eee; transition: border-color 0.3s;
+    .lp-process-title {
+      font-family: var(--font-headline); font-size: 26px;
+      line-height: 1.1; margin-bottom: 16px;
     }
-    .lp-how-step:hover { border-color: var(--accent); }
-    .step-num {
-      font-family: var(--font-headline); font-size: 64px;
-      color: rgba(255,60,49,0.15); line-height: 1; margin-bottom: 16px;
+    .lp-process-desc {
+      font-size: 15px; line-height: 1.75; color: var(--muted);
     }
-    .step-title {
+
+    /* ─── STATS BAR ─── */
+    .lp-stats {
+      background: var(--black); color: var(--white);
+      padding: 80px 48px;
+    }
+    .lp-stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    }
+    .lp-stat { text-align: center; }
+    .lp-stat-num {
+      font-family: var(--font-headline); font-size: clamp(48px, 5vw, 72px);
+      color: var(--accent); line-height: 1;
+    }
+    .lp-stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── BENEFITS (2-col cards, dark) ─── */
+    .lp-benefits { background: var(--black); color: var(--white); }
+    .lp-benefits .lp-headline { color: var(--white); }
+    .lp-benefits-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-top: 64px;
+    }
+    .lp-benefit {
+      padding: 48px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color var(--transition);
+    }
+    .lp-benefit:hover { border-color: var(--accent); }
+    .lp-benefit-num {
+      font-family: var(--font-headline); font-size: 14px;
+      letter-spacing: 0.1em; color: var(--accent); margin-bottom: 20px;
+    }
+    .lp-benefit-title {
       font-family: var(--font-headline); font-size: 28px;
       margin-bottom: 12px; line-height: 1.1;
     }
-    .step-desc {
-      font-size: 15px; line-height: 1.7; color: #666;
+    .lp-benefit-desc {
+      font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.5);
     }
 
-    /* ─── BENEFITS ─── */
-    .lp-benefits {
-      padding: 100px 48px; background: var(--black); color: var(--white);
+    /* ─── SINGLE IMAGE BREAK ─── */
+    .lp-image-break {
+      position: relative; height: 60vh; min-height: 400px;
+      background: #111; overflow: hidden;
     }
-    .lp-benefits-inner {
-      max-width: 1200px; margin: 0 auto;
+    .lp-image-break img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.7;
     }
-    .lp-benefits-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 64px;
-    }
-    .benefit-card {
-      padding: 40px; border: 1px solid rgba(255,255,255,0.1);
-      transition: border-color 0.3s;
-    }
-    .benefit-card:hover { border-color: var(--accent); }
-    .benefit-icon {
-      font-size: 32px; margin-bottom: 16px; color: var(--accent);
-    }
-    .benefit-title {
-      font-family: var(--font-headline); font-size: 24px;
-      margin-bottom: 12px;
-    }
-    .benefit-desc {
-      font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6);
-    }
-
-    /* ─── SHOWCASE ─── */
-    .lp-showcase {
-      padding: 100px 48px; background: var(--gray-light);
-    }
-    .lp-showcase-inner {
-      max-width: 1200px; margin: 0 auto; text-align: center;
-    }
-    .lp-showcase-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px;
-    }
-    .lp-showcase-grid img {
-      width: 100%; aspect-ratio: 1; object-fit: cover;
-    }
-
-    /* ─── LOGOS ─── */
-    .lp-logos {
-      padding: 64px 48px; background: var(--white);
-      border-top: 1px solid #eee; border-bottom: 1px solid #eee;
-    }
-    .lp-logos-inner {
-      max-width: 1200px; margin: 0 auto; text-align: center;
-    }
-    .lp-logos-grid {
+    .lp-image-break-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.5), rgba(8,8,8,0.8));
       display: flex; align-items: center; justify-content: center;
-      gap: 48px; flex-wrap: wrap; margin-top: 32px;
     }
-    .lp-logos-grid img {
-      height: 36px; filter: grayscale(100%) opacity(0.5);
-      transition: filter 0.3s;
+    .lp-image-break-text {
+      text-align: center; color: var(--white);
+      max-width: 700px; padding: 0 24px;
     }
-    .lp-logos-grid img:hover { filter: grayscale(0%) opacity(1); }
+    .lp-image-break-text h2 {
+      font-family: var(--font-headline); font-size: clamp(36px, 5vw, 64px);
+      line-height: 1; margin-bottom: 20px;
+    }
+    .lp-image-break-text h2 em {
+      font-family: var(--font-serif); font-style: italic; color: var(--accent);
+    }
+    .lp-image-break-text p {
+      font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.7;
+    }
 
-    /* ─── CTA / FORM ─── */
+    /* ─── FAQ ─── */
+    .lp-faq { background: #f4f4f4; }
+    .lp-faq-list { margin-top: 48px; max-width: 760px; }
+    .faq-item {
+      border-bottom: 1px solid #d0d0d0; cursor: pointer;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 0; font-size: 17px; font-weight: 500;
+    }
+    .faq-q::after {
+      content: '+'; font-family: var(--font-headline); font-size: 28px;
+      color: var(--accent); transition: transform 0.3s;
+    }
+    .faq-item.open .faq-q::after { content: '−'; }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 15px; line-height: 1.75; color: var(--muted); padding: 0 0;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 0 28px; }
+
+    /* ─── FORM SECTION ─── */
     .lp-form-section {
-      padding: 100px 48px; background: var(--black); color: var(--white);
+      background: var(--black); color: var(--white);
+      padding: 120px 48px;
     }
-    .lp-form-inner {
-      max-width: 800px; margin: 0 auto;
+    .lp-form-wrap {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
     }
-    .lp-form-inner .section-headline { color: var(--white); }
+    .lp-form-left .lp-headline { color: var(--white); }
+    .lp-form-left .lp-subtext { color: rgba(255,255,255,0.45); }
+    .lp-form-contact {
+      margin-top: 48px; font-size: 14px; color: rgba(255,255,255,0.3);
+      line-height: 2;
+    }
+    .lp-form-contact a { color: var(--accent); }
     .lp-form {
-      margin-top: 48px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      display: flex; flex-direction: column; gap: 16px;
     }
+    .lp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .lp-form input, .lp-form select, .lp-form textarea {
       width: 100%; padding: 16px 20px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
       color: var(--white); font-family: var(--font-body); font-size: 15px;
       outline: none; transition: border-color 0.2s;
     }
-    .lp-form input::placeholder, .lp-form textarea::placeholder {
-      color: rgba(255,255,255,0.35);
-    }
-    .lp-form input:focus, .lp-form select:focus, .lp-form textarea:focus {
-      border-color: var(--accent);
-    }
-    .lp-form select { appearance: none; -webkit-appearance: none; }
+    .lp-form input::placeholder, .lp-form textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .lp-form input:focus, .lp-form select:focus, .lp-form textarea:focus { border-color: var(--accent); }
+    .lp-form select { appearance: none; -webkit-appearance: none; color: rgba(255,255,255,0.25); }
     .lp-form select option { background: var(--black); color: var(--white); }
-    .lp-form .full { grid-column: 1 / -1; }
-    .lp-form textarea { min-height: 120px; resize: vertical; }
-    .lp-form .btn-primary { grid-column: 1 / -1; text-align: center; }
+    .lp-form textarea { min-height: 100px; resize: vertical; }
+    .lp-form-submit {
+      font-family: var(--font-body); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--white); background: var(--accent);
+      padding: 18px 40px; border: none; cursor: pointer;
+      transition: opacity var(--transition); align-self: flex-start;
+    }
+    .lp-form-submit:hover { opacity: 0.8; }
 
     /* ─── FOOTER ─── */
     .lp-footer {
       padding: 32px 48px; background: var(--black);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      text-align: center; font-size: 13px; color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center; font-size: 12px; color: rgba(255,255,255,0.2);
+      letter-spacing: 0.03em;
     }
-
-    /* ─── FAQ ─── */
-    .lp-faq {
-      padding: 100px 48px; background: var(--white);
-    }
-    .lp-faq-inner {
-      max-width: 800px; margin: 0 auto;
-    }
-    .faq-item {
-      border-bottom: 1px solid #eee; padding: 24px 0; cursor: pointer;
-    }
-    .faq-question {
-      font-family: var(--font-body); font-size: 17px; font-weight: 600;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .faq-question::after {
-      content: '+'; font-size: 24px; color: var(--accent); transition: transform 0.3s;
-    }
-    .faq-item.open .faq-question::after { content: '−'; }
-    .faq-answer {
-      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
-      font-size: 15px; line-height: 1.7; color: #666;
-    }
-    .faq-item.open .faq-answer { max-height: 300px; padding-top: 16px; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      .lp-nav { padding: 16px 24px; }
-      .lp-hero { padding: 120px 24px 64px; }
-      .lp-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .lp-nav { padding: 0 24px; }
+      .lp-hero { padding: 100px 24px 64px; }
       .lp-hero h1 { font-size: 48px; }
-      .lp-stats-inner { grid-template-columns: repeat(2, 1fr); }
-      .lp-how-grid { grid-template-columns: 1fr; }
+      .lp-section { padding: 80px 24px; }
+      .lp-process-grid { grid-template-columns: 1fr; }
+      .lp-process-item { border-right: none; border-bottom: 1px solid #e0e0e0; }
+      .lp-process-item:last-child { border-bottom: none; }
+      .lp-stats-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
       .lp-benefits-grid { grid-template-columns: 1fr; }
       .lp-showcase-grid { grid-template-columns: 1fr 1fr; }
-      .lp-form { grid-template-columns: 1fr; }
-      .lp-problem, .lp-how, .lp-benefits, .lp-showcase, .lp-form-section, .lp-faq, .lp-logos, .lp-stats {
-        padding-left: 24px; padding-right: 24px;
-      }
-      .btn-outline { margin-left: 0; margin-top: 12px; }
+      .lp-form-wrap { grid-template-columns: 1fr; gap: 48px; }
+      .lp-form-row { grid-template-columns: 1fr; }
+      .lp-form-section { padding: 80px 24px; }
     }
   </style>
 </head>
@@ -311,27 +332,95 @@
 
   <!-- ─── NAV ─── -->
   <nav class="lp-nav">
-    <img src="media/beyaz.png" alt="ADON Studio" />
+    <img src="media/beyaz.png" alt="ADON Studio" class="lp-nav-logo" />
     <a href="#form" class="lp-nav-cta">Teklif Al</a>
   </nav>
 
   <!-- ─── HERO ─── -->
   <section class="lp-hero">
-    <div class="lp-hero-inner">
-      <div>
-        <div class="lp-hero-badge">AI Destekli Ürün Fotoğrafçılığı</div>
-        <h1>
-          Tek Çekimden<br>
-          <em>Sınırsız Sahne.</em>
-        </h1>
-        <p class="lp-hero-desc">
-          Ürünlerinizin profesyonel stüdyo çekimini yapıyor, yapay zeka orkestrasyon sistemimizle her bir kareyi yüzlerce benzersiz, fotogerçekçi yaşam tarzı sahnesine dönüştürüyoruz. Marka uyumlu, kampanyaya hazır, ölçeklenebilir.
-        </p>
-        <a href="#form" class="btn-primary">Ücretsiz Demo Talep Et</a>
-        <a href="#how" class="btn-outline">Nasıl Çalışır?</a>
-      </div>
-      <div>
-        <img src="media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg" alt="AI ile oluşturulmuş ürün görseli — Hawaiian Tropic" class="lp-hero-img" />
+    <div class="lp-hero-content">
+      <div class="lp-hero-label">AI Destekli Ürün Fotoğrafçılığı</div>
+      <h1>
+        Tek Çekimden<br>
+        <em>Sınırsız Sahne.</em>
+      </h1>
+      <p class="lp-hero-desc">
+        Profesyonel stüdyo çekiminizi yapay zeka orkestrasyon sistemimizle yüzlerce benzersiz, fotogerçekçi sahneye dönüştürüyoruz. Marka uyumlu. Kampanyaya hazır. 48 saatte.
+      </p>
+      <a href="#form" class="lp-hero-cta">Teklif Al →</a>
+    </div>
+  </section>
+
+  <!-- ─── LOGO MARQUEE ─── -->
+  <section class="lp-marquee">
+    <div class="lp-marquee-track">
+      <img src="media/logos/01-beymen.jpg" alt="Beymen" />
+      <img src="media/logos/02-is-bankasi.jpg" alt="İş Bankası" />
+      <img src="media/logos/03-tekirdag-raki.jpg" alt="Tekirdağ Rakısı" />
+      <img src="media/logos/04-karcher.jpg" alt="Kärcher" />
+      <img src="media/logos/05-filli-boya.jpg" alt="Filli Boya" />
+      <img src="media/logos/06-sok-market.jpg" alt="ŞOK" />
+      <img src="media/logos/09-urban-care.jpg" alt="Urban Care" />
+      <img src="media/logos/10-pastel-kozmetik.jpg" alt="Pastel Cosmetics" />
+      <img src="media/logos/12-imprime-perfume.jpg" alt="Imprimé" />
+      <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" />
+      <img src="media/logos/01-beymen.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/02-is-bankasi.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/03-tekirdag-raki.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/04-karcher.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/05-filli-boya.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/06-sok-market.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/09-urban-care.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/10-pastel-kozmetik.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/12-imprime-perfume.jpg" alt="" aria-hidden="true" />
+      <img src="media/logos/13-the-purest-solutions.jpg" alt="" aria-hidden="true" />
+    </div>
+  </section>
+
+  <!-- ─── IMAGE SHOWCASE ─── -->
+  <section class="lp-showcase">
+    <div class="lp-showcase-grid">
+      <div class="img-slot"><img src="media/works/img_1774110359406.jpg" alt="AI ürün görseli örneği" /></div>
+      <div class="img-slot"><img src="media/works/img_1774110398749.jpg" alt="AI ürün görseli örneği" /></div>
+      <div class="img-slot"><img src="media/works/img_1774110425841.jpg" alt="AI ürün görseli örneği" /></div>
+      <div class="img-slot"><img src="media/works/img_1774110663011.jpg" alt="AI ürün görseli örneği" /></div>
+      <div class="img-slot"><img src="media/works/sdsdd_1774021642294.jpg" alt="AI ürün görseli örneği" /></div>
+      <div class="img-slot"><img src="media/works/rossmann_1774109277324.png" alt="AI ürün görseli örneği" /></div>
+    </div>
+  </section>
+
+  <!-- ─── PROBLEM ─── -->
+  <section class="lp-section lp-problem">
+    <div class="lp-section-inner">
+      <div class="lp-label">Problem</div>
+      <h2 class="lp-headline">Geleneksel Ürün Çekimi<br>Artık Yeterli Değil</h2>
+      <p class="lp-subtext">
+        Her kampanya için ayrı set, ayrı ekip, ayrı bütçe. Lokalizasyon, sezonluk değişiklikler ve kanal çeşitliliği geleneksel prodüksiyonu hem yavaş hem pahalı hale getiriyor. Markalar haftalar süren süreçlere ve kontrol edilemeyen maliyetlere takılıyor.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── PROCESS ─── -->
+  <section class="lp-section lp-process" id="how">
+    <div class="lp-section-inner">
+      <div class="lp-label">Süreç</div>
+      <h2 class="lp-headline">3 Adımda Kampanyaya<br>Hazır Görseller</h2>
+      <div class="lp-process-grid">
+        <div class="lp-process-item">
+          <div class="lp-process-num">01</div>
+          <div class="lp-process-title">Profesyonel Çekim</div>
+          <p class="lp-process-desc">Ürünleriniz stüdyomuzda kontrollü ışık ve kalibreli ekipmanla çekiliyor. Pack-shot, detay ve 360° açılar tek seansta tamamlanıyor.</p>
+        </div>
+        <div class="lp-process-item">
+          <div class="lp-process-num">02</div>
+          <div class="lp-process-title">AI Sahne Üretimi</div>
+          <p class="lp-process-desc">Yapay zeka orkestrasyon sistemimiz ürününüzü yüzlerce farklı yaşam tarzı sahnesine, arka plana ve ortama yerleştiriyor. Fotogerçekçi, marka uyumlu.</p>
+        </div>
+        <div class="lp-process-item">
+          <div class="lp-process-num">03</div>
+          <div class="lp-process-title">Teslimat</div>
+          <p class="lp-process-desc">Tüm görseller marka kılavuzunuza uygun, kanal bazlı boyutlandırılmış ve kampanyaya hazır şekilde teslim ediliyor. 48 saat içinde.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -339,157 +428,91 @@
   <!-- ─── STATS ─── -->
   <section class="lp-stats">
     <div class="lp-stats-inner">
-      <div>
+      <div class="lp-stat">
         <div class="lp-stat-num">10x</div>
         <div class="lp-stat-label">Daha Hızlı Teslimat</div>
       </div>
-      <div>
+      <div class="lp-stat">
         <div class="lp-stat-num">%80</div>
         <div class="lp-stat-label">Daha Düşük Maliyet</div>
       </div>
-      <div>
+      <div class="lp-stat">
         <div class="lp-stat-num">500+</div>
         <div class="lp-stat-label">Sahne Varyantı / Proje</div>
       </div>
-      <div>
+      <div class="lp-stat">
         <div class="lp-stat-num">48s</div>
         <div class="lp-stat-label">Ortalama Teslimat Süresi</div>
       </div>
     </div>
   </section>
 
-  <!-- ─── PROBLEM ─── -->
-  <section class="lp-problem">
-    <div class="lp-problem-inner">
-      <div class="section-label">Problem</div>
-      <h2 class="section-headline">Geleneksel Ürün Çekimi Artık Yetmiyor</h2>
-      <p class="section-desc">
-        Her kampanya için ayrı set, ayrı ekip, ayrı bütçe. Lokalizasyon ihtiyaçları, sezonluk değişiklikler ve kanal çeşitliliği geleneksel prodüksiyonu sürdürülemez hale getiriyor. E-ticaret markaları haftalar süren süreçlere ve yüksek maliyetlere mahkum kalıyor.
-      </p>
-    </div>
-  </section>
-
-  <!-- ─── HOW IT WORKS ─── -->
-  <section class="lp-how" id="how">
-    <div class="lp-how-inner">
-      <div style="text-align:center;">
-        <div class="section-label">Süreç</div>
-        <h2 class="section-headline">3 Adımda Sınırsız Görsel</h2>
-      </div>
-      <div class="lp-how-grid">
-        <div class="lp-how-step">
-          <div class="step-num">01</div>
-          <div class="step-title">Profesyonel Çekim</div>
-          <p class="step-desc">Ürünleriniz stüdyomuzda kontrollü ışık ve kalibreli ekipmanla çekiliyor. Pack-shot, detay ve 360° açılar tek seansta tamamlanıyor.</p>
-        </div>
-        <div class="lp-how-step">
-          <div class="step-num">02</div>
-          <div class="step-title">AI Sahne Üretimi</div>
-          <p class="step-desc">Çekim sonrası, yapay zeka orkestrasyon sistemimiz ürününüzü yüzlerce farklı yaşam tarzı sahnesine, arka plana ve ortama yerleştiriyor.</p>
-        </div>
-        <div class="lp-how-step">
-          <div class="step-num">03</div>
-          <div class="step-title">Kampanyaya Hazır Teslimat</div>
-          <p class="step-desc">Tüm görseller marka kılavuzunuza uygun, kanal bazlı boyutlandırılmış ve kampanyaya hazır şekilde teslim ediliyor. 48 saat içinde.</p>
-        </div>
+  <!-- ─── IMAGE BREAK ─── -->
+  <section class="lp-image-break">
+    <img src="media/hawaiian-tropic-spf30-after-sun-urun-fotografi.jpg" alt="AI ürün görseli" />
+    <div class="lp-image-break-overlay">
+      <div class="lp-image-break-text">
+        <h2>Stüdyo Kalitesi.<br><em>Yapay Zeka Hızı.</em></h2>
+        <p>Tek bir ürün çekiminden yüzlerce benzersiz, lokalize edilmiş yaşam tarzı sahnesine.</p>
       </div>
     </div>
   </section>
 
   <!-- ─── BENEFITS ─── -->
-  <section class="lp-benefits">
-    <div class="lp-benefits-inner">
-      <div style="text-align:center;">
-        <div class="section-label">Avantajlar</div>
-        <h2 class="section-headline" style="color:#fff;">Neden AI ile Ürün Görseli?</h2>
-      </div>
+  <section class="lp-section lp-benefits">
+    <div class="lp-section-inner">
+      <div class="lp-label">Avantajlar</div>
+      <h2 class="lp-headline">Neden AI ile Ürün Görseli?</h2>
       <div class="lp-benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon">⚡</div>
-          <div class="benefit-title">10x Hız</div>
-          <p class="benefit-desc">Geleneksel prodüksiyonla haftalar süren süreçler, AI ile saatlere iniyor. Kampanya takvimlerinize yetişmek artık sorun değil.</p>
+        <div class="lp-benefit">
+          <div class="lp-benefit-num">01</div>
+          <div class="lp-benefit-title">Radikal Hız</div>
+          <p class="lp-benefit-desc">Geleneksel prodüksiyonla haftalar süren süreçler saatlere iniyor. Kampanya takvimlerinize her zaman yetişiyorsunuz.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">💰</div>
-          <div class="benefit-title">%80 Maliyet Tasarrufu</div>
-          <p class="benefit-desc">Set kurulumu, ekstra ekip ve lokasyon masrafları ortadan kalkıyor. Aynı bütçeyle 10 kat daha fazla içerik üretiyorsunuz.</p>
+        <div class="lp-benefit">
+          <div class="lp-benefit-num">02</div>
+          <div class="lp-benefit-title">Maliyet Kontrolü</div>
+          <p class="lp-benefit-desc">Set kurulumu, ekstra ekip ve lokasyon masrafları ortadan kalkıyor. Aynı bütçeyle çok daha fazla içerik üretiyorsunuz.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">🎯</div>
-          <div class="benefit-title">Marka Tutarlılığı</div>
-          <p class="benefit-desc">Her görsel marka kılavuzunuza tam uyumlu. Renk paleti, ton ve stil her karede tutarlı. Marka algınız güçleniyor.</p>
+        <div class="lp-benefit">
+          <div class="lp-benefit-num">03</div>
+          <div class="lp-benefit-title">Marka Tutarlılığı</div>
+          <p class="lp-benefit-desc">Her görsel marka kılavuzunuza tam uyumlu. Renk paleti, ton ve stil her karede tutarlı kalıyor.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">🌍</div>
-          <div class="benefit-title">Global Lokalizasyon</div>
-          <p class="benefit-desc">Aynı ürünü farklı pazarlar için lokalize edin. Kültürel uyum, yerel sahneler ve bölgesel estetik tek tuşla.</p>
+        <div class="lp-benefit">
+          <div class="lp-benefit-num">04</div>
+          <div class="lp-benefit-title">Global Lokalizasyon</div>
+          <p class="lp-benefit-desc">Aynı ürünü farklı pazarlar için lokalize edin. Kültürel uyum, yerel sahneler ve bölgesel estetik.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SHOWCASE ─── -->
-  <section class="lp-showcase">
-    <div class="lp-showcase-inner">
-      <div class="section-label">Portföy</div>
-      <h2 class="section-headline">Çalışmalarımızdan Örnekler</h2>
-      <div class="lp-showcase-grid">
-        <img src="media/works/img_1774110359406.jpg" alt="ADON Studio AI ürün görseli örneği 1" />
-        <img src="media/works/img_1774110398749.jpg" alt="ADON Studio AI ürün görseli örneği 2" />
-        <img src="media/works/img_1774110425841.jpg" alt="ADON Studio AI ürün görseli örneği 3" />
-        <img src="media/works/img_1774110663011.jpg" alt="ADON Studio AI ürün görseli örneği 4" />
-        <img src="media/works/sdsdd_1774021642294.jpg" alt="ADON Studio AI ürün görseli örneği 5" />
-        <img src="media/works/rossmann_1774109277324.png" alt="ADON Studio AI ürün görseli örneği 6" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── LOGOS ─── -->
-  <section class="lp-logos">
-    <div class="lp-logos-inner">
-      <div class="section-label">Güvenen Markalar</div>
-      <div class="lp-logos-grid">
-        <img src="media/logos/01-beymen.jpg" alt="Beymen" />
-        <img src="media/logos/02-is-bankasi.jpg" alt="İş Bankası" />
-        <img src="media/logos/03-tekirdag-raki.jpg" alt="Tekirdağ Rakısı" />
-        <img src="media/logos/04-karcher.jpg" alt="Kärcher" />
-        <img src="media/logos/05-filli-boya.jpg" alt="Filli Boya" />
-        <img src="media/logos/06-sok-market.jpg" alt="ŞOK" />
-        <img src="media/logos/09-urban-care.jpg" alt="Urban Care" />
-        <img src="media/logos/10-pastel-kozmetik.jpg" alt="Pastel Cosmetics" />
-        <img src="media/logos/12-imprime-perfume.jpg" alt="Imprimé" />
-        <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" />
       </div>
     </div>
   </section>
 
   <!-- ─── FAQ ─── -->
-  <section class="lp-faq">
-    <div class="lp-faq-inner">
-      <div style="text-align:center;">
-        <div class="section-label">Sıkça Sorulan Sorular</div>
-        <h2 class="section-headline">Merak Edilenler</h2>
-      </div>
-      <div style="margin-top:48px;">
+  <section class="lp-section lp-faq">
+    <div class="lp-section-inner">
+      <div class="lp-label">Sıkça Sorulan Sorular</div>
+      <h2 class="lp-headline">Merak Edilenler</h2>
+      <div class="lp-faq-list">
         <div class="faq-item">
-          <div class="faq-question">AI ile üretilen görseller gerçekçi görünüyor mu?</div>
-          <div class="faq-answer">Evet, fotogerçekçi kalitededir. Profesyonel stüdyo çekiminden elde edilen ham görseller üzerine AI sahne üretimi yapıldığı için ürünün kendisi %100 gerçektir. Sahneler ise insan gözünün ayırt edemeyeceği kalitede üretilir.</div>
+          <div class="faq-q">AI ile üretilen görseller gerçekçi görünüyor mu?</div>
+          <div class="faq-a">Evet. Profesyonel stüdyo çekiminden elde edilen ham görseller üzerine AI sahne üretimi yapıldığı için ürünün kendisi %100 gerçektir. Sahneler ise insan gözünün ayırt edemeyeceği kalitede üretilir.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Teslimat süresi ne kadar?</div>
-          <div class="faq-answer">Standart projeler 48 saat içinde teslim edilir. Büyük ölçekli kampanyalar için proje bazlı takvim oluşturulur ancak geleneksel prodüksiyona kıyasla en az 10 kat daha hızlıdır.</div>
+          <div class="faq-q">Teslimat süresi ne kadar?</div>
+          <div class="faq-a">Standart projeler 48 saat içinde teslim edilir. Büyük ölçekli kampanyalarda proje bazlı takvim oluşturulur — yine de geleneksel prodüksiyona kıyasla en az 10 kat daha hızlıdır.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Marka kılavuzumuza uyum sağlanıyor mu?</div>
-          <div class="faq-answer">Kesinlikle. Proje başlangıcında marka kılavuzunuz, renk paletizniz ve stil tercihleriniz sistemimize aktarılır. Tüm çıktılar bu standartlara göre üretilir ve onay sürecinizden geçer.</div>
+          <div class="faq-q">Marka kılavuzumuza uyum sağlanıyor mu?</div>
+          <div class="faq-a">Kesinlikle. Proje başlangıcında marka kılavuzunuz, renk paletiniz ve stil tercihleriniz sistemimize aktarılır. Tüm çıktılar bu standartlara göre üretilir.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Minimum sipariş miktarı var mı?</div>
-          <div class="faq-answer">Minimum sipariş bulunmuyor. Tek ürün için bile hizmet verebiliyoruz. Ancak toplu projelerde birim maliyet önemli ölçüde düşmektedir.</div>
+          <div class="faq-q">Minimum sipariş miktarı var mı?</div>
+          <div class="faq-a">Minimum sipariş bulunmuyor. Tek ürün için bile hizmet verebiliyoruz. Toplu projelerde birim maliyet önemli ölçüde düşmektedir.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Hangi sektörlere hizmet veriyorsunuz?</div>
-          <div class="faq-answer">E-ticaret, FMCG, kozmetik, moda, gıda, elektronik ve daha birçok sektöre hizmet veriyoruz. Her sektörün görsel ihtiyaçlarına göre özelleştirilmiş çözümler sunuyoruz.</div>
+          <div class="faq-q">Hangi sektörlere hizmet veriyorsunuz?</div>
+          <div class="faq-a">E-ticaret, FMCG, kozmetik, moda, gıda, elektronik ve daha birçok sektöre hizmet veriyoruz. Her sektörün görsel ihtiyaçlarına göre özelleştirilmiş çözümler sunuyoruz.</div>
         </div>
       </div>
     </div>
@@ -497,23 +520,29 @@
 
   <!-- ─── FORM ─── -->
   <section class="lp-form-section" id="form">
-    <div class="lp-form-inner">
-      <div style="text-align:center;">
-        <div class="section-label">İletişim</div>
-        <h2 class="section-headline" style="color:#fff;">Ücretsiz Demo Talep Edin</h2>
-        <p style="color:rgba(255,255,255,0.5); margin-bottom:16px; font-size:16px;">
-          Ürününüzün AI destekli görsellerini görmek ister misiniz? Formu doldurun, size özel bir demo hazırlayalım.
-        </p>
+    <div class="lp-form-wrap">
+      <div class="lp-form-left">
+        <div class="lp-label">İletişim</div>
+        <h2 class="lp-headline">Projenizi<br>Konuşalım.</h2>
+        <p class="lp-subtext">Ürün görsellerinizi bir üst seviyeye taşımak için bize ulaşın. İhtiyacınıza özel bir teklif hazırlayalım.</p>
+        <div class="lp-form-contact">
+          <a href="mailto:cemsenses@gmail.com">cemsenses@gmail.com</a><br>
+          İstanbul, Türkiye
+        </div>
       </div>
       <form class="lp-form" action="https://formsubmit.co/cemsenses@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Yeni Landing Page Talebi: AI Ürün Görseli" />
+        <input type="hidden" name="_subject" value="Landing Page: AI Ürün Görseli Talebi" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_next" value="https://adon.com.tr/lp-urun-gorseli.html#form" />
-        <input type="text" name="name" placeholder="Ad Soyad" required />
-        <input type="email" name="email" placeholder="E-posta Adresi" required />
-        <input type="text" name="company" placeholder="Şirket Adı" />
-        <input type="tel" name="phone" placeholder="Telefon Numarası" />
-        <select name="sector" class="full">
+        <div class="lp-form-row">
+          <input type="text" name="name" placeholder="Ad Soyad" required />
+          <input type="email" name="email" placeholder="E-posta" required />
+        </div>
+        <div class="lp-form-row">
+          <input type="text" name="company" placeholder="Şirket Adı" />
+          <input type="tel" name="phone" placeholder="Telefon" />
+        </div>
+        <select name="sector">
           <option value="" disabled selected>Sektörünüz</option>
           <option value="E-ticaret">E-ticaret</option>
           <option value="FMCG">FMCG</option>
@@ -523,8 +552,8 @@
           <option value="Elektronik">Elektronik</option>
           <option value="Diğer">Diğer</option>
         </select>
-        <textarea name="message" class="full" placeholder="Projeniz hakkında kısa bilgi verin..."></textarea>
-        <button type="submit" class="btn-primary full">Demo Talep Et →</button>
+        <textarea name="message" placeholder="Projeniz hakkında kısa bilgi..."></textarea>
+        <button type="submit" class="lp-form-submit">Gönder →</button>
       </form>
     </div>
   </section>
@@ -534,12 +563,9 @@
     &copy; 2026 ADON Studio. Tüm hakları saklıdır.
   </footer>
 
-  <!-- ─── FAQ Toggle Script ─── -->
   <script>
     document.querySelectorAll('.faq-item').forEach(function(item) {
-      item.addEventListener('click', function() {
-        this.classList.toggle('open');
-      });
+      item.addEventListener('click', function() { this.classList.toggle('open'); });
     });
   </script>
 
