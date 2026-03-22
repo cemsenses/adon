@@ -81,24 +81,6 @@
     "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
   },
   {
-    "id": 1,
-    "title": "Küresel Kampanya",
-    "category": "Video Prodüksiyon",
-    "year": "2025",
-    "image": "",
-    "placeholder": "AI",
-    "color": "linear-gradient(135deg, #c9c5e8, #f2b8c6)"
-  },
-  {
-    "id": 2,
-    "title": "Ürün Dijital Galeri",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "",
-    "placeholder": "V+",
-    "color": "linear-gradient(135deg, #b8d8e8, #c9e8d0)"
-  },
-  {
     "id": 3,
     "title": "Moda Koleksiyon Lansmanı",
     "category": "Moda & Yaşam Tarzı",
