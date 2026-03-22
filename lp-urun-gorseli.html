@@ -300,6 +300,16 @@
       transition: opacity var(--transition); align-self: flex-start;
     }
     .lp-form-submit:hover { opacity: 0.8; }
+    .lp-form-label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 8px;
+    }
+    .lp-form-submit-wrap { position: relative; }
+    .lp-form-success {
+      display: none; font-size: 14px; color: #4ade80;
+      margin-top: 16px;
+    }
 
     /* ─── FOOTER ─── */
     .lp-footer {
@@ -526,34 +536,44 @@
         <h2 class="lp-headline">Projenizi<br>Konuşalım.</h2>
         <p class="lp-subtext">Ürün görsellerinizi bir üst seviyeye taşımak için bize ulaşın. İhtiyacınıza özel bir teklif hazırlayalım.</p>
         <div class="lp-form-contact">
-          <a href="mailto:cemsenses@gmail.com">cemsenses@gmail.com</a><br>
+          <a href="mailto:info@adon.com.tr">info@adon.com.tr</a><br>
           İstanbul, Türkiye
         </div>
       </div>
-      <form class="lp-form" action="https://formsubmit.co/cemsenses@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Landing Page: AI Ürün Görseli Talebi" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://adon.com.tr/lp-urun-gorseli.html#form" />
+      <form id="lp-contact-form" class="lp-form" action="https://formspree.io/f/xreydnlw" method="POST">
         <div class="lp-form-row">
-          <input type="text" name="name" placeholder="Ad Soyad" required />
-          <input type="email" name="email" placeholder="E-posta" required />
+          <div>
+            <label class="lp-form-label">Ad Soyad</label>
+            <input type="text" name="name" placeholder="Adınızı girin" required />
+          </div>
+          <div>
+            <label class="lp-form-label">Şirket</label>
+            <input type="text" name="company" placeholder="Opsiyonel" />
+          </div>
         </div>
-        <div class="lp-form-row">
-          <input type="text" name="company" placeholder="Şirket Adı" />
-          <input type="tel" name="phone" placeholder="Telefon" />
+        <div>
+          <label class="lp-form-label">E-Posta</label>
+          <input type="email" name="email" placeholder="ornek@sirket.com" required />
         </div>
-        <select name="sector">
-          <option value="" disabled selected>Sektörünüz</option>
-          <option value="E-ticaret">E-ticaret</option>
-          <option value="FMCG">FMCG</option>
-          <option value="Kozmetik">Kozmetik</option>
-          <option value="Moda">Moda</option>
-          <option value="Gıda">Gıda</option>
-          <option value="Elektronik">Elektronik</option>
-          <option value="Diğer">Diğer</option>
-        </select>
-        <textarea name="message" placeholder="Projeniz hakkında kısa bilgi..."></textarea>
-        <button type="submit" class="lp-form-submit">Gönder →</button>
+        <div>
+          <label class="lp-form-label">İlgilendiğiniz Çözüm</label>
+          <select name="service">
+            <option value="">Seçiniz...</option>
+            <option value="photo">AI Destekli Fotoğraf</option>
+            <option value="video">AI Destekli Video</option>
+            <option value="hybrid">Hibrit Video</option>
+            <option value="music">AI Destekli Müzik</option>
+          </select>
+        </div>
+        <div>
+          <label class="lp-form-label">Projenizi Anlatın</label>
+          <textarea name="message" rows="5" placeholder="Projenizden, hedeflerinizden ve beklentilerinizden bahsedin..." required></textarea>
+        </div>
+        <input type="hidden" name="_source" value="Landing Page: AI Ürün Görseli" />
+        <div class="lp-form-submit-wrap">
+          <button type="submit" class="lp-form-submit">Gönder →</button>
+          <p id="lp-form-success" class="lp-form-success">Mesajınız alındı. En kısa sürede dönüş yapacağız.</p>
+        </div>
       </form>
     </div>
   </section>
@@ -566,6 +586,31 @@
   <script>
     document.querySelectorAll('.faq-item').forEach(function(item) {
       item.addEventListener('click', function() { this.classList.toggle('open'); });
+    });
+
+    document.getElementById('lp-contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var btn = this.querySelector('button[type="submit"]');
+      btn.textContent = 'Gönderiliyor...';
+      btn.disabled = true;
+      try {
+        var response = await fetch(this.action, {
+          method: 'POST',
+          body: new FormData(this),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          btn.style.display = 'none';
+          document.getElementById('lp-form-success').style.display = 'block';
+          this.reset();
+        } else {
+          btn.textContent = 'Hata oluştu, tekrar deneyin';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        btn.textContent = 'Hata oluştu, tekrar deneyin';
+        btn.disabled = false;
+      }
     });
   </script>
 
