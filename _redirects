@@ -1,2 +1,13 @@
-# 404 olan tüm URL'leri ana sayfaya yönlendir
+# Mevcut sayfalar olduğu gibi çalışsın
+/index.html /index.html 200
+/hakkimizda.html /hakkimizda.html 200
+/sentez.html /sentez.html 200
+/cozumler.html /cozumler.html 200
+/calismalar.html /calismalar.html 200
+/iletisim.html /iletisim.html 200
+/admin.html /admin.html 200
+/sitemap.xml /sitemap.xml 200
+/robots.txt /robots.txt 200
+
+# Geri kalan tüm bilinmeyen URL'leri ana sayfaya yönlendir
 /* / 301
