@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cemsenses.github.io/adon/</loc>
+    <loc>https://adon.com.tr/</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://cemsenses.github.io/adon/hakkimizda.html</loc>
+    <loc>https://adon.com.tr/hakkimizda.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cemsenses.github.io/adon/sentez.html</loc>
+    <loc>https://adon.com.tr/sentez.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cemsenses.github.io/adon/cozumler.html</loc>
+    <loc>https://adon.com.tr/cozumler.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cemsenses.github.io/adon/calismalar.html</loc>
+    <loc>https://adon.com.tr/calismalar.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cemsenses.github.io/adon/iletisim.html</loc>
+    <loc>https://adon.com.tr/iletisim.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-</urlset>
