@@ -292,7 +292,8 @@
   .lt-track { display: flex; align-items: center; gap: 120px; width: max-content; animation: lt-scroll 25s linear infinite; }
   .lt-wrap:hover .lt-track { animation-play-state: paused; }
   @keyframes lt-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .lt-img { height: 80px; width: auto; flex-shrink: 0; display: block; filter: grayscale(100%) opacity(0.55); }
+  .lt-img { height: 48px; width: auto; flex-shrink: 0; display: block; filter: grayscale(100%) opacity(0.55); }
+  @media (max-width: 768px) { .lt-img { height: 36px; } }
   </style>
 
   <!-- ─── Homepage Video Grid ─── -->
