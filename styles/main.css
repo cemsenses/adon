@@ -1189,7 +1189,7 @@ footer {
 /* ─── Team Grid ─── */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2px;
 }
 
@@ -1205,7 +1205,7 @@ footer {
 
 .team-avatar {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
   margin-bottom: 0;
 }
@@ -1608,7 +1608,7 @@ footer {
   }
 
   .team-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .footer-grid {
