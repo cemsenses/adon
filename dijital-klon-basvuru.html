@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>AI Dijital Klon Projesi – Başvuru | ADON Studio</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="media/favicon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles/main.css?v=3" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--black);
+            font-family: var(--font-body);
+            min-height: 100vh;
+        }
+
+        /* ── Logo ── */
+        .page-logo {
+            position: fixed;
+            top: 28px;
+            left: 36px;
+            z-index: 100;
+        }
+        .page-logo img {
+            height: 22px;
+            width: auto;
+            display: block;
+        }
+
+        /* ── Hero ── */
+        .casting-hero {
+            background: #c0392b;
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 80px 64px 64px;
+            position: relative;
+        }
+        .casting-hero-inner {
+            max-width: 900px;
+        }
+        .casting-hero-label {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 20px;
+        }
+        .casting-hero-title {
+            font-family: var(--font-headline);
+            font-size: clamp(52px, 8vw, 100px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #fff;
+            line-height: 0.95;
+            margin-bottom: 28px;
+        }
+        .casting-hero-sub {
+            font-family: var(--font-body);
+            font-size: 17px;
+            color: rgba(255,255,255,0.8);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        /* ── Content ── */
+        .casting-body {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 80px 36px 120px;
+        }
+
+        /* ── Metin ── */
+        .casting-text {
+            margin-bottom: 72px;
+        }
+        .casting-text h2 {
+            font-family: var(--font-headline);
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-top: 52px;
+            margin-bottom: 16px;
+            color: var(--black);
+        }
+        .casting-text h2:first-child {
+            margin-top: 0;
+        }
+        .casting-text p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        .casting-text ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 12px;
+        }
+        .casting-text ul li {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #333;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+        .casting-text ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .casting-text strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+        .casting-text hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        /* ── Form ── */
+        .casting-form-wrap {
+            border-top: 2px solid var(--black);
+            padding-top: 56px;
+        }
+        .casting-form-title {
+            font-family: var(--font-headline);
+            font-size: 36px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 1px solid #d0d0d0;
+            background: #fff;
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--black);
+            padding: 14px 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            border-radius: 0;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--black);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #aaa;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Fotoğraf yükleme - deaktif */
+        .photo-upload-section {
+            margin-top: 36px;
+            margin-bottom: 36px;
+        }
+        .photo-upload-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .photo-upload-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+        .photo-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px dashed #ccc;
+            background: #f9f9f9;
+            padding: 18px 28px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.6;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ── KVKK ── */
+        .kvkk-wrap {
+            margin-top: 36px;
+            padding: 24px;
+            background: #f5f5f5;
+            border-left: 3px solid var(--black);
+        }
+        .kvkk-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .kvkk-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            margin-top: 2px;
+            accent-color: var(--black);
+            cursor: pointer;
+        }
+        .kvkk-check span {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+        }
+        .kvkk-check a {
+            color: var(--black);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* ── Submit ── */
+        .submit-wrap {
+            margin-top: 36px;
+        }
+        .btn-submit {
+            background: var(--black);
+            color: #fff;
+            border: none;
+            font-family: var(--font-headline);
+            font-size: 18px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 20px 56px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            display: inline-block;
+        }
+        .btn-submit:hover {
+            background: #c0392b;
+        }
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .submit-note {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ── Success ── */
+        .success-msg {
+            display: none;
+            background: #f0fff4;
+            border: 1px solid #68d391;
+            padding: 24px 28px;
+            margin-top: 24px;
+            font-size: 15px;
+            color: #276749;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .casting-hero { padding: 72px 24px 48px; min-height: 50vh; }
+            .casting-body { padding: 48px 20px 80px; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-logo { top: 20px; left: 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Logo -->
+    <a href="index.html" class="page-logo">
+        <img src="media/siyah.png" alt="ADON Studio" onerror="this.src='media/beyaz.png'; this.parentElement.style.background='#111'; this.parentElement.style.padding='4px 8px';">
+    </a>
+
+    <!-- Hero -->
+    <div class="casting-hero">
+        <div class="casting-hero-inner">
+            <div class="casting-hero-label">ADON Studio · Casting Projesi</div>
+            <div class="casting-hero-title">Dijital Klon<br>Olarak Kazan</div>
+            <div class="casting-hero-sub">Yüzün yapay zeka destekli reklam filmlerinde, marka tanıtımlarında ve kampanya görsellerinde yer alsın. Ücretsiz çekim, şeffaf sözleşme, kullandıkça gelir.</div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="casting-body">
+
+        <!-- Metin -->
+        <div class="casting-text">
+
+            <h2>AI Dijital Klon Projesi – Genç Yüzler Arıyoruz</h2>
+            <p>Adon Studio, yapay zeka destekli reklam filmlerinde ve marka tanıtımlarında kullanılmak üzere <strong>dijital klon karakterler</strong> oluşturacak. Bu proje kapsamında ajansımıza katılmak isteyen <strong>genç yüzler</strong> arıyoruz.</p>
+
+            <hr>
+
+            <h2>Ne Yapmanız Gerekiyor?</h2>
+            <p>Ajansımıza gelip profesyonel ekibimiz eşliğinde;</p>
+            <ul>
+                <li>Farklı duygu ifadeleriyle yüz fotoğrafı çekimi</li>
+                <li>Karşıdan ve yandan tam boy fotoğraf çekimi</li>
+            </ul>
+            <p>Bu kadar. Başka bir şey istemiyoruz.</p>
+
+            <hr>
+
+            <h2>Haklarınız Güvende</h2>
+            <p><strong>Çekim ücretsizdir.</strong> Ajansımıza herhangi bir ödeme yapmanız gerekmez.</p>
+            <p>Çekimlerinizden önce sizinle birlikte imzalayacağımız belgeler:</p>
+            <ul>
+                <li><strong>Muvafakatname</strong> – Görüntülerinizin hangi koşullarda kullanılacağını açıkça tanımlar, haklarınızı korur.</li>
+                <li><strong>KVKK Aydınlatma ve Onay Formu</strong> – Kişisel verileriniz yasal güvence altında işlenir.</li>
+            </ul>
+            <p>Dijital klonunuz yalnızca etik standartlara uyan, seçilmiş markaların onaylı projelerinde kullanılır.</p>
+
+            <hr>
+
+            <h2>Nerede Görüneceğim?</h2>
+            <ul>
+                <li>AI destekli reklam ve tanıtım filmleri</li>
+                <li>Marka afişleri</li>
+                <li>Sosyal medya içerikleri</li>
+                <li>Kampanya görselleri</li>
+            </ul>
+
+            <hr>
+
+            <h2>Kimler Başvurabilir?</h2>
+            <p>18 yaş ve üzeri herkes başvurabilir. 18 yaşından küçükler için veli onayı zorunludur.</p>
+
+            <hr>
+
+            <h2>Nasıl Çalışır?</h2>
+            <p>Bir marka dijital klonunuzu seçtiğinde, karakterinizin kullanılacağı projenin kapsamına göre size özel bir ücretlendirme yapılır. <strong>Kullandıkça kazanırsınız.</strong></p>
+
+        </div>
+
+        <!-- Form -->
+        <div class="casting-form-wrap">
+            <div class="casting-form-title">Başvuru Formu</div>
+
+            <form id="casting-form" novalidate>
+
+                <!-- Ad Soyad / Doğum Tarihi -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-name">Ad Soyad *</label>
+                        <input type="text" id="f-name" name="ad_soyad" placeholder="Adınız ve soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-birth">Doğum Tarihi *</label>
+                        <input type="date" id="f-birth" name="dogum_tarihi" required>
+                    </div>
+                </div>
+
+                <!-- Telefon / E-posta -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-phone">Telefon *</label>
+                        <input type="tel" id="f-phone" name="telefon" placeholder="05xx xxx xx xx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-email">E-posta *</label>
+                        <input type="email" id="f-email" name="eposta" placeholder="ornek@email.com" required>
+                    </div>
+                </div>
+
+                <!-- Boy / Kilo -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-height">Boy (cm) *</label>
+                        <input type="number" id="f-height" name="boy" placeholder="175" min="100" max="230" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-weight">Kilo (kg)</label>
+                        <input type="number" id="f-weight" name="kilo" placeholder="70" min="30" max="200">
+                    </div>
+                </div>
+
+                <!-- Cinsiyet / Uyruk -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-gender">Cinsiyet *</label>
+                        <select id="f-gender" name="cinsiyet" required>
+                            <option value="" disabled selected>Seçiniz</option>
+                            <option value="kadin">Kadın</option>
+                            <option value="erkek">Erkek</option>
+                            <option value="diger">Diğer</option>
+                            <option value="belirtmek-istemiyorum">Belirtmek istemiyorum</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-nationality">Uyruk</label>
+                        <input type="text" id="f-nationality" name="uyruk" placeholder="T.C.">
+                    </div>
+                </div>
+
+                <!-- Saç Rengi / Göz Rengi -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-hair">Saç Rengi *</label>
+                        <select id="f-hair" name="sac_rengi" required>
+                            <option value="" disabled selected>Seçiniz</option>
+                            <option value="siyah">Siyah</option>
+                            <option value="kahverengi">Kahverengi</option>
+                            <option value="kumral">Kumral</option>
+                            <option value="sari">Sarı</option>
+                            <option value="kizil">Kızıl</option>
+                            <option value="beyaz-gri">Beyaz / Gri</option>
+                            <option value="boya-diger">Boya / Diğer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-eyes">Göz Rengi *</label>
+                        <select id="f-eyes" name="goz_rengi" required>
+                            <option value="" disabled selected>Seçiniz</option>
+                            <option value="kahverengi">Kahverengi</option>
+                            <option value="siyah">Siyah</option>
+                            <option value="ela">Ela</option>
+                            <option value="yesil">Yeşil</option>
+                            <option value="mavi">Mavi</option>
+                            <option value="gri">Gri</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Ten Rengi / Etnik Köken -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-skin">Ten Rengi</label>
+                        <select id="f-skin" name="ten_rengi">
+                            <option value="" disabled selected>Seçiniz</option>
+                            <option value="cok-acik">Çok Açık</option>
+                            <option value="acik">Açık</option>
+                            <option value="orta">Orta</option>
+                            <option value="esmer">Esmer</option>
+                            <option value="cok-esmer">Çok Esmer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-city">Şehir *</label>
+                        <input type="text" id="f-city" name="sehir" placeholder="İstanbul" required>
+                    </div>
+                </div>
+
+                <!-- Daha önce deneyim -->
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label for="f-exp">Daha önce reklam / fotoğraf çekimi deneyiminiz var mı?</label>
+                        <select id="f-exp" name="deneyim">
+                            <option value="" disabled selected>Seçiniz</option>
+                            <option value="hayir">Hayır, bu benim ilkim</option>
+                            <option value="evet-az">Evet, birkaç kez</option>
+                            <option value="evet-cok">Evet, profesyonel deneyimim var</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Eklemek istedikleri -->
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label for="f-note">Eklemek istediğiniz bir şey var mı?</label>
+                        <textarea id="f-note" name="not" placeholder="Herhangi bir not, soru veya bilgi..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Fotoğraf yükleme (deaktif) -->
+                <div class="photo-upload-section">
+                    <span class="photo-upload-label">Fotoğraf Yükle (Yakında Aktif)</span>
+                    <div class="photo-upload-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Fotoğraf seç (maks. 1 MB)
+                    </div>
+                    <div class="photo-upload-note">Bu alan yakında aktif olacak. Şimdilik fotoğraf yüklemenize gerek yok.</div>
+                </div>
+
+                <!-- KVKK -->
+                <div class="kvkk-wrap">
+                    <label class="kvkk-check">
+                        <input type="checkbox" id="f-kvkk" required>
+                        <span>
+                            <a href="#" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum, kişisel verilerimin Adon Studio tarafından yukarıda belirtilen amaçlarla işlenmesine açık rıza veriyorum. 18 yaşından küçüksem bu başvuruyu veliimin bilgisi ve onayı dahilinde yapıyorum.
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-wrap">
+                    <button type="submit" class="btn-submit" id="f-submit" disabled>Başvurumu Gönder →</button>
+                    <div class="submit-note">* ile işaretli alanlar zorunludur. Bilgileriniz gizli tutulur, üçüncü taraflarla paylaşılmaz.</div>
+                </div>
+
+                <div class="success-msg" id="success-msg">
+                    ✓ Başvurunuz alındı. En kısa sürede sizinle iletişime geçeceğiz.
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // KVKK checkbox → submit butonunu aktif et
+        const kvkk = document.getElementById('f-kvkk');
+        const submitBtn = document.getElementById('f-submit');
+        kvkk.addEventListener('change', () => {
+            submitBtn.disabled = !kvkk.checked;
+        });
+
+        // Form gönder
+        document.getElementById('casting-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!kvkk.checked) return;
+
+            // Zorunlu alan kontrolü
+            const required = this.querySelectorAll('[required]');
+            let valid = true;
+            required.forEach(el => {
+                if (!el.value.trim()) {
+                    el.style.borderColor = '#c0392b';
+                    valid = false;
+                } else {
+                    el.style.borderColor = '';
+                }
+            });
+            if (!valid) {
+                alert('Lütfen tüm zorunlu alanları doldurun.');
+                return;
+            }
+
+            // Şimdilik sadece başarı mesajı göster
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            setTimeout(() => {
+                document.getElementById('success-msg').style.display = 'block';
+                submitBtn.textContent = 'Gönderildi ✓';
+                this.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 800);
+        });
+
+        // Input odak rengi sıfırla
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('input', () => { el.style.borderColor = ''; });
+        });
+    </script>
+
+</body>
+</html>
