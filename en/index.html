@@ -396,8 +396,8 @@
       .then(function(s){
         var idx=s.index||{};
         // Hero
-        brHTML('cms-hero-top', (idx.hero||{}).top);
-        brHTML('cms-hero-bottom', (idx.hero||{}).bottom);
+        brHTML('cms-hero-top', (idx.hero||{}).textTop);
+        brHTML('cms-hero-bottom', (idx.hero||{}).textBottom);
         html('cms-hero-desc', (idx.hero||{}).desc);
         // Fark
         html('cms-fark-label', (idx.fark||{}).label);
