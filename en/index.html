@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ADON Studio — AI-Powered Creative Production</title>
+  <meta name="description" content="ADON Studio: A creative production studio where human craftsmanship meets AI orchestration. Video, product imagery and fashion content at scale." />
+  <link rel="icon" type="image/x-icon" href="../media/favicon.ico" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://adon.com.tr/en/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://adon.com.tr/en/" />
+  <meta property="og:title" content="ADON Studio — AI-Powered Creative Production" />
+  <meta property="og:description" content="AI orchestration meets human craftsmanship. Fast, consistent, scalable content production." />
+  <meta property="og:image" content="https://adon.com.tr/media/hero/adon-anasayfa.jpg" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="ADON Studio" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ADON Studio — AI-Powered Creative Production" />
+  <meta name="twitter:description" content="AI orchestration meets human craftsmanship. Fast, consistent, scalable content production." />
+  <meta name="twitter:image" content="https://adon.com.tr/media/hero/adon-anasayfa.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="../media/favicon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="../styles/main.css?v=3" />
+  <link rel="stylesheet" href="../styles/animations.css" />
+  <style>
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+      padding: 0 32px;
+    }
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+    }
+    .sc-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    @media (max-width: 768px) {
+      .sc-card {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sc-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: var(--card-bg);
+    }
+    .sc-card-img-placeholder {
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      min-height: 300px;
+    }
+    .sc-card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sc-card-title {
+      font-family: var(--font-headline);
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+    .sc-card-subtitle {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .sc-card-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .sc-card-btn {
+      align-self: flex-start;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      transition: color var(--fast);
+    }
+    .sc-card-btn:hover {
+      color: var(--black);
+    }
+    #homepage-video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 32px;
+    }
+    @media (max-width: 768px) {
+      #homepage-video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ADON Studio",
+      "url": "https://adon.com.tr/",
+      "logo": "https://adon.com.tr/media/beyaz.png",
+      "description": "Creative production studio that blends human craftsmanship with AI orchestration.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@adon.com.tr",
+        "contactType": "customer service"
+      },
+      "sameAs": [
+        "https://www.instagram.com/adon.studio/",
+        "https://www.linkedin.com/company/adon-studio/",
+        "https://www.youtube.com/@ADON-AI-Studio"
+      ]
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:#ff3c31;color:#fff;padding:8px 16px;z-index:9999;transition:top 0.2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to content</a>
+    <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-overlay"></div>
+
+  <!-- ─── Navigation ─── -->
+  <nav class="nav nav--dark" id="block-nav" data-cms-block="nav">
+    <a href="index.html" class="nav-logo"><img src="../media/beyaz.png" alt="ADON Studio" class="logo-default" style="height:22px;width:auto;display:block;"><img src="../media/logos/adon-ufak-logo.png" alt="ADON Studio" class="logo-scrolled" style="height:22px;width:auto;display:none;"></a>
+    <div class="nav-links">
+      <a href="about.html" id="nav-link-1">About</a>
+      <a href="solutions.html" id="nav-link-2">Solutions</a>
+      <a href="works.html" id="nav-link-3">Works</a>
+      <a href="synthesis.html" id="nav-link-4">Synthesis</a>
+    </div>
+    <div class="lang-toggle">
+      <a href="../index.html" class="lang-link">TR</a>
+      <span class="lang-active">EN</span>
+    </div>
+    <a href="contact.html" class="nav-cta" id="nav-cta">Contact</a>
+    <button class="nav-menu-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="cms-main">
+  <!-- ─── Hero ─── -->
+  <section class="hero" id="block-hero" data-cms-block="hero" id="main-content">
+
+    <!-- Video Background -->
+    <div class="hero-video-bg">
+      <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;pointer-events:none;">
+        <iframe
+          src="https://player.vimeo.com/video/1175934505?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0"
+          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;border:none;"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          frameborder="0">
+        </iframe>
+      </div>
+      <div class="hero-video-overlay"></div>
+    </div>
+
+    <h1 class="hero-headlines">
+      <div class="hero-text-top" id="cms-hero-top"></div>
+      <div class="hero-text-bottom" id="cms-hero-bottom"></div>
+    </h1>
+
+    <div class="hero-middle">
+      <div class="hero-desc reveal reveal-delay-2" id="cms-hero-desc">
+        ADON Studio is far more than a studio producing visual content for brands: a <em>new generation creative factory</em> that blends a decade of production expertise with our proprietary AI orchestration system. Faster. More consistent. More scalable.
+      </div>
+      <a href="synthesis.html" class="btn reveal reveal-delay-3">See Synthesis in Action →</a>
+    </div>
+  </section>
+
+  <!-- ─── Marquee ─── -->
+  <div class="marquee-section" id="block-marquee" data-cms-block="marquee">
+    <div class="marquee-track">
+      <span>Transformation, Not Process</span>
+      <span>Uncompromised Quality</span>
+      <span>Scalability Built Into Design</span>
+      <span>Performance Driven</span>
+      <span>Global Reach, Local Authenticity</span>
+      <span>Guaranteed Brand Integrity</span>
+      <span>Zero Logistics Burden</span>
+      <span>Transformation, Not Process</span>
+      <span>Uncompromised Quality</span>
+      <span>Scalability Built Into Design</span>
+      <span>Performance Driven</span>
+      <span>Global Reach, Local Authenticity</span>
+      <span>Guaranteed Brand Integrity</span>
+      <span>Zero Logistics Burden</span>
+    </div>
+  </div>
+
+  <!-- ─── Transformation Section ─── -->
+  <section class="section" id="block-fark" data-cms-block="fark">
+    <div class="split">
+      <div>
+        <p class="section-label" id="cms-fark-label">Our Difference</p>
+        <h2 class="section-headline reveal" id="cms-fark-headline">
+          A Tool Gives<br>
+          You Speed.<br>
+          We Deliver<br>
+          <em>Results.</em>
+        </h2>
+      </div>
+      <div>
+        <p class="section-body reveal reveal-delay-2" id="cms-fark-body">
+          Many studios use AI to reduce production costs. We chose a different path: we combined the craftsperson expertise we've built over years with our own AI orchestration infrastructure. The result is not ordinary automation, but content that doesn't compromise on cinematic quality, perfectly aligns with your brand standards, and is delivered in a fraction of traditional production time.
+        </p>
+        <br><br>
+        <a href="synthesis.html" class="btn reveal reveal-delay-4">Explore Synthesis →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 5 Pillars ─── -->
+  <section class="section-sm" style="padding-top: 0;" id="block-pillars" data-cms-block="pillars">
+    <p class="section-label" style="padding: 0 32px; margin-bottom: 0;" id="cms-pillars-label">Five Pillars of Transformation</p>
+    <div class="pillars stagger" style="margin-top: 32px;" id="cms-pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Craftsmanship & Quality Assurance</div>
+        <div class="pillar-body">AI outputs never reach you raw. Our creative directors set aesthetic standards; at the final stage, expert editors, color specialists and VFX artists refine every frame until it matches your brand identity.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">10x Speed vs Traditional</div>
+        <div class="pillar-body">We compress weeks of traditional production into hours. Thanks to parallel AI models, we can produce hundreds of variants in 48 hours and deliver campaign packages ready for A/B testing.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Perfect Alignment With Your Guidelines, Every Time</div>
+        <div class="pillar-body">Brand consistency is often the first casualty when scaling content. Our methodology embeds every brand value—from color palette to voice, typography to photographic style—into every content piece.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Concept to Approval: Risk-Free Prototyping</div>
+        <div class="pillar-body">Test your concepts before committing large budgets. Visual prototypes we create in the ideation phase accelerate approval processes and eliminate surprise costs in final production.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">05</div>
+        <div class="pillar-title">Global Scale, Local Touch</div>
+        <div class="pillar-body">We don't just translate text; we reimagine visuals, models and atmosphere for each market's cultural fabric. A single production delivers locally authentic content simultaneously across 20+ countries.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Logo Ticker ─── -->
+  <section id="block-logos" data-cms-block="logos" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;clip-path:inset(0);position:relative;">
+    <div class="lt-wrap">
+      <div class="lt-track">
+        <img src="../media/logos/01-beymen.jpg"              alt="Beymen"              class="lt-img">
+        <img src="../media/logos/02-is-bankasi.jpg"          alt="İş Bankası"          class="lt-img">
+        <img src="../media/logos/03-tekirdag-raki.jpg"       alt="Tekirdağ Rakısı"     class="lt-img">
+        <img src="../media/logos/04-karcher.jpg"             alt="Kärcher"             class="lt-img">
+        <img src="../media/logos/05-filli-boya.jpg"          alt="Filli Boya"          class="lt-img">
+        <img src="../media/logos/06-sok-market.jpg"          alt="ŞOK"                 class="lt-img">
+        <img src="../media/logos/07-yatsan.jpg"              alt="Yatsan"              class="lt-img">
+        <img src="../media/logos/08-lastikpark.jpg"          alt="LastikPark"          class="lt-img">
+        <img src="../media/logos/09-urban-care.jpg"          alt="Urban Care"          class="lt-img">
+        <img src="../media/logos/10-pastel-kozmetik.jpg"     alt="Pastel Cosmetics"    class="lt-img">
+        <img src="../media/logos/11-tresan.jpg"              alt="Tresan"              class="lt-img">
+        <img src="../media/logos/12-imprime-perfume.jpg"     alt="Imprimé"             class="lt-img">
+        <img src="../media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" class="lt-img">
+        <!-- SET 2 — duplicate -->
+        <img src="../media/logos/01-beymen.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/02-is-bankasi.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/03-tekirdag-raki.jpg"       alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/04-karcher.jpg"             alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/05-filli-boya.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/06-sok-market.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/07-yatsan.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/08-lastikpark.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/09-urban-care.jpg"          alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/10-pastel-kozmetik.jpg"     alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/11-tresan.jpg"              alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/12-imprime-perfume.jpg"     alt="" aria-hidden="true" class="lt-img">
+        <img src="../media/logos/13-the-purest-solutions.jpg" alt="" aria-hidden="true" class="lt-img">
+      </div>
+    </div>
+  </section>
+  <style>
+  .lt-wrap { clip-path: inset(0); width: 100%; }
+  .lt-track { display: flex; align-items: center; gap: 120px; width: max-content; animation: lt-scroll 25s linear infinite; }
+  .lt-wrap:hover .lt-track { animation-play-state: paused; }
+  @keyframes lt-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .lt-img { height: 48px; width: auto; flex-shrink: 0; display: block; filter: grayscale(100%) opacity(0.55); }
+  @media (max-width: 768px) { .lt-img { height: 36px; } }
+  </style>
+
+  <!-- ─── Homepage Video Grid ─── -->
+  <section id="block-homepage-videos" data-cms-block="homepage-videos" style="display:none;">
+    <div class="section">
+      <div id="homepage-video-grid"></div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="cta-section reveal" id="block-cta" data-cms-block="cta">
+    <p class="section-label" style="justify-content: center;">Let's Create</p>
+    <h2 class="cta-title" id="cms-cta-headline">
+      Let's Build<br>
+      Your<br>
+      <em>Next Project</em><br>
+      Together.
+    </h2>
+    <a href="contact.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;" id="cms-cta-btn">→ Start a Conversation</a>
+  </section>
+
+  </main>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="../media/beyaz.png" alt="ADON Studio" style="height: 28px; width: auto; display: block;"></div>
+        <p class="footer-tagline" id="footer-tagline">A strategic partner that delivers transformation at scale by blending human craftsmanship expertise with AI orchestration.</p>
+        <div style="margin-top: 24px; display: flex; gap: 16px;">
+          <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+          <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+          <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="solutions.html">Solutions</a>
+          <a href="works.html">Works</a>
+          <a href="synthesis.html">Synthesis</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Locations</div>
+        <div class="footer-links">
+          <a href="#">Istanbul</a>
+          <a href="#">Milan</a>
+          <a href="#">London</a>
+          <a href="#">Nicosia</a>
+        </div>
+        <div style="margin-top: 32px;">
+          <div class="footer-col-title">Contact</div>
+          <div class="footer-links">
+            <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">© 2026 ADON Studio. All rights reserved.</span>
+      <span id="footer-locations">Istanbul · Milan · London · Nicosia</span>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    function html(id,v){ var el=document.getElementById(id); if(el&&v) el.innerHTML=v; }
+    function txt(id,v){ var el=document.getElementById(id); if(el&&v) el.textContent=v; }
+    function brHTML(id,v){ if(!v) return; var el=document.getElementById(id); if(!el) return; el.innerHTML=v.replace(/\n/g,'<br>'); }
+    fetch('../en/site.json?v='+Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(s){
+        var idx=s.index||{};
+        // Hero
+        brHTML('cms-hero-top', (idx.hero||{}).top);
+        brHTML('cms-hero-bottom', (idx.hero||{}).bottom);
+        html('cms-hero-desc', (idx.hero||{}).desc);
+        // Fark
+        html('cms-fark-label', (idx.fark||{}).label);
+        brHTML('cms-fark-headline', (idx.fark||{}).headline);
+        html('cms-fark-body', (idx.fark||{}).body);
+        // Pillars
+        html('cms-pillars-label', (idx.pillars||{}).label);
+        var pc=document.getElementById('cms-pillars');
+        if(pc && idx.pillars && idx.pillars.items && idx.pillars.items.length){
+          pc.innerHTML='';
+          idx.pillars.items.forEach(function(p){
+            var d=document.createElement('div'); d.className='pillar';
+            d.innerHTML='<div class="pillar-num">'+(p.num||'')+'</div><div class="pillar-title">'+(p.title||'')+'</div><div class="pillar-body">'+(p.body||'')+'</div>';
+            pc.appendChild(d);
+          });
+        }
+        // CTA
+        brHTML('cms-cta-headline', (idx.cta||{}).headline);
+        if((idx.cta||{}).ctaText){ var btn=document.getElementById('cms-cta-btn'); if(btn) btn.innerHTML=(idx.cta||{}).ctaText; }
+        // Carousel
+        var carouselCards = document.querySelector('.carousel-cards');
+        if(carouselCards && idx.carousel && idx.carousel.length){
+          carouselCards.innerHTML='';
+          idx.carousel.forEach(function(item){
+            var li=document.createElement('li');
+            li.style.backgroundImage="url('"+item.image+"')";
+            li.setAttribute('aria-label', item.label||'');
+            carouselCards.appendChild(li);
+          });
+          if(typeof window.reinitCarousel === 'function') window.reinitCarousel();
+        }
+        // Homepage video grid
+        var hvg = document.getElementById('homepage-video-grid');
+        var hvBlock = document.getElementById('block-homepage-videos');
+        if(hvg && idx.homepageVideos && idx.homepageVideos.length){
+          hvg.innerHTML='';
+          idx.homepageVideos.forEach(function(v){
+            var cell=document.createElement('div');
+            cell.style.cssText='aspect-ratio:16/9;background:#0a0a0a;overflow:hidden;';
+            var ytMatch=v.url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
+            var vmMatch=v.url.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/|album\/[^/]+\/video\/)?(\d+)/);
+            if(ytMatch){
+              cell.innerHTML='<iframe src="https://www.youtube.com/embed/'+ytMatch[1]+'?rel=0&modestbranding=1" style="width:100%;height:100%;border:none;display:block;" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+            } else if(vmMatch){
+              cell.innerHTML='<iframe src="https://player.vimeo.com/video/'+vmMatch[1]+'?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" style="width:100%;height:100%;border:none;display:block;" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+            }
+            hvg.appendChild(cell);
+          });
+          if(hvBlock) hvBlock.style.display='';
+        }
+        // Nav menu links
+        var nav = s.nav||{};
+        var links = nav.links||[];
+        links.forEach(function(lnk, i){
+          var el = document.getElementById('nav-link-'+(i+1));
+          if(el){ if(lnk.label) el.textContent=lnk.label; if(lnk.href) el.href=lnk.href; }
+        });
+        if(nav.ctaLabel){ var nc=document.getElementById('nav-cta'); if(nc) nc.textContent=nav.ctaLabel; }
+        // Footer
+        var ft = s.footer||{};
+        if(ft.tagline) html('footer-tagline', ft.tagline);
+        if(ft.copyright) txt('footer-copyright', ft.copyright);
+        if(ft.locations) txt('footer-locations', ft.locations);
+        // Block order & visibility
+        applyBlocks((s.index||{})._blocks||[]);
+      })
+      .catch(function(){});
+  })();
+
+  function applyBlocks(blocks){
+    if(!blocks.length) return;
+    var parent = document.getElementById('cms-main');
+    if(!parent) return;
+    var frag = document.createDocumentFragment();
+    blocks.forEach(function(b){
+      var el = document.getElementById(b.id);
+      if(!el) return;
+      el.style.display = (b.visible===false) ? 'none' : '';
+      frag.appendChild(el);
+    });
+    parent.appendChild(frag);
+  }
+  </script>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+  <script src="../js/main.js" defer></script>
+</body>
+
+</html>

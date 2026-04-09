@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1774110677010,
+    "title": "IMPRIME PERFUME",
+    "category": "Product & E-Commerce",
+    "year": "2026",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110663011.jpg",
+    "placeholder": "IM",
+    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+  },
+  {
+    "id": 1774110465611,
+    "title": "Beymen.com",
+    "category": "Product & E-Commerce",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png",
+    "placeholder": "BE",
+    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+  },
+  {
+    "id": 1774110432974,
+    "title": "Urban Care",
+    "category": "Product & E-Commerce",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg",
+    "placeholder": "UR",
+    "color": "linear-gradient(135deg,#b8c9e8,#b8e8e0)"
+  },
+  {
+    "id": 1774110413173,
+    "title": "Hawaian Tropic",
+    "category": "Product & E-Commerce",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110398749.jpg",
+    "placeholder": "HA",
+    "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
+  },
+  {
+    "id": 1774110374332,
+    "title": "The Purest Solutions",
+    "category": "Product & E-Commerce",
+    "year": "2024",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110359406.jpg",
+    "placeholder": "TH",
+    "color": "linear-gradient(135deg,#f2e8b8,#f2c8a8)"
+  },
+  {
+    "id": 1774109893405,
+    "title": "Imprime Perfume",
+    "category": "Product & E-Commerce",
+    "year": "2026",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109873643.jpeg",
+    "placeholder": "IM",
+    "color": "linear-gradient(135deg,#c9c5e8,#f2b8c6)"
+  },
+  {
+    "id": 1774109804158,
+    "title": "Imprime Perfume",
+    "category": "Video Production",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109791755.png",
+    "placeholder": "IM",
+    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+  },
+  {
+    "id": 1774109505186,
+    "title": "Rossmann",
+    "category": "Product & E-Commerce",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109498643.png",
+    "placeholder": "RO",
+    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+  },
+  {
+    "id": 1774109282659,
+    "title": "Rossmann",
+    "category": "Product & E-Commerce",
+    "year": "2025",
+    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/rossmann_1774109277324.png",
+    "placeholder": "RO",
+    "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
+  }
+]

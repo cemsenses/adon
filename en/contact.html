@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Contact — ADON Studio | Start Your AI Transformation</title>
+    <meta name="description"
+        content="Ready to evolve? Start a dialogue with ADON Studio. Let's orchestrate your next production project from our Istanbul and Adana offices." />
+    <link rel="icon" type="image/x-icon" href="../media/favicon.ico" />
+    <!-- SEO -->
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://adon.com.tr/en/contact.html" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://adon.com.tr/en/contact.html" />
+    <meta property="og:title" content="Contact — ADON Studio | Start Your AI Transformation" />
+    <meta property="og:description" content="Contact ADON Studio. Let's discuss your project and start your transformation together." />
+    <meta property="og:image" content="https://adon.com.tr/media/hero/adon-hakkimizda.jpg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="ADON Studio" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact — ADON Studio | Start Your AI Transformation" />
+    <meta name="twitter:description" content="Contact ADON Studio. Let's discuss your project and start your transformation together." />
+    <meta name="twitter:image" content="https://adon.com.tr/media/hero/adon-hakkimizda.jpg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="../media/favicon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="../styles/main.css?v=3" />
+    <link rel="stylesheet" href="../styles/animations.css" />
+    <style>
+
+        /* ── Hero ── */
+        .contact-hero {
+            background: var(--black);
+            padding: calc(var(--nav-height) + 100px) 64px 120px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+
+        .contact-hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ── Scroll arrow (same as works) ── */
+        .scroll-down-btn {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            z-index: 10;
+            animation: sd-fadein 1.2s ease 1s both;
+            padding: 0;
+        }
+        .scroll-down-btn:hover { color: #fff; }
+        .scroll-down-line {
+            display: block;
+            width: 1px;
+            height: 48px;
+            background: currentColor;
+            transform-origin: top;
+            animation: sd-line 2s ease-in-out infinite;
+        }
+        .scroll-down-arrow {
+            width: 20px;
+            height: 20px;
+            animation: sd-arrow 2s ease-in-out infinite;
+        }
+        @keyframes sd-fadein {
+            from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes sd-line {
+            0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+            40%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+            80%  { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
+            100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+        }
+        @keyframes sd-arrow {
+            0%, 35% { opacity: 0; transform: translateY(-8px); }
+            65%     { opacity: 1; transform: translateY(4px); }
+            100%    { opacity: 0; transform: translateY(10px); }
+        }
+
+        .contact-hero h1 {
+            font-family: var(--font-headline);
+            font-weight: 900;
+            font-size: clamp(64px, 8vw, 140px);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .contact-hero h1 em {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            text-transform: none;
+            color: rgba(255,255,255,0.4);
+            display: block;
+            font-size: 0.75em;
+            letter-spacing: 0;
+            margin-top: 8px;
+        }
+
+        .contact-hero-right {
+            padding-bottom: 8px;
+        }
+
+        .contact-hero-right p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.55);
+            max-width: 420px;
+            margin-bottom: 40px;
+        }
+
+        .contact-hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-hero-meta-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-hero-meta-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.05em;
+        }
+
+        .contact-hero-meta-text strong {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+        }
+
+        /* ── Main content area ── */
+        .contact-body {
+            background: var(--bg);
+            padding: 80px 64px 100px;
+        }
+
+        .contact-body-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        /* ── Left: Info column ── */
+        .contact-info-col {
+            position: sticky;
+            top: calc(var(--nav-height) + 32px);
+        }
+
+        .contact-info-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .contact-info-value {
+            font-family: var(--font-headline);
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: var(--black);
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .contact-info-value a {
+            color: var(--black);
+            transition: color var(--fast);
+        }
+
+        .contact-info-value a:hover {
+            color: var(--accent);
+        }
+
+        /* Email lowercase */
+        #cms-email-link {
+            text-transform: lowercase !important;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .contact-info-value .sub {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .contact-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-link {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            transition: color var(--fast);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-link::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--border);
+            transition: width var(--fast), background var(--fast);
+        }
+
+        .social-link:hover {
+            color: var(--black);
+        }
+
+        .social-link:hover::before {
+            width: 32px;
+            background: var(--black);
+        }
+
+        /* ── Right: Form column ── */
+        .contact-form-col {
+            padding-top: 4px;
+        }
+
+        .contact-form-title {
+            font-family: var(--font-headline);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .form-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 14px 0;
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--black);
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid var(--border);
+            outline: none;
+            transition: border-color var(--fast);
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #b0b0b0;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-bottom-color: var(--black);
+        }
+
+        .form-textarea {
+            resize: none;
+            min-height: 120px;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%235c5c5c'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 20px;
+            cursor: none;
+            color: var(--black);
+        }
+
+        .form-select option {
+            color: var(--black);
+        }
+
+        .form-submit-wrap {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        #form-success {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .contact-hero {
+                padding: calc(var(--nav-height) + 60px) 24px 100px;
+            }
+            .contact-body {
+                padding: 60px 24px 80px;
+            }
+            .contact-body-inner {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            .contact-info-col {
+                position: static;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact — ADON Studio",
+      "url": "https://adon.com.tr/en/contact.html",
+      "description": "Contact ADON Studio. Discuss your AI-powered production project with us.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ADON Studio",
+        "url": "https://adon.com.tr",
+        "telephone": "",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Istanbul",
+          "addressCountry": "TR"
+        }
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:#ff3c31;color:#fff;padding:8px 16px;z-index:9999;transition:top 0.2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to content</a>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="page-overlay"></div>
+
+    <!-- ─── Navigation ─── -->
+    <nav class="nav" style="background: var(--black);">
+        <a href="index.html" class="nav-logo" style="color: var(--white);"><img src="../media/beyaz.png" alt="ADON Studio" class="logo-default" style="height:22px;width:auto;display:block;"><img src="../media/logos/adon-ufak-logo.png" alt="ADON Studio" class="logo-scrolled" style="height:22px;width:auto;display:none;"></a>
+        <div class="nav-links">
+            <a href="about.html" style="color: rgba(255,255,255,0.7);">About</a>
+            <a href="solutions.html" style="color: rgba(255,255,255,0.7);">Solutions</a>
+            <a href="works.html" style="color: rgba(255,255,255,0.7);">Works</a>
+            <a href="synthesis.html" style="color: rgba(255,255,255,0.7);">Synthesis</a>
+        </div>
+        <div class="lang-toggle">
+      <a href="../iletisim.html" class="lang-link">TR</a>
+      <span class="lang-active">EN</span>
+    </div>
+    <a href="contact.html" class="nav-cta"
+            style="border-color: rgba(255,255,255,0.4); color: var(--white);">Contact</a>
+        <button class="nav-menu-toggle" aria-label="Menu" style="filter: invert(1);">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main id="main-content">
+
+        <!-- ─── Hero ─── -->
+        <header class="contact-hero" id="block-hero" data-cms-block="hero">
+            <div class="contact-hero-inner">
+                <h1 id="cms-hero-title">
+                    Let's Talk<br>
+                    About Your Project.
+                    <em>Start the transformation.</em>
+                </h1>
+            </div>
+
+            <!-- Scroll button -->
+            <button class="scroll-down-btn" onclick="document.getElementById('block-form').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
+                <span class="scroll-down-line"></span>
+                <svg class="scroll-down-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- ─── Body ─── -->
+        <section class="contact-body" id="block-form" data-cms-block="form">
+            <div class="contact-body-inner">
+
+                <!-- Left: Contact Info -->
+                <div class="contact-info-col">
+
+                    <div class="contact-info-label">Office · Istanbul</div>
+                    <div class="contact-info-value" id="cms-ist-val">
+                        <a href="https://www.google.com/maps/search/LOTUS+Halaskargazi+Cd.+38-66" target="_blank" rel="noopener noreferrer">
+                            LOTUS Halaskargazi<br>Cd. 38-66
+                            <span class="sub">Istanbul, Turkey</span>
+                        </a>
+                    </div>
+
+                    <div class="contact-info-label">Office · Adana</div>
+                    <div class="contact-info-value" id="cms-ada-val">
+                        Adana
+                        <span class="sub">Turkey</span>
+                    </div>
+
+                    <div class="contact-info-label">Email</div>
+                    <div class="contact-info-value">
+                        <a href="mailto:info@adon.com.tr" id="cms-email-link">info@adon.com.tr</a>
+                    </div>
+
+                    <div class="contact-divider"></div>
+
+                    <div class="contact-info-label" style="margin-bottom: 16px;">Social Media</div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                        <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer" class="social-link">YouTube</a>
+                    </div>
+
+                </div>
+
+                <!-- Right: Form -->
+                <div class="contact-form-col">
+                    <div class="contact-form-title">Send a Message</div>
+
+                    <form id="contact-form" action="https://formspree.io/f/xreydnlw" method="POST">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="name">Full Name</label>
+                                <input class="form-input" type="text" id="name" name="name" placeholder="Enter your name" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="company">Company</label>
+                                <input class="form-input" type="text" id="company" name="company" placeholder="Optional" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-input" type="email" id="email" name="email" placeholder="example@company.com" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="service">Solution of Interest</label>
+                            <select class="form-select" id="service" name="service">
+                                <option value="">Select...</option>
+                                <option value="photo">AI-Powered Photography</option>
+                                <option value="video">AI-Powered Video</option>
+                                <option value="hybrid">Hybrid Video</option>
+                                <option value="music">AI-Powered Music</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Tell Us About Your Project</label>
+                            <textarea class="form-textarea" id="message" name="message" rows="6"
+                                placeholder="Tell us about your project, goals and expectations..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-submit-wrap">
+                            <button type="submit" class="btn btn-filled"
+                                style="padding: 18px 48px; font-size: 14px;">
+                                Send →
+                            </button>
+                            <p id="form-success" style="display: none;">
+                                ✓ Your message was received. We'll get back to you shortly.
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><img src="../media/beyaz.png" alt="ADON Studio" style="height: 28px; width: auto; display: block;"></div>
+                <p class="footer-tagline">A strategic partner that delivers transformation at scale by blending human craftsmanship expertise with AI orchestration.</p>
+                <div style="margin-top: 24px; display: flex; gap: 16px;">
+                    <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+                    <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+                    <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Quick Links</div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="solutions.html">Solutions</a>
+                    <a href="works.html">Works</a>
+                    <a href="synthesis.html">Synthesis</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Locations</div>
+                <div class="footer-links">
+                    <a href="#">Istanbul</a>
+                    <a href="#">Milan</a>
+                    <a href="#">London</a>
+                    <a href="#">Nicosia</a>
+                </div>
+                <div style="margin-top: 32px;">
+                    <div class="footer-col-title">Contact</div>
+                    <div class="footer-links">
+                        <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 ADON Studio. All rights reserved.</span>
+            <span>Istanbul · Milan · London · Nicosia</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Save lead to localStorage
+                    const lead = {
+                        id: Date.now(),
+                        date: new Date().toISOString(),
+                        name: document.getElementById('name').value.trim(),
+                        company: document.getElementById('company').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        service: document.getElementById('service').value,
+                        message: document.getElementById('message').value.trim(),
+                        status: 'new'
+                    };
+                    const leads = JSON.parse(localStorage.getItem('adon_leads') || '[]');
+                    leads.unshift(lead);
+                    localStorage.setItem('adon_leads', JSON.stringify(leads));
+
+                    btn.style.display = 'none';
+                    document.getElementById('form-success').style.display = 'block';
+                    this.reset();
+                } else {
+                    btn.textContent = 'Send →';
+                    btn.disabled = false;
+                    alert('An error occurred. Please write directly to info@adon.com.tr.');
+                }
+            } catch (err) {
+                btn.textContent = 'Send →';
+                btn.disabled = false;
+                alert('Connection error. Please write directly to info@adon.com.tr.');
+            }
+        });
+
+        // Lock scroll to top on page load
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.style.background = 'rgba(8,8,8,0.95)';
+                nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.1)';
+            } else {
+                nav.style.background = 'var(--black)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+    <script>
+    (function(){
+      function txt(id,v){ var el=document.getElementById(id); if(el&&v) el.textContent=v; }
+      function html(id,v){ var el=document.getElementById(id); if(el&&v) el.innerHTML=v; }
+      function brHTML(id,v){ if(!v) return; var el=document.getElementById(id); if(!el) return; el.innerHTML=v.replace(/\n/g,'<br>'); }
+      fetch('../en/site.json?v='+Date.now())
+        .then(function(r){ return r.json(); })
+        .then(function(s){
+          var il=s.iletisim||{};
+          var hero=il.hero||{};
+          var info=il.info||{};
+          brHTML('cms-hero-title', hero.title);
+          html('cms-hero-desc', hero.desc);
+          txt('cms-ist', info.istanbul);
+          txt('cms-ada', info.adana);
+          txt('cms-email-hero', info.email);
+          if(info.email){
+            var lnk=document.getElementById('cms-email-link');
+            if(lnk){ lnk.textContent=info.email; lnk.href='mailto:'+info.email; }
+          }
+          // Istanbul address value
+          if(info.istanbul){
+            var iv=document.getElementById('cms-ist-val');
+            if(iv){ var a=iv.querySelector('a'); if(a){ a.innerHTML=info.istanbul+'<span class="sub">'+(info.istanbulSub||'Istanbul, Turkey')+'</span>'; a.href='https://www.google.com/maps/search/'+encodeURIComponent(info.istanbul); } }
+          }
+          if(info.adana){
+            var av=document.getElementById('cms-ada-val');
+            if(av) av.innerHTML=info.adana+'<span class="sub">'+(info.adanaSub||'Turkey')+'</span>';
+          }
+          applyBlocks((s.iletisim||{})._blocks||[]);
+        })
+        .catch(function(){});
+    })();
+    function applyBlocks(blocks){
+      if(!blocks.length) return;
+      var firstEl=document.getElementById(blocks[0].id); if(!firstEl) return;
+      var parent=document.getElementById("main-content")||firstEl.parentElement;
+      var frag=document.createDocumentFragment();
+      blocks.forEach(function(b){ var el=document.getElementById(b.id); if(!el) return; el.style.display=(b.visible===false)?'none':''; frag.appendChild(el); });
+      parent.appendChild(frag);
+    }
+    </script>
+</body>
+
+</html>

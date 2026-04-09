@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ADON CMS — English</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#080808;--white:#f5f5f0;--red:#ff3c31;--border:#e0e0da;--bg:#fafaf7;--card:#fff;--muted:#999;--font:-apple-system,sans-serif}
+body{font-family:var(--font);background:var(--bg);color:var(--black);min-height:100vh}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
+.login-box{background:#111;border:1px solid #222;padding:48px;width:100%;max-width:380px}
+.login-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:32px}
+.login-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:32px}
+.login-input{width:100%;padding:14px 16px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px;margin-bottom:16px;outline:none;font-family:var(--font)}
+.login-btn{width:100%;padding:14px;background:var(--red);color:#fff;border:none;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.login-error{color:var(--red);font-size:13px;margin-top:12px;display:none}
+
+/* LAYOUT */
+#admin-screen{display:none}
+.admin-header{background:var(--black);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.admin-header-logo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.admin-header-logo span{color:#fff;font-weight:700}
+.btn-logout{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer}
+.btn-logout:hover{color:#fff}
+.cms-layout{display:flex;min-height:calc(100vh - 56px)}
+
+/* SIDEBAR */
+.cms-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:20px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:12px 20px 6px}
+.sidebar-btn{display:block;width:100%;text-align:left;padding:9px 20px;background:none;border:none;font-size:13px;color:#555;cursor:pointer;transition:all .15s}
+.sidebar-btn:hover{background:#f5f5f0;color:var(--black)}
+.sidebar-btn.active{background:var(--black);color:#fff;font-weight:600}
+.sidebar-divider{height:1px;background:var(--border);margin:10px 0}
+
+/* MAIN */
+.cms-main{flex:1;padding:32px;max-width:920px;padding-bottom:120px}
+.panel{display:none}
+.panel.active{display:block}
+.panel-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.panel-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:36px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* FIELDS */
+.fg{margin-bottom:20px}
+.fl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.fh{font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none}
+.fi{width:100%;padding:11px 14px;border:1px solid var(--border);background:#fff;font-size:14px;color:var(--black);outline:none;transition:border-color .2s;font-family:var(--font)}
+.fi:focus{border-color:var(--black)}
+textarea.fi{resize:vertical;min-height:80px}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px;padding-right:36px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* RICHTEXT */
+.rw .ql-toolbar{border:1px solid var(--border);background:#fafaf7;border-radius:0}
+.rw .ql-container{border:1px solid var(--border);border-top:none;font-family:var(--font);font-size:14px}
+.rw .ql-editor{min-height:100px}
+
+/* IMAGE UPLOAD */
+.iw{border:2px dashed var(--border);position:relative;overflow:hidden;transition:border-color .2s;min-height:80px;cursor:pointer}
+.iw:hover,.iw.drag-over{border-color:var(--black)}
+.iw input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
+.iw-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:6px;color:var(--muted);text-align:center}
+.iw-ph-icon{font-size:24px}
+.iw-ph-label{font-size:12px;line-height:1.5}
+.iw img.preview{width:100%;display:block;max-height:220px;object-fit:cover}
+
+/* REPEATER */
+.repeater{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.ri{background:#fff;border:1px solid var(--border)}
+.ri-header{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:pointer;user-select:none}
+.ri-num{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);min-width:24px}
+.ri-preview{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-toggle{font-size:10px;color:var(--muted);transition:transform .2s;margin-left:auto}
+.ri.open .ri-toggle{transform:rotate(180deg)}
+.ri-body{display:none;padding:0 14px 14px}
+.ri.open .ri-body{display:block}
+.ri-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+
+/* BUTTONS */
+.bsm{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border);background:none;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.bsm:hover{border-color:var(--black);color:var(--black)}
+.bsm.danger{color:var(--red);border-color:var(--red)}
+.bsm.danger:hover{background:var(--red);color:#fff}
+.bsm.primary{background:var(--black);color:#fff;border-color:var(--black)}
+.bsm.primary:hover{opacity:.8}
+
+/* ADD BOX */
+.add-box{background:#fff;border:1px solid var(--border);padding:24px;margin-bottom:24px}
+.add-box-title{font-size:14px;font-weight:700;margin-bottom:16px}
+
+/* WORKS & VIDEOS */
+.wg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.wc{background:#fff;border:1px solid var(--border);overflow:hidden}
+.wc-img{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:rgba(8,8,8,.12);overflow:hidden}
+.wc-img img{width:100%;height:100%;object-fit:cover}
+.wc-info{padding:8px 10px;border-top:1px solid var(--border)}
+.wc-title{font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wc-cat{font-size:10px;color:var(--muted)}
+.wc-actions{padding:6px 10px 8px;display:flex;gap:6px}
+.vl{display:flex;flex-direction:column;gap:10px}
+.vc{background:#fff;border:1px solid var(--border);display:flex;gap:12px;padding:12px;align-items:flex-start}
+.vt{width:120px;flex-shrink:0;aspect-ratio:16/9;background:#111;overflow:hidden}
+.vt img{width:100%;height:100%;object-fit:cover}
+.vi-info{flex:1}
+.vi-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.vi-url{font-size:10px;color:var(--muted);word-break:break-all}
+.vi-actions{display:flex;gap:6px;margin-top:8px}
+
+/* SAVE BAR */
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--black);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;z-index:300;transform:translateY(100%);transition:transform .3s}
+.save-bar.visible{transform:translateY(0)}
+.save-bar-text{color:rgba(255,255,255,.6);font-size:13px}
+.save-bar-text span{color:#fff;font-weight:600}
+.save-right{display:flex;align-items:center;gap:16px}
+.save-status{font-size:12px;color:rgba(255,255,255,.5)}
+.btn-save{padding:12px 28px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+
+/* TOKEN MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#111;border:1px solid #333;padding:40px;width:100%;max-width:480px}
+.modal-title{color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
+.modal-sub{color:rgba(255,255,255,.4);font-size:13px;margin-bottom:24px;line-height:1.6}
+.modal-input{width:100%;padding:12px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:13px;font-family:monospace;outline:none;margin-bottom:16px}
+.modal-actions{display:flex;gap:12px}
+.btn-mok{flex:1;padding:12px;background:var(--red);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.btn-mcancel{padding:12px 20px;background:none;color:rgba(255,255,255,.4);border:1px solid #333;font-size:12px;cursor:pointer}
+
+@media(max-width:640px){.frow{grid-template-columns:1fr}.cms-sidebar{display:none}.cms-main{padding:16px}}
+
+/* ── BLOCK MANAGER ── */
+.block-manager{background:#fff;border:1px solid var(--border);margin-bottom:32px}
+.block-manager-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.block-manager-title svg{opacity:.5}
+.block-list{display:flex;flex-direction:column}
+.block-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0ec;transition:background .15s}
+.block-row:last-child{border-bottom:none}
+.block-row:hover{background:#fafaf7}
+.block-row.hidden-block{opacity:.45}
+.block-row-label{flex:1;font-size:13px;font-weight:500;color:var(--black)}
+.block-row.hidden-block .block-row-label{text-decoration:line-through;color:var(--muted)}
+.block-row-actions{display:flex;gap:4px;align-items:center}
+.btn-block{background:none;border:1px solid var(--border);padding:4px 8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;line-height:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px}
+.btn-block:hover{border-color:var(--black);color:var(--black)}
+.btn-block.btn-hide{color:var(--muted)}
+.btn-block.btn-hide.active{background:var(--black);border-color:var(--black);color:#fff}
+.btn-block:disabled{opacity:.25;cursor:not-allowed}
+
+/* ── LEADS ── */
+.leads-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.leads-filter{display:flex;gap:6px}
+.leads-filter-btn{padding:6px 14px;border:1px solid var(--border);background:none;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .15s}
+.leads-filter-btn.active{background:var(--black);border-color:var(--black);color:#fff}
+.leads-count{font-size:12px;color:var(--muted);margin-left:auto}
+.leads-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:13px}
+.leads-empty-icon{font-size:32px;margin-bottom:12px}
+.lead-card{background:#fff;border:1px solid var(--border);margin-bottom:12px;transition:box-shadow .15s}
+.lead-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.lead-card.status-contacted{border-left:3px solid #22c55e}
+.lead-card.status-new{border-left:3px solid var(--red)}
+.lead-header{display:flex;align-items:flex-start;gap:16px;padding:16px 16px 12px}
+.lead-avatar{width:40px;height:40px;border-radius:50%;background:var(--black);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;letter-spacing:.02em}
+.lead-meta{flex:1;min-width:0}
+.lead-name{font-size:14px;font-weight:700;color:var(--black);margin-bottom:2px}
+.lead-company{font-size:12px;color:var(--muted)}
+.lead-email{font-size:12px;color:var(--red);font-weight:600;margin-top:2px}
+.lead-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.lead-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);color:var(--muted)}
+.lead-badge.new{background:#fff0ee;border-color:#fca5a5;color:#dc2626}
+.lead-badge.contacted{background:#f0fdf4;border-color:#86efac;color:#16a34a}
+.lead-date{font-size:11px;color:var(--muted)}
+.lead-service-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:#f5f5f0;color:var(--muted)}
+.lead-body{padding:0 16px 12px;border-top:1px solid #f0f0ec;margin:0 16px}
+.lead-message{font-size:13px;color:#444;line-height:1.6;margin-top:10px;white-space:pre-line}
+.lead-actions{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #f0f0ec}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">ADON Studio · <span style="color:rgba(255,255,255,.7)">CMS</span></div>
+    <div class="login-title">Admin Panel</div>
+    <input class="login-input" type="password" id="pw-input" placeholder="Password"/>
+    <button class="login-btn" id="pw-btn">Login →</button>
+    <div class="login-error" id="login-error">Incorrect password.</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen">
+  <header class="admin-header">
+    <div class="admin-header-logo">ADON · <span>CMS</span></div>
+    <button class="btn-logout" id="btn-logout">Logout</button>
+  </header>
+  <div class="cms-layout">
+
+    <!-- SIDEBAR -->
+    <nav class="cms-sidebar">
+      <div class="sidebar-label">Global</div>
+      <button class="sidebar-btn" data-panel="nav">Navigation</button>
+      <button class="sidebar-btn" data-panel="footer-edit">Footer</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Pages</div>
+      <button class="sidebar-btn active" data-panel="index">Home</button>
+      <button class="sidebar-btn" data-panel="about">About</button>
+      <button class="sidebar-btn" data-panel="synthesis">Synthesis</button>
+      <button class="sidebar-btn" data-panel="solutions">Solutions</button>
+      <button class="sidebar-btn" data-panel="contact">Contact</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Home Media</div>
+      <button class="sidebar-btn" data-panel="carousel">Carousel</button>
+      <button class="sidebar-btn" data-panel="hp-videos">Video Grid</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Portfolio</div>
+      <button class="sidebar-btn" data-panel="p-gorsel">Images</button>
+      <button class="sidebar-btn" data-panel="p-video">Videos</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">CRM</div>
+      <button class="sidebar-btn" data-panel="leads">Submissions <span id="leads-sidebar-count" style="background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;display:none"></span></button>
+    </nav>
+
+    <main class="cms-main">
+
+      <!-- ══════════════════════════════
+           NAVİGASYON
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-nav">
+        <div class="panel-title">Navigation</div>
+        <div class="panel-sub">All pages top menu · site.json → nav</div>
+
+        <div class="section-divider">MENU LINKS</div>
+        <div id="nav-links-list"></div>
+
+        <div class="section-divider">CTA BUTTON</div>
+        <div class="frow">
+          <div class="fg">
+            <div class="fl">Button Text</div>
+            <input class="fi" id="nav-cta-label" type="text" placeholder="İletişim"/>
+          </div>
+          <div class="fg">
+            <div class="fl">Link</div>
+            <input class="fi" id="nav-cta-href" type="text" placeholder="contact.html"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           FOOTER
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-footer-edit">
+        <div class="panel-title">Footer</div>
+        <div class="panel-sub">All pages footer area · site.json → footer</div>
+
+        <div class="section-divider">İÇERİK</div>
+        <div class="fg">
+          <div class="fl">Tagline (short description)</div>
+          <div class="rw" id="footer-tagline-q"></div>
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <div class="fl">Copyright Text</div>
+            <input class="fi" id="footer-copyright-fi" type="text" placeholder="© 2026 ADON Studio..."/>
+          </div>
+          <div class="fg">
+            <div class="fl">Locations (bottom bar)</div>
+            <input class="fi" id="footer-locations-fi" type="text" placeholder="İstanbul · Milan · ..."/>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           ANA SAYFA
+      ══════════════════════════════ -->
+      <div class="panel active" id="panel-index">
+        <div class="panel-title">Home</div>
+        <div class="panel-sub">index.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Block Order &amp; Visibility</div><div class="block-list" id="bm-index"></div></div>
+
+        <div class="section-divider">HERO</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Top Headline</div><input class="fi" id="i-hero-top" type="text"></div>
+          <div class="fg"><div class="fl">Sub Headline <span class="fh">&lt;em&gt; kullanabilirsiniz</span></div><input class="fi" id="i-hero-bottom" type="text"></div>
+        </div>
+        <div class="fg"><div class="fl">Description Text</div><div class="rw" id="i-hero-desc-q"></div></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Background Video File</div><input class="fi" id="i-hero-video" type="text" placeholder="media/...mp4"></div>
+          <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="i-hero-cta" type="text"></div>
+        </div>
+
+        <div class="section-divider">OUR DIFFERENCE SECTION</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Label</div><input class="fi" id="i-fark-label" type="text"></div>
+          <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="i-fark-cta" type="text"></div>
+        </div>
+        <div class="fg"><div class="fl">Headline <span class="fh">Line break: \n | Italic: &lt;em&gt;...&lt;/em&gt;</span></div><textarea class="fi" id="i-fark-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Description</div><div class="rw" id="i-fark-body-q"></div></div>
+
+        <div class="section-divider">5 PILLARS OF TRANSFORMATION</div>
+        <div class="fg"><div class="fl">Section Label</div><input class="fi" id="i-pillars-label" type="text"></div>
+        <div class="repeater" id="r-pillars"></div>
+
+        <div class="section-divider">SPEED & SCALE</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="i-speed-headline" rows="4"></textarea></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Background Video</div><input class="fi" id="i-speed-video" type="text"></div>
+          <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="i-speed-cta" type="text"></div>
+        </div>
+        <div class="repeater" id="r-speed-cards"></div>
+
+        <div class="section-divider">OUR SOLUTIONS (Card Grid)</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="i-sol-headline" rows="3"></textarea></div>
+          <div class="fg"><div class="fl">Description</div><textarea class="fi" id="i-sol-body" rows="3"></textarea></div>
+        </div>
+        <div class="repeater" id="r-sol-cards"></div>
+
+        <div class="section-divider">CTA BANNER</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Label</div><input class="fi" id="i-cta-label" type="text"></div>
+          <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="i-cta-btn" type="text"></div>
+        </div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="i-cta-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Description</div><div class="rw" id="i-cta-body-q"></div></div>
+
+        <div class="section-divider">SERVICE CARDS (4-Card Grid)</div>
+        <div class="fg"><div class="fl">Section Label</div><input class="fi" id="i-sc-label" type="text" placeholder="Hizmetlerimiz"/></div>
+        <div id="r-service-cards"></div>
+
+        <div class="section-divider">FAQ (Frequently Asked Questions)</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="i-faq-headline" rows="2"></textarea></div>
+          <div class="fg"></div>
+        </div>
+        <div class="repeater" id="r-faq"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           HAKKIMIZDA
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-about">
+        <div class="panel-title">About</div>
+        <div class="panel-sub">about.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Block Order &amp; Visibility</div><div class="block-list" id="bm-about"></div></div>
+
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Image <span class="fh">Recommended: 1920×800px</span></div>
+          <div class="iw" id="hk-hero-iw">
+            <input type="file" id="hk-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Select or drag an image</div></div>
+          </div>
+        </div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="hk-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Subtitle</div><div class="rw" id="hk-hero-sub-q"></div></div>
+
+        <div class="section-divider">MANIFESTO</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="hk-man-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">Paragraph 1</div><div class="rw" id="hk-man-body1-q"></div></div>
+        <div class="fg"><div class="fl">Paragraph 2</div><div class="rw" id="hk-man-body2-q"></div></div>
+
+        <div class="section-divider">TEAM MEMBERS</div>
+        <div class="repeater" id="r-team"></div>
+
+        <div class="section-divider">DNA — 3 THINGS THAT SET US APART</div>
+        <div class="repeater" id="r-dna"></div>
+
+        <div class="section-divider">CTA</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="hk-cta-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="hk-cta-btn" type="text"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SENTEZ
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-synthesis">
+        <div class="panel-title">Synthesis</div>
+        <div class="panel-sub">synthesis.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Block Order &amp; Visibility</div><div class="block-list" id="bm-synthesis"></div></div>
+
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Image <span class="fh">Recommended: 1920×800px</span></div>
+          <div class="iw" id="sz-hero-iw">
+            <input type="file" id="sz-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Select or drag an image</div></div>
+          </div>
+        </div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="sz-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Subtitle</div><div class="rw" id="sz-hero-sub-q"></div></div>
+
+        <div class="section-divider">5-STEP SYNTHESIS</div>
+        <div class="fg"><div class="fl">Section Headline</div><textarea class="fi" id="sz-fw-headline" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">Description</div><div class="rw" id="sz-fw-body-q"></div></div>
+        <div class="repeater" id="r-steps"></div>
+
+        <div class="section-divider">WHY IT WORKS — DIFFERENT SOURCE</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="sz-why-headline" rows="2"></textarea></div>
+        <div class="repeater" id="r-why-pillars"></div>
+
+        <div class="section-divider">CTA</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="sz-cta-headline" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="sz-cta-btn" type="text"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           ÇÖZÜMLER
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-solutions">
+        <div class="panel-title">Solutions</div>
+        <div class="panel-sub">solutions.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Block Order &amp; Visibility</div><div class="block-list" id="bm-solutions"></div></div>
+
+        <div class="section-divider">HERO</div>
+        <div class="fg">
+          <div class="fl">Hero Image <span class="fh">Recommended: 1920×800px</span></div>
+          <div class="iw" id="cz-hero-iw">
+            <input type="file" id="cz-hero-if" accept="image/*"/>
+            <div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Select or drag an image</div></div>
+          </div>
+        </div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="cz-hero-title" rows="4"></textarea></div>
+        <div class="fg"><div class="fl">Subtitle</div><div class="rw" id="cz-hero-sub-q"></div></div>
+
+        <div class="section-divider">SOLUTIONS BY CRAFT</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Section Label</div><input class="fi" id="cz-craft-label" type="text"></div>
+          <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="cz-craft-headline" rows="2"></textarea></div>
+        </div>
+        <div class="repeater" id="r-craft-cards"></div>
+
+        <div class="section-divider">SOLUTIONS BY OBJECTIVE</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Section Label</div><input class="fi" id="cz-obj-label" type="text"></div>
+          <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="cz-obj-headline" rows="2"></textarea></div>
+        </div>
+        <div class="repeater" id="r-obj-cards"></div>
+
+        <div class="section-divider">WHY ADON</div>
+        <div class="fg"><div class="fl">Headline</div><textarea class="fi" id="cz-why-headline" rows="5"></textarea></div>
+        <div class="fg"><div class="fl">Description</div><div class="rw" id="cz-why-body-q"></div></div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Background Video</div><input class="fi" id="cz-why-video" type="text"></div>
+          <div class="fg"><div class="fl">CTA Button Text</div><input class="fi" id="cz-why-cta" type="text"></div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           İLETİŞİM
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-contact">
+        <div class="panel-title">Contact</div>
+        <div class="panel-sub">contact.html</div>
+        <div class="block-manager"><div class="block-manager-title">🧱 Block Order &amp; Visibility</div><div class="block-list" id="bm-contact"></div></div>
+
+        <div class="section-divider">HERO</div>
+        <div class="fg"><div class="fl">Headline <span class="fh">Line break: \n | Italic: &lt;em&gt;</span></div><textarea class="fi" id="il-hero-title" rows="3"></textarea></div>
+        <div class="fg"><div class="fl">Description</div><div class="rw" id="il-hero-desc-q"></div></div>
+
+        <div class="section-divider">CONTACT INFORMATION</div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Istanbul Address</div><input class="fi" id="il-ist" type="text"></div>
+          <div class="fg"><div class="fl">İstanbul Subtitle</div><input class="fi" id="il-ist-sub" type="text"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><div class="fl">Adana Address</div><input class="fi" id="il-ada" type="text"></div>
+          <div class="fg"><div class="fl">Adana Subtitle</div><input class="fi" id="il-ada-sub" type="text"></div>
+        </div>
+        <div class="fg"><div class="fl">Email</div><input class="fi" id="il-email" type="text"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           CAROUSEL
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-carousel">
+        <div class="panel-title">Home Carousel</div>
+        <div class="panel-sub">index.html · site.json → index.carousel</div>
+
+        <div class="add-box">
+          <div class="add-box-title">New Image Ekle</div>
+          <div class="frow">
+            <div class="fg">
+              <div class="fl">Label <span class="fh">Alt text / description</span></div>
+              <input class="fi" id="cr-label" type="text" placeholder="Product Photography"/>
+            </div>
+            <div class="fg">
+              <div class="fl">Image <span class="fh">Free ratio, full-screen visible</span></div>
+              <div class="iw" id="cr-iw" style="min-height:48px">
+                <input type="file" id="cr-if" accept="image/*"/>
+                <div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Select image</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="bsm primary" id="btn-add-carousel" style="margin-top:4px">Add →</button>
+        </div>
+
+        <div class="admin-section-title" style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Mevcut Carousel Imageleri</div>
+        <div id="admin-carousel-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           ANA SAYFA VIDEO GRID
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-hp-videos">
+        <div class="panel-title">Home Video Grid</div>
+        <div class="panel-sub">index.html · site.json → index.homepageVideos · Above carousel, 16:9 pairs</div>
+
+        <div class="add-box">
+          <div class="add-box-title">Add New Video</div>
+          <div class="frow">
+            <div class="fg">
+              <div class="fl">Headline</div>
+              <input class="fi" id="hv-title" type="text" placeholder="Video title (optional)"/>
+            </div>
+            <div class="fg">
+              <div class="fl">Vimeo URL</div>
+              <input class="fi" id="hv-url" type="text" placeholder="https://vimeo.com/123456789"/>
+            </div>
+          </div>
+          <button class="bsm primary" id="btn-add-hpvideo" style="margin-top:4px">Add →</button>
+        </div>
+
+        <div class="admin-section-title" style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Current Videos</div>
+        <div class="vl" id="admin-hp-videos"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           PORTFÖY — GÖRSELLER
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-p-gorsel">
+        <div class="panel-title">Portfolio — Images</div>
+        <div class="panel-sub">works.html · works.json</div>
+        <div class="add-box">
+          <div class="add-box-title">New Image Ekle</div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Headline</div><input class="fi" id="w-title" type="text" placeholder="Proje adı"></div>
+            <div class="fg"><div class="fl">Category</div>
+              <select class="fi" id="w-cat">
+                <option>Video Prodüksiyon</option><option>Ürün & E-Ticaret</option>
+                <option>Moda & Yaşam Tarzı</option><option>Kurumsal</option>
+              </select>
+            </div>
+          </div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Yıl</div><input class="fi" id="w-year" type="text" value="2025"></div>
+            <div class="fg"><div class="fl">Image <span class="fh">4:5 önerilen</span></div>
+              <div class="iw" id="w-iw" style="min-height:48px">
+                <input type="file" id="w-if" accept="image/*"/>
+                <div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Seç</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="bsm primary" id="btn-add-work" style="margin-top:4px">Add →</button>
+        </div>
+        <div class="wg" id="admin-works"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           PORTFÖY — VİDEOLAR
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-p-video">
+        <div class="panel-title">Portfolio — Videos</div>
+        <div class="panel-sub">works.html · videos.json</div>
+        <div class="add-box">
+          <div class="add-box-title">Add New Video</div>
+          <div class="frow">
+            <div class="fg"><div class="fl">Headline</div><input class="fi" id="v-title" type="text" placeholder="Video başlığı"></div>
+            <div class="fg"><div class="fl">Video URL (YouTube veya Vimeo)</div><input class="fi" id="v-url" type="text" placeholder="https://vimeo.com/123456789 veya https://youtube.com/watch?v=..."></div>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:8px 0 4px;cursor:pointer;">
+            <input type="checkbox" id="v-vertical" style="width:16px;height:16px;cursor:pointer;"> Dikey video (9:16)
+          </label>
+          <button class="bsm primary" id="btn-add-video" style="margin-top:4px">Add →</button>
+        </div>
+        <div class="vl" id="admin-videos"></div>
+      </div>
+
+      <!-- ══════════════════════════════
+           BAŞVURULAR (LEADS)
+      ══════════════════════════════ -->
+      <div class="panel" id="panel-leads">
+        <div class="panel-title">Submissions</div>
+        <div class="panel-sub">İletişim formundan gelen başvurular · Bu tarayıcıda saklanır</div>
+
+        <div class="leads-toolbar">
+          <div class="leads-filter">
+            <button class="leads-filter-btn active" data-lf="all">All</button>
+            <button class="leads-filter-btn" data-lf="new">New</button>
+            <button class="leads-filter-btn" data-lf="contacted">İletişim Kuruldu</button>
+          </div>
+          <span class="leads-count" id="leads-count-label"></span>
+          <button class="bsm danger" id="btn-clear-leads" style="margin-left:auto">Allnü Delete</button>
+        </div>
+
+        <div id="leads-list"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar" id="save-bar">
+    <div class="save-bar-text">You have unsaved changes. <span>Yayınlamak ister misiniz?</span></div>
+    <div class="save-right">
+      <span class="save-status" id="save-status"></span>
+      <button class="btn-save" id="btn-save">Yayınla →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOKEN MODAL -->
+<div class="modal-bg" id="token-modal">
+  <div class="modal">
+    <div class="modal-title">GitHub Token Gerekli</div>
+    <div class="modal-sub">Değişiklikleri yayınlamak için GitHub Personal Access Token girin. Tarayıcıda güvenli saklanır.</div>
+    <input class="modal-input" type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+    <div class="modal-actions">
+      <button class="btn-mok" id="token-ok">Kaydet ve Yayınla →</button>
+      <button class="btn-mcancel" id="token-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const PASS = 'adon2025';
+const GH = { owner:'cemsenses', repo:'adon', branch:'main' };
+const SITE_PATH   = 'en/site.json';
+const WORKS_PATH  = 'en/works.json';
+const VIDEOS_PATH = 'en/videos.json';
+const MEDIA_CMS   = 'media/cms/';
+const MEDIA_WORKS = 'media/works/';
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let site={}, works=[], videos=[], dirty=false;
+let ghToken = localStorage.getItem('adon_gh_token')||'';
+const QUILLS = {};
+
+// ══════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════
+document.getElementById('pw-btn').onclick = tryLogin;
+document.getElementById('pw-input').onkeydown = e=>{ if(e.key==='Enter') tryLogin(); };
+function tryLogin(){
+  if(document.getElementById('pw-input').value===PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-screen').style.display='block';
+    init();
+  } else {
+    document.getElementById('login-error').style.display='block';
+  }
+}
+document.getElementById('btn-logout').onclick = ()=>location.reload();
+
+// ══════════════════════════════════════════
+// SIDEBAR
+// ══════════════════════════════════════════
+document.querySelectorAll('.sidebar-btn').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.panel).classList.add('active');
+  };
+});
+
+// ══════════════════════════════════════════
+// QUILL HELPER
+// ══════════════════════════════════════════
+const TB = [['bold','italic','underline'],[{'size':['small',false,'large','huge']}],[{'list':'ordered'},{'list':'bullet'}],['clean']];
+function makeQ(id, html, onchange){
+  const el=document.getElementById(id);
+  if(!el) return null;
+  const q=new Quill(el,{theme:'snow',modules:{toolbar:TB}});
+  if(html) q.root.innerHTML=html;
+  q.on('text-change',()=>{ if(onchange) onchange(q.root.innerHTML); setDirty(); });
+  QUILLS[id]=q;
+  return q;
+}
+
+// ══════════════════════════════════════════
+// IMAGE UPLOAD HELPER
+// ══════════════════════════════════════════
+function initImg(wrapId, fileId, onFile){
+  const wrap=document.getElementById(wrapId);
+  const file=document.getElementById(fileId);
+  if(!wrap||!file) return;
+  const handle=(f)=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const b64=e.target.result.split(',')[1];
+      // Show preview
+      wrap.innerHTML='';
+      const img=document.createElement('img'); img.src=e.target.result; img.className='preview'; wrap.appendChild(img);
+      const ni=document.createElement('input'); ni.type='file'; ni.accept='image/*';
+      ni.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+      ni.onchange=()=>{ if(ni.files[0]) handle(ni.files[0]); };
+      wrap.appendChild(ni);
+      if(onFile) onFile(f,b64);
+    };
+    r.readAsDataURL(f);
+  };
+  file.onchange=()=>{ if(file.files[0]) handle(file.files[0]); };
+  wrap.ondragover=e=>{ e.preventDefault(); wrap.classList.add('drag-over'); };
+  wrap.ondragleave=()=>wrap.classList.remove('drag-over');
+  wrap.ondrop=e=>{ e.preventDefault(); wrap.classList.remove('drag-over'); const f=e.dataTransfer.files[0]; if(f&&f.type.startsWith('image/')){ const dt=new DataTransfer(); dt.items.add(f); file.files=dt.files; handle(f); } };
+}
+
+function showImgPreview(wrapId, src, onNewFile){
+  const wrap=document.getElementById(wrapId); if(!wrap||!src) return;
+  wrap.innerHTML='';
+  const img=document.createElement('img'); img.src=src; img.className='preview'; wrap.appendChild(img);
+  const ni=document.createElement('input'); ni.type='file'; ni.accept='image/*';
+  ni.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+  ni.onchange=()=>{
+    if(!ni.files[0]) return;
+    const r=new FileReader(); r.onload=e=>{ const b64=e.target.result.split(',')[1]; img.src=e.target.result; if(onNewFile) onNewFile(ni.files[0],b64); };
+    r.readAsDataURL(ni.files[0]);
+  };
+  wrap.appendChild(ni);
+}
+
+// ══════════════════════════════════════════
+// REPEATER HELPER
+// ══════════════════════════════════════════
+function buildRepeater(containerId, items, fields){
+  const c=document.getElementById(containerId); c.innerHTML='';
+  items.forEach((item,i)=>{
+    const div=document.createElement('div'); div.className='ri open';
+    const hdr=document.createElement('div'); hdr.className='ri-header';
+    hdr.innerHTML=`<span class="ri-num">${String(i+1).padStart(2,'0')}</span><span class="ri-preview">${item.title||item.name||item.question||item.num||''}</span><span class="ri-toggle">▾</span>`;
+    hdr.onclick=()=>div.classList.toggle('open');
+    const body=document.createElement('div'); body.className='ri-body';
+
+    fields.forEach(f=>{
+      const fg=document.createElement('div'); fg.className='fg';
+      const lbl=document.createElement('div'); lbl.className='fl'; lbl.textContent=f.label; fg.appendChild(lbl);
+
+      if(f.type==='richtext'){
+        const rw=document.createElement('div'); rw.className='rw'; rw.id=`${containerId}-${i}-${f.key}`; fg.appendChild(rw); body.appendChild(fg);
+      } else if(f.type==='img'){
+        const iw=document.createElement('div'); iw.className='iw'; iw.id=`${containerId}-${i}-${f.key}-iw`;
+        const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.id=`${containerId}-${i}-${f.key}-if`;
+        inp.style.cssText='position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2';
+        if(item[f.key]){ const im=document.createElement('img'); im.src=item[f.key]; im.className='preview'; iw.appendChild(im); }
+        else { iw.innerHTML='<div class="iw-ph"><div class="iw-ph-icon">🖼</div><div class="iw-ph-label">Select image</div></div>'; }
+        iw.appendChild(inp); fg.appendChild(iw); body.appendChild(fg);
+      } else if(f.type==='bullets'){
+        const arr=item[f.key]||[];
+        arr.forEach((b,bi)=>{
+          const bfg=document.createElement('div'); bfg.className='fg';
+          const blbl=document.createElement('div'); blbl.className='fl'; blbl.textContent=`${f.label} ${bi+1}`; bfg.appendChild(blbl);
+          const inp=document.createElement('textarea'); inp.className='fi'; inp.rows=2; inp.value=b;
+          inp.oninput=()=>{ item[f.key][bi]=inp.value; setDirty(); };
+          bfg.appendChild(inp); body.appendChild(bfg);
+        });
+        return;
+      } else {
+        const inp=f.rows?document.createElement('textarea'):document.createElement('input');
+        inp.className='fi'; if(f.rows) inp.rows=f.rows;
+        if(!f.rows) inp.type='text';
+        inp.value=item[f.key]||'';
+        inp.oninput=()=>{ item[f.key]=inp.value; hdr.querySelector('.ri-preview').textContent=item.title||item.name||item.question||item.num||''; setDirty(); };
+        fg.appendChild(inp); body.appendChild(fg);
+      }
+    });
+
+    // Actions
+    const acts=document.createElement('div'); acts.className='ri-actions';
+    if(i>0){ const u=document.createElement('button'); u.className='bsm'; u.textContent='↑'; u.onclick=()=>{ const t=items[i]; items[i]=items[i-1]; items[i-1]=t; setDirty(); buildRepeater(containerId,items,fields); }; acts.appendChild(u); }
+    if(i<items.length-1){ const d=document.createElement('button'); d.className='bsm'; d.textContent='↓'; d.onclick=()=>{ const t=items[i]; items[i]=items[i+1]; items[i+1]=t; setDirty(); buildRepeater(containerId,items,fields); }; acts.appendChild(d); }
+    const del=document.createElement('button'); del.className='bsm danger'; del.textContent='Delete';
+    del.onclick=()=>{ if(confirm('Deleteinsin mi?')){ items.splice(i,1); setDirty(); buildRepeater(containerId,items,fields); } }; acts.appendChild(del);
+    body.appendChild(acts);
+
+    div.appendChild(hdr); div.appendChild(body); c.appendChild(div);
+
+    // Init richtexts
+    fields.filter(f=>f.type==='richtext').forEach(f=>{
+      const q=makeQ(`${containerId}-${i}-${f.key}`, item[f.key], v=>{ item[f.key]=v; });
+    });
+
+    // Init img uploads
+    fields.filter(f=>f.type==='img').forEach(f=>{
+      const wrapId=`${containerId}-${i}-${f.key}-iw`;
+      const fileId=`${containerId}-${i}-${f.key}-if`;
+      initImg(wrapId, fileId, (file,b64)=>{
+        const ext=file.name.split('.').pop();
+        const fn=sanitize(item.name||item.title||'img')+'_'+Date.now()+'.'+ext;
+        item['_'+f.key+'Data']=b64; item['_'+f.key+'Filename']=fn;
+        item[f.key]=MEDIA_CMS+fn;
+        setDirty();
+      });
+    });
+  });
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+async function init(){
+  try{ const r=await fetch('../'+SITE_PATH+'?v='+Date.now()); site=await r.json(); }catch{ site={}; }
+  try{ const r=await fetch('../'+WORKS_PATH+'?v='+Date.now()); works=await r.json(); }catch{ works=[]; }
+  try{ const r=await fetch('../'+VIDEOS_PATH+'?v='+Date.now()); videos=await r.json(); }catch{ videos=[]; }
+  populate();
+}
+
+function bind(id, setter){ const el=document.getElementById(id); if(el) el.oninput=()=>{ setter(el.value); setDirty(); }; }
+function val(id, v){ const el=document.getElementById(id); if(el&&v!==undefined&&v!==null) el.value=v; }
+
+function populate(){
+  const s=site;
+
+  // ── ANA SAYFA ──
+  const idx=s.index||{};
+  val('i-hero-top',(idx.hero||{}).textTop);
+  val('i-hero-bottom',(idx.hero||{}).textBottom);
+  val('i-hero-video',(idx.hero||{}).video);
+  val('i-hero-cta',(idx.hero||{}).ctaText);
+  val('i-fark-label',(idx.fark||{}).label);
+  val('i-fark-headline',(idx.fark||{}).headline);
+  val('i-fark-cta',(idx.fark||{}).ctaText);
+  val('i-pillars-label',idx.pillarsLabel);
+  val('i-speed-headline',(idx.speedTeaser||{}).headline);
+  val('i-speed-video',(idx.speedTeaser||{}).video);
+  val('i-speed-cta',(idx.speedTeaser||{}).ctaText);
+  val('i-sol-headline',(idx.solutions||{}).headline);
+  val('i-sol-body',(idx.solutions||{}).body);
+  val('i-cta-label',(idx.cta||{}).label);
+  val('i-cta-headline',(idx.cta||{}).headline);
+  val('i-cta-btn',(idx.cta||{}).ctaText);
+  val('i-faq-headline',(idx.faq||{}).headline);
+
+  makeQ('i-hero-desc-q',(idx.hero||{}).desc, v=>{ idx.hero.desc=v; });
+  makeQ('i-fark-body-q',(idx.fark||{}).body, v=>{ idx.fark.body=v; });
+  makeQ('i-cta-body-q',(idx.cta||{}).body, v=>{ idx.cta.body=v; });
+
+  bind('i-hero-top',   v=>idx.hero.textTop=v);
+  bind('i-hero-bottom',v=>idx.hero.textBottom=v);
+  bind('i-hero-video', v=>idx.hero.video=v);
+  bind('i-hero-cta',   v=>idx.hero.ctaText=v);
+  bind('i-fark-label', v=>idx.fark.label=v);
+  bind('i-fark-headline',v=>idx.fark.headline=v);
+  bind('i-fark-cta',   v=>idx.fark.ctaText=v);
+  bind('i-pillars-label',v=>idx.pillarsLabel=v);
+  bind('i-speed-headline',v=>idx.speedTeaser.headline=v);
+  bind('i-speed-video',v=>idx.speedTeaser.video=v);
+  bind('i-speed-cta',  v=>idx.speedTeaser.ctaText=v);
+  bind('i-sol-headline',v=>idx.solutions.headline=v);
+  bind('i-sol-body',   v=>idx.solutions.body=v);
+  bind('i-cta-label',  v=>idx.cta.label=v);
+  bind('i-cta-headline',v=>idx.cta.headline=v);
+  bind('i-cta-btn',    v=>idx.cta.ctaText=v);
+  bind('i-faq-headline',v=>idx.faq.headline=v);
+
+  // Hizmet Kartları
+  val('i-sc-label',(idx.serviceCards||{}).label);
+  bind('i-sc-label', v=>{ if(!idx.serviceCards) idx.serviceCards={}; idx.serviceCards.label=v; setDirty(); });
+  buildRepeater('r-service-cards', (idx.serviceCards||{}).cards||[], [
+    {key:'image',   label:'Kart Imagei', type:'img'},
+    {key:'title',   label:'Ana Headline'},
+    {key:'subtitle',label:'Sub Headline'},
+    {key:'desc',    label:'Kısa Description', rows:4},
+    {key:'btnText', label:'Button Text'},
+    {key:'btnLink', label:'Buton Linki'}
+  ], arr=>{ if(!idx.serviceCards) idx.serviceCards={}; idx.serviceCards.cards=arr; });
+
+  buildRepeater('r-pillars', idx.pillars||[], [{key:'num',label:'No'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+  buildRepeater('r-speed-cards', (idx.speedTeaser||{}).cards||[], [{key:'num',label:'No'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+  buildRepeater('r-sol-cards', (idx.solutions||{}).cards||[], [{key:'num',label:'No'},{key:'tag',label:'Label'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+  buildRepeater('r-faq', (idx.faq||{}).items||[], [{key:'question',label:'Soru'},{key:'answer',label:'Cevap',rows:4}]);
+
+  // ── HAKKIMIZDA ──
+  const hk=s.hakkimizda||{};
+  val('hk-hero-title',(hk.hero||{}).title);
+  val('hk-man-headline',(hk.manifesto||{}).headline);
+  val('hk-cta-headline',(hk.cta||{}).headline);
+  val('hk-cta-btn',(hk.cta||{}).ctaText);
+
+  if((hk.hero||{}).image) showImgPreview('hk-hero-iw', hk.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); hk.hero._imgData=b64; hk.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+ext; hk.hero.image=MEDIA_CMS+hk.hero._imgFilename; setDirty(); });
+  else initImg('hk-hero-iw','hk-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); hk.hero._imgData=b64; hk.hero._imgFilename='hakkimizda-hero-'+Date.now()+'.'+ext; hk.hero.image=MEDIA_CMS+hk.hero._imgFilename; setDirty(); });
+
+  makeQ('hk-hero-sub-q',(hk.hero||{}).sub, v=>hk.hero.sub=v);
+  makeQ('hk-man-body1-q',(hk.manifesto||{}).body1, v=>hk.manifesto.body1=v);
+  makeQ('hk-man-body2-q',(hk.manifesto||{}).body2, v=>hk.manifesto.body2=v);
+
+  bind('hk-hero-title',   v=>hk.hero.title=v);
+  bind('hk-man-headline', v=>hk.manifesto.headline=v);
+  bind('hk-cta-headline', v=>hk.cta.headline=v);
+  bind('hk-cta-btn',      v=>hk.cta.ctaText=v);
+
+  buildRepeater('r-team', hk.team||[], [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
+  buildRepeater('r-dna', (hk.dna||{}).items||[], [{key:'icon',label:'İkon'},{key:'title',label:'Headline'},{key:'subtitle',label:'Sub Headline'},{key:'body',label:'Description',rows:3}]);
+
+  // ── SENTEZ ──
+  const sz=s.sentez||{};
+  val('sz-hero-title',(sz.hero||{}).title);
+  val('sz-fw-headline',(sz.framework||{}).headline);
+  val('sz-why-headline',(sz.whyItWorks||{}).headline);
+  val('sz-cta-headline',(sz.cta||{}).headline);
+  val('sz-cta-btn',(sz.cta||{}).ctaText);
+
+  if((sz.hero||{}).image) showImgPreview('sz-hero-iw', sz.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); sz.hero._imgData=b64; sz.hero._imgFilename='sentez-hero-'+Date.now()+'.'+ext; sz.hero.image=MEDIA_CMS+sz.hero._imgFilename; setDirty(); });
+  else initImg('sz-hero-iw','sz-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); sz.hero._imgData=b64; sz.hero._imgFilename='sentez-hero-'+Date.now()+'.'+ext; sz.hero.image=MEDIA_CMS+sz.hero._imgFilename; setDirty(); });
+
+  makeQ('sz-hero-sub-q',(sz.hero||{}).sub, v=>sz.hero.sub=v);
+  makeQ('sz-fw-body-q',(sz.framework||{}).body, v=>sz.framework.body=v);
+
+  bind('sz-hero-title',   v=>sz.hero.title=v);
+  bind('sz-fw-headline',  v=>sz.framework.headline=v);
+  bind('sz-why-headline', v=>sz.whyItWorks.headline=v);
+  bind('sz-cta-headline', v=>sz.cta.headline=v);
+  bind('sz-cta-btn',      v=>sz.cta.ctaText=v);
+
+  buildRepeater('r-steps', sz.steps||[], [{key:'num',label:'No'},{key:'tag',label:'Label'},{key:'title',label:'Headline'},{key:'bullets',label:'Madde',type:'bullets'}]);
+  buildRepeater('r-why-pillars', (sz.whyItWorks||{}).pillars||[], [{key:'num',label:'Headline Kısa'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+
+  // ── ÇÖZÜMLER ──
+  const cz=s.cozumler||{};
+  val('cz-hero-title',(cz.hero||{}).title);
+  val('cz-craft-label',(cz.byCraft||{}).label);
+  val('cz-craft-headline',(cz.byCraft||{}).headline);
+  val('cz-obj-label',(cz.byObjective||{}).label);
+  val('cz-obj-headline',(cz.byObjective||{}).headline);
+  val('cz-why-headline',(cz.whyAdon||{}).headline);
+  val('cz-why-video',(cz.whyAdon||{}).video);
+  val('cz-why-cta',(cz.whyAdon||{}).ctaText);
+
+  if((cz.hero||{}).image) showImgPreview('cz-hero-iw', cz.hero.image, (f,b64)=>{ const ext=f.name.split('.').pop(); cz.hero._imgData=b64; cz.hero._imgFilename='cozumler-hero-'+Date.now()+'.'+ext; cz.hero.image=MEDIA_CMS+cz.hero._imgFilename; setDirty(); });
+  else initImg('cz-hero-iw','cz-hero-if',(f,b64)=>{ const ext=f.name.split('.').pop(); cz.hero._imgData=b64; cz.hero._imgFilename='cozumler-hero-'+Date.now()+'.'+ext; cz.hero.image=MEDIA_CMS+cz.hero._imgFilename; setDirty(); });
+
+  makeQ('cz-hero-sub-q',(cz.hero||{}).sub, v=>cz.hero.sub=v);
+  makeQ('cz-why-body-q',(cz.whyAdon||{}).body, v=>cz.whyAdon.body=v);
+
+  bind('cz-hero-title',     v=>cz.hero.title=v);
+  bind('cz-craft-label',    v=>cz.byCraft.label=v);
+  bind('cz-craft-headline', v=>cz.byCraft.headline=v);
+  bind('cz-obj-label',      v=>cz.byObjective.label=v);
+  bind('cz-obj-headline',   v=>cz.byObjective.headline=v);
+  bind('cz-why-headline',   v=>cz.whyAdon.headline=v);
+  bind('cz-why-video',      v=>cz.whyAdon.video=v);
+  bind('cz-why-cta',        v=>cz.whyAdon.ctaText=v);
+
+  buildRepeater('r-craft-cards', (cz.byCraft||{}).cards||[], [{key:'badge',label:'Rozet'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+  buildRepeater('r-obj-cards', (cz.byObjective||{}).cards||[], [{key:'num',label:'No'},{key:'tag',label:'Label'},{key:'title',label:'Headline'},{key:'body',label:'Description',rows:3}]);
+
+  // ── İLETİŞİM ──
+  const il=s.iletisim||{};
+  val('il-hero-title',(il.hero||{}).title);
+  val('il-ist',(il.info||{}).istanbul);
+  val('il-ist-sub',(il.info||{}).istanbulSub);
+  val('il-ada',(il.info||{}).adana);
+  val('il-ada-sub',(il.info||{}).adanaSub);
+  val('il-email',(il.info||{}).email);
+
+  makeQ('il-hero-desc-q',(il.hero||{}).desc, v=>il.hero.desc=v);
+  bind('il-hero-title',v=>il.hero.title=v);
+  bind('il-ist',       v=>il.info.istanbul=v);
+  bind('il-ist-sub',   v=>il.info.istanbulSub=v);
+  bind('il-ada',       v=>il.info.adana=v);
+  bind('il-ada-sub',   v=>il.info.adanaSub=v);
+  bind('il-email',     v=>il.info.email=v);
+
+  // ── NAV & FOOTER ──
+  populateNav();
+  populateFooter();
+
+  // ── PORTFÖY ──
+  renderWorks(); initWorkAdd();
+  renderVideos(); initVideoAdd();
+
+  // ── BLOK YÖNETİCİLERİ ──
+  initBlockManagers();
+
+  // ── CAROUSEL & HP VIDEOS ──
+  renderCarousel();
+  initCarouselAdd();
+  renderHpVideos();
+  initHpVideoAdd();
+
+  // ── LEADS ──
+  initLeads();
+}
+
+// ══════════════════════════════════════════
+// WORKS
+// ══════════════════════════════════════════
+const COLORS=['linear-gradient(135deg,#c9c5e8,#f2b8c6)','linear-gradient(135deg,#b8d8e8,#c9e8d0)','linear-gradient(135deg,#f2e8b8,#f2c8a8)','linear-gradient(135deg,#e8b8c9,#e8c8f2)','linear-gradient(135deg,#b8c9e8,#b8e8e0)','linear-gradient(135deg,#e8d8b8,#e8b8b8)'];
+
+function renderWorks(){
+  const c=document.getElementById('admin-works'); c.innerHTML='';
+  works.forEach((w,i)=>{
+    const card=document.createElement('div'); card.className='wc';
+    const img=document.createElement('div'); img.className='wc-img'; img.style.background=w.color||COLORS[i%COLORS.length];
+    if(w.image) img.innerHTML=`<img src="${w.image}" alt="${w.title}" loading="lazy"/>`;
+    else img.textContent=w.placeholder||'?';
+    card.innerHTML=`<div class="wc-info"><div class="wc-title">${w.title}</div><div class="wc-cat">${w.category} · ${w.year}</div></div><div class="wc-actions"><button class="bsm danger" data-wi="${i}">Delete</button>${i>0?`<button class="bsm" data-wu="${i}">↑</button>`:''}${i<works.length-1?`<button class="bsm" data-wd="${i}">↓</button>`:''}</div>`;
+    card.prepend(img); c.appendChild(card);
+  });
+  c.querySelectorAll('.bsm.danger[data-wi]').forEach(b=>{ b.onclick=()=>{ if(confirm('Deleteinsin mi?')){ works.splice(+b.dataset.wi,1); setDirty(); renderWorks(); } }; });
+  c.querySelectorAll('[data-wu]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.wu; [works[i],works[i-1]]=[works[i-1],works[i]]; setDirty(); renderWorks(); }; });
+  c.querySelectorAll('[data-wd]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.wd; [works[i],works[i+1]]=[works[i+1],works[i]]; setDirty(); renderWorks(); }; });
+}
+function initWorkAdd(){
+  let pb64=null,pfn=null;
+  function bindImgPicker(){
+    initImg('w-iw','w-if',(f,b64)=>{
+      pb64=b64;
+      pfn=sanitize(document.getElementById('w-title').value||'img')+'_'+Date.now()+'.'+f.name.split('.').pop();
+    });
+  }
+  bindImgPicker();
+  document.getElementById('btn-add-work').onclick=()=>{
+    const title=document.getElementById('w-title').value.trim();
+    if(!title){alert('Headline gerekli');return;}
+    const w={id:Date.now(),title,category:document.getElementById('w-cat').value,year:document.getElementById('w-year').value||'2025',image:'',placeholder:title.substring(0,2).toUpperCase(),color:COLORS[works.length%COLORS.length]};
+    if(pb64){ w._imgData=pb64; w._imgFilename=pfn; w.image=MEDIA_WORKS+pfn; pb64=null; pfn=null; }
+    works.unshift(w); setDirty(); renderWorks();
+    document.getElementById('w-title').value='';
+    resetIw('w-iw','w-if');
+    bindImgPicker(); // Sıfırlama sonrası yeni input'a event listener bağla
+  };
+}
+function resetIw(wid,fid){ const w=document.getElementById(wid); w.innerHTML=`<input type="file" id="${fid}" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2"/><div class="iw-ph" style="padding:12px"><div class="iw-ph-icon" style="font-size:18px">🖼</div><div class="iw-ph-label" style="font-size:11px">Seç</div></div>`; }
+
+// ══════════════════════════════════════════
+// VIDEOS
+// ══════════════════════════════════════════
+function ytId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/); return m?m[1]:null; }
+function vimeoId(url){ const m=url.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/|album\/[^/]+\/video\/)?(\d+)/); return m?m[1]:null; }
+function videoId(url){ return ytId(url)||vimeoId(url)||null; }
+function thumbSrc(url){ const yt=ytId(url); if(yt) return `https://img.youtube.com/vi/${yt}/mqdefault.jpg`; return ''; }
+async function vimeoThumb(id){ try{ const r=await fetch(`https://vimeo.com/api/v2/video/${id}.json`); const d=await r.json(); return d[0]?.thumbnail_medium||''; }catch(e){ return ''; } }
+async function renderVideos(){
+  const c=document.getElementById('admin-videos'); c.innerHTML='';
+  if(!videos.length){ c.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi.</p>'; return; }
+  for(let i=0;i<videos.length;i++){
+    const v=videos[i];
+    const ytid=ytId(v.url); const vmid=vimeoId(v.url);
+    let thumb='';
+    if(ytid) thumb=`https://img.youtube.com/vi/${ytid}/mqdefault.jpg`;
+    else if(vmid) thumb=await vimeoThumb(vmid);
+    const card=document.createElement('div'); card.className='vc';
+    const orient=v.vertical?'<span style="font-size:10px;background:#f0f0f0;padding:2px 6px;border-radius:2px;margin-left:6px;">DİKEY</span>':'';
+    card.innerHTML=`<div class="vt">${thumb?`<img src="${thumb}" alt="">`:''}</div><div class="vi-info"><div class="vi-title">${v.title||'Headlinesız'}${orient}</div><div class="vi-url">${v.url}</div><div class="vi-actions"><button class="bsm danger" data-vi="${i}">Delete</button>${i>0?`<button class="bsm" data-vu="${i}">↑</button>`:''}${i<videos.length-1?`<button class="bsm" data-vd="${i}">↓</button>`:''}</div></div>`;
+    c.appendChild(card);
+  }
+  c.querySelectorAll('.bsm.danger[data-vi]').forEach(b=>{ b.onclick=()=>{ if(confirm('Deleteinsin mi?')){ videos.splice(+b.dataset.vi,1); setDirty(); renderVideos(); } }; });
+  c.querySelectorAll('[data-vu]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.vu; [videos[i],videos[i-1]]=[videos[i-1],videos[i]]; setDirty(); renderVideos(); }; });
+  c.querySelectorAll('[data-vd]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.vd; [videos[i],videos[i+1]]=[videos[i+1],videos[i]]; setDirty(); renderVideos(); }; });
+}
+function initVideoAdd(){
+  document.getElementById('btn-add-video').onclick=()=>{
+    const url=document.getElementById('v-url').value.trim();
+    if(!url){alert('Video URL gerekli');return;}
+    if(!ytId(url)&&!vimeoId(url)){alert('Geçerli YouTube veya Vimeo URL girin');return;}
+    const vertical=document.getElementById('v-vertical').checked;
+    videos.push({id:Date.now(),title:document.getElementById('v-title').value.trim()||'Video',url,vertical});
+    setDirty(); renderVideos();
+    document.getElementById('v-title').value='';
+    document.getElementById('v-url').value='';
+    document.getElementById('v-vertical').checked=false;
+  };
+}
+
+// ══════════════════════════════════════════
+// DIRTY / SAVE BAR
+// ══════════════════════════════════════════
+function setDirty(){ dirty=true; document.getElementById('save-bar').classList.add('visible'); }
+
+document.getElementById('btn-save').onclick=()=>{ if(!ghToken){ document.getElementById('token-modal').classList.add('open'); } else { publish(); } };
+document.getElementById('token-ok').onclick=()=>{ const t=document.getElementById('token-input').value.trim(); if(!t)return; ghToken=t; localStorage.setItem('adon_gh_token',t); document.getElementById('token-modal').classList.remove('open'); publish(); };
+document.getElementById('token-cancel').onclick=()=>document.getElementById('token-modal').classList.remove('open');
+
+// ══════════════════════════════════════════
+// PUBLISH
+// ══════════════════════════════════════════
+async function publish(){
+  const btn=document.getElementById('btn-save');
+  const st=document.getElementById('save-status');
+  btn.disabled=true; btn.textContent='Yükleniyor...'; st.textContent='';
+
+  try{
+    // Fetch fresh site.json from GitHub API — always keep team data current
+    try{
+      st.textContent='Fetching latest team data...';
+      const ghHeaders={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
+      const rr=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${SITE_PATH}?ref=${GH.branch}&t=${Date.now()}`,{headers:ghHeaders,cache:'no-store'});
+      if(rr.ok){
+        const rd=await rr.json();
+        const remoteObj=JSON.parse(atob(rd.content.replace(/\n/g,'')));
+        const remoteTeam=(remoteObj.hakkimizda||{}).team||[];
+        // Uzak ekipteki tüm üyeleri koru; admin'de bu oturumda eklenen yeni üyeleri de ekle
+        const localTeam=(site.hakkimizda||{}).team||[];
+        const remoteNames=new Set(remoteTeam.map(function(m){return m.name;}));
+        const localNew=localTeam.filter(function(m){return !remoteNames.has(m.name);});
+        const mergedTeam=[...remoteTeam,...localNew];
+        if(!site.hakkimizda) site.hakkimizda={};
+        site.hakkimizda.team=mergedTeam;
+        if(mergedTeam.length!==localTeam.length){
+          buildRepeater('r-team', mergedTeam, [{key:'name',label:'Ad Soyad'},{key:'role',label:'Unvan'},{key:'image',label:'Fotoğraf',type:'img'}]);
+        }
+      }
+    }catch(e){ console.warn('Team sync skip:',e); }
+
+    // Hero görselleri
+    for(const page of ['hakkimizda','sentez','cozumler']){
+      const h=(site[page]||{}).hero||{};
+      if(h._imgData&&h._imgFilename){
+        st.textContent='Image: '+page;
+        await ghPut(MEDIA_CMS+h._imgFilename, h._imgData, 'media: '+h._imgFilename);
+        h.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_CMS}${h._imgFilename}`;
+        delete h._imgData; delete h._imgFilename;
+      }
+    }
+
+    // Ekip fotoğrafları (repeater items)
+    for(const m of (site.hakkimizda||{}).team||[]){
+      for(const key of ['image']){
+        if(m['_'+key+'Data']&&m['_'+key+'Filename']){
+          st.textContent='Fotoğraf: '+m.name;
+          await ghPut(MEDIA_CMS+m['_'+key+'Filename'], m['_'+key+'Data'], 'media: '+m['_'+key+'Filename']);
+          m[key]=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_CMS}${m['_'+key+'Filename']}`;
+          delete m['_'+key+'Data']; delete m['_'+key+'Filename'];
+        }
+      }
+    }
+
+    // Carousel görselleri
+    for(const item of (site.index||{}).carousel||[]){
+      if(item._imgData&&item._imgFilename){
+        st.textContent='Carousel görsel: '+item.label;
+        await ghPut('media/carousel/'+item._imgFilename, item._imgData, 'media: carousel/'+item._imgFilename);
+        item.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/media/carousel/${item._imgFilename}`;
+        delete item._imgData; delete item._imgFilename;
+      }
+    }
+
+    // Hizmet kartı görselleri
+    for(const card of (site.index||{}).serviceCards?.cards||[]){
+      if(card._imageData&&card._imageFilename){
+        st.textContent='Kart görseli: '+card.title;
+        await ghPut('media/services/'+card._imageFilename, card._imageData, 'media: services/'+card._imageFilename);
+        card.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/media/services/${card._imageFilename}`;
+        delete card._imageData; delete card._imageFilename;
+      }
+    }
+
+    // Works görselleri
+    for(const w of works){
+      if(w._imgData&&w._imgFilename){
+        st.textContent='Image: '+w.title;
+        await ghPut(MEDIA_WORKS+w._imgFilename, w._imgData, 'media: '+w._imgFilename);
+        w.image=`https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${MEDIA_WORKS}${w._imgFilename}`;
+        delete w._imgData; delete w._imgFilename;
+      }
+    }
+
+    // site.json
+    st.textContent='Saving en/site.json...';
+    await ghPut(SITE_PATH, toB64(JSON.stringify(site,null,2)), 'content: en/site.json updated');
+
+    // works.json
+    st.textContent='Saving en/works.json...';
+    const cw=works.map(({_imgData,_imgFilename,...w})=>w);
+    await ghPut(WORKS_PATH, toB64(JSON.stringify(cw,null,2)), 'content: en/works.json updated');
+
+    // videos.json
+    st.textContent='Saving en/videos.json...';
+    await ghPut(VIDEOS_PATH, toB64(JSON.stringify(videos,null,2)), 'content: en/videos.json updated');
+
+    st.textContent='✓ Yayınlandı!';
+    dirty=false;
+    setTimeout(()=>{ document.getElementById('save-bar').classList.remove('visible'); st.textContent=''; },3000);
+
+  }catch(err){ st.textContent='✗ Hata: '+err.message; console.error(err); }
+
+  btn.disabled=false; btn.textContent='Yayınla →';
+}
+
+function toB64(str){ return btoa(unescape(encodeURIComponent(str))); }
+
+async function ghPut(path, b64, message){
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`;
+  const headers={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+  let sha=null;
+  try{ const r=await fetch(url+'?ref='+GH.branch+'&t='+Date.now(),{headers,cache:'no-store'}); if(r.ok){ const d=await r.json(); sha=d.sha; } }catch{}
+  const body={message,content:b64,branch:GH.branch}; if(sha) body.sha=sha;
+  const r=await fetch(url,{method:'PUT',headers,body:JSON.stringify(body)});
+  if(!r.ok){ const e=await r.json(); throw new Error(e.message||'HTTP '+r.status); }
+  return r.json();
+}
+
+function sanitize(s){ return s.toLowerCase().replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
+
+// ══════════════════════════════════════════
+// CAROUSEL
+// ══════════════════════════════════════════
+function carouselThumbSrc(item){
+  // New eklendi, base64 preview var
+  if(item._previewB64) return 'data:image/jpeg;base64,'+item._previewB64;
+  // Relative path — GitHub raw URL'ye çevir
+  if(item.image && !item.image.startsWith('http')){
+    return `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${item.image}`;
+  }
+  return item.image||'';
+}
+
+function renderCarousel(){
+  const list = document.getElementById('admin-carousel-list');
+  if(!list) return;
+  const items = (site.index||{}).carousel||[];
+  list.innerHTML = '';
+  if(!items.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz görsel eklenmedi.</p>'; return; }
+  items.forEach((item, i)=>{
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:12px;padding:12px;background:#fff;border:1px solid var(--border);align-items:center;margin-bottom:2px;';
+    const thumb = document.createElement('div');
+    thumb.style.cssText = 'width:120px;flex-shrink:0;aspect-ratio:4/3;background:#eee;overflow:hidden;';
+    const thumbSrc = carouselThumbSrc(item);
+    thumb.innerHTML = thumbSrc ? `<img src="${thumbSrc}" style="width:100%;height:100%;object-fit:cover;" alt="${item.label||''}"/>` : '';
+    const info = document.createElement('div');
+    info.style.flex='1';
+    info.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:4px">${item.label||'Labelsiz'}</div><div style="font-size:11px;color:var(--muted);word-break:break-all">${item.image}</div>`;
+    const acts = document.createElement('div');
+    acts.style.cssText='display:flex;gap:6px;flex-shrink:0;';
+    acts.innerHTML = `
+      ${i>0?`<button class="bsm" data-cui="${i}" data-cud="-1">↑</button>`:''}
+      ${i<items.length-1?`<button class="bsm" data-cui="${i}" data-cud="1">↓</button>`:''}
+      <button class="bsm danger" data-cdel="${i}">Delete</button>`;
+    row.appendChild(thumb); row.appendChild(info); row.appendChild(acts);
+    list.appendChild(row);
+  });
+  list.querySelectorAll('[data-cud]').forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.cui, d=+btn.dataset.cud;
+      [items[i],items[i+d]]=[items[i+d],items[i]];
+      setDirty(); renderCarousel();
+    };
+  });
+  list.querySelectorAll('[data-cdel]').forEach(btn=>{
+    btn.onclick=()=>{ if(confirm('Bu görseli carousel\'den silmek istiyor musunuz?')){ items.splice(+btn.dataset.cdel,1); setDirty(); renderCarousel(); } };
+  });
+}
+
+function initCarouselAdd(){
+  // Pending state — doğrudan file input'u dinle, wrap rebuild etme
+  let pendingB64=null, pendingFn=null;
+
+  // Event delegation: wrap içindeki input değişince yakala
+  document.getElementById('cr-iw').addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      pendingB64 = ev.target.result.split(',')[1];
+      pendingFn = 'carousel-'+Date.now()+'.'+file.name.split('.').pop();
+      // Önizleme göster
+      const wrap = document.getElementById('cr-iw');
+      // Var olan preview'u kaldır, yeni ekle
+      const existingImg = wrap.querySelector('img.cr-preview');
+      if(existingImg) existingImg.remove();
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.className = 'cr-preview';
+      img.style.cssText = 'width:100%;height:60px;object-fit:cover;display:block;';
+      wrap.insertBefore(img, wrap.firstChild);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('btn-add-carousel').onclick=()=>{
+    if(!pendingB64){ alert('Lütfen bir görsel seçin.'); return; }
+    const label = document.getElementById('cr-label').value.trim()||'Image';
+    if(!site.index.carousel) site.index.carousel=[];
+    site.index.carousel.push({
+      image: 'media/carousel/'+pendingFn,
+      label,
+      _imgData: pendingB64,
+      _imgFilename: pendingFn,
+      _previewB64: pendingB64
+    });
+    setDirty(); renderCarousel();
+
+    // Formu sıfırla
+    document.getElementById('cr-label').value='';
+    pendingB64=null; pendingFn=null;
+
+    // Input value'yu sıfırla (aynı dosyayı tekrar seçilebilsin diye)
+    const inp = document.getElementById('cr-if');
+    if(inp) inp.value='';
+
+    // Preview'u kaldır
+    const wrap = document.getElementById('cr-iw');
+    const existingImg = wrap.querySelector('img.cr-preview');
+    if(existingImg) existingImg.remove();
+  };
+}
+
+// ══════════════════════════════════════════
+// HOMEPAGE VIDEO GRID
+// ══════════════════════════════════════════
+function renderHpVideos(){
+  const list = document.getElementById('admin-hp-videos');
+  if(!list) return;
+  const videos = (site.index||{}).homepageVideos||[];
+  list.innerHTML='';
+  if(!videos.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">Henüz video eklenmedi. Videolar carousel\'in üstünde 2\'li sıra halinde gösterilir.</p>'; return; }
+  videos.forEach((v,i)=>{
+    const card=document.createElement('div'); card.className='vc';
+    const isVimeo = !!vimeoId(v.url);
+    const vid = isVimeo ? vimeoId(v.url) : ytId(v.url);
+    const ytThumb = !isVimeo && vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : '';
+    card.innerHTML=`
+      <div class="vt" id="hv-thumb-${i}">${ytThumb?`<img src="${ytThumb}" alt="">`:'<div style="width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Vimeo</div>'}</div>
+      <div class="vi-info">
+        <div class="vi-title">${v.title||'Headlinesız'} <span style="font-size:10px;color:var(--muted);font-weight:400">${isVimeo?'· Vimeo':'· YouTube'}</span></div>
+        <div class="vi-url">${v.url}</div>
+        <div class="vi-actions">
+          <button class="bsm danger" data-hvdel="${i}">Delete</button>
+          ${i>0?`<button class="bsm" data-hvup="${i}">↑</button>`:''}
+          ${i<videos.length-1?`<button class="bsm" data-hvdn="${i}">↓</button>`:''}
+        </div>
+      </div>`;
+    list.appendChild(card);
+    // Vimeo thumbnail'i async yükle
+    if(isVimeo && vid){
+      vimeoThumb(vid).then(src=>{ if(src){ const t=document.getElementById(`hv-thumb-${i}`); if(t) t.innerHTML=`<img src="${src}" alt="">`; } });
+    }
+  });
+  list.querySelectorAll('[data-hvdel]').forEach(b=>{ b.onclick=()=>{ if(confirm('Deleteinsin mi?')){ videos.splice(+b.dataset.hvdel,1); setDirty(); renderHpVideos(); } }; });
+  list.querySelectorAll('[data-hvup]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.hvup; [videos[i],videos[i-1]]=[videos[i-1],videos[i]]; setDirty(); renderHpVideos(); }; });
+  list.querySelectorAll('[data-hvdn]').forEach(b=>{ b.onclick=()=>{ const i=+b.dataset.hvdn; [videos[i],videos[i+1]]=[videos[i+1],videos[i]]; setDirty(); renderHpVideos(); }; });
+}
+
+function initHpVideoAdd(){
+  document.getElementById('btn-add-hpvideo').onclick=()=>{
+    const url=document.getElementById('hv-url').value.trim();
+    if(!url){ alert('Vimeo URL gerekli'); return; }
+    if(!vimeoId(url) && !ytId(url)){ alert('Geçerli Vimeo veya YouTube URL girin'); return; }
+    if(!site.index.homepageVideos) site.index.homepageVideos=[];
+    site.index.homepageVideos.push({id:Date.now(), title:document.getElementById('hv-title').value.trim()||'Video', url});
+    setDirty(); renderHpVideos();
+    document.getElementById('hv-title').value='';
+    document.getElementById('hv-url').value='';
+  };
+}
+
+// ══════════════════════════════════════════
+// BLOCK MANAGER
+// ══════════════════════════════════════════
+function renderBlockManager(containerId, pageKey){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const blocks = (site[pageKey]||{})._blocks||[];
+  container.innerHTML='';
+
+  blocks.forEach((block, i)=>{
+    const row = document.createElement('div');
+    row.className = 'block-row' + (block.visible===false ? ' hidden-block' : '');
+
+    const label = document.createElement('div');
+    label.className = 'block-row-label';
+    label.textContent = block.label;
+
+    const actions = document.createElement('div');
+    actions.className = 'block-row-actions';
+
+    // Up button
+    const upBtn = document.createElement('button');
+    upBtn.className = 'btn-block';
+    upBtn.innerHTML = '↑';
+    upBtn.title = 'Yukarı taşı';
+    upBtn.disabled = (i === 0);
+    upBtn.onclick = ()=>{
+      const tmp = blocks[i]; blocks[i] = blocks[i-1]; blocks[i-1] = tmp;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    // Down button
+    const downBtn = document.createElement('button');
+    downBtn.className = 'btn-block';
+    downBtn.innerHTML = '↓';
+    downBtn.title = 'Aşağı taşı';
+    downBtn.disabled = (i === blocks.length - 1);
+    downBtn.onclick = ()=>{
+      const tmp = blocks[i]; blocks[i] = blocks[i+1]; blocks[i+1] = tmp;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    // Hide/Show toggle
+    const hideBtn = document.createElement('button');
+    hideBtn.className = 'btn-block btn-hide' + (block.visible===false ? ' active' : '');
+    hideBtn.innerHTML = block.visible===false ? '🙈' : '👁';
+    hideBtn.title = block.visible===false ? 'Göster' : 'Gizle';
+    hideBtn.onclick = ()=>{
+      block.visible = (block.visible===false) ? true : false;
+      setDirty(); renderBlockManager(containerId, pageKey);
+    };
+
+    actions.appendChild(upBtn);
+    actions.appendChild(downBtn);
+    actions.appendChild(hideBtn);
+    row.appendChild(label);
+    row.appendChild(actions);
+    container.appendChild(row);
+  });
+}
+
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
+function populateNav(){
+  if(!site.nav) site.nav={ links:[], ctaLabel:'İletişim', ctaHref:'contact.html' };
+  const nav = site.nav;
+
+  // Nav link listesi
+  const list = document.getElementById('nav-links-list');
+  if(list){
+    list.innerHTML='';
+    (nav.links||[]).forEach(function(lnk, i){
+      const row = document.createElement('div');
+      row.className='frow'; row.style.marginBottom='12px';
+      row.innerHTML=`
+        <div class="fg"><div class="fl">Menü ${i+1} — Headline</div>
+          <input class="fi" value="${lnk.label||''}" data-ni="${i}" data-nk="label" type="text"/></div>
+        <div class="fg"><div class="fl">Link</div>
+          <input class="fi" value="${lnk.href||''}" data-ni="${i}" data-nk="href" type="text"/></div>`;
+      list.appendChild(row);
+    });
+    list.querySelectorAll('input[data-ni]').forEach(inp=>{
+      inp.oninput=()=>{
+        const i=+inp.dataset.ni, k=inp.dataset.nk;
+        nav.links[i][k]=inp.value; setDirty();
+      };
+    });
+  }
+
+  // CTA
+  const ctaLbl = document.getElementById('nav-cta-label');
+  const ctaHrf = document.getElementById('nav-cta-href');
+  if(ctaLbl){ ctaLbl.value=nav.ctaLabel||''; ctaLbl.oninput=()=>{ nav.ctaLabel=ctaLbl.value; setDirty(); }; }
+  if(ctaHrf){ ctaHrf.value=nav.ctaHref||''; ctaHrf.oninput=()=>{ nav.ctaHref=ctaHrf.value; setDirty(); }; }
+}
+
+// ══════════════════════════════════════════
+// FOOTER
+// ══════════════════════════════════════════
+function populateFooter(){
+  if(!site.footer) site.footer={};
+  const ft = site.footer;
+
+  makeQ('footer-tagline-q', ft.tagline, v=>{ ft.tagline=v; setDirty(); });
+
+  const cp = document.getElementById('footer-copyright-fi');
+  const lc = document.getElementById('footer-locations-fi');
+  if(cp){ cp.value=ft.copyright||''; cp.oninput=()=>{ ft.copyright=cp.value; setDirty(); }; }
+  if(lc){ lc.value=ft.locations||''; lc.oninput=()=>{ ft.locations=lc.value; setDirty(); }; }
+}
+
+// Populate sonunda block manager'ları render et
+function initBlockManagers(){
+  renderBlockManager('bm-index',      'index');
+  renderBlockManager('bm-hakkimizda', 'hakkimizda');
+  renderBlockManager('bm-sentez',     'sentez');
+  renderBlockManager('bm-cozumler',   'cozumler');
+  renderBlockManager('bm-iletisim',   'iletisim');
+}
+
+// ══════════════════════════════════════════
+// LEADS (BAŞVURULAR)
+// ══════════════════════════════════════════
+const SERVICE_LABELS = {
+  'photo': 'AI Destekli Fotoğraf',
+  'video': 'AI Destekli Video',
+  'hybrid': 'Hibrit Video',
+  'music': 'AI Destekli Müzik',
+  '': 'Belirtilmemiş'
+};
+
+let leadsFilter = 'all';
+
+function getLeads(){ return JSON.parse(localStorage.getItem('adon_leads')||'[]'); }
+function saveLeads(leads){ localStorage.setItem('adon_leads', JSON.stringify(leads)); }
+
+function updateLeadsBadge(){
+  const leads = getLeads();
+  const newCount = leads.filter(l=>l.status==='new').length;
+  const badge = document.getElementById('leads-sidebar-count');
+  if(badge){
+    if(newCount > 0){ badge.textContent = newCount; badge.style.display='inline'; }
+    else { badge.style.display='none'; }
+  }
+}
+
+function renderLeads(){
+  const all = getLeads();
+  const filtered = leadsFilter === 'all' ? all : all.filter(l => l.status === leadsFilter);
+  const list = document.getElementById('leads-list');
+  const countLabel = document.getElementById('leads-count-label');
+  if(!list) return;
+
+  countLabel.textContent = filtered.length + ' başvuru';
+
+  if(!filtered.length){
+    list.innerHTML = `<div class="leads-empty"><div class="leads-empty-icon">📭</div>${leadsFilter==='all'?'Henüz başvuru yok. İletişim formundan gelen başvurular burada görünecek.':'Bu kategoride başvuru yok.'}</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  filtered.forEach(function(lead){
+    const initials = (lead.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    const dateStr = lead.date ? new Date(lead.date).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const card = document.createElement('div');
+    card.className = 'lead-card status-' + (lead.status||'new');
+    card.innerHTML = `
+      <div class="lead-header">
+        <div class="lead-avatar">${initials}</div>
+        <div class="lead-meta">
+          <div class="lead-name">${lead.name||'—'}</div>
+          ${lead.company?`<div class="lead-company">${lead.company}</div>`:''}
+          <div class="lead-email">${lead.email||'—'}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="lead-badge ${lead.status==='contacted'?'contacted':'new'}">${lead.status==='contacted'?'İletişim Kuruldu':'New'}</span>
+          <span class="lead-date">${dateStr}</span>
+          ${lead.service?`<span class="lead-service-tag">${SERVICE_LABELS[lead.service]||lead.service}</span>`:''}
+        </div>
+      </div>
+      ${lead.message?`<div class="lead-body"><div class="lead-message">${lead.message}</div></div>`:''}
+      <div class="lead-actions">
+        <a class="bsm" href="mailto:${lead.email}?subject=ADON Studio — Başvurunuz Hakkında&body=Merhaba ${lead.name},%0A%0A" target="_blank">✉ Yanıtla</a>
+        <button class="bsm" data-lead-toggle="${lead.id}">${lead.status==='contacted'?'New Olarak İşaretle':'✓ İletişim Kuruldu'}</button>
+        <button class="bsm danger" data-lead-del="${lead.id}" style="margin-left:auto">Delete</button>
+      </div>`;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('[data-lead-toggle]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const leads = getLeads();
+      const id = +btn.dataset.leadToggle;
+      const lead = leads.find(l=>l.id===id);
+      if(lead){ lead.status = lead.status==='contacted' ? 'new' : 'contacted'; saveLeads(leads); renderLeads(); updateLeadsBadge(); }
+    };
+  });
+
+  list.querySelectorAll('[data-lead-del]').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(!confirm('Bu başvuru silinsin mi?')) return;
+      const leads = getLeads().filter(l=>l.id !== +btn.dataset.leadDel);
+      saveLeads(leads); renderLeads(); updateLeadsBadge();
+    };
+  });
+}
+
+function initLeads(){
+  document.querySelectorAll('[data-lf]').forEach(btn=>{
+    btn.onclick = ()=>{
+      document.querySelectorAll('[data-lf]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      leadsFilter = btn.dataset.lf;
+      renderLeads();
+    };
+  });
+
+  const clearBtn = document.getElementById('btn-clear-leads');
+  if(clearBtn){
+    clearBtn.onclick = ()=>{
+      if(!confirm('Tüm başvurular silinsin mi? Bu işlem geri alınamaz.')) return;
+      saveLeads([]); renderLeads(); updateLeadsBadge();
+    };
+  }
+
+  renderLeads();
+  updateLeadsBadge();
+}
+</script>
+</body>
+</html>

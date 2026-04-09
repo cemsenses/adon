@@ -238,6 +238,52 @@ button {
   color: var(--white);
 }
 
+/* ─── Language Toggle ─── */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lang-active {
+  color: var(--black);
+  opacity: 0.35;
+}
+
+.nav--dark .lang-active {
+  color: var(--white);
+  opacity: 0.35;
+}
+
+.lang-toggle::before {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: currentColor;
+  opacity: 0.25;
+  margin-right: 2px;
+}
+
+.lang-link {
+  color: var(--black);
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+.lang-link:hover {
+  opacity: 0.6;
+}
+
+.nav--dark .lang-link {
+  color: var(--white);
+}
+
 /* ─── Mobile hamburger ─── */
 .nav-menu-toggle {
   display: none;

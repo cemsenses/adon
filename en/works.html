@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Works — ADON Studio Portfolio</title>
+    <meta name="description"
+        content="Discover ADON Studio's high-quality production work created with generative AI. Video, imagery and audio content." />
+    <link rel="icon" type="image/x-icon" href="../media/favicon.ico" />
+    <!-- SEO -->
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://adon.com.tr/en/works.html" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://adon.com.tr/en/works.html" />
+    <meta property="og:title" content="Works — ADON Studio Portfolio" />
+    <meta property="og:description" content="ADON Studio's high-quality production work created with generative AI." />
+    <meta property="og:image" content="https://adon.com.tr/media/calismalar.jpeg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="ADON Studio" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Works — ADON Studio Portfolio" />
+    <meta name="twitter:description" content="ADON Studio's high-quality production work created with generative AI." />
+    <meta name="twitter:image" content="https://adon.com.tr/media/calismalar.jpeg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="../media/favicon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <link rel="stylesheet" href="../styles/main.css?v=3" />
+    <link rel="stylesheet" href="../styles/animations.css" />
+    <style>
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            padding: 0 32px 40px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: none;
+            transition: all var(--fast);
+            cursor: none;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            border-color: var(--black);
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* ── Work Item — 4:5 ── */
+        .work-item {
+            aspect-ratio: 4/5;
+            background: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .work-item-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            font-family: var(--font-headline);
+            font-size: 60px;
+            font-weight: 900;
+            color: rgba(8, 8, 8, 0.12);
+            text-transform: uppercase;
+        }
+        .work-item-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .work-item:hover .work-item-bg {
+            transform: scale(1.06);
+        }
+        .work-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px;
+        }
+        .work-item:hover .work-overlay {
+            opacity: 1;
+        }
+        .work-title {
+            font-family: var(--font-headline);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .work-cat {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(8,8,8,0.93);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.open {
+            display: flex;
+        }
+        .lightbox-inner {
+            position: relative;
+            max-width: min(90vw, 560px);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .lightbox-img-wrap {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .lightbox-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .lightbox-placeholder {
+            font-family: var(--font-headline);
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            text-transform: uppercase;
+        }
+        .lightbox-info { display: none; }
+        .lightbox-close {
+            position: absolute;
+            top: -44px;
+            right: 0;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+        .lightbox-close:hover {
+            color: #fff;
+        }
+
+        /* ── Tab Switcher ── */
+        .tab-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 48px 32px 40px;
+        }
+        .tab-btn {
+            font-family: var(--font-headline);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 16px 48px;
+            border: 2px solid var(--border);
+            color: var(--muted);
+            background: none;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .tab-btn.active {
+            border-color: var(--black);
+            background: var(--black);
+            color: var(--white);
+        }
+        .tab-btn:hover:not(.active) {
+            border-color: #999;
+            color: var(--black);
+        }
+
+        /* ── Video Grid ── */
+        .video-section { display: block; }
+        .video-section.hidden { display: none; }
+        .image-section { display: none; }
+        .image-section.active { display: block; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            padding: 0;
+        }
+        .video-grid--vertical {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 768px) {
+            .video-grid, .video-grid--vertical { grid-template-columns: 1fr; }
+        }
+        .video-item {
+            aspect-ratio: 16/9;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-item--vertical {
+            aspect-ratio: 9/16;
+        }
+        .video-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .video-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.15);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Works — ADON Studio Portfolio",
+      "url": "https://adon.com.tr/en/works.html",
+      "description": "ADON Studio's AI-powered production work: video ads, product photography and fashion editorial content.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ADON Studio",
+        "url": "https://adon.com.tr"
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:#ff3c31;color:#fff;padding:8px 16px;z-index:9999;transition:top 0.2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to content</a>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="page-overlay"></div>
+
+    <!-- ─── Navigation ─── -->
+    <nav class="nav nav--dark">
+        <a href="index.html" class="nav-logo"><img src="../media/beyaz.png" alt="ADON Studio" class="logo-default" style="height:22px;width:auto;display:block;"><img src="../media/logos/adon-ufak-logo.png" alt="ADON Studio" class="logo-scrolled" style="height:22px;width:auto;display:none;"></a>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="solutions.html">Solutions</a>
+            <a href="works.html">Works</a>
+            <a href="synthesis.html">Synthesis</a>
+        </div>
+        <div class="lang-toggle">
+      <a href="../calismalar.html" class="lang-link">TR</a>
+      <span class="lang-active">EN</span>
+    </div>
+    <a href="contact.html" class="nav-cta">Contact</a>
+        <button class="nav-menu-toggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main id="main-content">
+    <!-- ─── Page Header ─── -->
+    <header class="page-header page-header--photo">
+        <div class="page-header-bg">
+            <img src="../media/calismalar.jpeg" alt="Works">
+            <div class="page-header-overlay"></div>
+        </div>
+        <div class="page-header-content">
+            <p class="page-header-label">Portfolio</p>
+            <h1 class="page-header-title">
+                Our Works.
+            </h1>
+            <p class="page-header-sub">
+                The generative AI space is full of hype and ambiguity. We built our orchestration system on a foundation of ethical precision and strategic clarity.
+                We don't hide behind the technology; we master it.
+            </p>
+        </div>
+
+        <!-- Scroll indicator -->
+        <button class="scroll-down-btn" onclick="document.querySelector('.tab-switcher').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
+            <span class="scroll-down-line"></span>
+            <svg class="scroll-down-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <style>
+        .scroll-down-btn {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            z-index: 10;
+            animation: sd-fadein 1.2s ease 1s both;
+            padding: 0;
+        }
+        .scroll-down-btn:hover { color: #fff; }
+        .scroll-down-line {
+            display: block;
+            width: 1px;
+            height: 48px;
+            background: currentColor;
+            transform-origin: top;
+            animation: sd-line 2s ease-in-out infinite;
+        }
+        .scroll-down-arrow {
+            width: 20px;
+            height: 20px;
+            animation: sd-arrow 2s ease-in-out infinite;
+        }
+        @keyframes sd-fadein {
+            from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes sd-line {
+            0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+            40%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+            80%  { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
+            100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+        }
+        @keyframes sd-arrow {
+            0%, 35% { opacity: 0; transform: translateY(-8px); }
+            65%     { opacity: 1; transform: translateY(4px); }
+            100%    { opacity: 0; transform: translateY(10px); }
+        }
+        </style>
+    </header>
+
+    <!-- ─── Tab Switcher ─── -->
+    <div class="tab-switcher">
+        <button class="tab-btn active" id="tab-video">Video</button>
+        <button class="tab-btn" id="tab-gorsel">Visuals</button>
+    </div>
+
+    <!-- ─── Video Section ─── -->
+    <div class="video-section" id="video-section">
+        <div class="video-grid" id="video-grid"></div>
+        <div class="video-grid video-grid--vertical" id="video-grid-vertical" style="margin-top:2px;display:none;"></div>
+    </div>
+
+    <!-- ─── Visual Section ─── -->
+    <div class="image-section" id="image-section">
+        <div class="works-grid" style="gap: 2px;" id="works-grid">
+            <!-- Loaded dynamically from works.json -->
+        </div>
+    </div>
+
+    <!-- ─── Lightbox ─── -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Work detail">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+            <div class="lightbox-img-wrap" id="lightbox-img-wrap"></div>
+            <div class="lightbox-info">
+                <div>
+                    <div class="lightbox-title" id="lightbox-title"></div>
+                    <div class="lightbox-cat" id="lightbox-cat"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Marquee ─── -->
+    <div class="marquee-section" style="margin-top: 2px;">
+        <div class="marquee-track">
+            <span>TRANSFORMATION, NOT PROCESS</span>
+            <span>NO QUALITY COMPROMISE</span>
+            <span>DESIGNED TO SCALE</span>
+            <span>PERFORMANCE DRIVEN</span>
+            <span>GLOBAL REACH, LOCAL AUTHENTICITY</span>
+            <span>BRAND INTEGRITY PROTECTED</span>
+            <span>LOGISTICS ELIMINATED</span>
+            <span>TRANSFORMATION, NOT PROCESS</span>
+            <span>NO QUALITY COMPROMISE</span>
+            <span>DESIGNED TO SCALE</span>
+            <span>PERFORMANCE DRIVEN</span>
+            <span>GLOBAL REACH, LOCAL AUTHENTICITY</span>
+            <span>BRAND INTEGRITY PROTECTED</span>
+            <span>LOGISTICS ELIMINATED</span>
+        </div>
+    </div>
+
+    <!-- ─── CTA ─── -->
+    <section class="cta-section reveal">
+        <p class="section-label" style="justify-content: center;">Your Next Project</p>
+        <h2 class="cta-title">
+            Let's Create<br>
+            Your<br>
+            <em>Project</em><br>
+            Together.
+        </h2>
+        <a href="contact.html" class="btn btn-filled" style="font-size: 14px; padding: 18px 48px;">Start the Conversation →</a>
+    </section>
+
+    </main>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><img src="../media/beyaz.png" alt="ADON Studio" style="height: 28px; width: auto; display: block;"></div>
+                <p class="footer-tagline">A strategic partner that delivers transformation at scale by blending human craftsmanship expertise with AI orchestration.</p>
+                <div style="margin-top: 24px; display: flex; gap: 16px;">
+                    <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+                    <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+                    <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
+                        style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Quick Links</div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="solutions.html">Solutions</a>
+                    <a href="works.html">Works</a>
+                    <a href="synthesis.html">Synthesis</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Locations</div>
+                <div class="footer-links">
+                    <a href="#">Istanbul</a>
+                    <a href="#">Milan</a>
+                    <a href="#">London</a>
+                    <a href="#">Nicosia</a>
+                </div>
+                <div style="margin-top: 32px;">
+                    <div class="footer-col-title">Contact</div>
+                    <div class="footer-links">
+                        <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 ADON Studio. All rights reserved.</span>
+            <span>Istanbul · Milan · London · Nicosia</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script>
+        // ── Elements ──
+        const grid          = document.getElementById('works-grid');
+        const videoGrid     = document.getElementById('video-grid');
+        const imageSection  = document.getElementById('image-section');
+        const videoSection  = document.getElementById('video-section');
+        const tabGorsel     = document.getElementById('tab-gorsel');
+        const tabVideo      = document.getElementById('tab-video');
+        const lightbox      = document.getElementById('lightbox');
+        const lightboxImgWrap = document.getElementById('lightbox-img-wrap');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxCat   = document.getElementById('lightbox-cat');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // ── Tab switching ──
+        tabGorsel.addEventListener('click', () => {
+            tabGorsel.classList.add('active');
+            tabVideo.classList.remove('active');
+            imageSection.classList.add('active');
+            videoSection.classList.add('hidden');
+        });
+        tabVideo.addEventListener('click', () => {
+            tabVideo.classList.add('active');
+            tabGorsel.classList.remove('active');
+            videoSection.classList.remove('hidden');
+            imageSection.classList.remove('active');
+        });
+
+        // ── Works Grid ──
+        let allWorks = [];
+
+        function renderGrid(works) {
+            grid.innerHTML = '';
+            works.forEach(work => {
+                const item = document.createElement('div');
+                item.className = 'work-item';
+
+                const bg = document.createElement('div');
+                bg.className = 'work-item-bg';
+                bg.style.background = work.color;
+
+                if (work.image) {
+                    const img = document.createElement('img');
+                    img.src = work.image;
+                    img.alt = work.title;
+                    img.loading = 'lazy';
+                    bg.appendChild(img);
+                } else {
+                    bg.textContent = work.placeholder;
+                }
+
+                const overlay = document.createElement('div');
+                overlay.className = 'work-overlay';
+                overlay.innerHTML = `
+                    <div class="work-title">${work.title}</div>
+                    <div class="work-cat">${work.category} · ${work.year}</div>
+                `;
+
+                item.appendChild(bg);
+                item.appendChild(overlay);
+                item.addEventListener('click', () => openLightbox(work));
+                grid.appendChild(item);
+            });
+        }
+
+        // ── Lightbox ──
+        function openLightbox(work) {
+            lightboxImgWrap.innerHTML = '';
+            lightboxImgWrap.style.background = work.color;
+            if (work.image) {
+                const img = document.createElement('img');
+                img.src = work.image;
+                img.alt = work.title;
+                lightboxImgWrap.appendChild(img);
+            } else {
+                const ph = document.createElement('div');
+                ph.className = 'lightbox-placeholder';
+                ph.textContent = work.placeholder;
+                lightboxImgWrap.appendChild(ph);
+            }
+            lightboxTitle.textContent = work.title;
+            lightboxCat.textContent = `${work.category} · ${work.year}`;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+        // ── Video Player Management ──
+        const vimeoPlayers = [];
+
+        function getYouTubeId(url) {
+            const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&\s?]+)/);
+            return m ? m[1] : null;
+        }
+        function getVimeoId(url) {
+            const m = url.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/|album\/[^/]+\/video\/)?(\d+)/);
+            return m ? m[1] : null;
+        }
+
+        function makeVideoCell(v, vertical) {
+            const cell = document.createElement('div');
+            cell.className = 'video-item' + (vertical ? ' video-item--vertical' : '');
+            const ytId = getYouTubeId(v.url);
+            const vmId = getVimeoId(v.url);
+            if (ytId) {
+                cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>`;
+            } else if (vmId) {
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://player.vimeo.com/video/${vmId}?badge=0&autopause=0&title=0&byline=0&portrait=0`;
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                iframe.allowFullscreen = true;
+                iframe.loading = 'lazy';
+                cell.appendChild(iframe);
+
+                // Player API event listeners
+                const player = new Vimeo.Player(iframe);
+
+                // On end: reset and pause
+                player.on('ended', () => {
+                    player.setCurrentTime(0).then(() => player.pause());
+                });
+
+                // On play: pause all others
+                player.on('play', () => {
+                    vimeoPlayers.forEach(p => {
+                        if (p !== player) p.pause();
+                    });
+                });
+
+                vimeoPlayers.push(player);
+            }
+            return cell;
+        }
+
+        function renderVideoGrid(videos) {
+            const hGrid = document.getElementById('video-grid');
+            const vGrid = document.getElementById('video-grid-vertical');
+            hGrid.innerHTML = ''; vGrid.innerHTML = '';
+
+            const horizontal = videos.filter(v => !v.vertical);
+            const vertical   = videos.filter(v => v.vertical);
+
+            // Horizontal grid — pad to even count on desktop
+            const isMobile = window.innerWidth <= 768;
+            const hItems = [...horizontal];
+            if (!isMobile && hItems.length % 2 !== 0) hItems.push(null);
+            hItems.forEach(v => {
+                if (v) hGrid.appendChild(makeVideoCell(v, false));
+                else { const e=document.createElement('div'); e.className='video-item video-empty'; hGrid.appendChild(e); }
+            });
+            hGrid.style.display = horizontal.length ? 'grid' : 'none';
+
+            // Vertical grid — pad to 3 on desktop
+            const vItems = [...vertical];
+            if (!isMobile && vItems.length % 3 !== 0) {
+                const pad = 3 - (vItems.length % 3);
+                for (let i=0;i<pad;i++) vItems.push(null);
+            }
+            vItems.forEach(v => {
+                if (v) vGrid.appendChild(makeVideoCell(v, true));
+                else { const e=document.createElement('div'); e.className='video-item video-item--vertical video-empty'; vGrid.appendChild(e); }
+            });
+            vGrid.style.display = vertical.length ? 'grid' : 'none';
+        }
+
+        // ── Load ──
+        fetch('../en/works.json?v=' + Date.now())
+            .then(r => r.json())
+            .then(data => { allWorks = data; renderGrid(allWorks); })
+            .catch(() => {
+                grid.innerHTML = '<p style="color:var(--muted);padding:32px;">Content could not be loaded.</p>';
+            });
+
+        fetch('../en/videos.json?v=' + Date.now())
+            .then(r => r.json())
+            .then(data => renderVideoGrid(data))
+            .catch(() => { document.getElementById('video-grid').innerHTML = ''; });
+    </script>
+</body>
+
+</html>
