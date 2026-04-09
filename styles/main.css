@@ -239,6 +239,7 @@ button {
 }
 
 /* ─── Language Toggle ─── */
+/* Default: white (all navs start dark) */
 .lang-toggle {
   display: flex;
   align-items: center;
@@ -248,15 +249,10 @@ button {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--white);
 }
 
 .lang-active {
-  color: var(--black);
-  opacity: 0.35;
-}
-
-.nav--dark .lang-active {
-  color: var(--white);
   opacity: 0.35;
 }
 
@@ -271,7 +267,7 @@ button {
 }
 
 .lang-link {
-  color: var(--black);
+  color: inherit;
   position: relative;
   transition: opacity 0.2s ease;
 }
@@ -280,8 +276,9 @@ button {
   opacity: 0.6;
 }
 
-.nav--dark .lang-link {
-  color: var(--white);
+/* When nav scrolls to light background, switch to dark */
+.nav.scrolled .lang-toggle {
+  color: var(--black);
 }
 
 /* ─── Mobile hamburger ─── */
