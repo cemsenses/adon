@@ -723,58 +723,34 @@
   }
 
   /* ── INFO BOX ── */
+  @keyframes info-border {
+    0%   { border-color: rgba(245,245,243,0.12); }
+    50%  { border-color: rgba(245,245,243,0.38); }
+    100% { border-color: rgba(245,245,243,0.12); }
+  }
   #info-box {
     position: fixed;
     bottom: 5vh;
     right: calc(5vw + 148px);
     z-index: 1000;
-    display: flex;
-    align-items: flex-end;
-    gap: 0;
-  }
-  #info-toggle {
-    width: 28px;
-    height: 28px;
-    border: 1px solid rgba(245,245,243,0.25);
-    background: transparent;
-    cursor: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: border-color 0.3s ease;
-  }
-  #info-toggle:hover { border-color: rgba(245,245,243,0.7); }
-  #info-toggle svg {
-    width: 12px; height: 12px;
-    fill: none;
-    stroke: var(--white);
-    stroke-width: 1.8;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-  }
-  #info-toggle:hover svg { opacity: 1; }
-  #info-content {
-    max-width: 0;
-    overflow: hidden;
+    border: 1px solid rgba(245,245,243,0.12);
+    padding: 14px 18px;
+    max-width: 280px;
     opacity: 0;
-    transition: max-width 0.6s var(--ease), opacity 0.4s ease;
-    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    animation: info-border 3s ease-in-out infinite;
   }
-  #info-content.open {
-    max-width: 420px;
+  #info-box.visible {
     opacity: 1;
   }
-  #info-content p {
+  #info-box p {
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 100;
-    font-size: 10px;
+    font-size: 9.5px;
     letter-spacing: 0.12em;
-    line-height: 1.7;
-    color: rgba(245,245,243,0.5);
-    padding: 0 0 0 14px;
-    white-space: normal;
-    max-width: 320px;
+    line-height: 1.8;
+    color: rgba(245,245,243,0.45);
   }
 </style>
 </head>
@@ -915,12 +891,7 @@
 
 <!-- NAV -->
 <div id="info-box">
-  <div id="info-content">
-    <p>Sonraki içerikleri izleyebilmek için oklara tıklayabilir, klavyenizdeki ileri/geri ok tuşlarını kullanabilir ya da mobil cihazınızdan parmağınızla kaydırabilirsiniz.</p>
-  </div>
-  <button id="info-toggle" aria-label="Bilgi">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  </button>
+  <p>Sonraki içerikleri izleyebilmek için oklara tıklayabilir, klavyenizdeki ileri/geri ok tuşlarını kullanabilir ya da mobil cihazınızdan parmağınızla kaydırabilirsiniz.</p>
 </div>
 
 <div id="nav">
@@ -1008,26 +979,17 @@
 
   // ── INFO BOX
   var infoBox = document.getElementById('info-box');
-  var infoToggle = document.getElementById('info-toggle');
-  var infoContent = document.getElementById('info-content');
-  var infoOpen = false;
 
-  infoToggle.addEventListener('click', function() {
-    infoOpen = !infoOpen;
-    infoContent.classList.toggle('open', infoOpen);
-  });
+  // Kapak slide'da 1.5s sonra fade-in
+  setTimeout(function() {
+    if (current === 0) infoBox.classList.add('visible');
+  }, 1500);
 
-  // Sadece kapakta görün
-  var origGoTo = goTo;
   function updateInfoVisibility(index) {
     if (index === 0) {
-      infoBox.style.opacity = '1';
-      infoBox.style.pointerEvents = 'auto';
+      setTimeout(function() { infoBox.classList.add('visible'); }, 400);
     } else {
-      infoBox.style.opacity = '0';
-      infoBox.style.pointerEvents = 'none';
-      infoOpen = false;
-      infoContent.classList.remove('open');
+      infoBox.classList.remove('visible');
     }
   }
 
