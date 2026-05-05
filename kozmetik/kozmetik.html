@@ -925,7 +925,7 @@
   <div class="slide slide-vimeo" data-slide="5">
     <div class="vimeo-wrap">
       <div style="padding:177.78% 0 0 0;position:relative;">
-        <iframe src="https://player.vimeo.com/video/1189412845?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Urban Care Glycolic Shampoo"></iframe>
+        <iframe id="vimeo-player" src="https://player.vimeo.com/video/1189412845?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Urban Care Glycolic Shampoo"></iframe>
       </div>
     </div>
     <div class="vimeo-caption">
@@ -1064,6 +1064,14 @@
     btnPrev.disabled = current === 0;
     btnNext.disabled = current === total - 1;
     updateInfoVisibility(current);
+    // Video kontrolü
+    if (typeof vimeoPlayer !== 'undefined') {
+      if (current === 5) {
+        vimeoPlayer.play();
+      } else {
+        vimeoPlayer.pause();
+      }
+    }
 
     setTimeout(() => { animating = false; }, 750);
   }
@@ -1134,6 +1142,20 @@
     });
     mf.innerHTML = result;
   })();
+
+  // ── VIMEO PLAYER CONTROL
+  var vimeoPlayer;
+  window.addEventListener('load', function() {
+    var iframe = document.getElementById('vimeo-player');
+    if (iframe && typeof Vimeo !== 'undefined') {
+      vimeoPlayer = new Vimeo.Player(iframe);
+      vimeoPlayer.setLoop(true);
+      // Başlangıçta video slide'da değilsek durdur
+      if (current !== 5) {
+        vimeoPlayer.pause();
+      }
+    }
+  });
 
   // ── PARTICLE SYSTEM
   var pCanvas = document.getElementById('particle-canvas');
