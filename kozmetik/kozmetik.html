@@ -685,6 +685,42 @@
     opacity: 1 !important;
     transform: none !important;
   }
+
+  /* ── SLIDE: MARKALAR ── */
+  .slide-markalar {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4vh;
+    padding: 8vw;
+  }
+  .slide-markalar .markalar-title {
+    font-size: clamp(18px, 2vw, 28px);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
+  }
+  .slide-markalar .markalar-title em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .slide-markalar .markalar-img {
+    width: 100%;
+    max-width: 1100px;
+    height: auto;
+    display: block;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1s var(--ease) 0.35s, transform 1s var(--ease) 0.35s;
+  }
+  .slide.is-active .markalar-title,
+  .slide.is-active .markalar-img {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 </style>
 </head>
 <body>
@@ -718,18 +754,10 @@
     </p>
   </div>
 
-  <!-- SLIDE 3: VIDEO SLIDE (Vimeo embed — placeholder) -->
-  <div class="slide slide-video" data-slide="2">
-    <div class="video-wrap">
-      <!-- Vimeo embed code buraya gelecek -->
-      <div style="position:absolute;inset:0;background:#000000;display:flex;align-items:center;justify-content:center;">
-        <span style="font-family:'Lexend Deca',sans-serif;font-weight:100;font-size:11px;letter-spacing:0.3em;color:var(--gray-2);text-transform:uppercase;">Video — Yakında Eklenecek</span>
-      </div>
-    </div>
-    <div class="video-info">
-      <div class="vi-brand">Marka Adı</div>
-      <div class="vi-title">Proje / Kampanya Adı</div>
-    </div>
+  <!-- SLIDE 3: MARKALAR -->
+  <div class="slide slide-markalar" data-slide="2">
+    <p class="markalar-title"><em>Birlikte yol aldıklarımız...</em></p>
+    <img class="markalar-img" src="markalar.png" alt="Markalar">
   </div>
 
   <!-- SLIDE 4: CATEGORY DIVIDER — Görsel Üretim -->
