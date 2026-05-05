@@ -1288,20 +1288,16 @@
     updateInfoVisibility(current);
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
-      if (current === 5) { vimeoPlayer.play(); }
-      else { vimeoPlayer.pause(); }
+      if (current !== 5) { vimeoPlayer.pause(); }
     }
     if (typeof vimeoPlayer2 !== 'undefined') {
-      if (current === 6) { vimeoPlayer2.play(); }
-      else { vimeoPlayer2.pause(); }
+      if (current !== 6) { vimeoPlayer2.pause(); }
     }
     if (typeof vimeoPlayer3 !== 'undefined') {
-      if (current === 10) { vimeoPlayer3.play(); }
-      else { vimeoPlayer3.pause(); }
+      if (current !== 10) { vimeoPlayer3.pause(); }
     }
     if (typeof vimeoPlayer4 !== 'undefined') {
-      if (current === 14) { vimeoPlayer4.play(); }
-      else { vimeoPlayer4.pause(); }
+      if (current !== 14) { vimeoPlayer4.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
