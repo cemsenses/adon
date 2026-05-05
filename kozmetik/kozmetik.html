@@ -609,7 +609,7 @@
     pointer-events: none;
   }
   #persistent-logo img {
-    width: 36px;
+    width: 80px;
     height: auto;
     display: block;
   }
@@ -617,20 +617,19 @@
 
   /* ── COVER LOGO ── */
   .cover-logo {
-    position: absolute;
-    top: 5vh;
-    left: 10vw;
+    position: relative;
     z-index: 3;
     opacity: 0;
-    transition: opacity 1s ease 0.2s;
+    margin-bottom: 4vh;
+    transition: opacity 1s ease 0.1s;
   }
   .cover-logo img {
-    width: 48px;
+    width: 110px;
     height: auto;
     display: block;
   }
   .slide.is-active .cover-logo {
-    opacity: 0.9 !important;
+    opacity: 1 !important;
   }
 
   /* ── PARTICLE CANVAS ── */
