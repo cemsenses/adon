@@ -752,6 +752,25 @@
     line-height: 1.9;
     color: rgba(245,245,243,0.5);
   }
+
+  /* ── SLIDE: BRAND LOGO ── */
+  .slide-brand-logo {
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-brand-logo .brand-logo-img {
+    width: 520px;
+    max-width: 70vw;
+    height: auto;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s var(--ease) 0.2s, transform 1s var(--ease) 0.2s;
+  }
+  .slide.is-active .brand-logo-img {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 </style>
 </head>
 <body>
@@ -791,11 +810,9 @@
     <img class="markalar-img" src="markalar.png" alt="Markalar">
   </div>
 
-  <!-- SLIDE 4: CATEGORY DIVIDER — Görsel Üretim -->
-  <div class="slide slide-category" data-slide="3">
-    <div class="cat-number">02</div>
-    <div class="cat-name">Görsel Üretim</div>
-    <div class="cat-desc">Ürün görselleri · Kampanya fotoğrafçılığı · AI görsel sentezi</div>
+  <!-- SLIDE 4: URBAN CARE LOGO -->
+  <div class="slide slide-brand-logo" data-slide="3">
+    <img class="brand-logo-img" src="urban-care-logo.png" alt="Urban Care">
   </div>
 
   <!-- SLIDE 5: FULLSCREEN IMAGE -->
