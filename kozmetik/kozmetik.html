@@ -640,18 +640,13 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0;
-    transition: opacity 2s ease;
+    opacity: 1;
     pointer-events: none;
     display: block;
   }
-  #particle-canvas.ready { opacity: 1; }
-  .slide-cover .cover-logo,
   .slide-cover .cover-eyebrow,
   .slide-cover .cover-title,
-  .slide-cover .cover-sub,
-  .slide-cover .cover-line,
-  .slide-cover .cover-year { position: relative; z-index: 2; }
+  .slide-cover .cover-sub { position: relative; z-index: 2; }
 </style>
 </head>
 <body>
@@ -908,8 +903,6 @@
   for (var pi = 0; pi < PCOUNT; pi++) {
     pParticles.push(pMakeParticle(true));
   }
-
-  pCanvas.style.opacity = '1';
 
   function pLoop() {
     pCtx.clearRect(0, 0, pW, pH);
