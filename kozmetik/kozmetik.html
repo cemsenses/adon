@@ -646,6 +646,45 @@
   .slide-cover .cover-eyebrow,
   .slide-cover .cover-title,
   .slide-cover .cover-sub { position: relative; z-index: 2; }
+
+  /* ── SLIDE: MANIFESTO ── */
+  .slide-manifesto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10vw;
+  }
+  .slide-manifesto .mf-text {
+    font-weight: 200;
+    font-size: clamp(22px, 3vw, 48px);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    max-width: 80vw;
+    text-align: center;
+  }
+  .slide-manifesto .mf-text em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  /* word-by-word animation */
+  .slide-manifesto .mf-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .slide-manifesto .mf-word.em-word {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .slide.is-active .mf-word {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 </style>
 </head>
 <body>
@@ -670,11 +709,13 @@
     <p class="cover-sub">AI destekli görsel üretim · Kampanya içerikleri · Sosyal medya</p>
   </div>
 
-  <!-- SLIDE 2: CATEGORY DIVIDER — Video İçerikler -->
-  <div class="slide slide-category" data-slide="1">
-    <div class="cat-number">01</div>
-    <div class="cat-name">Video İçerikler</div>
-    <div class="cat-desc">Ürün filmleri · Kampanya videoları · Sosyal medya içerikleri</div>
+  <!-- SLIDE 2: MANIFESTO -->
+  <div class="slide slide-manifesto" data-slide="1">
+    <p class="mf-text">
+      ADON Studio, AI orkestrasyon altyapısı ve insan yaratıcı yönetimini birleştirerek kozmetik markalarına
+      <em>sinematik kalitede,</em>
+      ölçeklenebilir içerik üretir.
+    </p>
   </div>
 
   <!-- SLIDE 3: VIDEO SLIDE (Vimeo embed — placeholder) -->
@@ -874,6 +915,35 @@
   // ── INIT
   progress.style.width = `${(1 / total) * 100}%`;
   counter.textContent = `${pad(1)} / ${pad(total)}`;
+
+  // ── MANIFESTO WORD SPLIT
+  (function() {
+    var mf = document.querySelector('.slide-manifesto .mf-text');
+    if (!mf) return;
+    var html = mf.innerHTML;
+    // Split by whitespace but preserve <em> tags
+    var parts = html.split(/(<em>.*?<\/em>)/);
+    var result = '';
+    var delay = 0;
+    parts.forEach(function(part) {
+      if (part.match(/^<em>/)) {
+        // em block — split words inside
+        var inner = part.replace(/<em>|<\/em>/g, '');
+        inner.trim().split(/\s+/).forEach(function(word) {
+          result += '<span class="mf-word em-word" style="transition-delay:' + delay + 'ms">' + word + '</span> ';
+          delay += 60;
+        });
+      } else {
+        part.trim().split(/\s+/).forEach(function(word) {
+          if (word) {
+            result += '<span class="mf-word" style="transition-delay:' + delay + 'ms">' + word + '</span> ';
+            delay += 60;
+          }
+        });
+      }
+    });
+    mf.innerHTML = result;
+  })();
 
   // ── PARTICLE SYSTEM
   var pCanvas = document.getElementById('particle-canvas');
