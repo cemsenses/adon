@@ -647,6 +647,20 @@
     opacity: 1 !important;
     transform: none !important;
   }
+
+  /* ── PARTICLE CANVAS ── */
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 2s ease;
+    pointer-events: none;
+  }
+  #particle-canvas.ready { opacity: 1; }
+  .slide-cover > *:not(#particle-canvas) { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
@@ -664,6 +678,7 @@
 
   <!-- SLIDE 1: COVER -->
   <div class="slide slide-cover is-active" data-slide="0">
+    <canvas id="particle-canvas"></canvas>
     <div class="cover-logo"><img src="logo.png" alt="ADON"></div>
     <p class="cover-eyebrow">ADON Studio — Kozmetik Portföyü</p>
     <h1 class="cover-title">Güzelliği<br><em>yeniden</em><br>tanımlamak.</h1>
@@ -876,6 +891,115 @@
   // ── INIT
   progress.style.width = `${(1 / total) * 100}%`;
   counter.textContent = `${pad(1)} / ${pad(total)}`;
+
+  // ── PARTICLE SYSTEM
+  (function() {
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const mouse = { x: -999, y: -999 };
+    const COUNT = 90;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x  = Math.random() * W;
+        this.y  = init ? Math.random() * H : (Math.random() < 0.5 ? -10 : H + 10);
+        this.ox = this.x;
+        this.oy = this.y;
+        this.r  = Math.random() * 1.4 + 0.3;
+        this.sp = Math.random() * 0.18 + 0.04;
+        this.dx = (Math.random() - 0.5) * this.sp;
+        this.dy = (Math.random() - 0.5) * this.sp;
+        this.life = Math.random() * 200 + 100;
+        this.age  = init ? Math.random() * this.life : 0;
+        this.alpha = 0;
+      }
+      update() {
+        this.age++;
+        this.x += this.dx + Math.sin(this.age * 0.012 + this.ox) * 0.18;
+        this.y += this.dy + Math.cos(this.age * 0.009 + this.oy) * 0.15;
+        const mdx = this.x - mouse.x;
+        const mdy = this.y - mouse.y;
+        const dist = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (dist < 140 && dist > 0) {
+          const force = (140 - dist) / 140 * 0.6;
+          this.x += (mdx / dist) * force;
+          this.y += (mdy / dist) * force;
+        }
+        const half = this.life / 2;
+        this.alpha = this.age < half
+          ? (this.age / half) * 0.18
+          : ((this.life - this.age) / half) * 0.18;
+        if (this.age >= this.life || this.x < -20 || this.x > W+20 || this.y < -20 || this.y > H+20) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(245,245,243,' + this.alpha + ')';
+        ctx.fill();
+      }
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 90) {
+            const a = (1 - d / 90) * 0.04;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(245,245,243,' + a + ')';
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+      drawConnections();
+      particles.forEach(function(p) { p.update(); p.draw(); });
+      requestAnimationFrame(loop);
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: COUNT }, function() { return new Particle(); });
+      canvas.classList.add('ready');
+      loop();
+    }
+
+    window.addEventListener('resize', function() {
+      resize();
+      particles.forEach(function(p) { p.ox = p.x; p.oy = p.y; });
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (current === 0) {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      } else {
+        mouse.x = -999; mouse.y = -999;
+      }
+    });
+
+    if (document.readyState === 'complete') { init(); }
+    else { window.addEventListener('load', init); }
+  })();
+
 </script>
 </body>
 </html>
