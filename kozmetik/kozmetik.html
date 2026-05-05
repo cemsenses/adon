@@ -29,6 +29,10 @@
     font-family: 'Lexend', sans-serif;
     cursor: none;
   }
+  @media (hover: none), (pointer: coarse) {
+    html, body { cursor: auto; }
+    .cursor, .cursor-ring { display: none !important; }
+  }
 
   /* ── CUSTOM CURSOR ── */
   .cursor {
