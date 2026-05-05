@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADON — Kozmetik Portföy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600&family=Lexend+Deca:wght@100;200;300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f3;
+    --gray-1: #1a1a1a;
+    --gray-2: #2a2a2a;
+    --gray-3: #888;
+    --gray-4: #ccc;
+    --duration: 700ms;
+    --ease: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Lexend', sans-serif;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--white);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(245,245,243,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease;
+  }
+  .cursor.hover { width: 14px; height: 14px; }
+  .cursor-ring.hover { width: 56px; height: 56px; border-color: rgba(245,245,243,0.2); }
+
+  /* ── PRESENTATION WRAPPER ── */
+  #presentation {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    will-change: transform;
+    transition: transform var(--duration) var(--ease);
+  }
+
+  /* ── SLIDE BASE ── */
+  .slide {
+    position: relative;
+    min-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+  }
+
+  /* ── SLIDE: COVER ── */
+  .slide-cover {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10vw;
+  }
+  .slide-cover .cover-eyebrow {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: clamp(10px, 1vw, 13px);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    margin-bottom: 3vh;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
+  }
+  .slide-cover .cover-title {
+    font-weight: 200;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    max-width: 70vw;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s var(--ease) 0.25s, transform 0.9s var(--ease) 0.25s;
+  }
+  .slide-cover .cover-title em {
+    font-style: normal;
+    font-weight: 500;
+  }
+  .slide-cover .cover-sub {
+    font-weight: 300;
+    font-size: clamp(13px, 1.4vw, 18px);
+    color: var(--gray-3);
+    margin-top: 4vh;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s;
+  }
+  .slide-cover .cover-line {
+    position: absolute;
+    bottom: 10vh;
+    left: 10vw;
+    right: 10vw;
+    height: 1px;
+    background: var(--gray-2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s var(--ease) 0.6s;
+  }
+  .slide-cover .cover-year {
+    position: absolute;
+    bottom: calc(10vh + 2vh);
+    right: 10vw;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gray-3);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease) 0.8s;
+  }
+
+  /* ── SLIDE: CATEGORY DIVIDER ── */
+  .slide-category {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--black);
+  }
+  .slide-category .cat-number {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: clamp(80px, 15vw, 200px);
+    color: var(--gray-2);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s var(--ease) 0.1s, transform 0.9s var(--ease) 0.1s;
+  }
+  .slide-category .cat-name {
+    font-weight: 200;
+    font-size: clamp(24px, 4vw, 56px);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: -2vh;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease) 0.3s, transform 0.8s var(--ease) 0.3s;
+  }
+  .slide-category .cat-desc {
+    font-weight: 300;
+    font-size: clamp(12px, 1.2vw, 16px);
+    color: var(--gray-3);
+    margin-top: 2vh;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.7s var(--ease) 0.5s, transform 0.7s var(--ease) 0.5s;
+  }
+
+  /* ── SLIDE: FULLSCREEN IMAGE ── */
+  .slide-fullimage {
+    padding: 0;
+  }
+  .slide-fullimage .img-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--gray-1);
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 1s var(--ease) 0.1s, transform 1.2s var(--ease) 0.1s;
+  }
+  .slide-fullimage .img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 50%);
+    z-index: 1;
+  }
+  .slide-fullimage .img-caption {
+    position: absolute;
+    bottom: 8vh;
+    left: 8vw;
+    z-index: 2;
+  }
+  .slide-fullimage .img-caption .cap-brand {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.7s var(--ease) 0.5s, transform 0.7s var(--ease) 0.5s;
+  }
+  .slide-fullimage .img-caption .cap-title {
+    font-weight: 300;
+    font-size: clamp(22px, 3.5vw, 48px);
+    letter-spacing: -0.02em;
+    margin-top: 1vh;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease) 0.65s, transform 0.8s var(--ease) 0.65s;
+  }
+
+  /* ── SLIDE: HALF IMAGE + TEXT ── */
+  .slide-halftext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    gap: 0;
+  }
+  .slide-halftext .half-img {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--gray-1);
+  }
+  .slide-halftext .half-img-inner {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1s var(--ease) 0.2s, transform 1.3s var(--ease) 0.2s;
+  }
+  .slide-halftext .half-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8vw 6vw;
+    background: var(--black);
+  }
+  .slide-halftext .half-text .ht-eyebrow {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.7s var(--ease) 0.3s, transform 0.7s var(--ease) 0.3s;
+  }
+  .slide-halftext .half-text .ht-title {
+    font-weight: 200;
+    font-size: clamp(28px, 3.5vw, 52px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-top: 2vh;
+    opacity: 0;
+    transform: translateX(25px);
+    transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s;
+  }
+  .slide-halftext .half-text .ht-body {
+    font-weight: 300;
+    font-size: clamp(12px, 1.1vw, 15px);
+    line-height: 1.8;
+    color: var(--gray-3);
+    margin-top: 3vh;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.7s var(--ease) 0.6s, transform 0.7s var(--ease) 0.6s;
+  }
+  .slide-halftext .half-text .ht-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 3vh;
+    opacity: 0;
+    transform: translateX(15px);
+    transition: opacity 0.7s var(--ease) 0.75s, transform 0.7s var(--ease) 0.75s;
+  }
+  .ht-tags span {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--gray-2);
+    padding: 6px 14px;
+    color: var(--gray-3);
+  }
+  /* reversed half */
+  .slide-halftext.reversed .half-img { order: 2; }
+  .slide-halftext.reversed .half-text { order: 1; }
+  .slide-halftext.reversed .half-text .ht-eyebrow,
+  .slide-halftext.reversed .half-text .ht-title,
+  .slide-halftext.reversed .half-text .ht-body,
+  .slide-halftext.reversed .half-text .ht-tags {
+    transform: translateX(-20px);
+  }
+
+  /* ── SLIDE: PHOTO GRID 2×2 ── */
+  .slide-grid2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    padding: 0;
+    align-items: stretch;
+  }
+  .slide-grid2x2 .grid-item {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--gray-1);
+    min-height: 50vh;
+  }
+  .slide-grid2x2 .grid-item .grid-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 0.8s var(--ease), transform 1s var(--ease);
+  }
+  .slide-grid2x2 .grid-item:nth-child(1) .grid-img { transition-delay: 0.1s; }
+  .slide-grid2x2 .grid-item:nth-child(2) .grid-img { transition-delay: 0.3s; }
+  .slide-grid2x2 .grid-item:nth-child(3) .grid-img { transition-delay: 0.5s; }
+  .slide-grid2x2 .grid-item:nth-child(4) .grid-img { transition-delay: 0.7s; }
+  .slide-grid2x2 .grid-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 3vh 3vw;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 100%);
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s var(--ease) 0.9s, transform 0.6s var(--ease) 0.9s;
+  }
+  .slide-grid2x2 .grid-caption .gc-brand {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+  }
+  .slide-grid2x2 .grid-caption .gc-title {
+    font-weight: 300;
+    font-size: clamp(14px, 1.5vw, 20px);
+    margin-top: 4px;
+  }
+
+  /* ── SLIDE: 3 COLUMN GRID ── */
+  .slide-grid3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    padding: 0;
+    align-items: stretch;
+  }
+  .slide-grid3 .col-item {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--gray-1);
+    height: 100vh;
+  }
+  .slide-grid3 .col-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 0.8s var(--ease), transform 1s var(--ease);
+  }
+  .slide-grid3 .col-item:nth-child(1) .col-img { transition-delay: 0.1s; }
+  .slide-grid3 .col-item:nth-child(2) .col-img { transition-delay: 0.3s; }
+  .slide-grid3 .col-item:nth-child(3) .col-img { transition-delay: 0.5s; }
+  .slide-grid3 .col-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 60%);
+    z-index: 1;
+  }
+  .slide-grid3 .col-label {
+    position: absolute;
+    bottom: 5vh;
+    left: 3vw;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s var(--ease) 0.7s, transform 0.6s var(--ease) 0.7s;
+  }
+  .slide-grid3 .col-label span {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    display: block;
+  }
+  .slide-grid3 .col-label p {
+    font-weight: 300;
+    font-size: clamp(14px, 1.3vw, 18px);
+    margin-top: 4px;
+  }
+
+  /* ── SLIDE: VIDEO ── */
+  .slide-video {
+    padding: 0;
+    flex-direction: column;
+  }
+  .slide-video .video-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s var(--ease) 0.2s;
+  }
+  .slide-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .slide-video .video-info {
+    position: absolute;
+    bottom: 8vh;
+    left: 8vw;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .slide-video .video-info .vi-brand {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s var(--ease) 0.5s, transform 0.7s var(--ease) 0.5s;
+  }
+  .slide-video .video-info .vi-title {
+    font-weight: 300;
+    font-size: clamp(18px, 2.5vw, 36px);
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s var(--ease) 0.65s, transform 0.8s var(--ease) 0.65s;
+  }
+
+  /* ── SLIDE: END ── */
+  .slide-end {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .slide-end .end-logo {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: clamp(36px, 6vw, 80px);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s var(--ease) 0.2s, transform 0.9s var(--ease) 0.2s;
+  }
+  .slide-end .end-tagline {
+    font-weight: 200;
+    font-size: clamp(12px, 1.3vw, 17px);
+    color: var(--gray-3);
+    letter-spacing: 0.08em;
+    margin-top: 2.5vh;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s;
+  }
+  .slide-end .end-contact {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gray-3);
+    margin-top: 6vh;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease) 0.7s;
+  }
+
+  /* ── ACTIVE SLIDE — trigger animations ── */
+  .slide.is-active .cover-eyebrow,
+  .slide.is-active .cover-title,
+  .slide.is-active .cover-sub,
+  .slide.is-active .cover-year,
+  .slide.is-active .cat-number,
+  .slide.is-active .cat-name,
+  .slide.is-active .cat-desc,
+  .slide.is-active .img-caption .cap-brand,
+  .slide.is-active .img-caption .cap-title,
+  .slide.is-active .half-img-inner,
+  .slide.is-active .ht-eyebrow,
+  .slide.is-active .ht-title,
+  .slide.is-active .ht-body,
+  .slide.is-active .ht-tags,
+  .slide.is-active .grid-img,
+  .slide.is-active .grid-caption,
+  .slide.is-active .col-img,
+  .slide.is-active .col-label,
+  .slide.is-active .video-wrap,
+  .slide.is-active .vi-brand,
+  .slide.is-active .vi-title,
+  .slide.is-active .end-logo,
+  .slide.is-active .end-tagline,
+  .slide.is-active .end-contact {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .slide.is-active .img-bg,
+  .slide.is-active .half-img-inner,
+  .slide.is-active .grid-img,
+  .slide.is-active .col-img {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+  .slide.is-active .cover-line {
+    transform: scaleX(1) !important;
+  }
+
+  /* ── NAVIGATION ── */
+  #nav {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 1000;
+  }
+  .nav-btn {
+    width: 48px; height: 48px;
+    border: 1px solid var(--gray-2);
+    background: transparent;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .nav-btn:hover { border-color: var(--white); background: var(--gray-1); }
+  .nav-btn svg { width: 16px; height: 16px; fill: none; stroke: var(--white); stroke-width: 1.5; }
+  .nav-btn:disabled { opacity: 0.2; pointer-events: none; }
+
+  #slide-counter {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gray-3);
+    min-width: 64px;
+    text-align: center;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 1px;
+    background: var(--white);
+    z-index: 1000;
+    transition: width 0.5s var(--ease);
+  }
+
+  /* ── PLACEHOLDER STYLES ── */
+  .placeholder-img {
+    background: var(--gray-1) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .placeholder-img::after {
+    content: attr(data-label);
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gray-2);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div id="progress"></div>
+
+<!-- ════════════════════════════════════════
+     SLIDES
+════════════════════════════════════════ -->
+<div id="presentation">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-cover is-active" data-slide="0">
+    <p class="cover-eyebrow">ADON Studio — Kozmetik Portföyü</p>
+    <h1 class="cover-title">Güzelliği<br><em>Yeniden</em><br>Tanımlamak</h1>
+    <p class="cover-sub">AI destekli görsel üretim ile kozmetik markalar için<br>üretilen içerikler ve kampanyalar</p>
+    <div class="cover-line"></div>
+    <span class="cover-year">2024 — 2025</span>
+  </div>
+
+  <!-- SLIDE 2: CATEGORY DIVIDER — Video İçerikler -->
+  <div class="slide slide-category" data-slide="1">
+    <div class="cat-number">01</div>
+    <div class="cat-name">Video İçerikler</div>
+    <div class="cat-desc">Ürün filmleri · Kampanya videoları · Sosyal medya içerikleri</div>
+  </div>
+
+  <!-- SLIDE 3: VIDEO SLIDE (Vimeo embed — placeholder) -->
+  <div class="slide slide-video" data-slide="2">
+    <div class="video-wrap">
+      <!-- Vimeo embed code buraya gelecek -->
+      <div style="position:absolute;inset:0;background:var(--gray-1);display:flex;align-items:center;justify-content:center;">
+        <span style="font-family:'Lexend Deca',sans-serif;font-weight:100;font-size:11px;letter-spacing:0.3em;color:var(--gray-2);text-transform:uppercase;">Video — Yakında Eklenecek</span>
+      </div>
+    </div>
+    <div class="video-info">
+      <div class="vi-brand">Marka Adı</div>
+      <div class="vi-title">Proje / Kampanya Adı</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: CATEGORY DIVIDER — Görsel Üretim -->
+  <div class="slide slide-category" data-slide="3">
+    <div class="cat-number">02</div>
+    <div class="cat-name">Görsel Üretim</div>
+    <div class="cat-desc">Ürün görselleri · Kampanya fotoğrafçılığı · AI görsel sentezi</div>
+  </div>
+
+  <!-- SLIDE 5: FULLSCREEN IMAGE -->
+  <div class="slide slide-fullimage" data-slide="4">
+    <div class="img-bg placeholder-img" data-label="Tam Ekran Görsel — Yakında"></div>
+    <div class="img-overlay"></div>
+    <div class="img-caption">
+      <div class="cap-brand">Marka Adı</div>
+      <div class="cap-title">Kampanya Adı</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: HALF IMAGE + TEXT -->
+  <div class="slide slide-halftext" data-slide="5">
+    <div class="half-img">
+      <div class="half-img-inner placeholder-img" data-label="Görsel — Yakında"></div>
+    </div>
+    <div class="half-text">
+      <div class="ht-eyebrow">Marka Adı · 2024</div>
+      <div class="ht-title">Proje<br>Başlığı</div>
+      <div class="ht-body">Proje açıklaması buraya gelecek. Yapılan işin kısa ve etkili bir anlatımı, kullanılan teknikler ve elde edilen sonuçlar bu alanda yer alacak.</div>
+      <div class="ht-tags">
+        <span>AI Görsel</span>
+        <span>Ürün Filmi</span>
+        <span>Sosyal Medya</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: 2×2 PHOTO GRID -->
+  <div class="slide slide-grid2x2" data-slide="6">
+    <div class="grid-item">
+      <div class="grid-img placeholder-img" data-label="Görsel 1"></div>
+      <div class="grid-caption">
+        <div class="gc-brand">Marka</div>
+        <div class="gc-title">Görsel Başlık</div>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="grid-img placeholder-img" data-label="Görsel 2"></div>
+    </div>
+    <div class="grid-item">
+      <div class="grid-img placeholder-img" data-label="Görsel 3"></div>
+    </div>
+    <div class="grid-item">
+      <div class="grid-img placeholder-img" data-label="Görsel 4"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: 3 COLUMN GRID -->
+  <div class="slide slide-grid3" data-slide="7">
+    <div class="col-item">
+      <div class="col-img placeholder-img" data-label="Görsel 1"></div>
+      <div class="col-overlay"></div>
+      <div class="col-label"><span>Marka</span><p>Başlık</p></div>
+    </div>
+    <div class="col-item">
+      <div class="col-img placeholder-img" data-label="Görsel 2"></div>
+      <div class="col-overlay"></div>
+      <div class="col-label"><span>Marka</span><p>Başlık</p></div>
+    </div>
+    <div class="col-item">
+      <div class="col-img placeholder-img" data-label="Görsel 3"></div>
+      <div class="col-overlay"></div>
+      <div class="col-label"><span>Marka</span><p>Başlık</p></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: HALF IMAGE + TEXT (reversed) -->
+  <div class="slide slide-halftext reversed" data-slide="8">
+    <div class="half-text">
+      <div class="ht-eyebrow">Marka Adı · 2025</div>
+      <div class="ht-title">İkinci<br>Proje</div>
+      <div class="ht-body">Başka bir projenin kısa anlatımı. Farklı teknikler ve yaklaşımlar bu alanda açıklanacak.</div>
+      <div class="ht-tags">
+        <span>Kampanya</span>
+        <span>3D Görsel</span>
+      </div>
+    </div>
+    <div class="half-img">
+      <div class="half-img-inner placeholder-img" data-label="Görsel — Yakında"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: END -->
+  <div class="slide slide-end" data-slide="9">
+    <div class="end-logo">ADON</div>
+    <div class="end-tagline">Human × AI Production Studio</div>
+    <div class="end-contact">adon.com.tr · hello@adon.com.tr</div>
+  </div>
+
+</div><!-- /presentation -->
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <span id="slide-counter">01 / 10</span>
+  <button class="nav-btn" id="btn-next" aria-label="Sonraki">
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+</div>
+
+<script>
+  // ── CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('button, a').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // ── SLIDE ENGINE
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+  let animating = false;
+
+  const presentation = document.getElementById('presentation');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const counter = document.getElementById('slide-counter');
+  const progress = document.getElementById('progress');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function goTo(index) {
+    if (animating || index < 0 || index >= total) return;
+    animating = true;
+
+    slides[current].classList.remove('is-active');
+    current = index;
+    slides[current].classList.add('is-active');
+
+    presentation.style.transform = `translateX(-${current * 100}vw)`;
+
+    counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+    progress.style.width = `${((current + 1) / total) * 100}%`;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+
+    setTimeout(() => { animating = false; }, 750);
+  }
+
+  btnNext.addEventListener('click', () => goTo(current + 1));
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+
+  // ── KEYBOARD
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current - 1);
+  });
+
+  // ── SWIPE
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 50) goTo(dx > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  // ── INIT
+  progress.style.width = `${(1 / total) * 100}%`;
+  counter.textContent = `${pad(1)} / ${pad(total)}`;
+</script>
+</body>
+</html>
