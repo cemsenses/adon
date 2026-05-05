@@ -1356,10 +1356,19 @@
     if (iframe && typeof Vimeo !== 'undefined') {
       vimeoPlayer = new Vimeo.Player(iframe);
       vimeoPlayer.setLoop(true);
-      // Başlangıçta video slide'da değilsek durdur
-      if (current !== 5) {
-        vimeoPlayer.pause();
-      }
+      if (current !== 5) vimeoPlayer.pause();
+    }
+    var iframe2 = document.getElementById('vimeo-player-2');
+    if (iframe2 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer2 = new Vimeo.Player(iframe2);
+      vimeoPlayer2.setLoop(true);
+      if (current !== 6) vimeoPlayer2.pause();
+    }
+    var iframe3 = document.getElementById('vimeo-player-3');
+    if (iframe3 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer3 = new Vimeo.Player(iframe3);
+      vimeoPlayer3.setLoop(true);
+      if (current !== 10) vimeoPlayer3.pause();
     }
   });
 
