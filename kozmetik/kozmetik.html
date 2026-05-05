@@ -863,6 +863,33 @@
     opacity: 1 !important;
     transform: none !important;
   }
+
+  /* ── SLIDE: VIMEO WIDE (16:9) ── */
+  .slide-vimeo-wide {
+    align-items: center;
+    justify-content: center;
+    padding: 7vh 5vw 12vh 5vw;
+  }
+  .vimeo-wide-wrap {
+    width: 100%;
+    max-width: 1200px;
+    opacity: 0;
+    transition: opacity 1s ease 0.3s;
+  }
+  .slide.is-active .vimeo-wide-wrap {
+    opacity: 1 !important;
+  }
+  .vimeo-wide-inner {
+    position: relative;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  .vimeo-wide-inner iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
 </style>
 <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
@@ -937,23 +964,12 @@
     </div>
   </div>
 
-  <!-- SLIDE 7: 2×2 PHOTO GRID -->
-  <div class="slide slide-grid2x2" data-slide="6">
-    <div class="grid-item">
-      <div class="grid-img placeholder-img" data-label="Görsel 1"></div>
-      <div class="grid-caption">
-        <div class="gc-brand">Marka</div>
-        <div class="gc-title">Görsel Başlık</div>
+  <!-- SLIDE 7: VIDEO — Urban Care (16:9) -->
+  <div class="slide slide-vimeo-wide" data-slide="6">
+    <div class="vimeo-wide-wrap">
+      <div class="vimeo-wide-inner">
+        <iframe id="vimeo-player-2" src="https://player.vimeo.com/video/1189413575?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Urban Care"></iframe>
       </div>
-    </div>
-    <div class="grid-item">
-      <div class="grid-img placeholder-img" data-label="Görsel 2"></div>
-    </div>
-    <div class="grid-item">
-      <div class="grid-img placeholder-img" data-label="Görsel 3"></div>
-    </div>
-    <div class="grid-item">
-      <div class="grid-img placeholder-img" data-label="Görsel 4"></div>
     </div>
   </div>
 
@@ -1069,11 +1085,12 @@
     updateInfoVisibility(current);
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
-      if (current === 5) {
-        vimeoPlayer.play();
-      } else {
-        vimeoPlayer.pause();
-      }
+      if (current === 5) { vimeoPlayer.play(); }
+      else { vimeoPlayer.pause(); }
+    }
+    if (typeof vimeoPlayer2 !== 'undefined') {
+      if (current === 6) { vimeoPlayer2.play(); }
+      else { vimeoPlayer2.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
