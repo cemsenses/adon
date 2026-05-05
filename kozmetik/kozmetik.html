@@ -78,10 +78,13 @@
 
   /* ── SLIDE: COVER ── */
   .slide-cover {
+    position: relative;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-end;
     padding: 10vw;
-    padding-top: 18vh;
+    padding-bottom: 12vh;
   }
   .slide-cover .cover-eyebrow {
     font-family: 'Lexend Deca', sans-serif;
@@ -97,8 +100,8 @@
   }
   .slide-cover .cover-title {
     font-weight: 200;
-    font-size: clamp(48px, 8vw, 120px);
-    line-height: 0.95;
+    font-size: clamp(48px, 7vw, 110px);
+    line-height: 1.0;
     letter-spacing: -0.03em;
     max-width: 70vw;
     opacity: 0;
@@ -113,36 +116,14 @@
   }
   .slide-cover .cover-sub {
     font-weight: 300;
-    font-size: clamp(13px, 1.4vw, 18px);
+    font-size: clamp(12px, 1.2vw, 16px);
     color: var(--gray-3);
-    margin-top: 4vh;
+    margin-top: 3vh;
     letter-spacing: 0.02em;
+    line-height: 1.7;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s;
-  }
-  .slide-cover .cover-line {
-    position: absolute;
-    bottom: 10vh;
-    left: 10vw;
-    right: 10vw;
-    height: 1px;
-    background: var(--gray-2);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1s var(--ease) 0.6s;
-  }
-  .slide-cover .cover-year {
-    position: absolute;
-    bottom: calc(10vh + 2vh);
-    right: 10vw;
-    font-family: 'Lexend Deca', sans-serif;
-    font-weight: 100;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--gray-3);
-    opacity: 0;
-    transition: opacity 0.8s var(--ease) 0.8s;
   }
 
   /* ── SLIDE: CATEGORY DIVIDER ── */
@@ -633,21 +614,19 @@
   /* ── COVER LOGO ── */
   .cover-logo {
     position: absolute;
-    top: 6vh;
-    left: 8vw;
+    top: 5vh;
+    left: 10vw;
     z-index: 3;
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.8s var(--ease) 0s, transform 0.8s var(--ease) 0s;
+    transition: opacity 1s ease 0.2s;
   }
   .cover-logo img {
-    width: 52px;
+    width: 48px;
     height: auto;
     display: block;
   }
   .slide.is-active .cover-logo {
-    opacity: 1 !important;
-    transform: none !important;
+    opacity: 0.9 !important;
   }
 
   /* ── PARTICLE CANVAS ── */
@@ -899,112 +878,109 @@
   counter.textContent = `${pad(1)} / ${pad(total)}`;
 
   // ── PARTICLE SYSTEM
-  (function() {
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [];
-    const mouse = { x: -999, y: -999 };
-    const COUNT = 90;
+  var pCanvas = document.getElementById('particle-canvas');
+  var pCtx = pCanvas.getContext('2d');
+  var pW = window.innerWidth;
+  var pH = window.innerHeight;
+  var pMouse = { x: -999, y: -999 };
+  var pParticles = [];
+  var PCOUNT = 80;
 
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+  pCanvas.width = pW;
+  pCanvas.height = pH;
+
+  function pMakeParticle(init) {
+    return {
+      x: Math.random() * pW,
+      y: init ? Math.random() * pH : (Math.random() < 0.5 ? -5 : pH + 5),
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.2 + 0.4,
+      life: Math.floor(Math.random() * 180 + 80),
+      age: init ? Math.floor(Math.random() * 180) : 0
+    };
+  }
+
+  for (var pi = 0; pi < PCOUNT; pi++) {
+    pParticles.push(pMakeParticle(true));
+  }
+
+  pCanvas.style.opacity = '1';
+
+  function pLoop() {
+    pCtx.clearRect(0, 0, pW, pH);
+
+    for (var i = 0; i < pParticles.length; i++) {
+      var p = pParticles[i];
+      p.age++;
+
+      // organic drift
+      p.x += p.vx + Math.sin(p.age * 0.011 + i) * 0.15;
+      p.y += p.vy + Math.cos(p.age * 0.009 + i) * 0.12;
+
+      // mouse repulsion
+      var mdx = p.x - pMouse.x;
+      var mdy = p.y - pMouse.y;
+      var md = Math.sqrt(mdx * mdx + mdy * mdy);
+      if (md < 120 && md > 0) {
+        var mf = (120 - md) / 120 * 0.5;
+        p.x += (mdx / md) * mf;
+        p.y += (mdy / md) * mf;
+      }
+
+      // fade in/out
+      var half = p.life / 2;
+      var alpha = p.age < half ? (p.age / half) * 0.15 : ((p.life - p.age) / half) * 0.15;
+      if (alpha < 0) alpha = 0;
+
+      // draw dot
+      pCtx.beginPath();
+      pCtx.arc(p.x, p.y, p.r, 0, 6.2832);
+      pCtx.fillStyle = 'rgba(245,245,243,' + alpha + ')';
+      pCtx.fill();
+
+      // reset if dead
+      if (p.age >= p.life || p.x < -20 || p.x > pW+20 || p.y < -20 || p.y > pH+20) {
+        pParticles[i] = pMakeParticle(false);
+      }
     }
 
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(init) {
-        this.x  = Math.random() * W;
-        this.y  = init ? Math.random() * H : (Math.random() < 0.5 ? -10 : H + 10);
-        this.ox = this.x;
-        this.oy = this.y;
-        this.r  = Math.random() * 1.4 + 0.3;
-        this.sp = Math.random() * 0.18 + 0.04;
-        this.dx = (Math.random() - 0.5) * this.sp;
-        this.dy = (Math.random() - 0.5) * this.sp;
-        this.life = Math.random() * 200 + 100;
-        this.age  = init ? Math.random() * this.life : 0;
-        this.alpha = 0;
-      }
-      update() {
-        this.age++;
-        this.x += this.dx + Math.sin(this.age * 0.012 + this.ox) * 0.18;
-        this.y += this.dy + Math.cos(this.age * 0.009 + this.oy) * 0.15;
-        const mdx = this.x - mouse.x;
-        const mdy = this.y - mouse.y;
-        const dist = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (dist < 140 && dist > 0) {
-          const force = (140 - dist) / 140 * 0.6;
-          this.x += (mdx / dist) * force;
-          this.y += (mdy / dist) * force;
+    // connection lines
+    for (var a = 0; a < pParticles.length; a++) {
+      for (var b = a + 1; b < pParticles.length; b++) {
+        var ddx = pParticles[a].x - pParticles[b].x;
+        var ddy = pParticles[a].y - pParticles[b].y;
+        var dd = Math.sqrt(ddx*ddx + ddy*ddy);
+        if (dd < 80) {
+          pCtx.beginPath();
+          pCtx.moveTo(pParticles[a].x, pParticles[a].y);
+          pCtx.lineTo(pParticles[b].x, pParticles[b].y);
+          pCtx.strokeStyle = 'rgba(245,245,243,' + ((1 - dd/80) * 0.035) + ')';
+          pCtx.lineWidth = 0.4;
+          pCtx.stroke();
         }
-        const half = this.life / 2;
-        this.alpha = this.age < half
-          ? (this.age / half) * 0.18
-          : ((this.life - this.age) / half) * 0.18;
-        if (this.age >= this.life || this.x < -20 || this.x > W+20 || this.y < -20 || this.y > H+20) {
-          this.reset(false);
-        }
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(245,245,243,' + this.alpha + ')';
-        ctx.fill();
       }
     }
 
-    function drawConnections() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d  = Math.sqrt(dx*dx + dy*dy);
-          if (d < 90) {
-            const a = (1 - d / 90) * 0.04;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(245,245,243,' + a + ')';
-            ctx.lineWidth = 0.4;
-            ctx.stroke();
-          }
-        }
-      }
+    requestAnimationFrame(pLoop);
+  }
+
+  pLoop();
+
+  document.addEventListener('mousemove', function(e) {
+    if (current === 0) {
+      pMouse.x = e.clientX;
+      pMouse.y = e.clientY;
+    } else {
+      pMouse.x = -999;
+      pMouse.y = -999;
     }
+  });
 
-    function loop() {
-      ctx.clearRect(0, 0, W, H);
-      drawConnections();
-      particles.forEach(function(p) { p.update(); p.draw(); });
-      requestAnimationFrame(loop);
-    }
-
-    function init() {
-      resize();
-      particles = Array.from({ length: COUNT }, function() { return new Particle(); });
-      canvas.classList.add('ready');
-      loop();
-    }
-
-    window.addEventListener('resize', function() {
-      resize();
-      particles.forEach(function(p) { p.ox = p.x; p.oy = p.y; });
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (current === 0) {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
-      } else {
-        mouse.x = -999; mouse.y = -999;
-      }
-    });
-
-    // Canvas boyutu window'dan alındığı için direkt çağır
-    setTimeout(init, 100);
-  })();
+  window.addEventListener('resize', function() {
+    pW = pCanvas.width = window.innerWidth;
+    pH = pCanvas.height = window.innerHeight;
+  });
 
 </script>
 </body>
