@@ -81,6 +81,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 10vw;
+    padding-top: 18vh;
   }
   .slide-cover .cover-eyebrow {
     font-family: 'Lexend Deca', sans-serif;
@@ -90,7 +91,6 @@
     text-transform: uppercase;
     color: var(--gray-3);
     margin-bottom: 3vh;
-    margin-top: 8vh;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
@@ -691,8 +691,6 @@
     <p class="cover-eyebrow">ADON Studio — Kozmetik Portföyü</p>
     <h1 class="cover-title">Güzelliği<br><em>yeniden</em><br>tanımlamak.</h1>
     <p class="cover-sub">AI destekli görsel üretim ile kozmetik markalar için<br>üretilen içerikler ve kampanyalar</p>
-    <div class="cover-line"></div>
-    <span class="cover-year">2024 — 2025</span>
   </div>
 
   <!-- SLIDE 2: CATEGORY DIVIDER — Video İçerikler -->
@@ -909,8 +907,8 @@
     const COUNT = 90;
 
     function resize() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
 
     class Particle {
@@ -1004,8 +1002,8 @@
       }
     });
 
-    if (document.readyState === 'complete') { init(); }
-    else { window.addEventListener('load', init); }
+    // Canvas boyutu window'dan alındığı için direkt çağır
+    setTimeout(init, 100);
   })();
 
 </script>
