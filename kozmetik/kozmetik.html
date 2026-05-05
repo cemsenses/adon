@@ -1202,8 +1202,17 @@
     </div>
   </div>
 
-  <!-- SLIDE 15: END -->
-  <div class="slide slide-end" data-slide="14">
+  <!-- SLIDE 15: VIDEO — Imprimé Perfume (yatay) -->
+  <div class="slide slide-vimeo-wide" data-slide="14">
+    <div class="vimeo-wide-wrap">
+      <div class="vimeo-wide-inner" style="padding-top:55.94%">
+        <iframe id="vimeo-player-4" src="https://player.vimeo.com/video/1175738290?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Imprime Perfume"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: END -->
+  <div class="slide slide-end" data-slide="15">
     <div class="end-logo">ADON</div>
     <div class="end-tagline">Human × AI Production Studio</div>
     <div class="end-contact">adon.com.tr · hello@adon.com.tr</div>
@@ -1220,7 +1229,7 @@
   <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 15</span>
+  <span id="slide-counter">01 / 16</span>
   <button class="nav-btn" id="btn-next" aria-label="Sonraki">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -1289,6 +1298,10 @@
     if (typeof vimeoPlayer3 !== 'undefined') {
       if (current === 10) { vimeoPlayer3.play(); }
       else { vimeoPlayer3.pause(); }
+    }
+    if (typeof vimeoPlayer4 !== 'undefined') {
+      if (current === 14) { vimeoPlayer4.play(); }
+      else { vimeoPlayer4.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
@@ -1381,6 +1394,12 @@
       vimeoPlayer3 = new Vimeo.Player(iframe3);
       vimeoPlayer3.setLoop(true);
       if (current !== 10) vimeoPlayer3.pause();
+    }
+    var iframe4 = document.getElementById('vimeo-player-4');
+    if (iframe4 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer4 = new Vimeo.Player(iframe4);
+      vimeoPlayer4.setLoop(true);
+      if (current !== 14) vimeoPlayer4.pause();
     }
   });
 
