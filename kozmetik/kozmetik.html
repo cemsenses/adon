@@ -466,15 +466,28 @@
     justify-content: center;
     text-align: center;
   }
-  .slide-end .end-logo {
-    font-family: 'Lexend Deca', sans-serif;
-    font-weight: 100;
-    font-size: clamp(36px, 6vw, 80px);
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+  .slide-end .end-tesekkur {
+    font-size: clamp(14px, 1.5vw, 20px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--gray-3);
+    margin-bottom: 4vh;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
+  }
+  .slide-end .end-tesekkur em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .slide-end .end-logo-img {
+    width: 200px;
+    height: auto;
+    display: block;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.9s var(--ease) 0.2s, transform 0.9s var(--ease) 0.2s;
+    transition: opacity 0.9s var(--ease) 0.25s, transform 0.9s var(--ease) 0.25s;
   }
   .slide-end .end-tagline {
     font-weight: 200;
@@ -519,7 +532,8 @@
   .slide.is-active .video-wrap,
   .slide.is-active .vi-brand,
   .slide.is-active .vi-title,
-  .slide.is-active .end-logo,
+  .slide.is-active .end-tesekkur,
+  .slide.is-active .end-logo-img,
   .slide.is-active .end-tagline,
   .slide.is-active .end-contact {
     opacity: 1 !important;
@@ -1320,9 +1334,10 @@
 
   <!-- SLIDE 21: END -->
   <div class="slide slide-end" data-slide="26">
-    <div class="end-logo">ADON</div>
+    <div class="end-tesekkur"><em>Teşekkürler</em></div>
+    <img class="end-logo-img" src="logo-end.png" alt="ADON">
     <div class="end-tagline">Human × AI Production Studio</div>
-    <div class="end-contact">adon.com.tr · hello@adon.com.tr</div>
+    <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
   </div>
 
 </div><!-- /presentation -->
@@ -1453,6 +1468,13 @@
       setTimeout(function() { infoBox.classList.add('visible'); }, 400);
     } else {
       infoBox.classList.remove('visible');
+    }
+    // Son slide'da persistent logo gizle
+    var pLogo = document.getElementById('persistent-logo');
+    if (pLogo) {
+      if (index === 26 || index === total - 1) {
+        pLogo.classList.remove('visible');
+      }
     }
   }
 
