@@ -778,18 +778,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 6vh 5vw 10vh 5vw;
-    /* üst: logo için, alt: oklar için boşluk */
+    gap: 4px;
+    padding: 6vh 2vw 10vh 2vw;
   }
   .uc-grid-item {
-    flex: 1;
-    max-width: calc((100vw - 10vw - 24px) / 4);
+    flex: 0 0 auto;
+    width: calc(25% - 3px);
     position: relative;
     overflow: hidden;
     background: #000;
     aspect-ratio: 4 / 5;
-    border-radius: 1px;
   }
   .uc-grid-item img {
     position: absolute;
@@ -797,10 +795,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
     display: block;
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px);
     transition: opacity 0.9s var(--ease), transform 1s var(--ease);
   }
   .uc-grid-item:nth-child(1) img { transition-delay: 0.05s; }
