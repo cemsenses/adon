@@ -1292,8 +1292,21 @@
     <div class="uc-grid-item"><img src="el-4.png" alt="Edenland Elysian Mist"></div>
   </div>
 
-  <!-- SLIDE 20: END -->
-  <div class="slide slide-end" data-slide="24">
+  <!-- SLIDE 20: VIDEO — Edenland More Perfume (9:16) -->
+  <div class="slide slide-vimeo" data-slide="24">
+    <div class="vimeo-wrap">
+      <div style="padding:177.78% 0 0 0;position:relative;">
+        <iframe id="vimeo-player-7" src="https://player.vimeo.com/video/1190601233?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="More Perfume"></iframe>
+      </div>
+    </div>
+    <div class="vimeo-caption">
+      <div class="vc-brand">Edenland</div>
+      <div class="vc-title">More Perfume</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 21: END -->
+  <div class="slide slide-end" data-slide="25">
     <div class="end-logo">ADON</div>
     <div class="end-tagline">Human × AI Production Studio</div>
     <div class="end-contact">adon.com.tr · hello@adon.com.tr</div>
@@ -1310,7 +1323,7 @@
   <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 23</span>
+  <span id="slide-counter">01 / 24</span>
   <button class="nav-btn" id="btn-next" aria-label="Sonraki">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -1386,6 +1399,9 @@
     if (typeof vimeoPlayer6 !== 'undefined') {
       if (current !== 7) { vimeoPlayer6.pause(); }
     }
+    if (typeof vimeoPlayer7 !== 'undefined') {
+      if (current !== 24) { vimeoPlayer7.pause(); }
+    }
 
     setTimeout(() => { animating = false; }, 750);
   }
@@ -1458,7 +1474,7 @@
   })();
 
   // ── VIMEO PLAYER CONTROL
-  var vimeoPlayer, vimeoPlayer2, vimeoPlayer3, vimeoPlayer4, vimeoPlayer5, vimeoPlayer6;
+  var vimeoPlayer, vimeoPlayer2, vimeoPlayer3, vimeoPlayer4, vimeoPlayer5, vimeoPlayer6, vimeoPlayer7;
   window.addEventListener('load', function() {
     var iframe = document.getElementById('vimeo-player');
     if (iframe && typeof Vimeo !== 'undefined') {
@@ -1495,6 +1511,12 @@
       vimeoPlayer6 = new Vimeo.Player(iframe6);
       vimeoPlayer6.setLoop(true);
       if (current !== 7) vimeoPlayer6.pause();
+    }
+    var iframe7 = document.getElementById('vimeo-player-7');
+    if (iframe7 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer7 = new Vimeo.Player(iframe7);
+      vimeoPlayer7.setLoop(true);
+      if (current !== 24) vimeoPlayer7.pause();
     }
   });
 
