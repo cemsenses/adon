@@ -1211,13 +1211,26 @@
     </div>
   </div>
 
-  <!-- SLIDE 16: AQUA DI POLO LOGO -->
-  <div class="slide slide-brand-logo" data-slide="15">
+  <!-- SLIDE 16: VIDEO — Imprimé Roya Femme (9:16) -->
+  <div class="slide slide-vimeo" data-slide="16">
+    <div class="vimeo-wrap">
+      <div style="padding:177.78% 0 0 0;position:relative;">
+        <iframe id="vimeo-player-5" src="https://player.vimeo.com/video/1190593352?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Imprime Roya Femme - AI Video"></iframe>
+      </div>
+    </div>
+    <div class="vimeo-caption">
+      <div class="vc-brand">Imprimé</div>
+      <div class="vc-title">Roya Femme</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: AQUA DI POLO LOGO -->
+  <div class="slide slide-brand-logo" data-slide="17">
     <img class="brand-logo-img" src="aquadipolo-logo.png" alt="Aqua Di Polo">
   </div>
 
   <!-- SLIDE 17: AQUA DI POLO 4'LÜ GRID -->
-  <div class="slide slide-uc-grid" data-slide="16">
+  <div class="slide slide-uc-grid" data-slide="17">
     <div class="uc-grid-item">
       <img src="adp-1.png" alt="Aqua Di Polo Gran Paradiso Black">
     </div>
@@ -1233,7 +1246,7 @@
   </div>
 
   <!-- SLIDE 18: END -->
-  <div class="slide slide-end" data-slide="17">
+  <div class="slide slide-end" data-slide="18">
     <div class="end-logo">ADON</div>
     <div class="end-tagline">Human × AI Production Studio</div>
     <div class="end-contact">adon.com.tr · hello@adon.com.tr</div>
@@ -1250,7 +1263,7 @@
   <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 18</span>
+  <span id="slide-counter">01 / 19</span>
   <button class="nav-btn" id="btn-next" aria-label="Sonraki">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -1319,6 +1332,9 @@
     }
     if (typeof vimeoPlayer4 !== 'undefined') {
       if (current !== 14) { vimeoPlayer4.pause(); }
+    }
+    if (typeof vimeoPlayer5 !== 'undefined') {
+      if (current !== 15) { vimeoPlayer5.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
@@ -1417,6 +1433,12 @@
       vimeoPlayer4 = new Vimeo.Player(iframe4);
       vimeoPlayer4.setLoop(true);
       if (current !== 14) vimeoPlayer4.pause();
+    }
+    var iframe5 = document.getElementById('vimeo-player-5');
+    if (iframe5 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer5 = new Vimeo.Player(iframe5);
+      vimeoPlayer5.setLoop(true);
+      if (current !== 15) vimeoPlayer5.pause();
     }
   });
 
