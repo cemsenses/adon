@@ -1370,6 +1370,9 @@
     if (typeof vimeoPlayer5 !== 'undefined') {
       if (current !== 18) { vimeoPlayer5.pause(); }
     }
+    if (typeof vimeoPlayer6 !== 'undefined') {
+      if (current !== 7) { vimeoPlayer6.pause(); }
+    }
 
     setTimeout(() => { animating = false; }, 750);
   }
@@ -1442,7 +1445,7 @@
   })();
 
   // ── VIMEO PLAYER CONTROL
-  var vimeoPlayer;
+  var vimeoPlayer, vimeoPlayer2, vimeoPlayer3, vimeoPlayer4, vimeoPlayer5, vimeoPlayer6;
   window.addEventListener('load', function() {
     var iframe = document.getElementById('vimeo-player');
     if (iframe && typeof Vimeo !== 'undefined') {
@@ -1473,6 +1476,12 @@
       vimeoPlayer5 = new Vimeo.Player(iframe5);
       vimeoPlayer5.setLoop(true);
       if (current !== 18) vimeoPlayer5.pause();
+    }
+    var iframe6 = document.getElementById('vimeo-player-6');
+    if (iframe6 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer6 = new Vimeo.Player(iframe6);
+      vimeoPlayer6.setLoop(true);
+      if (current !== 7) vimeoPlayer6.pause();
     }
   });
 
