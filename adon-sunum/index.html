@@ -48,8 +48,8 @@
   .slide { position: relative; min-width: 100vw; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--black); }
 
   /* ── SLIDE: COVER ── */
-  .slide-cover { flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 10vw; padding-bottom: 12vh; }
-  .cover-logo { position: absolute; top: 6vh; left: 10vw; z-index: 3; opacity: 0; transition: opacity 1s ease 0.1s; }
+  .slide-cover { flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 10vw; }
+  .cover-logo { position: relative; z-index: 3; opacity: 0; margin-bottom: 7vh; transition: opacity 1s ease 0s; }
   .cover-logo img { width: 110px; height: auto; display: block; }
   .slide.is-active .cover-logo { opacity: 1 !important; }
   .cover-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: clamp(11px, 1.1vw, 14px); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 3vh; opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s; }
