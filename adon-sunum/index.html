@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADON Studio — Sunum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600&family=Lexend+Deca:wght@100;200;300&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #000000;
+    --white: #f5f5f3;
+    --gray-1: #000000;
+    --gray-2: #111111;
+    --gray-3: #888;
+    --gray-4: #ccc;
+    --duration: 700ms;
+    --ease: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Lexend', sans-serif;
+    cursor: none;
+  }
+  @media (hover: none), (pointer: coarse) {
+    html, body { cursor: auto; }
+    .cursor, .cursor-ring { display: none !important; }
+  }
+
+  /* CURSOR */
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(245,245,243,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform .18s ease, width .3s, height .3s; }
+  .cursor.hover { width: 14px; height: 14px; }
+  .cursor-ring.hover { width: 56px; height: 56px; }
+
+  /* PROGRESS */
+  #progress { position: fixed; top: 0; left: 0; height: 1px; background: var(--white); z-index: 1000; transition: width 0.5s var(--ease); }
+
+  /* PRESENTATION */
+  #presentation { position: fixed; inset: 0; display: flex; will-change: transform; transition: transform var(--duration) var(--ease); }
+
+  /* SLIDE BASE */
+  .slide { position: relative; min-width: 100vw; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--black); }
+
+  /* ── SLIDE: COVER ── */
+  .slide-cover { flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 10vw; padding-bottom: 12vh; }
+  .cover-logo { position: absolute; top: 6vh; left: 10vw; z-index: 3; opacity: 0; transition: opacity 1s ease 0.1s; }
+  .cover-logo img { width: 110px; height: auto; display: block; }
+  .slide.is-active .cover-logo { opacity: 1 !important; }
+  .cover-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: clamp(11px, 1.1vw, 14px); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 3vh; opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s; }
+  .cover-title { font-weight: 200; font-size: clamp(32px, 4.8vw, 76px); line-height: 1.05; letter-spacing: -0.03em; max-width: 70vw; opacity: 0; transform: translateY(40px); transition: opacity 0.9s var(--ease) 0.25s, transform 0.9s var(--ease) 0.25s; }
+  .cover-title em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
+  .cover-sub { font-weight: 300; font-size: clamp(12px, 1.2vw, 16px); color: var(--gray-3); margin-top: 3vh; letter-spacing: 0.02em; line-height: 1.7; opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s; }
+  .cover-line { position: absolute; bottom: 10vh; left: 10vw; right: 10vw; height: 1px; background: var(--gray-2); transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease) 0.6s; }
+  .slide.is-active .cover-eyebrow, .slide.is-active .cover-title, .slide.is-active .cover-sub { opacity: 1 !important; transform: none !important; }
+  .slide.is-active .cover-line { transform: scaleX(1) !important; }
+
+  /* ── SLIDE: MANIFESTO / TEXT ── */
+  .slide-text { flex-direction: column; align-items: flex-start; justify-content: center; padding: 10vw; }
+  .slide-text .text-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 4vh; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s; }
+  .slide-text .text-title { font-weight: 200; font-size: clamp(28px, 4vw, 58px); line-height: 1.1; letter-spacing: -0.025em; max-width: 75vw; opacity: 0; transform: translateY(30px); transition: opacity 0.9s var(--ease) 0.2s, transform 0.9s var(--ease) 0.2s; }
+  .slide-text .text-title em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
+  .slide-text .text-body { font-weight: 300; font-size: clamp(13px, 1.3vw, 18px); line-height: 1.85; color: var(--gray-3); margin-top: 4vh; max-width: 60vw; opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease) 0.45s, transform 0.8s var(--ease) 0.45s; }
+  .slide.is-active .text-eyebrow, .slide.is-active .text-title, .slide.is-active .text-body { opacity: 1 !important; transform: none !important; }
+
+  /* ── SLIDE: SAHNE (split content) ── */
+  .slide-sahne { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0; }
+  .sahne-left { padding: 8vw 5vw 8vw 8vw; display: flex; flex-direction: column; justify-content: center; }
+  .sahne-right { padding: 8vw 8vw 8vw 5vw; border-left: 1px solid var(--gray-2); display: flex; flex-direction: column; justify-content: center; }
+  .sahne-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(80px, 14vw, 180px); line-height: 1; color: var(--gray-2); opacity: 0; transform: translateY(20px); transition: opacity 0.9s var(--ease) 0.1s, transform 0.9s var(--ease) 0.1s; }
+  .sahne-title { font-weight: 200; font-size: clamp(22px, 2.8vw, 42px); letter-spacing: -0.02em; margin-top: 1vh; opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease) 0.25s, transform 0.8s var(--ease) 0.25s; }
+  .sahne-body { font-weight: 300; font-size: clamp(12px, 1.1vw, 16px); line-height: 1.8; color: var(--gray-3); margin-top: 3vh; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.4s, transform 0.7s var(--ease) 0.4s; }
+  .sahne-tags { display: flex; flex-direction: column; gap: 12px; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.55s, transform 0.7s var(--ease) 0.55s; }
+  .sahne-tag { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.15em; color: var(--gray-3); padding: 10px 0; border-bottom: 1px solid var(--gray-2); display: flex; align-items: center; gap: 12px; }
+  .sahne-tag::before { content: '✓'; color: var(--white); opacity: 0.5; }
+  .slide.is-active .sahne-num, .slide.is-active .sahne-title, .slide.is-active .sahne-body, .slide.is-active .sahne-tags { opacity: 1 !important; transform: none !important; }
+
+  /* ── SLIDE: İLETİŞİM ── */
+  .slide-contact { flex-direction: column; align-items: flex-start; justify-content: center; padding: 10vw; }
+  .contact-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 6vh; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s; }
+  .contact-grid { display: flex; gap: 6vw; opacity: 0; transform: translateY(25px); transition: opacity 0.9s var(--ease) 0.3s, transform 0.9s var(--ease) 0.3s; }
+  .contact-person { display: flex; flex-direction: column; gap: 8px; }
+  .contact-name { font-weight: 200; font-size: clamp(20px, 2.5vw, 36px); letter-spacing: -0.01em; }
+  .contact-info { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: clamp(11px, 1vw, 14px); letter-spacing: 0.1em; color: var(--gray-3); line-height: 1.8; }
+  .contact-divider { width: 1px; background: var(--gray-2); align-self: stretch; }
+  .slide.is-active .contact-eyebrow, .slide.is-active .contact-grid { opacity: 1 !important; transform: none !important; }
+
+  /* ── SLIDE: END ── */
+  .slide-end { flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 10vw; }
+  .end-tesekkur { font-size: clamp(52px, 8vw, 120px); font-weight: 400; letter-spacing: -0.02em; line-height: 1; margin-bottom: 8vh; opacity: 0; transform: translateY(20px); transition: opacity 0.9s var(--ease) 0.1s, transform 0.9s var(--ease) 0.1s; }
+  .end-tesekkur em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
+  .end-logo-img { width: 180px; height: auto; display: block; opacity: 0; transform: translateY(20px); transition: opacity 0.9s var(--ease) 0.35s, transform 0.9s var(--ease) 0.35s; }
+  .end-contact { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.2em; color: var(--gray-3); margin-top: 4vh; opacity: 0; transition: opacity 0.7s var(--ease) 0.6s; }
+  .slide.is-active .end-tesekkur, .slide.is-active .end-logo-img, .slide.is-active .end-contact { opacity: 1 !important; transform: none !important; }
+
+  /* PERSISTENT LOGO */
+  #persistent-logo { position: fixed; top: 4vh; right: 4vw; z-index: 500; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+  #persistent-logo img { width: 36px; height: auto; display: block; }
+  #persistent-logo.visible { opacity: 0.7; }
+
+  /* NAV */
+  #nav { position: fixed; bottom: 5vh; right: 5vw; display: flex; align-items: center; gap: 16px; z-index: 1000; }
+  .nav-btn { width: 48px; height: 48px; border: 1px solid var(--gray-2); background: transparent; cursor: none; display: flex; align-items: center; justify-content: center; transition: border-color .3s, background .3s; }
+  .nav-btn:hover { border-color: var(--white); background: var(--gray-1); }
+  .nav-btn svg { width: 16px; height: 16px; fill: none; stroke: var(--white); stroke-width: 1.5; }
+  .nav-btn:disabled { opacity: 0.2; pointer-events: none; }
+  #slide-counter { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.15em; color: var(--gray-3); min-width: 54px; text-align: center; }
+
+  /* CANVAS */
+  #particle-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 1; pointer-events: none; display: block; }
+  .slide-cover > *:not(#particle-canvas) { position: relative; z-index: 2; }
+  .cover-logo { z-index: 3 !important; }
+
+  @media (max-width: 768px) {
+    .slide-cover { padding: 0 7vw; justify-content: center; align-items: flex-start; }
+    .cover-logo { position: relative; top: auto; left: auto; margin-bottom: 6vw; }
+    .cover-logo img { width: 72px; }
+    .cover-title { font-size: clamp(28px, 8vw, 48px); max-width: 90vw; }
+    .slide-text { padding: 8vw; }
+    .slide-text .text-title { font-size: clamp(22px, 6vw, 36px); max-width: 90vw; }
+    .slide-text .text-body { max-width: 90vw; font-size: 12px; }
+    .slide-sahne { grid-template-columns: 1fr; overflow-y: auto; padding: 6vh 8vw 14vh; }
+    .sahne-right { border-left: none; border-top: 1px solid var(--gray-2); padding: 5vw 0 0; }
+    .contact-grid { flex-direction: column; gap: 5vh; }
+    .contact-divider { display: none; }
+    .end-tesekkur { font-size: clamp(36px, 10vw, 72px); }
+    #persistent-logo img { width: 26px; }
+    #nav { bottom: 3.5vh; right: 4vw; gap: 8px; }
+    .nav-btn { width: 38px; height: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div id="progress"></div>
+<div id="persistent-logo"><img src="../kozmetik/logo.png" alt="ADON"></div>
+
+<div id="presentation">
+
+  <!-- SLIDE 1: KAPAK -->
+  <div class="slide slide-cover is-active" data-slide="0">
+    <canvas id="particle-canvas"></canvas>
+    <div class="cover-logo"><img src="../kozmetik/logo-cover.png" alt="ADON"></div>
+    <p class="cover-eyebrow">ADON AI Studio</p>
+    <h1 class="cover-title">Gerçek görüntüleri<br>yapay zeka ile<br><em>özelleştiren</em> stüdyo.</h1>
+    <p class="cover-sub">Yenilikçi fotoğraf ve video prodüksiyonu · adon.com.tr</p>
+    <div class="cover-line"></div>
+  </div>
+
+  <!-- SLIDE 2: HİZMET AÇIKLAMASI -->
+  <div class="slide slide-text" data-slide="1">
+    <p class="text-eyebrow">Nasıl Çalışıyoruz</p>
+    <h2 class="text-title">Yapay Zekânın Gücü ve<br>Tasarım Deneyimi <em>Bir Arada</em></h2>
+    <p class="text-body">Ürünlerinizin özelliklerini ve hedef kitlenizi analiz ederek yapay zekâ araçlarını kullanıyor, uygun görsel ortamları hazırlıyoruz. Bu görseller ile ürün fotoğraflarını birleştirip son haline getirerek kusursuz bir görsel sunum ortaya çıkarıyoruz.</p>
+  </div>
+
+  <!-- SLIDE 3: KARAKTER OLUŞTURMA -->
+  <div class="slide slide-text" data-slide="2">
+    <p class="text-eyebrow">Hizmetler</p>
+    <h2 class="text-title"><em>Karakter</em> Oluşturma</h2>
+    <p class="text-body">Gerçek oyuncu performansını yapay zekâ karakterine aktarıyoruz. Ses, yüz mimikleri ve vücut hareketleri tam senkronize — bir kez çekin, sınırsız kullanın.</p>
+  </div>
+
+  <!-- SLIDE 4: SAHNE 1 -->
+  <div class="slide slide-sahne" data-slide="3">
+    <div class="sahne-left">
+      <div class="sahne-num">01</div>
+      <div class="sahne-title">Gerçek Çekim</div>
+      <div class="sahne-body">Profesyonel oyuncu kısa bir diyalog ve hareket yapıyor. Ses kaydı ve motion capture sistemi aktif olarak çalışıyor.</div>
+    </div>
+    <div class="sahne-right">
+      <div class="sahne-tags">
+        <div class="sahne-tag">Profesyonel oyuncu performansı</div>
+        <div class="sahne-tag">Motion capture sistemi</div>
+        <div class="sahne-tag">Ses kaydı aktif</div>
+        <div class="sahne-tag">Yüz mimik analizi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: SAHNE 2 -->
+  <div class="slide slide-sahne" data-slide="4">
+    <div class="sahne-left">
+      <div class="sahne-num">02</div>
+      <div class="sahne-title">AI Transfer</div>
+      <div class="sahne-body">Aynı performans yapay zekâ karakterine aktarılıyor. Ses, yüz mimikleri ve vücut hareketleri yüzde yüz senkronize hale geliyor.</div>
+    </div>
+    <div class="sahne-right">
+      <div class="sahne-tags">
+        <div class="sahne-tag">Yüz mimikleri tam aktarım</div>
+        <div class="sahne-tag">Ses klonlama</div>
+        <div class="sahne-tag">3D mekan render</div>
+        <div class="sahne-tag">Vücut hareketi senkronu</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: SAHNE 3 -->
+  <div class="slide slide-sahne" data-slide="5">
+    <div class="sahne-left">
+      <div class="sahne-num">03</div>
+      <div class="sahne-title">Karşılaştırma</div>
+      <div class="sahne-body">Split-screen: sol gerçek oyuncu, sağ yapay zekâ karakteri. İkisi de aynı anda oynatılıyor, mimik ve hareket tutarlılığı net görünüyor.</div>
+    </div>
+    <div class="sahne-right">
+      <div class="sahne-tags">
+        <div class="sahne-tag">Duygusal derinlik — gerçek performans</div>
+        <div class="sahne-tag">Tutarlılık — yıl boyunca değişmez</div>
+        <div class="sahne-tag">Ölçeklenebilirlik — sınırsız kombinasyon</div>
+        <div class="sahne-tag">Maliyet verimliliği — her video için ayrı çekim gerekmez</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: İLETİŞİM -->
+  <div class="slide slide-contact" data-slide="6">
+    <p class="contact-eyebrow">İletişim</p>
+    <div class="contact-grid">
+      <div class="contact-person">
+        <div class="contact-name">Cem Şenses</div>
+        <div class="contact-info">cem@adon.com.tr<br>0541 246 30 81</div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-person">
+        <div class="contact-name">Murat Özoral</div>
+        <div class="contact-info">murat@adon.com.tr<br>0532 441 88 51</div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-person">
+        <div class="contact-name">Ulvi Yaman</div>
+        <div class="contact-info">ulvi@adon.com.tr<br>0533 856 24 22</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: TEŞEKKÜRLER -->
+  <div class="slide slide-end" data-slide="7">
+    <div class="end-tesekkur"><em>Teşekkürler</em></div>
+    <img class="end-logo-img" src="../kozmetik/logo-end.png" alt="ADON">
+    <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
+  </div>
+
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" disabled>
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <span id="slide-counter">01 / 08</span>
+  <button class="nav-btn" id="btn-next">
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+</div>
+
+<script>
+  // CURSOR
+  var cursor = document.getElementById('cursor');
+  var ring = document.getElementById('cursor-ring');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('button, a').forEach(function(el) {
+    el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // SLIDE ENGINE
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var current = 0;
+  var animating = false;
+  var presentation = document.getElementById('presentation');
+  var btnPrev = document.getElementById('btn-prev');
+  var btnNext = document.getElementById('btn-next');
+  var counter = document.getElementById('slide-counter');
+  var progress = document.getElementById('progress');
+  var pLogo = document.getElementById('persistent-logo');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function goTo(index) {
+    if (animating || index < 0 || index >= total) return;
+    animating = true;
+    slides[current].classList.remove('is-active');
+    current = index;
+    slides[current].classList.add('is-active');
+    presentation.style.transform = 'translateX(-' + (current * 100) + 'vw)';
+    counter.textContent = pad(current + 1) + ' / ' + pad(total);
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    // Persistent logo — kapakta gizli, son slideda gizli
+    if (current === 0 || current === total - 1) { pLogo.classList.remove('visible'); }
+    else { pLogo.classList.add('visible'); }
+    setTimeout(function() { animating = false; }, 750);
+  }
+
+  btnNext.addEventListener('click', function() { goTo(current + 1); });
+  btnPrev.addEventListener('click', function() { goTo(current - 1); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  });
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    var dx = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 50) goTo(dx > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  // INIT
+  progress.style.width = (1 / total * 100) + '%';
+  counter.textContent = pad(1) + ' / ' + pad(total);
+
+  // PARTICLE
+  var pCanvas = document.getElementById('particle-canvas');
+  var pCtx = pCanvas.getContext('2d');
+  var pW = window.innerWidth, pH = window.innerHeight;
+  var pMouse = { x: -999, y: -999 };
+  var pParticles = [];
+  pCanvas.width = pW; pCanvas.height = pH;
+  function pMake(init) {
+    return { x: Math.random()*pW, y: init ? Math.random()*pH : (Math.random()<.5?-5:pH+5), vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3, r:Math.random()*1.2+.4, life:Math.floor(Math.random()*180+80), age:init?Math.floor(Math.random()*180):0 };
+  }
+  for (var pi = 0; pi < 80; pi++) pParticles.push(pMake(true));
+  function pLoop() {
+    pCtx.clearRect(0,0,pW,pH);
+    for (var i=0;i<pParticles.length;i++) {
+      var p=pParticles[i]; p.age++;
+      p.x+=p.vx+Math.sin(p.age*.011+i)*.15; p.y+=p.vy+Math.cos(p.age*.009+i)*.12;
+      var mdx=p.x-pMouse.x, mdy=p.y-pMouse.y, md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if(md<120&&md>0){var mf=(120-md)/120*.5;p.x+=(mdx/md)*mf;p.y+=(mdy/md)*mf;}
+      var half=p.life/2, alpha=p.age<half?(p.age/half)*.15:((p.life-p.age)/half)*.15;
+      if(alpha<0)alpha=0;
+      pCtx.beginPath();pCtx.arc(p.x,p.y,p.r,0,6.2832);pCtx.fillStyle='rgba(245,245,243,'+alpha+')';pCtx.fill();
+      if(p.age>=p.life||p.x<-20||p.x>pW+20||p.y<-20||p.y>pH+20)pParticles[i]=pMake(false);
+    }
+    for(var a=0;a<pParticles.length;a++){for(var b=a+1;b<pParticles.length;b++){var ddx=pParticles[a].x-pParticles[b].x,ddy=pParticles[a].y-pParticles[b].y,dd=Math.sqrt(ddx*ddx+ddy*ddy);if(dd<80){pCtx.beginPath();pCtx.moveTo(pParticles[a].x,pParticles[a].y);pCtx.lineTo(pParticles[b].x,pParticles[b].y);pCtx.strokeStyle='rgba(245,245,243,'+((1-dd/80)*.035)+')';pCtx.lineWidth=.4;pCtx.stroke();}}}
+    requestAnimationFrame(pLoop);
+  }
+  pLoop();
+  document.addEventListener('mousemove', function(e) { if(current===0){pMouse.x=e.clientX;pMouse.y=e.clientY;}else{pMouse.x=-999;pMouse.y=-999;} });
+  window.addEventListener('resize', function() { pW=pCanvas.width=window.innerWidth; pH=pCanvas.height=window.innerHeight; });
+</script>
+</body>
+</html>
