@@ -1092,6 +1092,87 @@
     width: 100%; height: 100%;
     border: none;
   }
+
+  /* ── MILESTONE BAR ── */
+  #milestone-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  #milestone-bar.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .milestone-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80vw;
+    max-width: 900px;
+  }
+  .milestone-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(245,245,243,0.1);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+  .milestone-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: none;
+    z-index: 1;
+  }
+  .milestone-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(245,245,243,0.25);
+    border: 1px solid rgba(245,245,243,0.15);
+    transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+  }
+  .milestone-item:hover .milestone-dot,
+  .milestone-item.active .milestone-dot {
+    background: rgba(245,245,243,0.9);
+    border-color: rgba(245,245,243,0.9);
+    transform: scale(1.4);
+  }
+  .milestone-label {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,245,243,0.3);
+    white-space: nowrap;
+    transition: color 0.3s ease;
+    margin-top: 2px;
+  }
+  .milestone-item:hover .milestone-label,
+  .milestone-item.active .milestone-label {
+    color: rgba(245,245,243,0.8);
+  }
+
+  @media (max-width: 768px) {
+    #milestone-bar { display: none; }
+  }
 </style>
 <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
@@ -1387,6 +1468,40 @@
 </div><!-- /presentation -->
 
 <!-- NAV -->
+<div id="milestone-bar">
+  <div class="milestone-track">
+    <div class="milestone-line"></div>
+    <div class="milestone-item" data-goto="3">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Rossmann</div>
+    </div>
+    <div class="milestone-item" data-goto="7">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Urban Care</div>
+    </div>
+    <div class="milestone-item" data-goto="12">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">The Purest Solutions</div>
+    </div>
+    <div class="milestone-item" data-goto="16">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Imprimé</div>
+    </div>
+    <div class="milestone-item" data-goto="21">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Aqua Di Polo</div>
+    </div>
+    <div class="milestone-item" data-goto="23">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Tresan</div>
+    </div>
+    <div class="milestone-item" data-goto="25">
+      <div class="milestone-dot"></div>
+      <div class="milestone-label">Edenland</div>
+    </div>
+  </div>
+</div>
+
 <div id="info-box">
   <p>Sonraki içerikleri izleyebilmek için oklara tıklayabilir, klavyenizdeki ileri/geri ok tuşlarını kullanabilir ya da mobil cihazınızdan parmağınızla kaydırabilirsiniz.</p>
 </div>
@@ -1452,6 +1567,7 @@
     btnPrev.disabled = current === 0;
     btnNext.disabled = current === total - 1;
     updateInfoVisibility(current);
+    updateMilestone(current);
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
       if (current !== 8) { vimeoPlayer.pause(); }
@@ -1502,6 +1618,48 @@
   }, { passive: true });
 
 
+
+  // ── MILESTONE BAR
+  var milestoneBar = document.getElementById('milestone-bar');
+  var milestoneItems = document.querySelectorAll('.milestone-item');
+  var brandSlides = [3, 7, 12, 16, 21, 23, 25];
+
+  // Tıklama
+  milestoneItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+      var idx = parseInt(item.getAttribute('data-goto'));
+      goTo(idx);
+    });
+    item.addEventListener('mouseenter', function() {
+      cursor.classList.add('hover');
+      ring.classList.add('hover');
+    });
+    item.addEventListener('mouseleave', function() {
+      cursor.classList.remove('hover');
+      ring.classList.remove('hover');
+    });
+  });
+
+  function updateMilestone(index) {
+    // Kapak ve manifesto slide'larında gizle
+    if (index <= 2) {
+      milestoneBar.classList.remove('visible');
+    } else {
+      milestoneBar.classList.add('visible');
+    }
+    // Aktif markayı bul — hangi bölümdeyiz
+    var activeIdx = -1;
+    for (var i = brandSlides.length - 1; i >= 0; i--) {
+      if (index >= brandSlides[i]) {
+        activeIdx = i;
+        break;
+      }
+    }
+    milestoneItems.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeIdx);
+    });
+  }
+
   // ── INFO BOX
   var infoBox = document.getElementById('info-box');
 
@@ -1527,6 +1685,7 @@
 
   // ── INIT
   progress.style.width = `${(1 / total) * 100}%`;
+  updateMilestone(0);
   counter.textContent = `${pad(1)} / ${pad(total)}`;
 
   // ── MANIFESTO WORD SPLIT
