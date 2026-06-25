@@ -194,6 +194,7 @@
   }
 </style>
 <script src="https://player.vimeo.com/api/player.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
@@ -234,7 +235,7 @@
     <div class="sunum-video-wrap">
       <div class="sv-title">İş Bankası - Webrazzi Event</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
-        <iframe id="sv-2" src="https://www.youtube.com/embed/W7Xmh065eMg?si=K5vOjKqX1AIRUosy&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        <iframe id="sv-2" src="https://www.youtube.com/embed/W7Xmh065eMg?si=K5vOjKqX1AIRUosy&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white&enablejsapi=1" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
       </div>
     </div>
   </div>
@@ -244,7 +245,7 @@
     <div class="sunum-video-wrap">
       <div class="sv-title">Bioxcin Acnium</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
-        <iframe id="sv-3" src="https://www.youtube.com/embed/2uIenB7c7kU?si=dU1XDj5zMOlZeElX&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        <iframe id="sv-3" src="https://www.youtube.com/embed/2uIenB7c7kU?si=dU1XDj5zMOlZeElX&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white&enablejsapi=1" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
       </div>
     </div>
   </div>
@@ -425,10 +426,29 @@
     });
   });
 
+  // YouTube players
+  var ytPlayers = {};
+  var ytSlides = { 'sv-2': 3, 'sv-3': 4 };
+
+  window.onYouTubeIframeAPIReady = function() {
+    ['sv-2', 'sv-3'].forEach(function(id) {
+      ytPlayers[id] = new YT.Player(id, {
+        events: { 'onReady': function() {} }
+      });
+    });
+  };
+
   function pauseAllVideos(exceptSlide) {
+    // Vimeo
     Object.keys(svSlides).forEach(function(id) {
       if (svSlides[id] !== exceptSlide && svPlayers[id]) {
         svPlayers[id].pause();
+      }
+    });
+    // YouTube
+    Object.keys(ytSlides).forEach(function(id) {
+      if (ytSlides[id] !== exceptSlide && ytPlayers[id] && ytPlayers[id].pauseVideo) {
+        ytPlayers[id].pauseVideo();
       }
     });
   }
