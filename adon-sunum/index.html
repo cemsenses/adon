@@ -229,7 +229,17 @@
     </div>
   </div>
 
-  <!-- SLIDE 4: KARAKTER OLUŞTURMA -->
+  <!-- SLIDE 4: VIDEO — YouTube -->
+  <div class="slide slide-sunum-video" data-slide="3">
+    <div class="sunum-video-wrap">
+      <div class="sv-title">Karakter Oluşturma — Demo</div>
+      <div class="sunum-video-inner" style="padding-top:56.25%">
+        <iframe id="sv-2" src="https://www.youtube.com/embed/W7Xmh065eMg?si=K5vOjKqX1AIRUosy&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: KARAKTER OLUŞTURMA -->
   <div class="slide slide-text" data-slide="2">
     <p class="text-eyebrow">Hizmetler</p>
     <h2 class="text-title"><em>Karakter</em> Oluşturma</h2>
@@ -309,7 +319,7 @@
   </div>
 
   <!-- SLIDE 8: TEŞEKKÜRLER -->
-  <div class="slide slide-end" data-slide="8">
+  <div class="slide slide-end" data-slide="9">
     <div class="end-tesekkur"><em>Teşekkürler</em></div>
     <img class="end-logo-img" src="../kozmetik/logo-end.png" alt="ADON">
     <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
@@ -321,7 +331,7 @@
   <button class="nav-btn" id="btn-prev" disabled>
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 09</span>
+  <span id="slide-counter">01 / 10</span>
   <button class="nav-btn" id="btn-next">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -392,7 +402,7 @@
 
   // VIMEO PLAYERS
   var svPlayers = {};
-  var svSlides = { 'sv-1': 2 };
+  var svSlides = { 'sv-1': 2 }; // sv-2 YouTube — sadece pause
 
   window.addEventListener('load', function() {
     Object.keys(svSlides).forEach(function(id) {
