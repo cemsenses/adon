@@ -133,6 +133,26 @@
     #nav { bottom: 3.5vh; right: 4vw; gap: 8px; }
     .nav-btn { width: 38px; height: 38px; }
   }
+
+  /* ── SLIDE: MARKALAR ── */
+  .slide-markalar {
+    align-items: center;
+    justify-content: center;
+    padding: 8vw;
+  }
+  .slide-markalar .markalar-img {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s var(--ease) 0.2s, transform 1s var(--ease) 0.2s;
+  }
+  .slide.is-active .markalar-img {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 </style>
 </head>
 <body>
@@ -154,11 +174,9 @@
     <div class="cover-line"></div>
   </div>
 
-  <!-- SLIDE 2: HİZMET AÇIKLAMASI -->
-  <div class="slide slide-text" data-slide="1">
-    <p class="text-eyebrow">Nasıl Çalışıyoruz</p>
-    <h2 class="text-title">Yapay Zekânın Gücü ve<br>Tasarım Deneyimi <em>Bir Arada</em></h2>
-    <p class="text-body">Ürünlerinizin özelliklerini ve hedef kitlenizi analiz ederek yapay zekâ araçlarını kullanıyor, uygun görsel ortamları hazırlıyoruz. Bu görseller ile ürün fotoğraflarını birleştirip son haline getirerek kusursuz bir görsel sunum ortaya çıkarıyoruz.</p>
+  <!-- SLIDE 2: MARKALAR -->
+  <div class="slide slide-markalar" data-slide="1">
+    <img class="markalar-img" src="markalar.png" alt="Markalar">
   </div>
 
   <!-- SLIDE 3: KARAKTER OLUŞTURMA -->
