@@ -242,6 +242,18 @@
     </div>
   </section>
 
+
+  <!-- ─── Scroll Video ─── -->
+  <section id="block-scroll-video" style="position:relative;height:300vh;background:#000;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;">
+      <video id="scroll-video-el"
+        src="../media/mustangvideo.mp4"
+        muted playsinline preload="auto"
+        style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;">
+      </video>
+    </div>
+  </section>
+
   <!-- ─── 5 Pillars ─── -->
   <section class="section-sm" style="padding-top: 0;" id="block-pillars" data-cms-block="pillars">
     <p class="section-label" style="padding: 0 32px; margin-bottom: 0;" id="cms-pillars-label">Five Pillars of Transformation</p>
@@ -489,6 +501,31 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
   <script src="../js/main.js" defer></script>
   
+
+  <script>
+  (function(){
+    var video = document.getElementById('scroll-video-el');
+    if(!video) return;
+    video.pause();
+    video.currentTime = 0;
+
+    function update(){
+      var section = document.getElementById('block-scroll-video');
+      if(!section) return;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if(scrollable <= 0) return;
+      var scrolled = Math.max(0, window.scrollY - section.offsetTop);
+      var progress = Math.min(1, scrolled / scrollable);
+      if(video.readyState >= 1 && isFinite(video.duration) && video.duration > 0){
+        video.currentTime = progress * video.duration;
+      }
+    }
+
+    video.addEventListener('loadedmetadata', update);
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+  })();
+  </script>
 
 </body>
 
