@@ -203,6 +203,22 @@
     </div>
   </div>
 
+  
+  <!-- ─── Scroll-Driven Video ─── -->
+  <section id="block-scroll-video" style="position:relative;height:300vh;background:#000;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;pointer-events:none;">
+        <iframe id="vimeo-scroll-player"
+          src="https://player.vimeo.com/video/1181460732?background=0&autopause=0&controls=0&muted=0&autoplay=0&loop=0&title=0&byline=0&portrait=0&app_id=58479"
+          style="width:100%;height:100%;border:none;"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          frameborder="0">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── Transformation Section ─── -->
   <section class="section" id="block-fark" data-cms-block="fark">
     <div class="split">
@@ -677,6 +693,51 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
   <script src="js/main.js" defer></script>
+
+  <!-- Scroll-Driven Video Script -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+  (function(){
+    var iframe = document.getElementById('vimeo-scroll-player');
+    if(!iframe) return;
+    var player = new Vimeo.Player(iframe);
+    var duration = 0;
+    var scrollTimer = null;
+    var lastTime = -1;
+
+    player.ready().then(function(){
+      return player.getDuration();
+    }).then(function(d){
+      duration = d;
+      player.pause();
+    }).catch(function(){});
+
+    function getProgress(){
+      var section = document.getElementById('block-scroll-video');
+      if(!section || duration === 0) return -1;
+      var offsetTop = section.offsetTop;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if(scrollable <= 0) return -1;
+      var scrolled = Math.max(0, window.scrollY - offsetTop);
+      return Math.min(1, scrolled / scrollable);
+    }
+
+    window.addEventListener('scroll', function(){
+      var p = getProgress();
+      if(p < 0) return;
+      var t = parseFloat((p * duration).toFixed(3));
+      if(Math.abs(t - lastTime) > 0.05){
+        lastTime = t;
+        player.setCurrentTime(t).catch(function(){});
+      }
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function(){
+        player.pause().catch(function(){});
+      }, 150);
+    }, {passive: true});
+  })();
+  </script>
+
 </body>
 
 </html>
