@@ -185,47 +185,6 @@
         </div>
     </section>
 
-    <!-- ─── Team Section ─── -->
-    <section class="section" style="padding-top: 0;" id="block-team" data-cms-block="team">
-        <p class="section-label" style="padding-bottom: 32px;">Our Team</p>
-        <div class="team-grid stagger" id="cms-team">
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="../media/kisiler/cem-adon-1.avif" width="300" height="300" loading="eager" alt="Cem Şenses">
-                </div>
-                <div class="team-name">Cem Şenses</div>
-                <div class="team-role">Founder</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="../media/kisiler/murat-adon-1.avif" width="300" height="300" loading="eager" alt="Murat Özoral">
-                </div>
-                <div class="team-name">Murat Özoral</div>
-                <div class="team-role">Strategic Partner</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="../media/kisiler/ulvi-yaman-adon.avif" width="300" height="300" loading="eager" alt="Ulvi Yaman">
-                </div>
-                <div class="team-name">Ulvi Yaman</div>
-                <div class="team-role">Strategist</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="../media/kisiler/ercument-adon-3.avif" width="300" height="300" loading="eager" alt="Ercüment Subaşı">
-                </div>
-                <div class="team-name">Ercüment Subaşı</div>
-                <div class="team-role">Creative Sound Director</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="../media/kisiler/Berkant%20ama%20hafif%20g%C3%BClen.png" width="300" height="300" loading="eager" alt="Berkant Zafer Kulaksız">
-                </div>
-                <div class="team-name">Berkant Zafer Kulaksız</div>
-                <div class="team-role">Visual Designer</div>
-            </div>
-        </div>
-    </section>
 
     <!-- ─── DNA Section ─── -->
     <section class="section" style="padding-top: 0;" id="block-dna" data-cms-block="dna">
@@ -447,33 +406,7 @@
           html('cms-man-body1', man.body1);
           html('cms-man-body2', man.body2);
 
-          // Team
-          var tc=document.getElementById('cms-team');
-          if(tc && hk.team && hk.team.length){
-            // Get existing names — keep hardcoded cards, add missing ones
-            var existing=new Set(Array.from(tc.querySelectorAll('.team-name')).map(function(n){return n.textContent.trim();}));
-            hk.team.forEach(function(m){
-              if(!existing.has(m.name)){
-                var d=document.createElement('div'); d.className='team-card';
-                d.innerHTML='<div class="team-avatar"><img src="'+m.image+'" width="300" height="300" loading="eager" alt="'+m.name+'"></div><div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div>';
-                tc.appendChild(d);
-              }
-            });
-            // Center last row on desktop
-            if(window.innerWidth>768){
-              var allCards=tc.querySelectorAll('.team-card');
-              var cols=5, rem=allCards.length%cols;
-              if(rem>0){
-                var startCol=Math.floor((cols-rem)/2)+1;
-                var row=Math.ceil(allCards.length/cols);
-                Array.from(allCards).slice(-rem).forEach(function(c,i){
-                  c.style.gridColumnStart=String(startCol+i);
-                  c.style.gridColumnEnd=String(startCol+i+1);
-                  c.style.gridRow=String(row);
-                });
-              }
-            }
-          }
+          
 
           // DNA
           var dc=document.getElementById('cms-dna');
