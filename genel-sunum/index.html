@@ -1368,6 +1368,43 @@
   @media (max-width: 768px) {
     #dot-nav { display: none; }
   }
+
+  /* ── SLIDE NUMBER (top-left, per section) ── */
+  .sec-num {
+    position: absolute;
+    top: 4vh;
+    left: 4vw;
+    z-index: 5;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(245,245,243,0.18);
+    pointer-events: none;
+  }
+
+  /* ── ACTIVE SLIDE NUMBER (next to dot nav) ── */
+  #active-slide-num {
+    position: fixed;
+    top: 50%;
+    right: 4.7vw;
+    transform: translateY(-50%);
+    z-index: 1500;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 100;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(245,245,243,0.35);
+    transition: color 0.4s ease, font-weight 0.4s ease;
+  }
+  #active-slide-num.active {
+    font-weight: 600;
+    color: rgba(245,245,243,0.95);
+  }
+  @media (max-width: 768px) {
+    #active-slide-num { display: none; }
+    .sec-num { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1376,6 +1413,7 @@
 <div class="cursor-ring" id="cursor-ring"></div>
 <div id="progress"></div>
 <div id="persistent-logo"><img src="logo.png" alt="ADON"></div>
+<div id="active-slide-num">01</div>
 <nav id="dot-nav"></nav>
 <div id="swipe-hint">↑ Kaydırın</div>
 
@@ -1815,6 +1853,16 @@
   }
 
 
+  // ── SLIDE NUMBERS ──
+  var activeNumEl = document.getElementById('active-slide-num');
+  function pad2(n){ return n < 10 ? '0'+n : ''+n; }
+  secs.forEach(function(sec, i){
+    var num = document.createElement('div');
+    num.className = 'sec-num';
+    num.textContent = pad2(i + 1);
+    sec.appendChild(num);
+  });
+
   // ── DOT NAVIGATION ──
   var dotNav = document.getElementById('dot-nav');
   secs.forEach(function(sec, i){
@@ -1838,6 +1886,8 @@
         if (self.isActive) {
           dotItems.forEach(function(d){ d.classList.remove('active'); });
           dotItems[i].classList.add('active');
+          activeNumEl.textContent = pad2(i + 1);
+          activeNumEl.classList.add('active');
         }
       }
     });
