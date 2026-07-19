@@ -1227,6 +1227,73 @@
   .sec.slide-vimeo, .sec.slide-vimeo-wide, .sec.slide-vimeo-tall { flex-direction: column; }
   #milestone-bar { display: none !important; }
   #nav { display: none !important; }
+
+  /* ── MOBIL SCROLL & LAYOUT ── */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+    .sec {
+      height: 100vh;
+      height: 100svh;
+      min-height: 100svh;
+      padding-left: 6vw;
+      padding-right: 6vw;
+    }
+    .reveal {
+      transform: translateY(40px) scale(0.96);
+    }
+    .sec.out-view .reveal {
+      transform: translateY(-30px) scale(1.03);
+    }
+    /* Video slide'lar mobilde tam otursun */
+    .sec.slide-vimeo, .sec.slide-vimeo-wide, .sec.slide-vimeo-tall {
+      padding: 8vh 4vw 10vh;
+    }
+    .sec.slide-vimeo .vimeo-wrap,
+    .sec.slide-vimeo-tall .vimeo-tall-wrap {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .vimeo-tall-inner {
+      height: auto !important;
+      width: 100% !important;
+      padding-top: 125% !important;
+    }
+    /* Grid mobilde 2x2 */
+    .sec.slide-uc-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      padding: 10vh 5vw 12vh;
+      align-content: center;
+    }
+    .sec.slide-uc-grid .uc-grid-item {
+      width: 100% !important;
+    }
+    /* Swipe ipucu */
+    #swipe-hint {
+      position: fixed;
+      bottom: 3vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1500;
+      font-family: 'Lexend Deca', sans-serif;
+      font-weight: 100;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,245,243,0.35);
+      pointer-events: none;
+      animation: swipeFade 2.6s ease-in-out infinite;
+    }
+    @keyframes swipeFade {
+      0%, 100% { opacity: 0.2; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.6; transform: translateX(-50%) translateY(-4px); }
+    }
+  }
+  @media (min-width: 769px) {
+    #swipe-hint { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1235,6 +1302,7 @@
 <div class="cursor-ring" id="cursor-ring"></div>
 <div id="progress"></div>
 <div id="persistent-logo"><img src="logo.png" alt="ADON"></div>
+<div id="swipe-hint">↑ Kaydırın</div>
 
 <main id="scroll-root">
 <!-- SLIDE 1: COVER -->
@@ -1569,11 +1637,16 @@
   })();
 
   // LENIS SMOOTH SCROLL
+  var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
   var lenis = new Lenis({
-    duration: 1.6,
+    duration: isTouch ? 1.1 : 1.6,
     easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },
     smoothWheel: true,
-    wheelMultiplier: 0.9
+    smoothTouch: true,
+    touchMultiplier: 1.6,
+    wheelMultiplier: 0.9,
+    syncTouch: true
   });
   function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
@@ -1626,6 +1699,8 @@
       progress.style.width = (self.progress*100)+'%';
       if (self.progress > 0.02 && self.progress < 0.97) pLogo.classList.add('visible');
       else pLogo.classList.remove('visible');
+      var hint = document.getElementById('swipe-hint');
+      if (hint) hint.style.opacity = self.progress > 0.05 ? '0' : '';
     }
   });
 
@@ -1675,6 +1750,52 @@
     })();
     document.addEventListener('mousemove',function(e){ if(window.scrollY<window.innerHeight){pMouse.x=e.clientX;pMouse.y=e.clientY;}else{pMouse.x=-999;pMouse.y=-999;} });
     window.addEventListener('resize',function(){ pW=pCanvas.width=window.innerWidth;pH=pCanvas.height=window.innerHeight; });
+  }
+
+
+  // ── MOBIL SWIPE NAVIGATION ──
+  if (isTouch) {
+    var curSec = 0;
+    var swiping = false;
+    var tStartY = 0, tStartX = 0, tStartT = 0;
+
+    function goToSec(i) {
+      if (i < 0 || i >= secs.length || swiping) return;
+      swiping = true;
+      curSec = i;
+      lenis.scrollTo(secs[i], {
+        duration: 1.0,
+        easing: function(t){ return 1 - Math.pow(1 - t, 3); },
+        lock: true
+      });
+      setTimeout(function(){ swiping = false; }, 1050);
+    }
+
+    document.addEventListener('touchstart', function(e){
+      tStartY = e.touches[0].clientY;
+      tStartX = e.touches[0].clientX;
+      tStartT = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e){
+      var dy = tStartY - e.changedTouches[0].clientY;
+      var dx = tStartX - e.changedTouches[0].clientX;
+      var dt = Date.now() - tStartT;
+      // Dikey swipe baskınsa ve yeterince hızlı/uzunsa
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 40 && dt < 700) {
+        goToSec(dy > 0 ? curSec + 1 : curSec - 1);
+      }
+    }, { passive: true });
+
+    // Scroll ile hangi section'dayız takip et
+    secs.forEach(function(sec, i){
+      ScrollTrigger.create({
+        trigger: sec,
+        start: 'top center',
+        end: 'bottom center',
+        onToggle: function(self){ if (self.isActive) curSec = i; }
+      });
+    });
   }
 
   // İlk section aktif
