@@ -1675,23 +1675,10 @@
     requestAnimationFrame(loop);
   })();
 
-  // LENIS SMOOTH SCROLL
-  var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-
-  var lenis = new Lenis({
-    duration: isTouch ? 1.1 : 1.6,
-    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },
-    smoothWheel: true,
-    smoothTouch: true,
-    touchMultiplier: 1.6,
-    wheelMultiplier: 0.9,
-    syncTouch: true
-  });
-  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
-
   gsap.registerPlugin(ScrollTrigger);
-  lenis.on('scroll', ScrollTrigger.update);
+  var scrollRoot = document.getElementById('scroll-root');
+  ScrollTrigger.defaults({ scroller: scrollRoot });
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   // SECTIONS
   var secs = document.querySelectorAll('.sec');
@@ -1792,50 +1779,8 @@
   }
 
 
-  // ── MOBIL SWIPE NAVIGATION ──
-  if (isTouch) {
-    var curSec = 0;
-    var swiping = false;
-    var tStartY = 0, tStartX = 0, tStartT = 0;
-
-    function goToSec(i) {
-      if (i < 0 || i >= secs.length || swiping) return;
-      swiping = true;
-      curSec = i;
-      lenis.scrollTo(secs[i], {
-        duration: 1.0,
-        easing: function(t){ return 1 - Math.pow(1 - t, 3); },
-        lock: true
-      });
-      setTimeout(function(){ swiping = false; }, 1050);
-    }
-
-    document.addEventListener('touchstart', function(e){
-      tStartY = e.touches[0].clientY;
-      tStartX = e.touches[0].clientX;
-      tStartT = Date.now();
-    }, { passive: true });
-
-    document.addEventListener('touchend', function(e){
-      var dy = tStartY - e.changedTouches[0].clientY;
-      var dx = tStartX - e.changedTouches[0].clientX;
-      var dt = Date.now() - tStartT;
-      // Dikey swipe baskınsa ve yeterince hızlı/uzunsa
-      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 40 && dt < 700) {
-        goToSec(dy > 0 ? curSec + 1 : curSec - 1);
-      }
-    }, { passive: true });
-
-    // Scroll ile hangi section'dayız takip et
-    secs.forEach(function(sec, i){
-      ScrollTrigger.create({
-        trigger: sec,
-        start: 'top center',
-        end: 'bottom center',
-        onToggle: function(self){ if (self.isActive) curSec = i; }
-      });
-    });
-  }
+  // Native CSS scroll-snap zaten dokunmatik swipe'ı destekliyor,
+  // ekstra JS navigasyona gerek yok.
 
   // İlk section aktif
   secs[0].classList.add('in-view');
