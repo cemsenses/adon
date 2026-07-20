@@ -730,6 +730,58 @@
     opacity: 1 !important;
   }
 
+  /* ── SCROLL CUE (kapak) ── */
+  #scroll-cue {
+    position: absolute;
+    right: 10vw;
+    bottom: 13.5vh;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245,245,243,0.5);
+    opacity: 0;
+    transition: opacity 1s ease 0.9s;
+    pointer-events: none;
+  }
+  .sec.in-view #scroll-cue {
+    opacity: 1 !important;
+  }
+  .scroll-cue-line {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(to bottom, rgba(245,245,243,0) 0%, rgba(245,245,243,0.5) 100%);
+    animation: scrollCueLine 2.2s ease-in-out infinite;
+  }
+  .scroll-cue-arrow {
+    width: 12px;
+    height: 7px;
+    animation: scrollCueArrow 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollCueLine {
+    0%, 100% { transform: scaleY(1); opacity: 0.5; }
+    50% { transform: scaleY(0.7); opacity: 0.9; }
+  }
+  @keyframes scrollCueArrow {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(4px); opacity: 1; }
+  }
+  @media (max-width: 768px) {
+    #scroll-cue { right: 7vw; bottom: 4vh; }
+  }
+
+  /* ── ORGANIC BLOB CANVAS (kapak) ── */
+  #organic-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
   /* ── PARTICLE CANVAS ── */
   #particle-canvas {
     position: absolute;
@@ -1504,9 +1556,16 @@
 <!-- SLIDE 1: COVER -->
   <section class="sec slide-cover">
     <canvas id="particle-canvas"></canvas>
+    <canvas id="organic-canvas"></canvas>
     <div class="cover-logo"><img src="logo-cover.png" alt="ADON"></div>
     <h1 class="cover-title">Türkiye'nin önde gelen<br><em>markalarının</em><br>içerik üretim ortağı.</h1>
     <p class="cover-sub">AI destekli görsel üretim · Kampanya içerikleri · Sosyal medya</p>
+    <div id="scroll-cue">
+      <span class="scroll-cue-line"></span>
+      <svg class="scroll-cue-arrow" viewBox="0 0 16 9" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="1,1 8,8 15,1" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </section>
 
   <!-- SLIDE 2: MANIFESTO -->
@@ -1949,7 +2008,7 @@
   // Her section içindeki animasyonlu elemanlara .reveal ekle
   secs.forEach(function(sec){
     Array.prototype.forEach.call(sec.children, function(child){
-      if (child.id === 'particle-canvas') return;
+      if (child.id === 'particle-canvas' || child.id === 'organic-canvas') return;
       child.classList.add('reveal');
     });
   });
@@ -2060,6 +2119,86 @@
     })();
     document.addEventListener('mousemove',function(e){ if(scrollRoot.scrollTop<window.innerHeight){pMouse.x=e.clientX;pMouse.y=e.clientY;}else{pMouse.x=-999;pMouse.y=-999;} });
     window.addEventListener('resize',function(){ pW=pCanvas.width=window.innerWidth;pH=pCanvas.height=window.innerHeight; });
+  }
+
+  // ORGANIC BLOB (kapak) — mouse'u organik şekilde takip eden, boşta dalgalanan blob
+  var oCanvas = document.getElementById('organic-canvas');
+  if (oCanvas) {
+    var oCtx = oCanvas.getContext('2d');
+    var oW = window.innerWidth, oH = window.innerHeight;
+    oCanvas.width = oW; oCanvas.height = oH;
+
+    var oTargetX = oW * 0.62, oTargetY = oH * 0.42;
+    var oCurX = oTargetX, oCurY = oTargetY;
+    var oLastMoveTime = Date.now();
+    var oMouseActive = false;
+    var oTime = 0;
+    var oNumPts = 9;
+    var oBaseR = Math.min(oW, oH) * 0.16;
+
+    document.addEventListener('mousemove', function(e){
+      if (scrollRoot.scrollTop < window.innerHeight) {
+        oTargetX = e.clientX; oTargetY = e.clientY;
+        oLastMoveTime = Date.now();
+        oMouseActive = true;
+      }
+    });
+
+    function oIdlePos(t){
+      return {
+        x: oW * 0.5 + Math.sin(t * 0.00035) * oW * 0.22 + Math.cos(t * 0.00019) * oW * 0.08,
+        y: oH * 0.46 + Math.cos(t * 0.00028) * oH * 0.16 + Math.sin(t * 0.00051) * oH * 0.06
+      };
+    }
+
+    (function oLoop(){
+      oTime += 16;
+      var idleFor = Date.now() - oLastMoveTime;
+      if (idleFor > 1800) {
+        oMouseActive = false;
+        var ip = oIdlePos(oTime);
+        oTargetX = ip.x; oTargetY = ip.y;
+      }
+      oCurX += (oTargetX - oCurX) * (oMouseActive ? 0.05 : 0.012);
+      oCurY += (oTargetY - oCurY) * (oMouseActive ? 0.05 : 0.012);
+
+      oCtx.clearRect(0, 0, oW, oH);
+
+      var pts = [];
+      for (var i = 0; i < oNumPts; i++){
+        var ang = (i / oNumPts) * Math.PI * 2;
+        var wob = Math.sin(oTime * 0.0009 + i * 1.7) * 0.16 + Math.cos(oTime * 0.0006 + i * 2.3) * 0.10;
+        var r = oBaseR * (1 + wob) * (oMouseActive ? 1.15 : 1);
+        pts.push({
+          x: oCurX + Math.cos(ang) * r,
+          y: oCurY + Math.sin(ang) * r
+        });
+      }
+
+      oCtx.beginPath();
+      for (var j = 0; j < pts.length; j++){
+        var cur = pts[j], next = pts[(j+1) % pts.length];
+        var mx = (cur.x + next.x) / 2, my = (cur.y + next.y) / 2;
+        if (j === 0) oCtx.moveTo(mx, my);
+        else oCtx.quadraticCurveTo(cur.x, cur.y, mx, my);
+      }
+      oCtx.closePath();
+
+      var grad = oCtx.createRadialGradient(oCurX, oCurY, 0, oCurX, oCurY, oBaseR * 1.4);
+      grad.addColorStop(0, 'rgba(245,245,243,0.10)');
+      grad.addColorStop(0.6, 'rgba(245,245,243,0.04)');
+      grad.addColorStop(1, 'rgba(245,245,243,0)');
+      oCtx.fillStyle = grad;
+      oCtx.fill();
+
+      requestAnimationFrame(oLoop);
+    })();
+
+    window.addEventListener('resize', function(){
+      oW = oCanvas.width = window.innerWidth;
+      oH = oCanvas.height = window.innerHeight;
+      oBaseR = Math.min(oW, oH) * 0.16;
+    });
   }
 
 
