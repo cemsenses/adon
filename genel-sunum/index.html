@@ -739,8 +739,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    color: rgba(245,245,243,0.5);
+    gap: 10px;
+    color: rgba(245,245,243,0.95);
     opacity: 0;
     transition: opacity 1s ease 0.9s;
     pointer-events: none;
@@ -750,22 +750,25 @@
   }
   .scroll-cue-line {
     width: 1px;
-    height: 34px;
-    background: linear-gradient(to bottom, rgba(245,245,243,0) 0%, rgba(245,245,243,0.5) 100%);
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(245,245,243,0) 0%, rgba(245,245,243,0.9) 100%);
     animation: scrollCueLine 2.2s ease-in-out infinite;
   }
   .scroll-cue-arrow {
-    width: 12px;
-    height: 7px;
+    width: 16px;
+    height: 9px;
     animation: scrollCueArrow 2.2s ease-in-out infinite;
   }
+  .scroll-cue-arrow polyline {
+    stroke-width: 1.6;
+  }
   @keyframes scrollCueLine {
-    0%, 100% { transform: scaleY(1); opacity: 0.5; }
-    50% { transform: scaleY(0.7); opacity: 0.9; }
+    0%, 100% { transform: scaleY(1); opacity: 0.7; }
+    50% { transform: scaleY(0.65); opacity: 1; }
   }
   @keyframes scrollCueArrow {
-    0%, 100% { transform: translateY(0); opacity: 0.5; }
-    50% { transform: translateY(4px); opacity: 1; }
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(6px); opacity: 1; }
   }
   @media (max-width: 768px) {
     #scroll-cue { right: 7vw; bottom: 4vh; }
@@ -2121,24 +2124,21 @@
     window.addEventListener('resize',function(){ pW=pCanvas.width=window.innerWidth;pH=pCanvas.height=window.innerHeight; });
   }
 
-  // ORGANIC BLOB (kapak) — mouse'u organik şekilde takip eden, boşta dalgalanan blob
+  // ORGANIC SWARM (kapak) — bağımsız hareket eden, mouse'a gevşek şekilde tepki veren noktalar
   var oCanvas = document.getElementById('organic-canvas');
   if (oCanvas) {
     var oCtx = oCanvas.getContext('2d');
     var oW = window.innerWidth, oH = window.innerHeight;
     oCanvas.width = oW; oCanvas.height = oH;
 
-    var oTargetX = oW * 0.62, oTargetY = oH * 0.42;
-    var oCurX = oTargetX, oCurY = oTargetY;
+    var oMouseX = oW * 0.6, oMouseY = oH * 0.42;
     var oLastMoveTime = Date.now();
     var oMouseActive = false;
     var oTime = 0;
-    var oNumPts = 9;
-    var oBaseR = Math.min(oW, oH) * 0.16;
 
     document.addEventListener('mousemove', function(e){
       if (scrollRoot.scrollTop < window.innerHeight) {
-        oTargetX = e.clientX; oTargetY = e.clientY;
+        oMouseX = e.clientX; oMouseY = e.clientY;
         oLastMoveTime = Date.now();
         oMouseActive = true;
       }
@@ -2146,50 +2146,61 @@
 
     function oIdlePos(t){
       return {
-        x: oW * 0.5 + Math.sin(t * 0.00035) * oW * 0.22 + Math.cos(t * 0.00019) * oW * 0.08,
-        y: oH * 0.46 + Math.cos(t * 0.00028) * oH * 0.16 + Math.sin(t * 0.00051) * oH * 0.06
+        x: oW * 0.5 + Math.sin(t * 0.00035) * oW * 0.24 + Math.cos(t * 0.00019) * oW * 0.09,
+        y: oH * 0.46 + Math.cos(t * 0.00028) * oH * 0.17 + Math.sin(t * 0.00051) * oH * 0.07
       };
     }
+
+    var oDots = [];
+    var oCount = 46;
+    for (var di = 0; di < oCount; di++){
+      var ddist = 40 + Math.random() * 260;
+      var dang = Math.random() * Math.PI * 2;
+      oDots.push({
+        // sürünün ortasına göre offset (kalıcı, bireysel karakter)
+        ox: Math.cos(dang) * ddist,
+        oy: Math.sin(dang) * ddist,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.6 + Math.random() * 0.9,
+        driftR: 14 + Math.random() * 26,
+        r: 0.8 + Math.random() * 1.6,
+        alphaBase: 0.06 + Math.random() * 0.12
+      });
+    }
+
+    var oSwarmX = oMouseX, oSwarmY = oMouseY;
 
     (function oLoop(){
       oTime += 16;
       var idleFor = Date.now() - oLastMoveTime;
+      var targetX, targetY;
       if (idleFor > 1800) {
         oMouseActive = false;
         var ip = oIdlePos(oTime);
-        oTargetX = ip.x; oTargetY = ip.y;
+        targetX = ip.x; targetY = ip.y;
+      } else {
+        targetX = oMouseX; targetY = oMouseY;
       }
-      oCurX += (oTargetX - oCurX) * (oMouseActive ? 0.05 : 0.012);
-      oCurY += (oTargetY - oCurY) * (oMouseActive ? 0.05 : 0.012);
+      oSwarmX += (targetX - oSwarmX) * (oMouseActive ? 0.035 : 0.01);
+      oSwarmY += (targetY - oSwarmY) * (oMouseActive ? 0.035 : 0.01);
 
       oCtx.clearRect(0, 0, oW, oH);
 
-      var pts = [];
-      for (var i = 0; i < oNumPts; i++){
-        var ang = (i / oNumPts) * Math.PI * 2;
-        var wob = Math.sin(oTime * 0.0009 + i * 1.7) * 0.16 + Math.cos(oTime * 0.0006 + i * 2.3) * 0.10;
-        var r = oBaseR * (1 + wob) * (oMouseActive ? 1.15 : 1);
-        pts.push({
-          x: oCurX + Math.cos(ang) * r,
-          y: oCurY + Math.sin(ang) * r
-        });
-      }
+      for (var i = 0; i < oDots.length; i++){
+        var d = oDots[i];
+        // her nokta kendi bağımsız, sentetik-organik yörüngesinde sürünün etrafında dolaşıyor
+        var wx = Math.sin(oTime * 0.0006 * d.speed + d.phase) * d.driftR;
+        var wy = Math.cos(oTime * 0.0005 * d.speed + d.phase * 1.3) * d.driftR;
+        var x = oSwarmX + d.ox + wx;
+        var y = oSwarmY + d.oy + wy;
+        var pulse = 0.6 + Math.sin(oTime * 0.0012 + d.phase) * 0.4;
+        var alpha = d.alphaBase * pulse * (oMouseActive ? 1.4 : 1);
 
-      oCtx.beginPath();
-      for (var j = 0; j < pts.length; j++){
-        var cur = pts[j], next = pts[(j+1) % pts.length];
-        var mx = (cur.x + next.x) / 2, my = (cur.y + next.y) / 2;
-        if (j === 0) oCtx.moveTo(mx, my);
-        else oCtx.quadraticCurveTo(cur.x, cur.y, mx, my);
+        oCtx.beginPath();
+        oCtx.arc(x, y, d.r, 0, 6.2832);
+        oCtx.fillStyle = 'rgba(245,245,243,' + alpha.toFixed(3) + ')';
+        oCtx.fill();
       }
-      oCtx.closePath();
-
-      var grad = oCtx.createRadialGradient(oCurX, oCurY, 0, oCurX, oCurY, oBaseR * 1.4);
-      grad.addColorStop(0, 'rgba(245,245,243,0.10)');
-      grad.addColorStop(0.6, 'rgba(245,245,243,0.04)');
-      grad.addColorStop(1, 'rgba(245,245,243,0)');
-      oCtx.fillStyle = grad;
-      oCtx.fill();
 
       requestAnimationFrame(oLoop);
     })();
@@ -2197,7 +2208,6 @@
     window.addEventListener('resize', function(){
       oW = oCanvas.width = window.innerWidth;
       oH = oCanvas.height = window.innerHeight;
-      oBaseR = Math.min(oW, oH) * 0.16;
     });
   }
 
