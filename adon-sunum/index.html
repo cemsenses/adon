@@ -247,11 +247,66 @@
 
   /* NAV */
   #nav { position: fixed; bottom: 5vh; right: 5vw; display: flex; align-items: center; gap: 16px; z-index: 1000; }
-  .nav-btn { width: 48px; height: 48px; border: 1px solid var(--gray-2); background: transparent; cursor: none; display: flex; align-items: center; justify-content: center; transition: border-color .3s, background .3s; }
+  .nav-btn { width: 48px; height: 48px; border: 1.5px solid rgba(245,245,243,0.7); background: transparent; cursor: none; display: flex; align-items: center; justify-content: center; transition: border-color .3s, background .3s; }
   .nav-btn:hover { border-color: var(--white); background: var(--gray-1); }
-  .nav-btn svg { width: 16px; height: 16px; fill: none; stroke: var(--white); stroke-width: 1.5; }
-  .nav-btn:disabled { opacity: 0.2; pointer-events: none; }
-  #slide-counter { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.15em; color: var(--gray-3); min-width: 54px; text-align: center; }
+  .nav-btn svg { width: 17px; height: 17px; fill: none; stroke: var(--white); stroke-width: 2.4; }
+  .nav-btn:disabled { opacity: 0.25; pointer-events: none; }
+  #slide-counter { font-family: 'Lexend Deca', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.15em; color: var(--white); min-width: 54px; text-align: center; }
+
+  /* ── SAYFA NOKTALARI (ALT) ── */
+  #page-dots {
+    position: fixed;
+    bottom: 2.2vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1000;
+  }
+  .page-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(245,245,243,0.25);
+    border: none;
+    cursor: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.35s cubic-bezier(0.16,1,0.3,1), height 0.35s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
+    flex-shrink: 0;
+  }
+  .page-dot:hover {
+    background: rgba(245,245,243,0.6);
+  }
+  .page-dot span {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 600;
+    font-size: 0;
+    color: #000;
+    opacity: 0;
+    transition: font-size 0.25s ease 0.1s, opacity 0.25s ease 0.1s;
+    line-height: 1;
+    user-select: none;
+  }
+  .page-dot.active {
+    width: 22px;
+    height: 22px;
+    background: rgba(245,245,243,0.95);
+  }
+  .page-dot.active span {
+    font-size: 9px;
+    opacity: 1;
+  }
+  @media (max-width: 768px) {
+    #page-dots { bottom: 1.4vh; gap: 5px; }
+    .page-dot { width: 6px; height: 6px; }
+    .page-dot.active { width: 18px; height: 18px; }
+    .page-dot.active span { font-size: 8px; }
+  }
 
   /* CANVAS */
   #particle-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 1; pointer-events: none; display: block; }
@@ -708,6 +763,8 @@
   </button>
 </div>
 
+<div id="page-dots"></div>
+
 <div id="lightbox">
   <img id="lightbox-img" src="" alt="">
 </div>
@@ -762,11 +819,34 @@
     btnPrev.disabled = current === 0;
     btnNext.disabled = current === total - 1;
     pauseAllVideos(current);
+    updatePageDots(current);
     // Persistent logo — kapakta gizli, son slideda gizli
     if (current === 0 || current === total - 1) { pLogo.classList.remove('visible'); }
     else { pLogo.classList.add('visible'); }
     setTimeout(function() { animating = false; }, 750);
   }
+
+  // ── SAYFA NOKTALARI ──
+  var pageDotsEl = document.getElementById('page-dots');
+  var pageDots = [];
+  for (var pdi = 0; pdi < total; pdi++) {
+    (function(idx){
+      var dot = document.createElement('button');
+      dot.className = 'page-dot';
+      var num = document.createElement('span');
+      num.textContent = idx + 1;
+      dot.appendChild(num);
+      dot.addEventListener('click', function(){ goTo(idx); });
+      dot.addEventListener('mouseenter', function(){ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      dot.addEventListener('mouseleave', function(){ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+      pageDotsEl.appendChild(dot);
+      pageDots.push(dot);
+    })(pdi);
+  }
+  function updatePageDots(index) {
+    pageDots.forEach(function(d, i){ d.classList.toggle('active', i === index); });
+  }
+  updatePageDots(0);
 
   btnNext.addEventListener('click', function() { goTo(current + 1); });
   btnPrev.addEventListener('click', function() { goTo(current - 1); });
