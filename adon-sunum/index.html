@@ -82,6 +82,130 @@
 
   /* ── SLIDE: İLETİŞİM ── */
   .slide-contact { flex-direction: column; align-items: flex-start; justify-content: center; padding: 10vw; }
+
+  /* ── SLIDE: GALLERY ── */
+  .slide-gallery {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 8vh 4vw 11vh 4vw;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .gallery-thumb {
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0a;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .slide.is-active .gallery-thumb {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .gallery-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    filter: grayscale(12%) brightness(0.94);
+  }
+  .gallery-thumb:hover img {
+    transform: scale(1.04);
+    filter: grayscale(0%) brightness(1);
+  }
+  .gallery-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(245,245,243,0.08);
+    pointer-events: none;
+    transition: border-color 0.4s ease;
+  }
+  .gallery-thumb:hover::after {
+    border-color: rgba(245,245,243,0.3);
+  }
+
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.94);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    padding: 4vh 4vw;
+    cursor: auto;
+  }
+  #lightbox.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    transform: scale(0.94);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  #lightbox.open img {
+    transform: scale(1);
+  }
+  #lightbox-close {
+    position: fixed;
+    top: 3.5vh;
+    right: 3.5vw;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(245,245,243,0.25);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    z-index: 3001;
+    opacity: 0;
+    pointer-events: none;
+  }
+  #lightbox-close.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #lightbox-close:hover {
+    border-color: rgba(245,245,243,0.8);
+    background: rgba(245,245,243,0.06);
+  }
+  #lightbox-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: #f5f5f3;
+    stroke-width: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .slide-gallery { padding: 3vh 4vw 10vh; overflow-y: auto; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); height: auto; gap: 6px; }
+    .gallery-thumb { aspect-ratio: 2/3; }
+    #lightbox-close { top: 2.5vh; right: 4vw; width: 38px; height: 38px; }
+  }
   .contact-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 6vh; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s; }
   .contact-grid { display: flex; gap: 6vw; opacity: 0; transform: translateY(25px); transition: opacity 0.9s var(--ease) 0.3s, transform 0.9s var(--ease) 0.3s; }
   .contact-person { display: flex; flex-direction: column; gap: 8px; }
@@ -352,8 +476,13 @@
     </div>
   </div>
 
+  <!-- SLIDE: GALLERY -->
+  <div class="slide slide-gallery" data-slide="10">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+
   <!-- SLIDE 7: İLETİŞİM -->
-  <div class="slide slide-contact" data-slide="10">
+  <div class="slide slide-contact" data-slide="11">
     <p class="contact-eyebrow">İletişim</p>
     <div class="contact-grid">
       <div class="contact-person">
@@ -374,7 +503,7 @@
   </div>
 
   <!-- SLIDE 8: TEŞEKKÜRLER -->
-  <div class="slide slide-end" data-slide="11">
+  <div class="slide slide-end" data-slide="12">
     <div class="end-tesekkur"><em>Teşekkürler</em></div>
     <img class="end-logo-img" src="../kozmetik/logo-end.png" alt="ADON">
     <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
@@ -386,11 +515,21 @@
   <button class="nav-btn" id="btn-prev" disabled>
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 12</span>
+  <span id="slide-counter">01 / 13</span>
   <button class="nav-btn" id="btn-next">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
 </div>
+
+<div id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+</div>
+<button id="lightbox-close" aria-label="Kapat">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="4" y1="4" x2="20" y2="20" stroke-linecap="round"/>
+    <line x1="20" y1="4" x2="4" y2="20" stroke-linecap="round"/>
+  </svg>
+</button>
 
 <script>
   // CURSOR
@@ -530,6 +669,59 @@
   pLoop();
   document.addEventListener('mousemove', function(e) { if(current===0){pMouse.x=e.clientX;pMouse.y=e.clientY;}else{pMouse.x=-999;pMouse.y=-999;} });
   window.addEventListener('resize', function() { pW=pCanvas.width=window.innerWidth; pH=pCanvas.height=window.innerHeight; });
+
+  // ── GALLERY (rastgele, tekilleştirilmiş 12 görsel) ──
+  var galleryPool = [
+    "gallery-adp-1.png","gallery-adp-2.png","gallery-adp-3.png","gallery-adp-4.png",
+    "gallery-el-1.jpeg","gallery-el-2.jpeg","gallery-el-3.png","gallery-el-4.png",
+    "gallery-imp-1.png","gallery-imp-2.jpg","gallery-imp-3.jpg","gallery-imp-4.png",
+    "gallery-ps-1.png","gallery-ps-2.jpg","gallery-ps-3.jpg","gallery-ps-4.jpg",
+    "gallery-ro-1.png","gallery-ro-2.png","gallery-ro-3.jpg","gallery-ro-4.png","gallery-ro-5.jpg","gallery-ro-6.jpeg","gallery-ro-7.jpeg","gallery-ro-8.png",
+    "gallery-rs-2.png","gallery-rs-4.png",
+    "gallery-uc-1.png","gallery-uc-2.png","gallery-uc-3.png","gallery-uc-4.png"
+  ];
+
+  function galleryShuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  var gallerySelected = galleryShuffle(galleryPool).slice(0, 12);
+  var galleryGrid = document.getElementById('gallery-grid');
+  if (galleryGrid) {
+    gallerySelected.forEach(function(src) {
+      var thumb = document.createElement('div');
+      thumb.className = 'gallery-thumb';
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = 'ADON Studio';
+      img.loading = 'lazy';
+      thumb.appendChild(img);
+      thumb.addEventListener('click', function(){ openLightbox(src); });
+      galleryGrid.appendChild(thumb);
+    });
+  }
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxClose = document.getElementById('lightbox-close');
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+    lightboxClose.classList.add('open');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxClose.classList.remove('open');
+  }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
 </script>
 </body>
 </html>
