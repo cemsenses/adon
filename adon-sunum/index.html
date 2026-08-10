@@ -721,14 +721,8 @@
     </div>
   </div>
 
-  <!-- SLIDE: GALLERY -->
-  <div class="slide slide-gallery" data-slide="10">
-    <div class="gallery-grid" id="gallery-grid"></div>
-  </div>
-
-  <!-- SLIDE 7: İLETİŞİM -->
   <!-- SLIDE: VIDEO — Hicret -->
-  <div class="slide slide-sunum-video" data-slide="11">
+  <div class="slide slide-sunum-video" data-slide="10">
     <div class="sunum-video-wrap">
       <div class="sv-title">HICRET</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
@@ -737,13 +731,28 @@
     </div>
   </div>
 
+  <!-- SLIDE: VIDEO — Imprime Perfume -->
+  <div class="slide slide-sunum-video" data-slide="11">
+    <div class="sunum-video-wrap">
+      <div class="sv-title">IMPRIME PERFUME</div>
+      <div class="sunum-video-inner" style="padding-top:55.94%">
+        <iframe id="sv-imprime" src="https://player.vimeo.com/video/1175738290?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Imprime Perfume"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE: GALLERY -->
+  <div class="slide slide-gallery" data-slide="12">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+
   <!-- SLIDE: TITLECARD — Hayat Kimya Demo -->
-  <div class="slide slide-titlecard" data-slide="12">
+  <div class="slide slide-titlecard" data-slide="13">
     <div class="titlecard-text">Hayat Kimya — Demo</div>
   </div>
 
   <!-- SLIDE: VIDEO — Molfix Demo 01 -->
-  <div class="slide slide-sunum-video" data-slide="13">
+  <div class="slide slide-sunum-video" data-slide="14">
     <div class="sunum-video-wrap">
       <div class="sv-title">MOLFIX DEMO — 01</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
@@ -753,7 +762,7 @@
   </div>
 
   <!-- SLIDE: VIDEO — Molfix Demo 02 -->
-  <div class="slide slide-sunum-video" data-slide="14">
+  <div class="slide slide-sunum-video" data-slide="15">
     <div class="sunum-video-wrap">
       <div class="sv-title">MOLFIX DEMO — 02</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
@@ -763,7 +772,7 @@
   </div>
 
   <!-- SLIDE: VIDEO — Baby Care Film -->
-  <div class="slide slide-sunum-video" data-slide="15">
+  <div class="slide slide-sunum-video" data-slide="16">
     <div class="sunum-video-wrap">
       <div class="sv-title">MOLFIX — BABY CARE FILM</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
@@ -772,7 +781,7 @@
     </div>
   </div>
 
-  <div class="slide slide-contact" data-slide="16">
+  <div class="slide slide-contact" data-slide="17">
     <p class="contact-eyebrow">İletişim</p>
     <div class="contact-grid">
       <div class="contact-person">
@@ -793,7 +802,7 @@
   </div>
 
   <!-- SLIDE 8: TEŞEKKÜRLER -->
-  <div class="slide slide-end" data-slide="17">
+  <div class="slide slide-end" data-slide="18">
     <div class="end-tesekkur"><em>Teşekkürler</em></div>
     <img class="end-logo-img" src="../kozmetik/logo-end.png" alt="ADON">
     <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
@@ -805,7 +814,7 @@
   <button class="nav-btn" id="btn-prev" disabled>
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 18</span>
+  <span id="slide-counter">01 / 19</span>
   <button class="nav-btn" id="btn-next">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -911,7 +920,7 @@
 
   // VIMEO PLAYERS
   var svPlayers = {};
-  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-bioxcin': 5, 'sv-4': 6, 'sv-5': 7, 'sv-5b': 7, 'sv-6': 8, 'sv-7': 9, 'sv-hicret': 11, 'sv-molfix1': 13, 'sv-molfix2': 14, 'sv-molfix3': 15 }; // sv-2 YouTube
+  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-bioxcin': 5, 'sv-4': 6, 'sv-5': 7, 'sv-5b': 7, 'sv-6': 8, 'sv-7': 9, 'sv-hicret': 10, 'sv-imprime': 11, 'sv-molfix1': 14, 'sv-molfix2': 15, 'sv-molfix3': 16 }; // sv-2 YouTube
 
   window.addEventListener('load', function() {
     Object.keys(svSlides).forEach(function(id) {
