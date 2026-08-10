@@ -62,6 +62,24 @@
 
   /* ── SLIDE: MANIFESTO / TEXT ── */
   .slide-text { flex-direction: column; align-items: flex-start; justify-content: center; padding: 10vw; }
+
+  /* ── SLIDE: BÜYÜK ORTALI BAŞLIK ── */
+  .slide-titlecard {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10vw;
+  }
+  .slide-titlecard .titlecard-text {
+    font-weight: 200;
+    font-size: clamp(32px, 5vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.9s var(--ease) 0.15s, transform 0.9s var(--ease) 0.15s;
+  }
+  .slide.is-active .titlecard-text { opacity: 1 !important; transform: none !important; }
   .slide-text .text-eyebrow { font-family: 'Lexend Deca', sans-serif; font-weight: 100; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 4vh; opacity: 0; transform: translateY(15px); transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s; }
   .slide-text .text-title { font-weight: 200; font-size: clamp(28px, 4vw, 58px); line-height: 1.1; letter-spacing: -0.025em; max-width: 75vw; opacity: 0; transform: translateY(30px); transition: opacity 0.9s var(--ease) 0.2s, transform 0.9s var(--ease) 0.2s; }
   .slide-text .text-title em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
@@ -517,7 +535,22 @@
   </div>
 
   <!-- SLIDE 7: İLETİŞİM -->
-  <div class="slide slide-contact" data-slide="11">
+  <!-- SLIDE: TITLECARD — Hayat Kimya Demo -->
+  <div class="slide slide-titlecard" data-slide="11">
+    <div class="titlecard-text">Hayat Kimya — Demo</div>
+  </div>
+
+  <!-- SLIDE: VIDEO — Molfix Demo 01 -->
+  <div class="slide slide-sunum-video" data-slide="12">
+    <div class="sunum-video-wrap">
+      <div class="sv-title">Molfix Demo — 01</div>
+      <div class="sunum-video-inner" style="padding-top:56.25%">
+        <iframe id="sv-molfix1" src="https://player.vimeo.com/video/1216895852?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Molfix Demo - 01"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-contact" data-slide="13">
     <p class="contact-eyebrow">İletişim</p>
     <div class="contact-grid">
       <div class="contact-person">
@@ -538,7 +571,7 @@
   </div>
 
   <!-- SLIDE 8: TEŞEKKÜRLER -->
-  <div class="slide slide-end" data-slide="12">
+  <div class="slide slide-end" data-slide="14">
     <div class="end-tesekkur"><em>Teşekkürler</em></div>
     <img class="end-logo-img" src="../kozmetik/logo-end.png" alt="ADON">
     <div class="end-contact">adon.com.tr · info@adon.com.tr</div>
@@ -550,7 +583,7 @@
   <button class="nav-btn" id="btn-prev" disabled>
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 13</span>
+  <span id="slide-counter">01 / 15</span>
   <button class="nav-btn" id="btn-next">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -631,7 +664,7 @@
 
   // VIMEO PLAYERS
   var svPlayers = {};
-  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-bioxcin': 5, 'sv-4': 6, 'sv-5': 7, 'sv-5b': 7, 'sv-6': 8, 'sv-7': 9 }; // sv-2 YouTube
+  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-bioxcin': 5, 'sv-4': 6, 'sv-5': 7, 'sv-5b': 7, 'sv-6': 8, 'sv-7': 9, 'sv-molfix1': 12 }; // sv-2 YouTube
 
   window.addEventListener('load', function() {
     Object.keys(svSlides).forEach(function(id) {
