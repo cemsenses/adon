@@ -480,6 +480,7 @@
     align-items: center;
     justify-content: center;
     gap: 0;
+    overflow: hidden;
     transition: opacity 0.6s ease, visibility 0.6s ease;
   }
   #password-gate.hidden {
@@ -487,7 +488,39 @@
     visibility: hidden;
     pointer-events: none;
   }
+  #gate-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  #gate-video-bg iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.24vw;
+    min-height: 100vh;
+    min-width: 177.85vh;
+    transform: translate(-50%, -50%);
+    border: none;
+    pointer-events: none;
+  }
+  #gate-video-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+    pointer-events: none;
+  }
   #password-gate .gate-logo {
+    position: relative;
+    z-index: 2;
     width: 130px;
     height: auto;
     margin-bottom: 6vh;
@@ -496,6 +529,8 @@
     animation: gateFade 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
   }
   #password-gate .gate-form {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -566,6 +601,10 @@
 <body>
 
 <div id="password-gate">
+  <div id="gate-video-bg">
+    <iframe src="https://player.vimeo.com/video/1216901740?badge=0&autopause=0&loop=1&background=1&muted=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Salute"></iframe>
+  </div>
+  <div id="gate-video-overlay"></div>
   <img class="gate-logo" src="logo-cover-new.png" alt="ADON">
   <div class="gate-form">
     <input type="password" id="gate-input" placeholder="Şifre" autocomplete="off">
