@@ -266,12 +266,12 @@
     </div>
   </div>
 
-  <!-- SLIDE 5: VIDEO — Bioxcin Acnium -->
+  <!-- SLIDE 5: VIDEO — Bioxcin-Acnium AI Movie -->
   <div class="slide slide-sunum-video" data-slide="5">
     <div class="sunum-video-wrap">
-      <div class="sv-title">Bioxcin Acnium</div>
+      <div class="sv-title">Bioxcin-Acnium AI Movie</div>
       <div class="sunum-video-inner" style="padding-top:56.25%">
-        <iframe id="sv-3" src="https://www.youtube.com/embed/2uIenB7c7kU?si=dU1XDj5zMOlZeElX&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&color=white&enablejsapi=1" frameborder="0" allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        <iframe id="sv-bioxcin" src="https://player.vimeo.com/video/1198697441?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Bioxcin-Acnium AI Movie"></iframe>
       </div>
     </div>
   </div>
@@ -479,7 +479,7 @@
 
   // VIMEO PLAYERS
   var svPlayers = {};
-  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-4': 6, 'sv-5': 7, 'sv-6': 8, 'sv-7': 9 }; // sv-2, sv-3 YouTube
+  var svSlides = { 'sv-showreel': 2, 'sv-1': 3, 'sv-bioxcin': 5, 'sv-4': 6, 'sv-5': 7, 'sv-6': 8, 'sv-7': 9 }; // sv-2 YouTube
 
   window.addEventListener('load', function() {
     Object.keys(svSlides).forEach(function(id) {
@@ -494,10 +494,10 @@
 
   // YouTube players
   var ytPlayers = {};
-  var ytSlides = { 'sv-2': 4, 'sv-3': 5 };
+  var ytSlides = { 'sv-2': 4 };
 
   window.onYouTubeIframeAPIReady = function() {
-    ['sv-2', 'sv-3'].forEach(function(id) {
+    ['sv-2'].forEach(function(id) {
       ytPlayers[id] = new YT.Player(id, {
         events: { 'onReady': function() {} }
       });
