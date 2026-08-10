@@ -237,7 +237,39 @@
 
   /* CANVAS */
   #particle-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 1; pointer-events: none; display: block; }
-  .slide-cover > *:not(#particle-canvas) { position: relative; z-index: 2; }
+  .slide-cover > *:not(#particle-canvas):not(#cover-video-bg):not(#cover-video-overlay) { position: relative; z-index: 2; }
+
+  /* ── KAPAK ARKAPLAN VİDEOSU ── */
+  #cover-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  #cover-video-bg iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.78vh;
+    transform: translate(-50%, -50%);
+    border: none;
+    pointer-events: none;
+  }
+  #cover-video-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+    pointer-events: none;
+  }
   .cover-logo { z-index: 3 !important; }
 
   @media (max-width: 768px) {
@@ -379,6 +411,10 @@
 
   <!-- SLIDE 1: KAPAK -->
   <div class="slide slide-cover is-active" data-slide="0">
+    <div id="cover-video-bg">
+      <iframe src="https://player.vimeo.com/video/1216891815?badge=0&autopause=0&loop=1&background=1&muted=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sunum-arkaplanvideo"></iframe>
+    </div>
+    <div id="cover-video-overlay"></div>
     <canvas id="particle-canvas"></canvas>
     <div class="cover-logo"><img src="../kozmetik/logo-cover.png" alt="ADON"></div>
     <p class="cover-eyebrow">ADON AI Studio</p>
