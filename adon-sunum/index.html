@@ -414,11 +414,110 @@
     margin-bottom: 20px;
     text-align: left;
   }
+  /* ── ŞİFRE EKRANI ── */
+  #password-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #password-gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  #password-gate .gate-logo {
+    width: 130px;
+    height: auto;
+    margin-bottom: 6vh;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: gateFade 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+  }
+  #password-gate .gate-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: gateFade 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+  }
+  #gate-input {
+    width: 260px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245,245,243,0.25);
+    color: #f5f5f3;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 10px 0;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  #gate-input::placeholder {
+    color: rgba(245,245,243,0.3);
+    font-weight: 200;
+  }
+  #gate-input:focus {
+    border-bottom-color: rgba(245,245,243,0.8);
+  }
+  #gate-submit {
+    margin-top: 6px;
+    padding: 13px 34px;
+    background: transparent;
+    border: 1px solid rgba(245,245,243,0.35);
+    color: #f5f5f3;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  #gate-submit:hover {
+    border-color: rgba(245,245,243,0.9);
+    background: rgba(245,245,243,0.06);
+  }
+  #gate-error {
+    margin-top: 18px;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #d9534f;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 14px;
+  }
+  #gate-error.show { opacity: 1; }
+  @keyframes gateFade {
+    to { opacity: 1; transform: none; }
+  }
 </style>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
+
+<div id="password-gate">
+  <img class="gate-logo" src="logo-cover-new.png" alt="ADON">
+  <div class="gate-form">
+    <input type="password" id="gate-input" placeholder="Şifre" autocomplete="off">
+    <button id="gate-submit">Sunuma Giriş</button>
+    <div id="gate-error">Şifre Hatalı</div>
+  </div>
+</div>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
@@ -810,6 +909,38 @@
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', function(e){ if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
+
+  // ── ŞİFRE EKRANI ──
+  (function(){
+    var GATE_PASSWORD = 'Adon2026';
+    var gate = document.getElementById('password-gate');
+    var gateInput = document.getElementById('gate-input');
+    var gateSubmit = document.getElementById('gate-submit');
+    var gateError = document.getElementById('gate-error');
+
+    if (sessionStorage.getItem('adonGateOk') === '1') {
+      gate.classList.add('hidden');
+    } else {
+      setTimeout(function(){ gateInput.focus(); }, 400);
+    }
+
+    function tryUnlock() {
+      if (gateInput.value === GATE_PASSWORD) {
+        gateError.classList.remove('show');
+        sessionStorage.setItem('adonGateOk', '1');
+        gate.classList.add('hidden');
+      } else {
+        gateError.classList.add('show');
+        gateInput.value = '';
+        gateInput.focus();
+      }
+    }
+
+    gateSubmit.addEventListener('click', tryUnlock);
+    gateInput.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') tryUnlock();
+    });
+  })();
 </script>
 </body>
 </html>
