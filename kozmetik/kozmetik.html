@@ -1304,20 +1304,6 @@
     </div>
   </div>
 
-  <!-- SLIDE: BIOXCIN LOGO -->
-  <div class="slide slide-brand-logo" data-slide="13">
-    <img class="brand-logo-img" src="bioxcin-logo.png" alt="Bioxcin">
-  </div>
-
-  <!-- SLIDE: VIDEO — Bioxcin-Acnium AI Movie -->
-  <div class="slide slide-vimeo-wide" data-slide="14">
-    <div class="vimeo-wide-wrap">
-      <div class="vimeo-wide-inner">
-        <iframe id="vimeo-player-14" src="https://player.vimeo.com/video/1198697441?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Bioxcin-Acnium AI Movie"></iframe>
-      </div>
-    </div>
-  </div>
-
   <!-- SLIDE 6: VIDEO — Urban Care Glycolic Shampoo -->
   <div class="slide slide-vimeo" data-slide="9">
     <div class="vimeo-wrap">
@@ -1336,6 +1322,20 @@
     <div class="vimeo-wide-wrap">
       <div class="vimeo-wide-inner">
         <iframe id="vimeo-player-2" src="https://player.vimeo.com/video/1189413575?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Urban Care"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE: BIOXCIN LOGO -->
+  <div class="slide slide-brand-logo" data-slide="13">
+    <img class="brand-logo-img" src="bioxcin-logo.png" alt="Bioxcin">
+  </div>
+
+  <!-- SLIDE: VIDEO — Bioxcin-Acnium AI Movie -->
+  <div class="slide slide-vimeo-wide" data-slide="14">
+    <div class="vimeo-wide-wrap">
+      <div class="vimeo-wide-inner">
+        <iframe id="vimeo-player-14" src="https://player.vimeo.com/video/1198697441?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Bioxcin-Acnium AI Movie"></iframe>
       </div>
     </div>
   </div>
@@ -1521,7 +1521,7 @@
       <div class="milestone-dot"></div>
       <div class="milestone-label">Urban Care</div>
     </div>
-    <div class="milestone-item" data-goto="13">
+    <div class="milestone-item" data-goto="15">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Bioxcin</div>
     </div>
@@ -1622,10 +1622,10 @@
     skipHashUpdate = false;
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
-      if (current !== 15) { vimeoPlayer.pause(); }
+      if (current !== 13) { vimeoPlayer.pause(); }
     }
     if (typeof vimeoPlayer2 !== 'undefined') {
-      if (current !== 16) { vimeoPlayer2.pause(); }
+      if (current !== 14) { vimeoPlayer2.pause(); }
     }
     if (typeof vimeoPlayer3 !== 'undefined') {
       if (current !== 20) { vimeoPlayer3.pause(); }
@@ -1661,7 +1661,7 @@
       if (current !== 11) { vimeoPlayer13.pause(); }
     }
     if (typeof vimeoPlayer14 !== 'undefined') {
-      if (current !== 14) { vimeoPlayer14.pause(); }
+      if (current !== 16) { vimeoPlayer14.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
@@ -1689,7 +1689,7 @@
   // ── MILESTONE BAR
   var milestoneBar = document.getElementById('milestone-bar');
   var milestoneItems = document.querySelectorAll('.milestone-item');
-  var brandSlides = [3, 7, 13, 18, 22, 27, 29, 31];
+  var brandSlides = [3, 7, 15, 18, 22, 27, 29, 31];
 
   // Tıklama
   milestoneItems.forEach(function(item) {
@@ -1807,13 +1807,13 @@
     if (iframe && typeof Vimeo !== 'undefined') {
       vimeoPlayer = new Vimeo.Player(iframe);
       vimeoPlayer.setLoop(true);
-      if (current !== 15) vimeoPlayer.pause();
+      if (current !== 13) vimeoPlayer.pause();
     }
     var iframe2 = document.getElementById('vimeo-player-2');
     if (iframe2 && typeof Vimeo !== 'undefined') {
       vimeoPlayer2 = new Vimeo.Player(iframe2);
       vimeoPlayer2.setLoop(true);
-      if (current !== 16) vimeoPlayer2.pause();
+      if (current !== 14) vimeoPlayer2.pause();
     }
     var iframe3 = document.getElementById('vimeo-player-3');
     if (iframe3 && typeof Vimeo !== 'undefined') {
@@ -1885,7 +1885,7 @@
     if (iframe14 && typeof Vimeo !== 'undefined') {
       vimeoPlayer14 = new Vimeo.Player(iframe14);
       vimeoPlayer14.setLoop(true);
-      if (current !== 14) vimeoPlayer14.pause();
+      if (current !== 16) vimeoPlayer14.pause();
     }
   });
 
