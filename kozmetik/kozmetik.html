@@ -1585,6 +1585,7 @@
   const total = slides.length;
   let current = 0;
   let animating = false;
+  let skipHashUpdate = false;
 
   const presentation = document.getElementById('presentation');
   const btnPrev = document.getElementById('btn-prev');
@@ -1614,6 +1615,11 @@
     btnNext.disabled = current === total - 1;
     updateInfoVisibility(current);
     updateMilestone(current);
+    // URL'yi güncel slide numarasıyla senkronize et (1-indexli)
+    if (!skipHashUpdate) {
+      history.replaceState(null, '', '#' + (current + 1));
+    }
+    skipHashUpdate = false;
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
       if (current !== 15) { vimeoPlayer.pause(); }
@@ -1748,6 +1754,22 @@
   progress.style.width = `${(1 / total) * 100}%`;
   updateMilestone(0);
   counter.textContent = `${pad(1)} / ${pad(total)}`;
+
+  // URL hash ile direkt slide'a git (örn. #5 -> 5. slide)
+  function goToFromHash() {
+    const raw = window.location.hash.replace('#', '');
+    const num = parseInt(raw, 10);
+    if (!isNaN(num) && num >= 1 && num <= total) {
+      skipHashUpdate = true;
+      goTo(num - 1);
+    }
+  }
+  if (window.location.hash) {
+    goToFromHash();
+  } else {
+    history.replaceState(null, '', '#1');
+  }
+  window.addEventListener('hashchange', goToFromHash);
 
   // ── MANIFESTO WORD SPLIT
   (function() {
