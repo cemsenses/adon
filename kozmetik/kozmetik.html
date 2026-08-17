@@ -1304,6 +1304,11 @@
     </div>
   </div>
 
+  <!-- SLIDE: BIOXCIN LOGO -->
+  <div class="slide slide-brand-logo" data-slide="13">
+    <img class="brand-logo-img" src="bioxcin-logo.png" alt="Bioxcin">
+  </div>
+
   <!-- SLIDE 6: VIDEO — Urban Care Glycolic Shampoo -->
   <div class="slide slide-vimeo" data-slide="9">
     <div class="vimeo-wrap">
@@ -1507,23 +1512,23 @@
       <div class="milestone-dot"></div>
       <div class="milestone-label">Urban Care</div>
     </div>
-    <div class="milestone-item" data-goto="16">
+    <div class="milestone-item" data-goto="17">
       <div class="milestone-dot"></div>
       <div class="milestone-label">The Purest Solutions</div>
     </div>
-    <div class="milestone-item" data-goto="20">
+    <div class="milestone-item" data-goto="21">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Imprimé</div>
     </div>
-    <div class="milestone-item" data-goto="25">
+    <div class="milestone-item" data-goto="26">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Aqua Di Polo</div>
     </div>
-    <div class="milestone-item" data-goto="27">
+    <div class="milestone-item" data-goto="28">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Tresan</div>
     </div>
-    <div class="milestone-item" data-goto="29">
+    <div class="milestone-item" data-goto="30">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Edenland</div>
     </div>
@@ -1538,7 +1543,7 @@
   <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 32</span>
+  <span id="slide-counter">01 / 33</span>
   <button class="nav-btn" id="btn-next" aria-label="Sonraki">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -1598,31 +1603,31 @@
     updateMilestone(current);
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
-      if (current !== 13) { vimeoPlayer.pause(); }
+      if (current !== 14) { vimeoPlayer.pause(); }
     }
     if (typeof vimeoPlayer2 !== 'undefined') {
-      if (current !== 14) { vimeoPlayer2.pause(); }
+      if (current !== 15) { vimeoPlayer2.pause(); }
     }
     if (typeof vimeoPlayer3 !== 'undefined') {
-      if (current !== 18) { vimeoPlayer3.pause(); }
+      if (current !== 19) { vimeoPlayer3.pause(); }
     }
     if (typeof vimeoPlayer4 !== 'undefined') {
-      if (current !== 22) { vimeoPlayer4.pause(); }
+      if (current !== 23) { vimeoPlayer4.pause(); }
     }
     if (typeof vimeoPlayer5 !== 'undefined') {
-      if (current !== 23) { vimeoPlayer5.pause(); }
+      if (current !== 24) { vimeoPlayer5.pause(); }
     }
     if (typeof vimeoPlayer6 !== 'undefined') {
       if (current !== 6) { vimeoPlayer6.pause(); }
     }
     if (typeof vimeoPlayer7 !== 'undefined') {
-      if (current !== 30) { vimeoPlayer7.pause(); }
+      if (current !== 31) { vimeoPlayer7.pause(); }
     }
     if (typeof vimeoPlayer8 !== 'undefined') {
-      if (current !== 24) { vimeoPlayer8.pause(); }
+      if (current !== 25) { vimeoPlayer8.pause(); }
     }
     if (typeof vimeoPlayer9 !== 'undefined') {
-      if (current !== 28) { vimeoPlayer9.pause(); }
+      if (current !== 29) { vimeoPlayer9.pause(); }
     }
     if (typeof vimeoPlayer10 !== 'undefined') {
       if (current !== 8) { vimeoPlayer10.pause(); }
@@ -1662,7 +1667,7 @@
   // ── MILESTONE BAR
   var milestoneBar = document.getElementById('milestone-bar');
   var milestoneItems = document.querySelectorAll('.milestone-item');
-  var brandSlides = [3, 7, 16, 20, 25, 27, 29];
+  var brandSlides = [3, 7, 17, 21, 26, 28, 30];
 
   // Tıklama
   milestoneItems.forEach(function(item) {
@@ -1764,31 +1769,31 @@
     if (iframe && typeof Vimeo !== 'undefined') {
       vimeoPlayer = new Vimeo.Player(iframe);
       vimeoPlayer.setLoop(true);
-      if (current !== 13) vimeoPlayer.pause();
+      if (current !== 14) vimeoPlayer.pause();
     }
     var iframe2 = document.getElementById('vimeo-player-2');
     if (iframe2 && typeof Vimeo !== 'undefined') {
       vimeoPlayer2 = new Vimeo.Player(iframe2);
       vimeoPlayer2.setLoop(true);
-      if (current !== 14) vimeoPlayer2.pause();
+      if (current !== 15) vimeoPlayer2.pause();
     }
     var iframe3 = document.getElementById('vimeo-player-3');
     if (iframe3 && typeof Vimeo !== 'undefined') {
       vimeoPlayer3 = new Vimeo.Player(iframe3);
       vimeoPlayer3.setLoop(true);
-      if (current !== 18) vimeoPlayer3.pause();
+      if (current !== 19) vimeoPlayer3.pause();
     }
     var iframe4 = document.getElementById('vimeo-player-4');
     if (iframe4 && typeof Vimeo !== 'undefined') {
       vimeoPlayer4 = new Vimeo.Player(iframe4);
       vimeoPlayer4.setLoop(true);
-      if (current !== 22) vimeoPlayer4.pause();
+      if (current !== 23) vimeoPlayer4.pause();
     }
     var iframe5 = document.getElementById('vimeo-player-5');
     if (iframe5 && typeof Vimeo !== 'undefined') {
       vimeoPlayer5 = new Vimeo.Player(iframe5);
       vimeoPlayer5.setLoop(true);
-      if (current !== 23) vimeoPlayer5.pause();
+      if (current !== 24) vimeoPlayer5.pause();
     }
     var iframe6 = document.getElementById('vimeo-player-6');
     if (iframe6 && typeof Vimeo !== 'undefined') {
@@ -1800,19 +1805,19 @@
     if (iframe7 && typeof Vimeo !== 'undefined') {
       vimeoPlayer7 = new Vimeo.Player(iframe7);
       vimeoPlayer7.setLoop(true);
-      if (current !== 30) vimeoPlayer7.pause();
+      if (current !== 31) vimeoPlayer7.pause();
     }
     var iframe8 = document.getElementById('vimeo-player-8');
     if (iframe8 && typeof Vimeo !== 'undefined') {
       vimeoPlayer8 = new Vimeo.Player(iframe8);
       vimeoPlayer8.setLoop(true);
-      if (current !== 24) vimeoPlayer8.pause();
+      if (current !== 25) vimeoPlayer8.pause();
     }
     var iframe9 = document.getElementById('vimeo-player-9');
     if (iframe9 && typeof Vimeo !== 'undefined') {
       vimeoPlayer9 = new Vimeo.Player(iframe9);
       vimeoPlayer9.setLoop(true);
-      if (current !== 28) vimeoPlayer9.pause();
+      if (current !== 29) vimeoPlayer9.pause();
     }
     var iframe10 = document.getElementById('vimeo-player-10');
     if (iframe10 && typeof Vimeo !== 'undefined') {
