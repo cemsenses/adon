@@ -1309,6 +1309,15 @@
     <img class="brand-logo-img" src="bioxcin-logo.png" alt="Bioxcin">
   </div>
 
+  <!-- SLIDE: VIDEO — Bioxcin-Acnium AI Movie -->
+  <div class="slide slide-vimeo-wide" data-slide="14">
+    <div class="vimeo-wide-wrap">
+      <div class="vimeo-wide-inner">
+        <iframe id="vimeo-player-14" src="https://player.vimeo.com/video/1198697441?badge=0&autopause=0&loop=1&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Bioxcin-Acnium AI Movie"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- SLIDE 6: VIDEO — Urban Care Glycolic Shampoo -->
   <div class="slide slide-vimeo" data-slide="9">
     <div class="vimeo-wrap">
@@ -1512,23 +1521,23 @@
       <div class="milestone-dot"></div>
       <div class="milestone-label">Urban Care</div>
     </div>
-    <div class="milestone-item" data-goto="17">
+    <div class="milestone-item" data-goto="18">
       <div class="milestone-dot"></div>
       <div class="milestone-label">The Purest Solutions</div>
     </div>
-    <div class="milestone-item" data-goto="21">
+    <div class="milestone-item" data-goto="22">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Imprimé</div>
     </div>
-    <div class="milestone-item" data-goto="26">
+    <div class="milestone-item" data-goto="27">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Aqua Di Polo</div>
     </div>
-    <div class="milestone-item" data-goto="28">
+    <div class="milestone-item" data-goto="29">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Tresan</div>
     </div>
-    <div class="milestone-item" data-goto="30">
+    <div class="milestone-item" data-goto="31">
       <div class="milestone-dot"></div>
       <div class="milestone-label">Edenland</div>
     </div>
@@ -1543,7 +1552,7 @@
   <button class="nav-btn" id="btn-prev" disabled aria-label="Önceki">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
-  <span id="slide-counter">01 / 33</span>
+  <span id="slide-counter">01 / 34</span>
   <button class="nav-btn" id="btn-next" aria-label="Sonraki">
     <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
@@ -1603,31 +1612,31 @@
     updateMilestone(current);
     // Video kontrolü
     if (typeof vimeoPlayer !== 'undefined') {
-      if (current !== 14) { vimeoPlayer.pause(); }
+      if (current !== 15) { vimeoPlayer.pause(); }
     }
     if (typeof vimeoPlayer2 !== 'undefined') {
-      if (current !== 15) { vimeoPlayer2.pause(); }
+      if (current !== 16) { vimeoPlayer2.pause(); }
     }
     if (typeof vimeoPlayer3 !== 'undefined') {
-      if (current !== 19) { vimeoPlayer3.pause(); }
+      if (current !== 20) { vimeoPlayer3.pause(); }
     }
     if (typeof vimeoPlayer4 !== 'undefined') {
-      if (current !== 23) { vimeoPlayer4.pause(); }
+      if (current !== 24) { vimeoPlayer4.pause(); }
     }
     if (typeof vimeoPlayer5 !== 'undefined') {
-      if (current !== 24) { vimeoPlayer5.pause(); }
+      if (current !== 25) { vimeoPlayer5.pause(); }
     }
     if (typeof vimeoPlayer6 !== 'undefined') {
       if (current !== 6) { vimeoPlayer6.pause(); }
     }
     if (typeof vimeoPlayer7 !== 'undefined') {
-      if (current !== 31) { vimeoPlayer7.pause(); }
+      if (current !== 32) { vimeoPlayer7.pause(); }
     }
     if (typeof vimeoPlayer8 !== 'undefined') {
-      if (current !== 25) { vimeoPlayer8.pause(); }
+      if (current !== 26) { vimeoPlayer8.pause(); }
     }
     if (typeof vimeoPlayer9 !== 'undefined') {
-      if (current !== 29) { vimeoPlayer9.pause(); }
+      if (current !== 30) { vimeoPlayer9.pause(); }
     }
     if (typeof vimeoPlayer10 !== 'undefined') {
       if (current !== 8) { vimeoPlayer10.pause(); }
@@ -1640,6 +1649,9 @@
     }
     if (typeof vimeoPlayer13 !== 'undefined') {
       if (current !== 11) { vimeoPlayer13.pause(); }
+    }
+    if (typeof vimeoPlayer14 !== 'undefined') {
+      if (current !== 14) { vimeoPlayer14.pause(); }
     }
 
     setTimeout(() => { animating = false; }, 750);
@@ -1667,7 +1679,7 @@
   // ── MILESTONE BAR
   var milestoneBar = document.getElementById('milestone-bar');
   var milestoneItems = document.querySelectorAll('.milestone-item');
-  var brandSlides = [3, 7, 17, 21, 26, 28, 30];
+  var brandSlides = [3, 7, 18, 22, 27, 29, 31];
 
   // Tıklama
   milestoneItems.forEach(function(item) {
@@ -1763,37 +1775,37 @@
   })();
 
   // ── VIMEO PLAYER CONTROL
-  var vimeoPlayer, vimeoPlayer2, vimeoPlayer3, vimeoPlayer4, vimeoPlayer5, vimeoPlayer6, vimeoPlayer7, vimeoPlayer8, vimeoPlayer9, vimeoPlayer10, vimeoPlayer11, vimeoPlayer12, vimeoPlayer13;
+  var vimeoPlayer, vimeoPlayer2, vimeoPlayer3, vimeoPlayer4, vimeoPlayer5, vimeoPlayer6, vimeoPlayer7, vimeoPlayer8, vimeoPlayer9, vimeoPlayer10, vimeoPlayer11, vimeoPlayer12, vimeoPlayer13, vimeoPlayer14;
   window.addEventListener('load', function() {
     var iframe = document.getElementById('vimeo-player');
     if (iframe && typeof Vimeo !== 'undefined') {
       vimeoPlayer = new Vimeo.Player(iframe);
       vimeoPlayer.setLoop(true);
-      if (current !== 14) vimeoPlayer.pause();
+      if (current !== 15) vimeoPlayer.pause();
     }
     var iframe2 = document.getElementById('vimeo-player-2');
     if (iframe2 && typeof Vimeo !== 'undefined') {
       vimeoPlayer2 = new Vimeo.Player(iframe2);
       vimeoPlayer2.setLoop(true);
-      if (current !== 15) vimeoPlayer2.pause();
+      if (current !== 16) vimeoPlayer2.pause();
     }
     var iframe3 = document.getElementById('vimeo-player-3');
     if (iframe3 && typeof Vimeo !== 'undefined') {
       vimeoPlayer3 = new Vimeo.Player(iframe3);
       vimeoPlayer3.setLoop(true);
-      if (current !== 19) vimeoPlayer3.pause();
+      if (current !== 20) vimeoPlayer3.pause();
     }
     var iframe4 = document.getElementById('vimeo-player-4');
     if (iframe4 && typeof Vimeo !== 'undefined') {
       vimeoPlayer4 = new Vimeo.Player(iframe4);
       vimeoPlayer4.setLoop(true);
-      if (current !== 23) vimeoPlayer4.pause();
+      if (current !== 24) vimeoPlayer4.pause();
     }
     var iframe5 = document.getElementById('vimeo-player-5');
     if (iframe5 && typeof Vimeo !== 'undefined') {
       vimeoPlayer5 = new Vimeo.Player(iframe5);
       vimeoPlayer5.setLoop(true);
-      if (current !== 24) vimeoPlayer5.pause();
+      if (current !== 25) vimeoPlayer5.pause();
     }
     var iframe6 = document.getElementById('vimeo-player-6');
     if (iframe6 && typeof Vimeo !== 'undefined') {
@@ -1805,19 +1817,19 @@
     if (iframe7 && typeof Vimeo !== 'undefined') {
       vimeoPlayer7 = new Vimeo.Player(iframe7);
       vimeoPlayer7.setLoop(true);
-      if (current !== 31) vimeoPlayer7.pause();
+      if (current !== 32) vimeoPlayer7.pause();
     }
     var iframe8 = document.getElementById('vimeo-player-8');
     if (iframe8 && typeof Vimeo !== 'undefined') {
       vimeoPlayer8 = new Vimeo.Player(iframe8);
       vimeoPlayer8.setLoop(true);
-      if (current !== 25) vimeoPlayer8.pause();
+      if (current !== 26) vimeoPlayer8.pause();
     }
     var iframe9 = document.getElementById('vimeo-player-9');
     if (iframe9 && typeof Vimeo !== 'undefined') {
       vimeoPlayer9 = new Vimeo.Player(iframe9);
       vimeoPlayer9.setLoop(true);
-      if (current !== 29) vimeoPlayer9.pause();
+      if (current !== 30) vimeoPlayer9.pause();
     }
     var iframe10 = document.getElementById('vimeo-player-10');
     if (iframe10 && typeof Vimeo !== 'undefined') {
@@ -1842,6 +1854,12 @@
       vimeoPlayer13 = new Vimeo.Player(iframe13);
       vimeoPlayer13.setLoop(true);
       if (current !== 11) vimeoPlayer13.pause();
+    }
+    var iframe14 = document.getElementById('vimeo-player-14');
+    if (iframe14 && typeof Vimeo !== 'undefined') {
+      vimeoPlayer14 = new Vimeo.Player(iframe14);
+      vimeoPlayer14.setLoop(true);
+      if (current !== 14) vimeoPlayer14.pause();
     }
   });
 
