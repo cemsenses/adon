@@ -1,83 +1,110 @@
 [
-  {
-    "id": 1774110677010,
-    "title": "IMPRIME PERFUME",
-    "category": "Ürün & E-Ticaret",
-    "year": "2026",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110663011.jpg",
-    "placeholder": "IM",
-    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
-  },
-  {
-    "id": 1774110465611,
-    "title": "Beymen.com",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png",
-    "placeholder": "BE",
-    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
-  },
-  {
-    "id": 1774110432974,
-    "title": "Urban Care",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg",
-    "placeholder": "UR",
-    "color": "linear-gradient(135deg,#b8c9e8,#b8e8e0)"
-  },
-  {
-    "id": 1774110413173,
-    "title": "Hawaian Tropic",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110398749.jpg",
-    "placeholder": "HA",
-    "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
-  },
-  {
-    "id": 1774110374332,
-    "title": "The Purest Solutions",
-    "category": "Ürün & E-Ticaret",
-    "year": "2024",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110359406.jpg",
-    "placeholder": "TH",
-    "color": "linear-gradient(135deg,#f2e8b8,#f2c8a8)"
-  },
-  {
-    "id": 1774109893405,
-    "title": "Imprime Perfume",
-    "category": "Ürün & E-Ticaret",
-    "year": "2026",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109873643.jpeg",
-    "placeholder": "IM",
-    "color": "linear-gradient(135deg,#c9c5e8,#f2b8c6)"
-  },
-  {
-    "id": 1774109804158,
-    "title": "Imprime Perfume",
-    "category": "Video Prodüksiyon",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109791755.png",
-    "placeholder": "IM",
-    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
-  },
-  {
-    "id": 1774109505186,
-    "title": "Rossmann",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109498643.png",
-    "placeholder": "RO",
-    "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
-  },
-  {
-    "id": 1774109282659,
-    "title": "Rossmann",
-    "category": "Ürün & E-Ticaret",
-    "year": "2025",
-    "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/rossmann_1774109277324.png",
-    "placeholder": "RO",
-    "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
-  }
+    {
+        "id": 1787402595980,
+        "title": "Isana Donut Lip Jelly",
+        "category": "Ürün & E-Ticaret",
+        "year": "2026",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/isana-donut-lipjelly.png",
+        "placeholder": "IS",
+        "color": "linear-gradient(135deg,#f2b8c9,#e8a8c0)"
+    },
+    {
+        "id": 1787402595981,
+        "title": "Isana Magic Aura",
+        "category": "Ürün & E-Ticaret",
+        "year": "2026",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/isana-magic-aura.png",
+        "placeholder": "IS",
+        "color": "linear-gradient(135deg,#f2c9d8,#e8b8c9)"
+    },
+    {
+        "id": 1787402595982,
+        "title": "Isana Hydration Cream",
+        "category": "Ürün & E-Ticaret",
+        "year": "2026",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/isana-hydration-cream.png",
+        "placeholder": "IS",
+        "color": "linear-gradient(135deg,#f2d8e0,#e8c5d0)"
+    },
+    {
+        "id": 1774110677010,
+        "title": "IMPRIME PERFUME",
+        "category": "Ürün & E-Ticaret",
+        "year": "2026",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110663011.jpg",
+        "placeholder": "IM",
+        "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+    },
+    {
+        "id": 1774110465611,
+        "title": "Beymen.com",
+        "category": "Ürün & E-Ticaret",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png",
+        "placeholder": "BE",
+        "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+    },
+    {
+        "id": 1774110432974,
+        "title": "Urban Care",
+        "category": "Ürün & E-Ticaret",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg",
+        "placeholder": "UR",
+        "color": "linear-gradient(135deg,#b8c9e8,#b8e8e0)"
+    },
+    {
+        "id": 1774110413173,
+        "title": "Hawaian Tropic",
+        "category": "Ürün & E-Ticaret",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110398749.jpg",
+        "placeholder": "HA",
+        "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
+    },
+    {
+        "id": 1774110374332,
+        "title": "The Purest Solutions",
+        "category": "Ürün & E-Ticaret",
+        "year": "2024",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110359406.jpg",
+        "placeholder": "TH",
+        "color": "linear-gradient(135deg,#f2e8b8,#f2c8a8)"
+    },
+    {
+        "id": 1774109893405,
+        "title": "Imprime Perfume",
+        "category": "Ürün & E-Ticaret",
+        "year": "2026",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109873643.jpeg",
+        "placeholder": "IM",
+        "color": "linear-gradient(135deg,#c9c5e8,#f2b8c6)"
+    },
+    {
+        "id": 1774109804158,
+        "title": "Imprime Perfume",
+        "category": "Video Prodüksiyon",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109791755.png",
+        "placeholder": "IM",
+        "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+    },
+    {
+        "id": 1774109505186,
+        "title": "Rossmann",
+        "category": "Ürün & E-Ticaret",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109498643.png",
+        "placeholder": "RO",
+        "color": "linear-gradient(135deg,#e8d8b8,#e8b8b8)"
+    },
+    {
+        "id": 1774109282659,
+        "title": "Rossmann",
+        "category": "Ürün & E-Ticaret",
+        "year": "2025",
+        "image": "https://raw.githubusercontent.com/cemsenses/adon/main/media/works/rossmann_1774109277324.png",
+        "placeholder": "RO",
+        "color": "linear-gradient(135deg,#e8b8c9,#e8c8f2)"
+    }
 ]
