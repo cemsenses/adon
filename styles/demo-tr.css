@@ -376,6 +376,29 @@ html.demo-tr {
   width: 100%;
 }
 
+/* Coral buttons: keep fill, draw a white rule inside (overflow:hidden would clip an outside rule) */
+.demo-tr-body .btn.demo-hover-rule {
+  overflow: visible;
+}
+
+.demo-tr-body .btn.demo-hover-rule:hover,
+.demo-tr-body .btn.demo-hover-rule.is-hover {
+  background: #ff3c31;
+  border-color: #ff3c31;
+  color: #fff;
+}
+
+.demo-tr-body .btn.demo-hover-rule::after {
+  bottom: 8px;
+  left: 32px;
+  background: #fff;
+}
+
+.demo-tr-body .btn.demo-hover-rule:hover::after,
+.demo-tr-body .btn.demo-hover-rule.is-hover::after {
+  width: calc(100% - 64px);
+}
+
 /* ── Touch: native cursor ── */
 html.is-touch,
 html.is-touch body,
