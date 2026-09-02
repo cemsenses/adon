@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+Disallow: /demo-tr
+Disallow: /demo-tr.html
+
 Sitemap: https://adon.com.tr/sitemap.xml

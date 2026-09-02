@@ -1,0 +1,463 @@
+/* =============================================
+   ADON STUDIO — demo-tr overlay
+   Additive. Does not replace live homepage.
+   ============================================= */
+
+html.demo-tr {
+  background: #080808;
+}
+
+.demo-tr-body {
+  background: #080808;
+}
+
+/* Kill live IO ghost reveals on this page — ScrollTrigger owns opacity */
+.demo-tr-body .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Dark nav stays white on the dark scrolled bar */
+.demo-tr-body .nav--dark.scrolled .lang-toggle {
+  color: var(--white);
+}
+
+.demo-tr-body .nav--dark.scrolled .logo-default {
+  display: block !important;
+}
+
+.demo-tr-body .nav--dark.scrolled .logo-scrolled {
+  display: none !important;
+}
+
+.demo-tr-body .marquee-section {
+  visibility: visible;
+}
+
+/* Overlay: overlay-out on load (existing language). Hero still sits underneath. */
+.demo-tr-body .page-overlay {
+  transform: scaleY(1);
+  transform-origin: bottom;
+  animation: overlay-out 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: none;
+}
+
+.demo-tr-body .page-overlay.is-navigating {
+  pointer-events: auto;
+  transform-origin: top;
+  animation: overlay-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Tiny persistent DEMO badge ── */
+.demo-badge {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 5000;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #ff3c31;
+  padding: 6px 9px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.demo-badge:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* ── COVER: Sentez composition ──
+   First paint is the cinematic still (CSS background), never a black void.
+   Left ~45% type + dark scrim; right side is the picture. */
+.demo-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background-color: #080808;
+  background-image: url('../media/hero/sentez.jpg');
+  background-size: cover;
+  background-position: 68% center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.demo-hero-media {
+  position: absolute;
+  inset: -12% 0;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.demo-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 68% center;
+  display: block;
+}
+
+.demo-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 8, 8, 0.94) 0%,
+      rgba(8, 8, 8, 0.82) 28%,
+      rgba(8, 8, 8, 0.48) 46%,
+      rgba(8, 8, 8, 0.12) 62%,
+      rgba(8, 8, 8, 0) 78%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8, 8, 8, 0.35) 0%,
+      rgba(8, 8, 8, 0) 28%,
+      rgba(8, 8, 8, 0.18) 100%
+    );
+}
+
+.demo-hero-copy {
+  position: relative;
+  z-index: 3;
+  width: min(42rem, 45%);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(var(--nav-height) + 72px) 40px 11vh 40px;
+  text-align: left;
+}
+
+.demo-hero-title {
+  font-family: var(--font-headline);
+  font-weight: 400;
+  font-size: clamp(40px, 5.4vw, 92px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase !important;
+  color: #fff;
+  margin: 0 0 28px;
+}
+
+.demo-hero-title em {
+  display: block;
+  font-family: var(--font-serif) !important;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none !important;
+  font-size: 0.78em;
+  letter-spacing: 0;
+  line-height: 1.05;
+  margin-top: 0.12em;
+  color: #fff;
+}
+
+.demo-hero-body {
+  max-width: 34rem;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 8px;
+}
+
+.demo-hero-body em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: #fff;
+}
+
+.demo-hero-copy .btn {
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+/* ── WORK PIN: one sticky rail, full-bleed, no gutter ── */
+.demo-pin {
+  position: relative;
+  background: #080808;
+  color: #fff;
+}
+
+.demo-pin-sticky {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: #080808;
+}
+
+.demo-pin-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.demo-pin-frame.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.demo-pin-media {
+  position: absolute;
+  inset: -12% 0;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.demo-pin-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.demo-pin-caption {
+  position: absolute;
+  left: 40px;
+  bottom: 36px;
+  z-index: 3;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 12px rgba(8, 8, 8, 0.55);
+}
+
+/* Reduced motion / static stack: stills, no pin */
+.demo-pin.is-static {
+  height: auto;
+}
+
+.demo-pin.is-static .demo-pin-sticky {
+  height: auto;
+  display: block;
+}
+
+.demo-pin.is-static .demo-pin-frame {
+  position: relative;
+  height: 100svh;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.demo-pin.is-static .demo-pin-media {
+  inset: 0;
+}
+
+/* ── Footnote: shrunk pillars + logos ── */
+.demo-footnote {
+  background: #fff;
+  color: var(--black);
+  padding: 56px 0 0;
+}
+
+.demo-footnote-label {
+  padding: 0 32px;
+  margin-bottom: 20px;
+}
+
+.demo-pillars {
+  border-top: 1px solid var(--border);
+}
+
+.demo-pillars .pillar {
+  padding: 24px 20px 28px;
+}
+
+.demo-pillars .pillar-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.demo-pillars .pillar-body {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.demo-logos {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  padding: 28px 0;
+  clip-path: inset(0);
+  position: relative;
+}
+
+.demo-tr-body .lt-wrap {
+  clip-path: inset(0);
+  width: 100%;
+  overflow: hidden;
+}
+
+.demo-tr-body .lt-track {
+  display: flex;
+  align-items: center;
+  gap: 96px;
+  width: max-content;
+  animation: demo-lt-scroll 28s linear infinite;
+}
+
+.demo-tr-body .lt-wrap:hover .lt-track {
+  animation-play-state: paused;
+}
+
+@keyframes demo-lt-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.demo-tr-body .lt-img {
+  height: 36px;
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+  filter: grayscale(100%) opacity(0.5);
+}
+
+/* Fark sits on white */
+.demo-fark {
+  background: #fff;
+  color: var(--black);
+}
+
+.demo-solutions {
+  background: #fff;
+  color: var(--black);
+}
+
+.demo-tr-body .cta-section {
+  background: #fff;
+}
+
+.demo-tr-body .speed-teaser-section .section-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.demo-tr-body .speed-teaser-section .section-label::before {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Hover type: coral rule (directed, not default underline) */
+.demo-hover-rule {
+  position: relative;
+}
+
+.demo-hover-rule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1.5px;
+  background: #ff3c31;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.demo-hover-rule.is-hover::after,
+.demo-hover-rule:hover::after {
+  width: 100%;
+}
+
+/* ── Touch: native cursor ── */
+html.is-touch,
+html.is-touch body,
+html.is-touch a,
+html.is-touch button {
+  cursor: auto !important;
+}
+
+html.is-touch .cursor,
+html.is-touch .cursor-follower {
+  display: none !important;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .demo-tr-body .page-overlay {
+    animation: none !important;
+    transform: scaleY(0) !important;
+  }
+
+  .demo-tr-body .lt-track {
+    animation: none;
+  }
+
+  .demo-hero-media,
+  .demo-pin-media {
+    inset: 0;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .demo-hero-copy {
+    width: min(36rem, 58%);
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-hero-copy {
+    width: 100%;
+    max-width: none;
+    padding: calc(var(--nav-height) + 48px) 24px 8vh;
+  }
+
+  .demo-hero-scrim {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 8, 8, 0.78) 0%,
+        rgba(8, 8, 8, 0.42) 55%,
+        rgba(8, 8, 8, 0.18) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(8, 8, 8, 0.28) 0%,
+        rgba(8, 8, 8, 0.55) 100%
+      );
+  }
+
+  .demo-hero-title {
+    font-size: clamp(36px, 11vw, 56px);
+  }
+
+  .demo-pin-caption {
+    left: 20px;
+    bottom: 24px;
+  }
+
+  .demo-footnote {
+    padding-top: 40px;
+  }
+
+  .demo-tr-body .lt-img {
+    height: 28px;
+  }
+
+  .demo-tr-body .lt-track {
+    gap: 64px;
+  }
+
+  .demo-badge {
+    left: 12px;
+    bottom: 12px;
+  }
+}
