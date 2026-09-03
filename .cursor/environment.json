@@ -1,0 +1,17 @@
+{
+  "name": "ADON Studio static site",
+  "install": "python3 --version",
+  "terminals": [
+    {
+      "name": "static-server",
+      "command": "python3 -m http.server 8000 --bind 0.0.0.0",
+      "description": "Serves the static site (HTML/CSS/JS and site.json) at http://localhost:8000. A static HTTP server is required because pages load content via fetch('site.json'), which does not work over the file:// protocol."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 8000
+    }
+  ]
+}
