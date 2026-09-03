@@ -128,6 +128,9 @@
     .form-label { font-size: 12px !important; letter-spacing: 0.15em !important; }
     .form-input, .form-textarea { font-size: 18px !important; padding: 14px 0 !important; }
 
+    /* ─── Hero: içerik arttığı için sabit viewport yüksekliği yerine otomatik büyüsün, nav ile asla çakışmasın ─── */
+    .hero { height: auto !important; min-height: 100svh; padding-top: calc(var(--nav-height) + 140px) !important; padding-bottom: 64px !important; }
+
     /* ─── Hero: eyebrow + stat şeridi (ana sayfada yok) ─── */
     .hero-eyebrow {
       font-family: var(--font-body); font-size: 13px; font-weight: 600;
@@ -232,12 +235,12 @@
     </div>
 
     <h1 class="hero-headlines" id="main-content">
-      <span class="hero-eyebrow">Türkiye'nin Yapay Zeka Prodüksiyon Stüdyosu</span>
       <div class="hero-text-top">Sinematik Kalite,</div>
       <div class="hero-text-bottom"><em>Yapay Zeka Hızında.</em></div>
     </h1>
 
     <div class="hero-middle">
+      <span class="hero-eyebrow">Türkiye'nin Yapay Zeka Prodüksiyon Stüdyosu</span>
       <p class="hero-desc reveal reveal-delay-2">
         ADON Studio, markalar için <strong>yapay zeka destekli video, ürün görseli ve moda içeriği</strong> üreten bir yaratıcı prodüksiyon stüdyosudur. On yıllık prodüksiyon birikimini kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle birleştiriyoruz.
       </p>
