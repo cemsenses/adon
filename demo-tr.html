@@ -3,344 +3,158 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ADON Studio — Türkçe Anasayfa Demo</title>
-  <meta name="description" content="ADON Studio Türkçe anasayfa demosu. Canlı site değildir." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADON AI Studio — Türkçe Anasayfa Demo</title>
+  <meta name="description" content="ADON AI Studio Türkçe anasayfa demosu. Canlı site değildir." />
   <meta name="robots" content="noindex, nofollow" />
 
   <link rel="icon" type="image/x-icon" href="media/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="192x192" href="media/favicon-192.png" />
 
-  <link rel="preload" as="image" href="media/hero/sentez.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="demo-tr/media/hero-tulle.jpg" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-
-  <link rel="stylesheet" href="styles/main.css?v=4" />
-  <link rel="stylesheet" href="styles/animations.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/demo-tr.css" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body class="demo-tr-body">
 
-  <a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:#ff3c31;color:#fff;padding:8px 16px;z-index:9999;transition:top 0.2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">İçeriğe Geç</a>
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
-  <div class="page-overlay"></div>
+  <a class="skip-link" href="#kapak">İçeriğe geç</a>
+  <div class="page-overlay" aria-hidden="true"></div>
 
   <a class="demo-badge" href="index.html" title="Bu bir demo sayfasıdır — canlı anasayfaya dön">DEMO</a>
 
-  <!-- ─── Navigation (same labels/hrefs as TR home) ─── -->
-  <nav class="nav nav--dark" id="block-nav">
-    <a href="index.html" class="nav-logo"><img src="media/beyaz.png" alt="ADON Studio" class="logo-default" style="height:22px;width:auto;display:block;"><img src="media/logos/adon-ufak-logo.png" alt="ADON Studio" class="logo-scrolled" style="height:22px;width:auto;display:none;"></a>
-    <div class="nav-links">
-      <a href="hakkimizda.html">Hakkımızda</a>
-      <a href="cozumler.html">Çözümler</a>
-      <a href="calismalar.html">Çalışmalar</a>
-      <a href="sentez.html">Sentez</a>
-    </div>
-    <div class="lang-toggle">
-      <span class="lang-active">TR</span>
-      <a href="en/index.html" class="lang-link">EN</a>
-    </div>
-    <a href="iletisim.html" class="nav-cta">İletişim</a>
-    <button class="nav-menu-toggle" aria-label="Menü">
-      <span></span><span></span><span></span>
+  <header class="dtr-bar">
+    <a class="dtr-logo" href="index.html" aria-label="ADON — canlı anasayfa">
+      <img src="media/beyaz.png" alt="ADON" width="88" height="18" />
+    </a>
+    <button class="dtr-menu-btn" type="button" aria-expanded="false" aria-controls="dtr-menu" id="dtr-menu-toggle">
+      MENU&nbsp;··
     </button>
-  </nav>
+  </header>
+
+  <div class="dtr-menu" id="dtr-menu" hidden>
+    <div class="dtr-menu-inner">
+      <p class="dtr-menu-kicker">ADON AI Studio</p>
+      <nav class="dtr-menu-nav" aria-label="Demo menü">
+        <a href="index.html">Ana sayfa</a>
+        <a href="hakkimizda.html">Hakkımızda</a>
+        <a href="cozumler.html">Çözümler</a>
+        <a href="calismalar.html">Çalışmalar</a>
+        <a href="iletisim.html">İletişim</a>
+      </nav>
+      <p class="dtr-menu-note">Bu sayfa bir demodur. Canlı siteyi açmak için Ana sayfa.</p>
+    </div>
+  </div>
 
   <main id="main-content">
 
-    <!-- ─── COVER: Sentez composition, cinematic still first paint ─── -->
-    <section class="demo-hero" aria-label="Kapak">
-      <div class="demo-hero-media" data-parallax>
-        <img src="media/hero/sentez.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" />
-      </div>
-      <div class="demo-hero-scrim" aria-hidden="true"></div>
-      <div class="demo-hero-copy">
-        <h1 class="demo-hero-title" id="cms-hero">
-          Yapay zeka ile üretiyoruz<br>
-          <em>Markalarla büyüyoruz.</em>
-        </h1>
-        <p class="demo-hero-body">
-          Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: on yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız <em>yeni nesil bir yaratıcı fabrika.</em> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.
-        </p>
-        <a href="sentez.html" class="btn demo-hover-rule">Sentezi İş Başında Görün →</a>
+    <!-- 1. Kapak -->
+    <section class="hero" id="kapak" aria-label="Kapak">
+      <div class="hero-frame">
+        <div class="hero-media" data-parallax>
+          <img src="demo-tr/media/hero-tulle.jpg" alt="" width="2400" height="1600" fetchpriority="high" decoding="async" />
+        </div>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <div class="hero-meta">
+          <p>Yapay zeka orkestrasyonlu prodüksiyon — İstanbul</p>
+          <p class="hero-stamp" data-stamp>3 Eylül</p>
+        </div>
+
+        <ul class="hero-services" aria-label="Hizmetler">
+          <li>FOTOĞRAF&nbsp;+</li>
+          <li>FILM</li>
+          <li>HİBRİT&nbsp;+</li>
+          <li>RENK</li>
+          <li>ART DIRECTION&nbsp;+</li>
+        </ul>
+
+        <div class="hero-copy">
+          <h1 class="hero-title">İŞ KONUŞUR.<br>BİZ YÖNETİRİZ.</h1>
+          <p class="hero-dek">Markalar için sinematik görüntü. Ham yapay zeka çıktısı yok — her kare edit, renk ve VFX’den geçer.</p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="pill" href="iletisim.html">Görüşme ayarla →</a>
+          <a class="text-link" href="#case">İşi gör</a>
+        </div>
       </div>
     </section>
 
-    <!-- ─── WORK FIRST: one Spector / XZERO pin ─── -->
-    <section class="demo-pin" id="work-pin" aria-label="Çalışmalar">
-      <div class="demo-pin-sticky">
-        <article class="demo-pin-frame is-active" data-frame="0">
-          <div class="demo-pin-media" data-parallax>
-            <img class="demo-pin-img demo-hover-img" src="media/works/img_1774109873643.jpeg" alt="Imprime Perfume" width="1600" height="2000" decoding="async" />
-          </div>
-          <p class="demo-pin-caption">Imprime Perfume</p>
-        </article>
-        <article class="demo-pin-frame" data-frame="1">
-          <div class="demo-pin-media" data-parallax>
-            <img class="demo-pin-img demo-hover-img" src="media/works/img_1774110398749.jpg" alt="Hawaian Tropic" width="1600" height="2000" decoding="async" />
-          </div>
-          <p class="demo-pin-caption">Hawaian Tropic</p>
-        </article>
-        <article class="demo-pin-frame" data-frame="2">
-          <div class="demo-pin-media" data-parallax>
-            <img class="demo-pin-img demo-hover-img" src="media/works/img_1774110425841.jpg" alt="Urban Care" width="1600" height="2000" decoding="async" />
-          </div>
-          <p class="demo-pin-caption">Urban Care</p>
-        </article>
-        <article class="demo-pin-frame" data-frame="3">
-          <div class="demo-pin-media" data-parallax>
-            <img class="demo-pin-img demo-hover-img" src="media/works/img_1774109791755.png" alt="Imprime Perfume" width="1600" height="2000" decoding="async" />
-          </div>
-          <p class="demo-pin-caption">Imprime Perfume</p>
-        </article>
+    <!-- 2. Bir case -->
+    <section class="case" id="case" aria-label="Bir case">
+      <div class="case-bleed" aria-hidden="true">
+        <img src="media/works/img_1774109873643.jpeg" alt="" width="1856" height="2304" decoding="async" />
       </div>
-    </section>
+      <div class="case-frame">
+        <img src="media/works/img_1774109873643.jpeg" alt="Imprimé — orenda, sue ve claire şişeleri taş kaide üzerinde" width="1856" height="2304" decoding="async" />
+      </div>
 
-    <!-- ─── Text marquee (exact index.html strings) ─── -->
-    <div class="marquee-section">
-      <div class="marquee-track">
-        <span>İşlem Değil, Dönüşüm</span>
-        <span>Ödünsüz Kalite</span>
-        <span>Tasarımın İçinde Ölçeklenebilirlik</span>
-        <span>Performans Odaklı</span>
-        <span>Küresel Erişim, Yerel Özgünlük</span>
-        <span>Garantili Marka Bütünlüğü</span>
-        <span>Lojistik Yükü Sıfır</span>
-        <span>İşlem Değil, Dönüşüm</span>
-        <span>Ödünsüz Kalite</span>
-        <span>Tasarımın İçinde Ölçeklenebilirlik</span>
-        <span>Performans Odaklı</span>
-        <span>Küresel Erişim, Yerel Özgünlük</span>
-        <span>Garantili Marka Bütünlüğü</span>
-        <span>Lojistik Yükü Sıfır</span>
-      </div>
-    </div>
+      <div class="case-ui">
+        <div class="case-top">
+          <p class="case-eyebrow">· İŞ · 01 / IMPRIMÉ</p>
+          <h2 class="case-title">BİR PARFÜM, ÜÇ<br>PAZAR, TEK ÇEKİM.</h2>
+        </div>
 
-    <!-- ─── Shrunk pillars + logo marquee (footnote) ─── -->
-    <section class="demo-footnote" aria-label="Dönüşümün Beş Temel Taşı">
-      <p class="section-label demo-footnote-label">Dönüşümün Beş Temel Taşı</p>
-      <div class="pillars demo-pillars demo-stagger">
-        <div class="pillar">
-          <div class="pillar-num">01</div>
-          <div class="pillar-title">Zanaat ve Kalite Güvencesi</div>
-          <div class="pillar-body">Yapay zeka çıktıları asla ham hâliyle teslim edilmez. Yaratıcı yönetmenlerimiz estetik standartları belirler; son aşamada uzman editörler, renk uzmanları ve VFX sanatçıları her kareyi marka kimliğinizle örtüşene kadar işler.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">02</div>
-          <div class="pillar-title">Geleneksele Kıyasla 10x Hız</div>
-          <div class="pillar-body">Geleneksel prodüksiyonda haftalar süren içerik üretimini saatlere sıkıştırıyoruz. Paralel çalışan yapay zeka modelleri sayesinde 48 saat içinde yüzlerce varyant üretip A/B testine hazır kampanya paketleri teslim edebiliyoruz.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">03</div>
-          <div class="pillar-title">Kılavuzunuza Tam Uyum, Her Seferinde</div>
-          <div class="pillar-body">İçerik ölçeklendiğinde marka tutarlılığı çoğu zaman ilk feda edilendir. Metodolojimiz; renk paletinden ton of voice'a, tipografiden fotoğrafik stile kadar tüm marka değerlerini her içerik parçasına işler.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">04</div>
-          <div class="pillar-title">Fikirden Onaya: Risk Almadan Prototipleme</div>
-          <div class="pillar-body">Büyük bütçeleri sahaya sürmeden önce konseptlerinizi test edin. Yaratıcı fikir aşamasında ürettiğimiz görsel prototipler, hem onay süreçlerini hızlandırır hem de nihai üretimde sürpriz maliyetleri ortadan kaldırır.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">05</div>
-          <div class="pillar-title">Global Ölçek, Yerel Dokunuş</div>
-          <div class="pillar-body">Sadece metni çevirmiyoruz; görselleri, modelleri ve atmosferi her pazarın kültürel dokusuna göre yeniden kurguluyoruz. Tek bir üretim süreciyle 20'den fazla ülkede yerel gibi görünen içerikleri eş zamanlı teslim ediyoruz.</div>
-        </div>
-      </div>
-      <div class="demo-logos">
-        <div class="lt-wrap">
-          <div class="lt-track">
-            <img src="media/logos/01-beymen.jpg" alt="Beymen" class="lt-img">
-            <img src="media/logos/02-is-bankasi.jpg" alt="İş Bankası" class="lt-img">
-            <img src="media/logos/03-tekirdag-raki.jpg" alt="Tekirdağ Rakısı" class="lt-img">
-            <img src="media/logos/04-karcher.jpg" alt="Kärcher" class="lt-img">
-            <img src="media/logos/05-filli-boya.jpg" alt="Filli Boya" class="lt-img">
-            <img src="media/logos/06-sok-market.jpg" alt="ŞOK" class="lt-img">
-            <img src="media/logos/07-yatsan.jpg" alt="Yatsan" class="lt-img">
-            <img src="media/logos/08-lastikpark.jpg" alt="LastikPark" class="lt-img">
-            <img src="media/logos/09-urban-care.jpg" alt="Urban Care" class="lt-img">
-            <img src="media/logos/10-pastel-kozmetik.jpg" alt="Pastel Cosmetics" class="lt-img">
-            <img src="media/logos/11-tresan.jpg" alt="Tresan" class="lt-img">
-            <img src="media/logos/12-imprime-perfume.jpg" alt="Imprimé" class="lt-img">
-            <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" class="lt-img">
-            <img src="media/logos/01-beymen.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/02-is-bankasi.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/03-tekirdag-raki.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/04-karcher.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/05-filli-boya.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/06-sok-market.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/07-yatsan.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/08-lastikpark.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/09-urban-care.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/10-pastel-kozmetik.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/11-tresan.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/12-imprime-perfume.jpg" alt="" aria-hidden="true" class="lt-img">
-            <img src="media/logos/13-the-purest-solutions.jpg" alt="" aria-hidden="true" class="lt-img">
+        <div class="case-meta">
+          <div class="case-meta-col">
+            <span class="case-meta-k">İstanbul</span>
+            <strong>Imprimé Perfume</strong>
+            <p class="case-tags">FOTOĞRAF · ART DIRECTION · RENK</p>
+          </div>
+          <div class="case-meta-col">
+            <span class="case-meta-k">2026</span>
+            <strong>Kampanya stilleri</strong>
+          </div>
+          <div class="case-meta-col case-meta-col--end">
+            <span class="case-meta-k">Süre</span>
+            <strong>48 saat</strong>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ─── Farkımız ─── -->
-    <section class="section demo-fark">
-      <div class="split">
-        <div>
-          <p class="section-label">Farkımız</p>
-          <h2 class="section-headline demo-reveal">
-            Bir Araç Size<br>
-            Hız Verir.<br>
-            Biz Sonuç<br>
-            <em>Teslim Ederiz.</em>
-          </h2>
-        </div>
-        <div>
-          <p class="section-body demo-reveal">
-            Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.
-          </p>
-          <br><br>
-          <a href="sentez.html" class="btn demo-hover-rule demo-reveal">Sentezi İnceleyin →</a>
-        </div>
-      </div>
+    <!-- 3. Süreç -->
+    <section class="process" id="surec" aria-label="Süreç">
+      <p class="process-label">SÜREÇ</p>
+      <h2 class="process-title dtr-reveal">DÖRT ADIM.<br>TEK TESLİM.</h2>
+      <ol class="process-grid dtr-stagger">
+        <li>
+          <span class="process-num">01</span>
+          <h3>BRIEF</h3>
+          <p>Marka kılavuzu, pazar, kısıt. İnsan masada.</p>
+        </li>
+        <li>
+          <span class="process-num">02</span>
+          <h3>ORKESTRASYON</h3>
+          <p>Modeller paralel. Ham kare dışarı çıkmaz.</p>
+        </li>
+        <li>
+          <span class="process-num">03</span>
+          <h3>SENTEZ</h3>
+          <p>Edit, renk, VFX. Sinematik bar.</p>
+        </li>
+        <li>
+          <span class="process-num">04</span>
+          <h3>TESLİM</h3>
+          <p>Varyant, lokal, A/B’ye hazır paket.</p>
+        </li>
+      </ol>
     </section>
 
-    <!-- ─── Hız & Ölçek teaser (dark beat) ─── -->
-    <section class="speed-teaser-section">
-      <div class="speed-teaser-overlay"></div>
-      <div class="speed-teaser-inner">
-        <div class="speed-teaser-left">
-          <p class="section-label">Hız &amp; Ölçek</p>
-          <h2 class="speed-teaser-title demo-reveal">
-            Tek Bir Hikayeyi,<br>
-            Binlerce Kusursuz<br>
-            <em>Deneyime</em><br>
-            Dönüştürüyoruz.
-          </h2>
-          <a href="hiz-ve-olcek.html" class="btn demo-hover-rule demo-reveal">Detayları Keşfet →</a>
-        </div>
-        <div class="speed-teaser-right demo-stagger">
-          <div class="speed-teaser-card">
-            <div class="stc-num">01</div>
-            <div class="stc-title">Yüksek Hızda A/b Testi</div>
-            <div class="stc-body">Tek bir konseptten 48 saatte 50'den fazla yüksek etkili reklam varyasyonu. Rakipleriniz kreatif onay sürecini tamamlamadan kazanan kombinasyonu çoktan buldunuz.</div>
-          </div>
-          <div class="speed-teaser-card">
-            <div class="stc-num">02</div>
-            <div class="stc-title">Global Lokalleşme</div>
-            <div class="stc-body">Kampanyanızı 20'den fazla pazarda ölçeklendirin. Görseller, ton ve bağlam kültürel dokuya uygun hale gelir — sadece tercüme değil, gerçek bağ.</div>
-          </div>
-          <div class="speed-teaser-card">
-            <div class="stc-num">03</div>
-            <div class="stc-title">Gerçek Zamanlı Optimizasyon</div>
-            <div class="stc-body">Yapay zeka destekli içgörüler anlık olarak akar. Ekibiniz ne işe yaradığını görür ve hemen harekete geçer.</div>
-          </div>
-        </div>
+    <!-- 4. Görüşme -->
+    <section class="close" id="gorusme" aria-label="Görüşme">
+      <h2 class="close-title dtr-reveal">SONRAKİ KAREYİ<br>KONUŞALIM.</h2>
+      <div class="close-row">
+        <a class="pill" href="iletisim.html">Görüşme ayarla →</a>
+        <a class="close-mail" href="mailto:info@adon.com.tr">info@adon.com.tr · İstanbul</a>
       </div>
     </section>
-
-    <!-- ─── Çözümlerimiz ─── -->
-    <section class="section demo-solutions">
-      <p class="section-label">Çözümlerimiz</p>
-      <h2 class="section-headline demo-reveal">Hedefinize Göre<br>Doğru Çözümü<br>Seçin.</h2>
-      <p class="section-body demo-reveal" style="max-width: 560px; margin-top: 24px;">Yeteneklerimizi kullandığımız araçlara göre değil, çözmek istediğiniz iş sorununa göre paketledik.</p>
-
-      <div class="card-grid demo-stagger" style="margin-top: 48px;">
-        <div class="card">
-          <div class="card-num">01</div>
-          <div class="card-tag">Büyüme Pazarlamacıları İçin</div>
-          <div class="card-title">Hız ve Ölçek</div>
-          <div class="card-body">48 saat içinde 50 reklam varyantı. Birden fazla pazarda. Kaliteden ödün vermeden. Büyüme hedefli pazarlamacılar için tasarlandı.</div>
-        </div>
-        <div class="card">
-          <div class="card-num">02</div>
-          <div class="card-tag">Kurumsal Liderler İçin</div>
-          <div class="card-title">Disiplin ve Tutarlılık</div>
-          <div class="card-body">Marka standartlarınızı koruyarak iç iletişim, eğitim ve kurumsal içerikleri ölçeklenebilir biçimde üretin. Büyük organizasyonların içerik kaosuna sistematik çözüm.</div>
-        </div>
-        <div class="card">
-          <div class="card-num">03</div>
-          <div class="card-tag">E-Ticaret Markaları İçin</div>
-          <div class="card-title">Ürün ve E-Ticaret</div>
-          <div class="card-body">Bir ürün fotoğrafını alıp her pazar için farklılaştırılmış yüzlerce yaşam tarzı sahnesine dönüştürüyoruz. Tek çekim, sınırsız bağlam.</div>
-        </div>
-        <div class="card">
-          <div class="card-num">04</div>
-          <div class="card-tag">Moda &amp; Yaşam Tarzı</div>
-          <div class="card-title">Moda ve Yaşam Tarzı</div>
-          <div class="card-body">Editoryal kaliteyi hızla prototiplemenizi sağlıyoruz. Fotogerçekçi kampanya görselleri, geleneksel set maliyetinin çok altında.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── Closing CTA ─── -->
-    <section class="cta-section demo-reveal">
-      <p class="section-label" style="justify-content: center;">Ölçülebilir İş Etkisi</p>
-      <h2 class="cta-title">
-        Prodüksiyon Hızından<br>
-        Fazlası:<br>
-        <em>Ölçülebilir</em><br>
-        Sonuçlar.
-      </h2>
-      <p style="font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7;">
-        Başarımızı teslim edilen dosya sayısıyla değil, müşterilerimizin kârlılığına sağladığımız elle tutulur katkıyla ölçüyoruz.
-      </p>
-      <a href="iletisim.html" class="btn btn-filled demo-hover-rule" style="font-size: 14px; padding: 18px 48px;">Konuşmaya Başlayalım →</a>
-    </section>
-
-    <!-- FAQ intentionally omitted on this demo -->
-
-    <!-- ─── Footer (same labels/hrefs as TR home) ─── -->
-    <footer>
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo"><img src="media/beyaz.png" alt="ADON Studio" width="112" height="28" style="height: 28px; width: auto; display: block;"></div>
-          <p class="footer-tagline">
-            İşte yeni standart: İnsan zanaatını yapay zeka orkestrasyonuyla birleştiren ve dönüşümü ölçeklendirerek
-            gerçeğe dönüştüren stratejik bir partner. Dönüşüme var mısınız?
-          </p>
-          <div style="margin-top: 24px; display: flex; gap: 16px;">
-            <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
-              style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
-            <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
-              style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
-            <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
-              style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">Hızlı Bağlantılar</div>
-          <div class="footer-links">
-            <a href="index.html">Ana Sayfa</a>
-            <a href="hakkimizda.html">Hakkımızda</a>
-            <a href="cozumler.html">Çözümler</a>
-            <a href="calismalar.html">Çalışmalar</a>
-            <a href="sentez.html">Sentez</a>
-            <a href="iletisim.html">İletişim</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">Lokasyonlar</div>
-          <div class="footer-links">
-            <a href="#">İstanbul</a>
-            <a href="#">Milan</a>
-            <a href="#">Londra</a>
-            <a href="#">Lefkoşa</a>
-          </div>
-          <div style="margin-top: 32px;">
-            <div class="footer-col-title">İletişim</div>
-            <div class="footer-links">
-              <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 ADON Studio. Tüm hakları saklıdır.</span>
-        <span>İstanbul · Milan · Londra · Lefkoşa</span>
-      </div>
-    </footer>
 
   </main>
 
@@ -348,7 +162,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="js/demo-tr.js" defer></script>
-
 </body>
 
 </html>
