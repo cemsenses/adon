@@ -196,7 +196,7 @@
       );
     });
 
-    var heroBits = document.querySelectorAll('.hero-title, .hero-dek, .hero-meta, .hero-services, .hero-actions');
+    var heroBits = document.querySelectorAll('.hero-title, .hero-dek, .hero-meta, .hero-actions');
     if (heroBits.length) {
       gsap.fromTo(heroBits,
         { opacity: 0, y: 16 },
@@ -214,7 +214,7 @@
   }
 
   function revealInstant() {
-    document.querySelectorAll('.dtr-reveal, .dtr-stagger > *, .hero-title, .hero-dek, .hero-meta, .hero-services, .hero-actions').forEach(function (el) {
+    document.querySelectorAll('.dtr-reveal, .dtr-stagger > *, .hero-title, .hero-dek, .hero-meta, .hero-actions').forEach(function (el) {
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
