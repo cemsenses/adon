@@ -131,7 +131,7 @@
     /* ─── CTA butonları: daha büyük, daha görünür ─── */
     .btn { font-size: 15px !important; padding: 18px 38px !important; gap: 12px !important; min-height: 52px; }
     .btn-lg { font-size: 17px !important; padding: 24px 56px !important; min-height: 64px; }
-    @media (max-width: 480px) { .btn-lg { width: 100%; justify-content: center; } }
+    @media (max-width: 480px) { .btn-lg { width: 100%; justify-content: center; text-align: center; padding: 22px 20px !important; } }
 
     /* ─── Hero: içerik arttığı için sabit viewport yüksekliği yerine otomatik büyüsün, nav ile asla çakışmasın ─── */
     .hero { height: auto !important; min-height: 100svh; padding-top: calc(var(--nav-height) + 140px) !important; padding-bottom: 64px !important; }
@@ -181,6 +181,10 @@
     .proof-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--transition); }
     .proof-item:hover img { transform: scale(1.04); }
     @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } }
+
+    /* ─── Marka bandı: görselin arka planıyla birebir aynı saf siyah ─── */
+    .brand-band { background: #000000; padding: 56px 32px; display: flex; justify-content: center; }
+    @media (max-width: 768px) { .brand-band { padding: 36px 12px; } }
 
     /* ─── Çözüm seçici: pill/segment kontrol (native select yerine) ─── */
     .service-picker { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -258,7 +262,7 @@
   </section>
 
   <!-- ─── Marka Portföyü (üstte, siyah, ortalı) ─── -->
-  <section style="background:#080808; padding:56px 32px; display:flex; justify-content:center;">
+  <section class="brand-band">
     <img src="media/logos/portfoy-marka-seti.jpg" alt="ADON Studio ile çalışılan markalar: Beymen.com, Türkiye İş Bankası, Tekirdağ Rakısı, Hitachi, Rossmann, Pınar, Kärcher, Filli Boya, ŞOK, Yatsan, Urban Care, Bioxcin, The Purest Solutions, Pastel Cosmetics, Tresan, Nuh'un Ankara Makarnası" style="max-width:1040px; width:100%; height:auto; display:block;" loading="lazy">
   </section>
 
