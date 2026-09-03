@@ -175,14 +175,6 @@
     .proof-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 22px; background: linear-gradient(to top, rgba(0,0,0,0.78), transparent); color: #fff; font-size: 16px; letter-spacing: 0.01em; }
     @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } }
 
-    /* ─── Logo ticker ─── */
-    .lt-wrap { clip-path: inset(0); width: 100%; }
-    .lt-track { display: flex; align-items: center; gap: 120px; width: max-content; animation: lt-scroll 25s linear infinite; }
-    .lt-wrap:hover .lt-track { animation-play-state: paused; }
-    @keyframes lt-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .lt-img { height: 48px; width: auto; flex-shrink: 0; display: block; filter: grayscale(100%) opacity(0.55); }
-    @media (max-width: 768px) { .lt-img { height: 36px; } }
-
     /* ─── Çözüm seçici: pill/segment kontrol (native select yerine) ─── */
     .service-picker { display: flex; flex-wrap: wrap; gap: 12px; }
     .service-picker input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -258,6 +250,11 @@
     </div>
   </section>
 
+  <!-- ─── Marka Portföyü (üstte, siyah, ortalı) ─── -->
+  <section style="background:#080808; padding:56px 32px; display:flex; justify-content:center;">
+    <img src="media/logos/portfoy-marka-seti.jpg" alt="ADON Studio ile çalışılan markalar: Beymen.com, Türkiye İş Bankası, Tekirdağ Rakısı, Hitachi, Rossmann, Pınar, Kärcher, Filli Boya, ŞOK, Yatsan, Urban Care, Bioxcin, The Purest Solutions, Pastel Cosmetics, Tresan, Nuh'un Ankara Makarnası" style="max-width:1040px; width:100%; height:auto; display:block;" loading="lazy">
+  </section>
+
   <!-- ─── Marquee ─── -->
   <div class="marquee-section">
     <div class="marquee-track">
@@ -327,40 +324,6 @@
       <div class="process-step"><div class="process-dot">02</div><div class="process-title">Konsept</div><div class="process-body">Yaratıcı yön kurgulanır, prototip üretilir.</div></div>
       <div class="process-step"><div class="process-dot">03</div><div class="process-title">Üretim</div><div class="process-body">Yapay zeka ile üretilir, insan gözetiminde işlenir.</div></div>
       <div class="process-step"><div class="process-dot">04</div><div class="process-title">Teslim</div><div class="process-body">48 saat içinde onaya hazır içerik teslim edilir.</div></div>
-    </div>
-  </section>
-
-  <!-- ─── Logo Ticker ─── -->
-  <section style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);padding:40px 0;clip-path:inset(0);position:relative;">
-    <div class="lt-wrap">
-      <div class="lt-track">
-        <img src="media/logos/01-beymen.jpg" alt="Beymen" class="lt-img">
-        <img src="media/logos/02-is-bankasi.jpg" alt="İş Bankası" class="lt-img">
-        <img src="media/logos/03-tekirdag-raki.jpg" alt="Tekirdağ Rakısı" class="lt-img">
-        <img src="media/logos/04-karcher.jpg" alt="Kärcher" class="lt-img">
-        <img src="media/logos/05-filli-boya.jpg" alt="Filli Boya" class="lt-img">
-        <img src="media/logos/06-sok-market.jpg" alt="ŞOK" class="lt-img">
-        <img src="media/logos/07-yatsan.jpg" alt="Yatsan" class="lt-img">
-        <img src="media/logos/08-lastikpark.jpg" alt="LastikPark" class="lt-img">
-        <img src="media/logos/09-urban-care.jpg" alt="Urban Care" class="lt-img">
-        <img src="media/logos/10-pastel-kozmetik.jpg" alt="Pastel Cosmetics" class="lt-img">
-        <img src="media/logos/11-tresan.jpg" alt="Tresan" class="lt-img">
-        <img src="media/logos/12-imprime-perfume.jpg" alt="Imprimé" class="lt-img">
-        <img src="media/logos/13-the-purest-solutions.jpg" alt="The Purest Solutions" class="lt-img">
-        <img src="media/logos/01-beymen.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/02-is-bankasi.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/03-tekirdag-raki.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/04-karcher.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/05-filli-boya.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/06-sok-market.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/07-yatsan.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/08-lastikpark.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/09-urban-care.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/10-pastel-kozmetik.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/11-tresan.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/12-imprime-perfume.jpg" alt="" aria-hidden="true" class="lt-img">
-        <img src="media/logos/13-the-purest-solutions.jpg" alt="" aria-hidden="true" class="lt-img">
-      </div>
     </div>
   </section>
 
