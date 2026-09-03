@@ -177,10 +177,9 @@
 
     /* ─── Kanıt grid: daha büyük, 2 sütun ─── */
     .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; }
-    .proof-item { position: relative; aspect-ratio: 5/4; overflow: hidden; background: var(--card-bg); }
+    .proof-item { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--card-bg); }
     .proof-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--transition); }
     .proof-item:hover img { transform: scale(1.04); }
-    .proof-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 22px; background: linear-gradient(to top, rgba(0,0,0,0.78), transparent); color: #fff; font-size: 16px; letter-spacing: 0.01em; }
     @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } }
 
     /* ─── Çözüm seçici: pill/segment kontrol (native select yerine) ─── */
@@ -340,10 +339,10 @@
     <p class="section-label">Kanıt</p>
     <h2 class="section-headline reveal" style="margin-bottom: 32px;">Sonuçlar<br><em>Konuşur.</em></h2>
     <div class="proof-grid">
-      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/isana-donut-lipjelly.png" alt="Isana Donut Lip Jelly — AI ürün görseli" loading="lazy"><span class="proof-cap">Isana — Ürün & E-Ticaret</span></div>
-      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png" alt="Beymen.com — AI ürün görseli" loading="lazy"><span class="proof-cap">Beymen.com — Ürün & E-Ticaret</span></div>
-      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg" alt="Urban Care — AI ürün görseli" loading="lazy"><span class="proof-cap">Urban Care — Ürün & E-Ticaret</span></div>
-      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109791755.png" alt="Imprimé Perfume — AI video prodüksiyon" loading="lazy"><span class="proof-cap">Imprimé Perfume — Video Prodüksiyon</span></div>
+      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/isana-donut-lipjelly.png" alt="Isana Donut Lip Jelly — AI ürün görseli" loading="lazy"></div>
+      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110459473.png" alt="Beymen.com — AI ürün görseli" loading="lazy"></div>
+      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774110425841.jpg" alt="Urban Care — AI ürün görseli" loading="lazy"></div>
+      <div class="proof-item"><img src="https://raw.githubusercontent.com/cemsenses/adon/main/media/works/img_1774109791755.png" alt="Imprimé Perfume — AI video prodüksiyon" loading="lazy"></div>
     </div>
     <div style="margin-top: 32px; padding: 0 32px;">
       <a href="calismalar.html" class="btn">Tüm Çalışmaları Görün →</a>
