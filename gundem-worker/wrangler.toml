@@ -14,10 +14,9 @@ binding = "DB"
 database_name = "adon-gundem"
 database_id = "f8e756d0-7386-4cf5-a6ff-81498f6fc343"   # workflow doldurur
 
-# R2 binding: uncomment once the token has Workers R2 Storage Edit and the bucket exists
-# [[r2_buckets]]
-# binding = "IMAGES"
-# bucket_name = "adon-gundem-images"
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "adon-gundem-images"
 
 [vars]
 SITE_ORIGIN = "https://adon.com.tr"
