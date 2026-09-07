@@ -110,7 +110,7 @@ async function feed(env, origin) {
 }
 
 async function image(env, request, key) {
-  if (!key || key.includes('..')) return new Response('Not found', { status: 404 });
+  if (!key || key.includes('..') || !env.IMAGES) return new Response('Not found', { status: 404 });
   const cache = caches.default;
   const cached = await cache.match(request);
   if (cached) return cached;
@@ -184,6 +184,7 @@ async function api(request, env, origin, sub) {
   }
 
   if (resource === 'images') {
+    if (!env.IMAGES) return json({ error: 'R2 binding missing' }, 503);
     if (!id || id.includes('..')) return json({ error: 'invalid key' }, 400);
     if (m === 'PUT') {
       const ct = request.headers.get('content-type') || guessType(id);
