@@ -6,5 +6,5 @@
   "image_alt": "Renk düzeltme masasında yan yana iki versiyon: ham çıktı ve son hâli",
   "published_at": "2026-08-19T09:00:00+03:00",
   "body_html": "<p>Üretilen görsel doğru olabilir ama henüz \"sizin\" değildir. Marka kimliği; renk sıcaklığı, kontrast eğrisi, tipografik boşluk ve kadrajın nefes payı gibi küçük kararların toplamında yaşar. Bu kararlar bir promptun içine tam olarak sığmaz.</p>\n<h2>Üç katman</h2>\n<ol>\n  <li>Kompozisyon denetimi: Kadrajda gereksiz nesne var mı, bakış yönü doğru mu?</li>\n  <li>Renk ve ışık: Markanın paletine oturuyor mu, cilt tonları güvenilir mi?</li>\n  <li>Ayrıntı düzeltme: Logo, ürün etiketi, eller ve yazılar.</li>\n</ol>\n<p>Bu üç katman bir ürün görselinde dakikalar, bir kampanya filminde günler alabilir. Ama atlandığında fark edilen ilk şey de tam olarak bu katmandır.</p>",
-  "status": "published"
+  "status": "draft"
 }
