@@ -26,6 +26,7 @@ export default {
       if (request.method === 'GET' || request.method === 'HEAD') {
         if (path === '') return indexPage(env, origin);
         if (path === 'feed.xml') return feed(env, origin);
+        if (path === 'sitemap.xml') return sitemap(env, origin);
         if (path.startsWith('img/')) return image(env, request, decodeURIComponent(path.slice(4)));
         if (path.startsWith('audio/')) return audioFile(env, request, decodeURIComponent(path.slice(6)));
         if (path.startsWith('api/')) return api(request, env, origin, path.slice(4));
@@ -107,6 +108,24 @@ async function feed(env, origin) {
   ).all();
   return new Response(renderFeed({ origin, posts: results }), {
     headers: { 'content-type': 'application/rss+xml; charset=utf-8', 'cache-control': 'public, max-age=600' },
+  });
+}
+
+async function sitemap(env, origin) {
+  const { results } = await env.DB.prepare(
+    `SELECT slug, published_at, updated_at FROM posts WHERE status='published' ORDER BY published_at DESC`
+  ).all();
+  const iso = (s) => new Date(s).toISOString().slice(0, 10);
+  const urls = [
+    `<url><loc>${origin}/gundem/</loc><changefreq>daily</changefreq><priority>0.8</priority></url>`,
+    ...results.map(
+      (p) =>
+        `<url><loc>${origin}/gundem/${p.slug}</loc><lastmod>${iso(p.updated_at || p.published_at)}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>`
+    ),
+  ].join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
+  return new Response(xml, {
+    headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=600' },
   });
 }
 
