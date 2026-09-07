@@ -34,6 +34,14 @@ export function imgSrc(post, base = '') {
   return post.image_key ? `${base}/gundem/img/${encodeURIComponent(post.image_key)}` : null;
 }
 
+// Turkish reading speed ~180 words/minute for body copy. Counted from the excerpt + body together,
+// stripped of HTML tags, so every post gets this automatically without any manual input.
+function readingTimeMinutes(post) {
+  const text = `${post.excerpt || ''} ${post.body_html || ''}`.replace(/<[^>]*>/g, ' ');
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 180));
+}
+
 function figure(post, { eager = false, sizes = '(max-width: 768px) 100vw, 920px' } = {}) {
   const src = imgSrc(post);
   const alt = esc(post.image_alt || post.title);
@@ -68,6 +76,7 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .g-head--index time{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap}
 .g-head--post h1{font-size:clamp(36px,5.2vw,80px);max-width:18ch;text-wrap:balance}
 .g-head--post .g-date{display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:28px 0 0}
+.g-head--post .g-readtime{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin:8px 0 0}
 .g-head--post .g-excerpt{font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);max-width:640px;margin:24px 0 0}
 /* White content */
 .g-page{max-width:var(--g-max);margin:0 auto;padding:64px 32px 96px}
@@ -416,6 +425,7 @@ export function renderPost({ origin, post, next, older = [] }) {
       ${crumbs([{ label: 'Ana Sayfa', href: `${origin}/index.html` }, { label: 'Gündem', href: '/gundem/' }, { label: post.title }])}
       <h1>${esc(post.title)}</h1>
       <time class="g-date" datetime="${esc(post.published_at)}">${fmtDate(post.published_at)}</time>
+      <p class="g-readtime">Okuma süresi: ${readingTimeMinutes(post)} dk</p>
       <p class="g-excerpt">${esc(post.excerpt)}</p>
       <div style="height:140px" aria-hidden="true"></div>
     </div>
