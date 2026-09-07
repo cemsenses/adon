@@ -1,0 +1,12 @@
+{
+  "name": "adon-gundem",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "sync": "node sync-content.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

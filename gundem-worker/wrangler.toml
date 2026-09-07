@@ -1,0 +1,27 @@
+name = "adon-gundem"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Worker route: Cloudflare proxies adon.com.tr (orange cloud) so /gundem* is served by this Worker,
+# everything else still goes to GitHub Pages.
+routes = [
+  { pattern = "adon.com.tr/gundem*", zone_name = "adon.com.tr" },
+  { pattern = "www.adon.com.tr/gundem*", zone_name = "adon.com.tr" }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "adon-gundem"
+database_id = "REPLACE_WITH_D1_ID"   # workflow doldurur
+
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "adon-gundem-images"     # wrangler r2 bucket create adon-gundem-images
+
+[vars]
+SITE_ORIGIN = "https://adon.com.tr"
+# Set to a number to show the "En çok okunanlar" column once at least 3 posts pass this view count.
+# Leave "0" to keep the column hidden for now.
+POPULAR_MIN_VIEWS = "0"
+
+# Secret (never in this file):  wrangler secret put ADMIN_TOKEN

@@ -1,0 +1,502 @@
+// Server-rendered templates for /gundem. Turkish only. No client framework.
+
+const MONTHS_TR = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+const DAYS_TR = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+
+export function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function toIstanbul(iso) {
+  // Shift to UTC+3 so day/month are right regardless of Worker runtime tz.
+  const d = new Date(iso);
+  return new Date(d.getTime() + 3 * 60 * 60 * 1000);
+}
+export function fmtDate(iso) {
+  const d = toIstanbul(iso);
+  return `${d.getUTCDate()} ${MONTHS_TR[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+export function fmtDateLong(iso) {
+  const d = toIstanbul(iso);
+  return `${DAYS_TR[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS_TR[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+export function fmtDateShort(iso) {
+  const d = toIstanbul(iso);
+  return `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.${d.getUTCFullYear()}`;
+}
+
+export function imgSrc(post, base = '') {
+  return post.image_key ? `${base}/gundem/img/${encodeURIComponent(post.image_key)}` : null;
+}
+
+function figure(post, { eager = false, sizes = '(max-width: 768px) 100vw, 920px' } = {}) {
+  const src = imgSrc(post);
+  const alt = esc(post.image_alt || post.title);
+  if (!src) {
+    return `<div class="g-img g-img--empty" role="img" aria-label="${alt}"><span>Görsel hazırlanıyor</span></div>`;
+  }
+  return `<img class="g-img" src="${src}" alt="${alt}" width="1600" height="900" ${eager ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'} sizes="${sizes}">`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared chrome                                                        */
+/* ------------------------------------------------------------------ */
+
+const CSS = `
+:root{--g-max:1120px;--g-read:720px;--g-wide:920px}
+body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.g-skip{position:absolute;left:-999px;top:8px;background:#fff;color:var(--black);padding:8px 12px;z-index:2000}
+.g-skip:focus{left:12px}
+/* Dark page head, same pattern as the site's inner pages */
+.g-head{background:var(--black);color:var(--white);padding:calc(var(--nav-height) + 96px) 32px 72px;border-bottom:1px solid var(--border)}
+.g-head-inner{max-width:var(--g-max);margin:0 auto}
+.g-crumb{display:flex;flex-wrap:wrap;gap:0 4px;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 32px;padding:0;list-style:none}
+.g-crumb li{display:inline-flex;align-items:center;min-height:24px}
+.g-crumb li+li::before{content:"/";margin:0 12px;color:rgba(255,255,255,.25)}
+.g-crumb a{color:rgba(255,255,255,.5);padding:6px 0;transition:color var(--fast)}
+.g-crumb a:hover{color:var(--white)}
+.g-crumb [aria-current]{color:rgba(255,255,255,.85);letter-spacing:.12em;text-transform:none;font-weight:500}
+.g-head h1{font-family:var(--font-headline);font-weight:900;text-transform:uppercase;color:var(--white);letter-spacing:.04em;line-height:.9;margin:0}
+.g-head--index h1{font-size:clamp(72px,12vw,180px);margin-left:-.04em}
+.g-head--index .g-sub{display:grid;grid-template-columns:1fr auto;gap:16px 40px;align-items:end;margin-top:32px}
+.g-head--index p{font-size:18px;line-height:1.6;color:rgba(255,255,255,.6);max-width:580px;margin:0}
+.g-head--index time{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap}
+.g-head--post h1{font-size:clamp(36px,5.2vw,80px);max-width:18ch;text-wrap:balance}
+.g-head--post .g-date{display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:28px 0 0}
+.g-head--post .g-excerpt{font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);max-width:640px;margin:24px 0 0}
+/* White content */
+.g-page{max-width:var(--g-max);margin:0 auto;padding:64px 32px 96px}
+.g-img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--card-bg)}
+.g-img--empty{display:flex;align-items:center;justify-content:center;background:var(--card-bg);color:var(--muted);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+.g-label{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;margin:0 0 24px}
+.g-label::before{content:'';display:block;width:32px;height:1px;background:var(--muted)}
+/* Lead story */
+.g-lead{display:grid;grid-template-columns:7fr 5fr;gap:32px 48px;align-items:start;padding:0 0 48px;border-bottom:1px solid var(--border)}
+.g-lead h2{font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:clamp(32px,3.8vw,52px);line-height:.95;letter-spacing:.01em;margin:0 0 16px;text-wrap:balance}
+.g-lead h2 a,.g-row h3 a{color:var(--black);transition:color var(--fast)}
+.g-lead h2 a:hover,.g-row h3 a:hover{color:var(--accent)}
+.g-date{display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.g-lead p{font-size:16px;line-height:1.7;color:var(--muted);margin:0}
+/* Row list */
+.g-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:0 56px}
+.g-cols--with-aside{grid-template-columns:minmax(0,1fr) 300px}
+.g-row{display:grid;grid-template-columns:120px minmax(0,1fr) 220px;gap:24px 40px;padding:40px 0;border-bottom:1px solid var(--border);align-items:start}
+.g-row .g-date{margin:6px 0 0}
+.g-row h3{font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:28px;line-height:1;letter-spacing:.01em;margin:0 0 12px;text-wrap:balance}
+.g-row p{margin:0;color:var(--muted);font-size:15px;line-height:1.7}
+/* Aside: popular */
+.g-aside{padding-top:40px}
+.g-aside ol{list-style:none;margin:0;padding:0;counter-reset:pop}
+.g-aside li{counter-increment:pop;display:grid;grid-template-columns:32px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--border)}
+.g-aside li::before{content:"0" counter(pop);font-family:var(--font-headline);font-size:20px;color:var(--accent);line-height:1.2}
+.g-aside a{color:var(--black);font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:20px;line-height:1.05;display:block;padding:2px 0;transition:color var(--fast)}
+.g-aside a:hover{color:var(--accent)}
+.g-aside small{display:block;color:var(--muted);font-size:12px;letter-spacing:.1em;margin-top:6px}
+/* Article */
+.g-figure{max-width:var(--g-wide);margin:-140px auto 56px;width:100%;position:relative;z-index:2}
+.g-figure figcaption{font-size:12px;letter-spacing:.05em;color:var(--muted);margin-top:12px}
+.g-article{max-width:var(--g-read);margin:0 auto}
+.g-body{font-size:17px;line-height:1.75;color:var(--black)}
+.g-body p{margin:0 0 1.4em}
+.g-body h2{font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;letter-spacing:.01em;margin:2.2em 0 .7em}
+.g-body h3{font-family:var(--font-body);font-weight:600;font-size:18px;margin:1.8em 0 .5em}
+.g-body ul{list-style:disc}.g-body ol{list-style:decimal}
+.g-body ul,.g-body ol{padding-left:1.3em;margin:0 0 1.4em}
+.g-body li{margin-bottom:.45em}
+.g-body blockquote{margin:2.2em 0;padding:0 0 0 24px;border-left:2px solid var(--accent);font-family:var(--font-serif);font-style:italic;font-size:24px;line-height:1.4;color:var(--black)}
+.g-body a{color:var(--black);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px;transition:color var(--fast)}
+.g-body a:hover{color:var(--accent)}
+.g-body img{max-width:100%;height:auto;display:block;margin:2em 0}
+.g-body figure{margin:2em 0}
+.g-body figcaption{font-size:12px;color:var(--muted);margin-top:8px}
+.g-end{max-width:var(--g-read);margin:72px auto 0;border-top:1px solid var(--black)}
+.g-next{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:24px;align-items:center;padding:28px 0;border-bottom:1px solid var(--border);color:var(--black)}
+.g-next .g-label{margin-bottom:10px}
+.g-next h2{font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;margin:0;transition:color var(--fast)}
+.g-next:hover h2{color:var(--accent)}
+.g-older{padding:32px 0 0}
+.g-older ul{list-style:none;margin:0;padding:0}
+.g-older li{border-bottom:1px solid var(--border)}
+.g-older li a{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:16px 0;color:var(--black);min-height:44px;align-items:baseline}
+.g-older li a:hover span:last-child{color:var(--accent)}
+.g-older .g-date{margin:0}
+.g-older span:last-child{font-family:var(--font-headline);font-weight:800;text-transform:uppercase;font-size:20px;line-height:1.05;transition:color var(--fast)}
+.g-all{display:inline-flex;align-items:center;white-space:nowrap;min-height:44px;margin-top:28px;font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--accent);border:1.5px solid var(--accent);padding:0 24px;transition:background .3s ease,border-color .3s ease}
+.g-all:hover{background:#333333;border-color:#333333}
+.g-empty{padding:64px 0;color:var(--muted);font-size:18px}
+@media (max-width:1024px){.g-cols--with-aside{grid-template-columns:minmax(0,1fr)}.g-aside{border-top:1px solid var(--black);margin-top:8px}}
+@media (max-width:768px){
+  .g-head{padding:calc(var(--nav-height) + 64px) 20px 48px}
+  .g-head--index .g-sub{grid-template-columns:1fr}
+  .g-page{padding:48px 20px 64px}
+  .g-lead{grid-template-columns:1fr;gap:20px;padding-bottom:32px}
+  .g-row{grid-template-columns:1fr;gap:12px;padding:28px 0}
+  .g-row .g-img{order:-1}
+  .g-row .g-date{margin:0}
+  .g-figure{margin-top:-64px}
+  .g-next{grid-template-columns:1fr}
+  .g-next .g-img{order:-1;max-width:320px}
+  .g-older li a{grid-template-columns:1fr;gap:6px}
+  .g-head--post .g-excerpt{font-size:19px}
+  .g-body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){body.gundem *{transition:none!important;animation:none!important}}
+`;
+
+// Nav and footer are copied from the site verbatim (paths made absolute). Do not restyle.
+function nav(origin) {
+  return `
+<nav class="nav nav--dark" id="block-nav" data-cms-block="nav">
+    <a href="${origin}/index.html" class="nav-logo"><img src="${origin}/media/beyaz.png" alt="ADON Studio" class="logo-default" style="height:22px;width:auto;display:block;"><img src="${origin}/media/logos/adon-ufak-logo.png" alt="ADON Studio" class="logo-scrolled" style="height:22px;width:auto;display:none;"></a>
+    <div class="nav-links">
+      <a href="${origin}/hakkimizda.html" id="nav-link-1">Hakkımızda</a>
+      <a href="${origin}/cozumler.html" id="nav-link-2">Çözümler</a>
+      <a href="${origin}/calismalar.html" id="nav-link-3">Çalışmalar</a>
+      <a href="${origin}/sentez.html" id="nav-link-4">Sentez</a>
+    </div>
+    <div class="lang-toggle">
+      <span class="lang-active">TR</span>
+      <a href="${origin}/en/index.html" class="lang-link">EN</a>
+    </div>
+    <a href="${origin}/iletisim.html" class="nav-cta" id="nav-cta">İletişim</a>
+    <button class="nav-menu-toggle" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>`;
+}
+
+function footer(origin) {
+  return `
+<footer id="block-footer" data-cms-block="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="${origin}/media/beyaz.png" alt="ADON Studio" width="112" height="28" style="height: 28px; width: auto; display: block;"></div>
+        <p class="footer-tagline" id="footer-tagline">
+          İşte yeni standart: İnsan zanaatını yapay zeka orkestrasyonuyla birleştiren ve dönüşümü ölçeklendirerek
+          gerçeğe dönüştüren stratejik bir partner. Dönüşüme var mısınız?
+        </p>
+        <div style="margin-top: 24px; display: flex; gap: 16px;">
+          <a href="https://www.instagram.com/adon.studio/" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Instagram</a>
+          <a href="https://www.linkedin.com/company/adon-studio/" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">LinkedIn</a>
+          <a href="https://www.youtube.com/@ADON-AI-Studio" target="_blank" rel="noopener noreferrer"
+            style="color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Youtube</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Hızlı Bağlantılar</div>
+        <div class="footer-links">
+          <a href="${origin}/index.html">Ana Sayfa</a>
+          <a href="${origin}/hakkimizda.html">Hakkımızda</a>
+          <a href="${origin}/cozumler.html">Çözümler</a>
+          <a href="${origin}/calismalar.html">Çalışmalar</a>
+          <a href="${origin}/sentez.html">Sentez</a>
+          <a href="${origin}/iletisim.html">İletişim</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Lokasyonlar</div>
+        <div class="footer-links">
+          <a href="#">İstanbul</a>
+          <a href="#">Milan</a>
+          <a href="#">Londra</a>
+          <a href="#">Lefkoşa</a>
+        </div>
+        <div style="margin-top: 32px;">
+          <div class="footer-col-title">İletişim</div>
+          <div class="footer-links">
+            <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">© 2026 ADON Studio. Tüm hakları saklıdır.</span>
+      <span id="footer-locations">İstanbul · Milan · Londra · Lefkoşa</span>
+    </div>
+  </footer>`;
+}
+
+export function layout({ origin, title, description, canonical, ogImage, ogType = 'website', jsonLd = [], body, extraHead = '' }) {
+  return `<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${esc(canonical)}">
+<meta name="robots" content="index, follow">
+<meta property="og:site_name" content="ADON Studio">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="${ogType}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:image" content="${esc(ogImage)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${esc(ogImage)}">
+<link rel="alternate" type="application/rss+xml" title="ADON Studio Gündem" href="${origin}/gundem/feed.xml">
+<link rel="icon" href="${origin}/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="${origin}/styles/main.css?v=4">
+<style>${CSS}</style>
+${jsonLd.map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n')}
+${extraHead}
+</head>
+<body class="gundem">
+<a class="g-skip" href="#main-content">İçeriğe Geç</a>
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+${nav(origin)}
+<main id="main-content">
+${body}
+</main>
+${footer(origin)}
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+<script src="${origin}/js/main.js" defer></script>
+</body>
+</html>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Index                                                                */
+/* ------------------------------------------------------------------ */
+
+function crumbs(items) {
+  return `<nav aria-label="Sayfa yolu"><ol class="g-crumb">${items
+    .map((it, i) =>
+      i === items.length - 1
+        ? `<li aria-current="page">${esc(it.label)}</li>`
+        : `<li><a href="${esc(it.href)}">${esc(it.label)}</a></li>`
+    )
+    .join('')}</ol></nav>`;
+}
+
+export function renderIndex({ origin, posts, popular = [], now = new Date().toISOString() }) {
+  const [lead, ...rest] = posts;
+  const withAside = popular.length >= 3;
+
+  const leadHtml = lead
+    ? `<section class="g-lead" aria-labelledby="g-lead-title">
+  <a class="g-lead-img" href="/gundem/${esc(lead.slug)}" aria-hidden="true" tabindex="-1">${figure(lead, { eager: true, sizes: '(max-width: 768px) 100vw, 640px' })}</a>
+  <div>
+    <p class="g-label">Son yazı</p>
+    <h2 id="g-lead-title"><a href="/gundem/${esc(lead.slug)}">${esc(lead.title)}</a></h2>
+    <time class="g-date" datetime="${esc(lead.published_at)}">${fmtDate(lead.published_at)}</time>
+    <p>${esc(lead.excerpt)}</p>
+  </div>
+</section>`
+    : `<p class="g-empty">Henüz yayınlanmış bir yazı yok.</p>`;
+
+  const rows = rest
+    .map(
+      (p) => `<article class="g-row">
+  <time class="g-date" datetime="${esc(p.published_at)}">${fmtDateShort(p.published_at)}</time>
+  <div>
+    <h3><a href="/gundem/${esc(p.slug)}">${esc(p.title)}</a></h3>
+    <p>${esc(p.excerpt)}</p>
+  </div>
+  <a href="/gundem/${esc(p.slug)}" aria-hidden="true" tabindex="-1">${figure(p, { sizes: '(max-width: 768px) 100vw, 220px' })}</a>
+</article>`
+    )
+    .join('\n');
+
+  const aside = withAside
+    ? `<aside class="g-aside" aria-labelledby="g-pop-title">
+  <h2 id="g-pop-title" class="g-label">En çok okunanlar</h2>
+  <ol>${popular
+    .map(
+      (p) => `<li><div><a href="/gundem/${esc(p.slug)}">${esc(p.title)}</a><small>${fmtDate(p.published_at)}</small></div></li>`
+    )
+    .join('')}</ol>
+</aside>`
+    : '';
+
+  const body = `
+<header class="g-head g-head--index">
+  <div class="g-head-inner">
+    ${crumbs([{ label: 'Ana Sayfa', href: `${origin}/index.html` }, { label: 'Gündem' }])}
+    <h1>Gündem</h1>
+    <div class="g-sub">
+      <p>Adon Studio'dan notlar, gözlemler ve perde arkası. Yapay zeka destekli üretimin günlük pratiğinden.</p>
+      <time datetime="${esc(now)}">${fmtDateLong(now)}</time>
+    </div>
+  </div>
+</header>
+<div class="g-page">
+  ${leadHtml}
+  <div class="g-cols${withAside ? ' g-cols--with-aside' : ''}">
+    <div>${rows}</div>
+    ${aside}
+  </div>
+</div>`;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'ADON Studio Gündem',
+      url: `${origin}/gundem/`,
+      inLanguage: 'tr',
+      publisher: { '@type': 'Organization', name: 'ADON Studio', url: origin },
+      blogPost: posts.slice(0, 10).map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        url: `${origin}/gundem/${p.slug}`,
+        datePublished: p.published_at,
+        image: imgSrc(p, origin) || undefined,
+      })),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${origin}/` },
+        { '@type': 'ListItem', position: 2, name: 'Gündem', item: `${origin}/gundem/` },
+      ],
+    },
+  ];
+
+  return layout({
+    origin,
+    title: 'Gündem | ADON Studio',
+    description: 'Adon Studio Gündem: yapay zeka destekli prodüksiyon üzerine notlar, gözlemler ve perde arkası.',
+    canonical: `${origin}/gundem/`,
+    ogImage: (lead && imgSrc(lead, origin)) || `${origin}/media/hero/adon-hakkimizda.jpg`,
+    jsonLd,
+    body,
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* Article                                                              */
+/* ------------------------------------------------------------------ */
+
+export function renderPost({ origin, post, next, older = [] }) {
+  const url = `${origin}/gundem/${post.slug}`;
+  const nextHtml = next
+    ? `<a class="g-next" href="/gundem/${esc(next.slug)}">
+  <div>
+    <p class="g-label">${next.isNewer ? 'Sonraki yazı' : 'Önceki yazı'}</p>
+    <h2>${esc(next.title)}</h2>
+  </div>
+  ${figure(next, { sizes: '(max-width: 768px) 320px, 180px' })}
+</a>`
+    : '';
+
+  const olderHtml = older.length
+    ? `<section class="g-older" aria-labelledby="g-older-title">
+  <h2 id="g-older-title" class="g-label">Eski yazılardan</h2>
+  <ul>${older
+    .map(
+      (p) => `<li><a href="/gundem/${esc(p.slug)}"><time class="g-date" datetime="${esc(p.published_at)}">${fmtDateShort(p.published_at)}</time><span>${esc(p.title)}</span></a></li>`
+    )
+    .join('')}</ul>
+  <a class="g-all" href="/gundem/">Tüm yazılar</a>
+</section>`
+    : `<section class="g-older"><a class="g-all" href="/gundem/">Tüm yazılar</a></section>`;
+
+  const body = `
+<article>
+  <header class="g-head g-head--post">
+    <div class="g-head-inner">
+      ${crumbs([{ label: 'Ana Sayfa', href: `${origin}/index.html` }, { label: 'Gündem', href: '/gundem/' }, { label: post.title }])}
+      <h1>${esc(post.title)}</h1>
+      <time class="g-date" datetime="${esc(post.published_at)}">${fmtDate(post.published_at)}</time>
+      <p class="g-excerpt">${esc(post.excerpt)}</p>
+      <div style="height:140px" aria-hidden="true"></div>
+    </div>
+  </header>
+  <div class="g-page">
+    <figure class="g-figure">${figure(post, { eager: true })}${post.image_caption ? `<figcaption>${esc(post.image_caption)}</figcaption>` : ''}</figure>
+    <div class="g-article g-body">${post.body_html}</div>
+    <nav class="g-end" aria-label="Diğer yazılar">
+      ${nextHtml}
+      ${olderHtml}
+    </nav>
+  </div>
+</article>`;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.published_at,
+      dateModified: post.updated_at || post.published_at,
+      inLanguage: 'tr',
+      image: imgSrc(post, origin) || undefined,
+      author: { '@type': 'Organization', name: 'ADON Studio', url: origin },
+      publisher: { '@type': 'Organization', name: 'ADON Studio', url: origin, logo: { '@type': 'ImageObject', url: `${origin}/media/logos/adon-ufak-logo.png` } },
+      mainEntityOfPage: url,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${origin}/` },
+        { '@type': 'ListItem', position: 2, name: 'Gündem', item: `${origin}/gundem/` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
+      ],
+    },
+  ];
+
+  return layout({
+    origin,
+    title: `${post.title} | Gündem | ADON Studio`,
+    description: post.excerpt.length > 155 ? post.excerpt.slice(0, 152).trimEnd() + '...' : post.excerpt,
+    canonical: url,
+    ogImage: imgSrc(post, origin) || `${origin}/media/hero/adon-hakkimizda.jpg`,
+    ogType: 'article',
+    jsonLd,
+    body,
+    extraHead: `<meta property="article:published_time" content="${esc(post.published_at)}">`,
+  });
+}
+
+export function renderNotFound({ origin }) {
+  return layout({
+    origin,
+    title: 'Yazı bulunamadı | Gündem | ADON Studio',
+    description: 'Aradığınız yazı bulunamadı.',
+    canonical: `${origin}/gundem/`,
+    ogImage: `${origin}/media/hero/adon-hakkimizda.jpg`,
+    body: `<header class="g-head g-head--post"><div class="g-head-inner">${crumbs([{ label: 'Ana Sayfa', href: `${origin}/index.html` }, { label: 'Gündem', href: '/gundem/' }, { label: 'Bulunamadı' }])}<h1>Bu yazı burada değil.</h1><p class="g-excerpt">Bağlantı değişmiş ya da yazı yayından kaldırılmış olabilir.</p></div></header><div class="g-page"><a class="g-all" href="/gundem/">Tüm yazılar</a></div>`,
+  });
+}
+
+export function renderFeed({ origin, posts }) {
+  const items = posts
+    .map(
+      (p) => `<item>
+<title>${esc(p.title)}</title>
+<link>${origin}/gundem/${esc(p.slug)}</link>
+<guid isPermaLink="true">${origin}/gundem/${esc(p.slug)}</guid>
+<pubDate>${new Date(p.published_at).toUTCString()}</pubDate>
+<description>${esc(p.excerpt)}</description>
+</item>`
+    )
+    .join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>ADON Studio Gündem</title>
+<link>${origin}/gundem/</link>
+<description>Yapay zeka destekli prodüksiyon üzerine notlar, gözlemler ve perde arkası.</description>
+<language>tr</language>
+${items}
+</channel></rss>`;
+}
