@@ -35,7 +35,7 @@ export function imgSrc(post, base = '') {
 }
 
 export function audioSrc(post, base = '') {
-  return post.audio_key ? `${base}/gundem/audio/${encodeURIComponent(post.audio_key)}?v=2` : null;
+  return post.audio_key ? `${base}/gundem/audio/${encodeURIComponent(post.audio_key)}?v=3` : null;
 }
 
 // Turkish reading speed ~180 words/minute for body copy. Counted from the excerpt + body together,
