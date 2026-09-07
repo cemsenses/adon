@@ -132,6 +132,7 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .g-aside small{display:block;color:var(--muted);font-size:12px;letter-spacing:.1em;margin-top:6px}
 /* Article */
 .g-figure{max-width:var(--g-wide);margin:-140px auto 56px;width:100%;position:relative;z-index:2}
+.g-head-spacer{height:140px}
 .g-figure figcaption{font-size:12px;letter-spacing:.05em;color:var(--muted);margin-top:12px}
 .g-article{max-width:var(--g-read);margin:0 auto}
 .g-body{font-size:17px;line-height:1.75;color:var(--black)}
@@ -172,6 +173,7 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
   .g-row .g-img{order:-1}
   .g-row .g-date{margin:0}
   .g-figure{margin-top:-64px}
+  .g-head-spacer{height:64px}
   .g-next{grid-template-columns:1fr}
   .g-next .g-img{order:-1;max-width:320px}
   .g-older li a{grid-template-columns:1fr;gap:6px}
@@ -523,7 +525,7 @@ export function renderPost({ origin, post, next, older = [] }) {
       <p class="g-readtime">Okuma süresi: ${readingTimeMinutes(post)} dk</p>
       <p class="g-excerpt">${esc(post.excerpt)}</p>
       ${listenPlayer(post)}
-      <div style="height:140px" aria-hidden="true"></div>
+      <div class="g-head-spacer" aria-hidden="true"></div>
     </div>
   </header>
   <div class="g-page">
