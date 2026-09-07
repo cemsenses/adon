@@ -88,7 +88,11 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .g-share-icons svg{width:18px;height:18px;display:block}
 .g-head--post .g-readtime{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin:8px 0 0}
 /* Listen player */
-.g-listen{display:flex;align-items:center;gap:14px;margin:22px 0 0;padding:12px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);max-width:420px}
+.g-listen{display:flex;align-items:center;gap:14px;margin:22px 0 0;padding:12px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);max-width:420px;position:relative;border-radius:4px}
+.g-listen::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--g-angle,0deg),transparent 0deg,var(--accent) 55deg,transparent 130deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .25s ease;animation:g-rotate 2.4s linear infinite;animation-play-state:paused;pointer-events:none}
+.g-listen.playing::before{opacity:1;animation-play-state:running}
+@property --g-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes g-rotate{to{--g-angle:360deg}}
 .g-listen-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--white);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .15s ease}
 .g-listen-btn:hover{background:#ff5548}
 .g-listen-btn:active{transform:scale(.94)}
@@ -101,6 +105,8 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .g-listen-bar{position:relative;height:3px;background:rgba(255,255,255,.18);cursor:pointer;border-radius:2px}
 .g-listen-fill{position:absolute;inset:0 auto 0 0;width:0%;background:var(--accent);border-radius:2px}
 .g-listen-time{font-family:var(--font-body);font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;font-variant-numeric:tabular-nums}
+.g-listen-speed{flex:none;min-width:40px;height:28px;padding:0 8px;border-radius:14px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:rgba(255,255,255,.75);font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.03em;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease}
+.g-listen-speed:hover{background:rgba(255,255,255,.12);color:var(--white);border-color:rgba(255,255,255,.35)}
 .g-head--post .g-excerpt{font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);max-width:640px;margin:24px 0 0}
 /* White content */
 .g-page{max-width:var(--g-max);margin:0 auto;padding:64px 32px 96px}
@@ -292,6 +298,7 @@ function listenPlayer(post) {  const src = audioSrc(post);
     <div class="g-listen-bar" role="slider" aria-label="Ses konumu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="g-listen-fill"></div></div>
     <div class="g-listen-time"><span data-cur>0:00</span> / <span data-dur>--:--</span></div>
   </div>
+  <button type="button" class="g-listen-speed" data-speed aria-label="Oynatma hızı">1x</button>
 </div>`;
 }
 
@@ -300,7 +307,17 @@ const LISTEN_JS = `
   function fmt(s){s=Math.floor(s||0);var m=Math.floor(s/60);var r=s%60;return m+':'+(r<10?'0':'')+r;}
   document.querySelectorAll('[data-audio-player]').forEach(function(el){
     var audio=el.querySelector('audio'),btn=el.querySelector('.g-listen-btn'),bar=el.querySelector('.g-listen-bar'),
-        fill=el.querySelector('.g-listen-fill'),cur=el.querySelector('[data-cur]'),dur=el.querySelector('[data-dur]');
+        fill=el.querySelector('.g-listen-fill'),cur=el.querySelector('[data-cur]'),dur=el.querySelector('[data-dur]'),
+        speedBtn=el.querySelector('[data-speed]');
+    var speeds=[1,1.5,2],speedIdx=0;
+    if(speedBtn){
+      speedBtn.addEventListener('click',function(){
+        speedIdx=(speedIdx+1)%speeds.length;
+        var s=speeds[speedIdx];
+        audio.playbackRate=s;
+        speedBtn.textContent=(s+'x');
+      });
+    }
     function setProgress(){
       if(audio.duration){var pct=(audio.currentTime/audio.duration)*100;fill.style.width=pct+'%';bar.setAttribute('aria-valuenow',Math.round(pct));}
       cur.textContent=fmt(audio.currentTime);
