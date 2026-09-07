@@ -14,8 +14,8 @@ let sql = '';
 for (const f of files) {
   const p = JSON.parse(readFileSync(`content/posts/${f}`, 'utf8'));
   if (!p.slug || !p.title || !p.excerpt || !p.body_html || !p.published_at) throw new Error(`eksik alan: ${f}`);
-  sql += `INSERT INTO posts (slug,title,excerpt,body_html,image_key,image_alt,published_at,status) VALUES (${q(p.slug)},${q(p.title)},${q(p.excerpt)},${q(p.body_html)},${q(p.image_key)},${q(p.image_alt)},${q(p.published_at)},${q(p.status === 'draft' ? 'draft' : 'published')})
-ON CONFLICT(slug) DO UPDATE SET title=excluded.title, excerpt=excluded.excerpt, body_html=excluded.body_html, image_key=excluded.image_key, image_alt=excluded.image_alt, published_at=excluded.published_at, status=excluded.status, updated_at=datetime('now');\n`;
+  sql += `INSERT INTO posts (slug,title,excerpt,body_html,image_key,image_alt,audio_key,published_at,status) VALUES (${q(p.slug)},${q(p.title)},${q(p.excerpt)},${q(p.body_html)},${q(p.image_key)},${q(p.image_alt)},${q(p.audio_key)},${q(p.published_at)},${q(p.status === 'draft' ? 'draft' : 'published')})
+ON CONFLICT(slug) DO UPDATE SET title=excluded.title, excerpt=excluded.excerpt, body_html=excluded.body_html, image_key=excluded.image_key, image_alt=excluded.image_alt, audio_key=excluded.audio_key, published_at=excluded.published_at, status=excluded.status, updated_at=datetime('now');\n`;
 }
 // Posts removed from the repo are unpublished, not deleted (views are kept).
 const slugs = files.map((f) => q(f.replace(/\.json$/, ''))).join(',');
@@ -32,4 +32,14 @@ if (existsSync('content/images')) {
     run(`npx wrangler r2 object put ${BUCKET}/${f} --file=content/images/${f} --content-type=${ct} --remote`);
   }
   console.log(`${imgs.length} görsel yüklendi`);
+}
+
+// 3. Audio -> R2 under audio/ prefix (key stored in a post's audio_key, e.g. "audio/<slug>.mp3")
+if (existsSync('content/audio')) {
+  const clips = readdirSync('content/audio').filter((f) => !f.startsWith('.'));
+  for (const f of clips) {
+    const ct = { mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg' }[f.split('.').pop().toLowerCase()] || 'audio/mpeg';
+    run(`npx wrangler r2 object put ${BUCKET}/audio/${f} --file=content/audio/${f} --content-type=${ct} --remote`);
+  }
+  console.log(`${clips.length} ses dosyası yüklendi`);
 }

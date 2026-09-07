@@ -34,6 +34,10 @@ export function imgSrc(post, base = '') {
   return post.image_key ? `${base}/gundem/img/${encodeURIComponent(post.image_key)}` : null;
 }
 
+export function audioSrc(post, base = '') {
+  return post.audio_key ? `${base}/gundem/audio/${encodeURIComponent(post.audio_key)}?v=2` : null;
+}
+
 // Turkish reading speed ~180 words/minute for body copy. Counted from the excerpt + body together,
 // stripped of HTML tags, so every post gets this automatically without any manual input.
 function readingTimeMinutes(post) {
@@ -77,6 +81,20 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .g-head--post h1{font-size:clamp(36px,5.2vw,80px);max-width:18ch;text-wrap:balance}
 .g-head--post .g-date{display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:28px 0 0}
 .g-head--post .g-readtime{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin:8px 0 0}
+/* Listen player */
+.g-listen{display:flex;align-items:center;gap:14px;margin:22px 0 0;padding:12px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);max-width:420px}
+.g-listen-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--white);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .15s ease}
+.g-listen-btn:hover{background:#ff5548}
+.g-listen-btn:active{transform:scale(.94)}
+.g-listen-btn svg{width:16px;height:16px;display:block}
+.g-listen-btn .g-icon-pause{display:none}
+.g-listen.playing .g-icon-play{display:none}
+.g-listen.playing .g-icon-pause{display:block}
+.g-listen-body{flex:1;min-width:0}
+.g-listen-label{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 8px}
+.g-listen-bar{position:relative;height:3px;background:rgba(255,255,255,.18);cursor:pointer;border-radius:2px}
+.g-listen-fill{position:absolute;inset:0 auto 0 0;width:0%;background:var(--accent);border-radius:2px}
+.g-listen-time{font-family:var(--font-body);font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;font-variant-numeric:tabular-nums}
 .g-head--post .g-excerpt{font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);max-width:640px;margin:24px 0 0}
 /* White content */
 .g-page{max-width:var(--g-max);margin:0 auto;padding:64px 32px 96px}
@@ -152,6 +170,7 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
   .g-next .g-img{order:-1;max-width:320px}
   .g-older li a{grid-template-columns:1fr;gap:6px}
   .g-head--post .g-excerpt{font-size:19px}
+  .g-listen{max-width:none}
   .g-body{font-size:16px}
 }
 @media (prefers-reduced-motion:reduce){body.gundem *{transition:none!important;animation:none!important}}
@@ -232,6 +251,57 @@ function footer(origin) {
   </footer>`;
 }
 
+function listenPlayer(post) {
+  const src = audioSrc(post);
+  if (!src) return '';
+  return `
+<div class="g-listen" data-audio-player>
+  <audio preload="metadata" src="${src}"></audio>
+  <button type="button" class="g-listen-btn" aria-label="Sesli dinle" style="min-width:40px;min-height:40px">
+    <svg class="g-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="g-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  </button>
+  <div class="g-listen-body">
+    <p class="g-listen-label">Sesli Dinle</p>
+    <div class="g-listen-bar" role="slider" aria-label="Ses konumu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="g-listen-fill"></div></div>
+    <div class="g-listen-time"><span data-cur>0:00</span> / <span data-dur>--:--</span></div>
+  </div>
+</div>`;
+}
+
+const LISTEN_JS = `
+(function(){
+  function fmt(s){s=Math.floor(s||0);var m=Math.floor(s/60);var r=s%60;return m+':'+(r<10?'0':'')+r;}
+  document.querySelectorAll('[data-audio-player]').forEach(function(el){
+    var audio=el.querySelector('audio'),btn=el.querySelector('.g-listen-btn'),bar=el.querySelector('.g-listen-bar'),
+        fill=el.querySelector('.g-listen-fill'),cur=el.querySelector('[data-cur]'),dur=el.querySelector('[data-dur]');
+    function setProgress(){
+      if(audio.duration){var pct=(audio.currentTime/audio.duration)*100;fill.style.width=pct+'%';bar.setAttribute('aria-valuenow',Math.round(pct));}
+      cur.textContent=fmt(audio.currentTime);
+    }
+    audio.addEventListener('loadedmetadata',function(){dur.textContent=fmt(audio.duration);});
+    audio.addEventListener('timeupdate',setProgress);
+    audio.addEventListener('play',function(){el.classList.add('playing');});
+    audio.addEventListener('pause',function(){el.classList.remove('playing');});
+    audio.addEventListener('ended',function(){el.classList.remove('playing');fill.style.width='0%';});
+    btn.addEventListener('click',function(){audio.paused?audio.play():audio.pause();});
+    function seek(clientX){
+      var r=bar.getBoundingClientRect();var pct=Math.min(1,Math.max(0,(clientX-r.left)/r.width));
+      if(audio.duration)audio.currentTime=pct*audio.duration;
+      setProgress();
+    }
+    bar.addEventListener('click',function(e){seek(e.clientX);});
+    bar.addEventListener('keydown',function(e){
+      if(!audio.duration)return;
+      if(e.key==='ArrowRight'){audio.currentTime=Math.min(audio.duration,audio.currentTime+5);}
+      else if(e.key==='ArrowLeft'){audio.currentTime=Math.max(0,audio.currentTime-5);}
+      else return;
+      setProgress();
+    });
+  });
+})();
+`;
+
 export function layout({ origin, title, description, canonical, ogImage, ogType = 'website', jsonLd = [], body, extraHead = '' }) {
   return `<!DOCTYPE html>
 <html lang="tr">
@@ -276,6 +346,7 @@ ${footer(origin)}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
 <script src="${origin}/js/main.js" defer></script>
+<script>${LISTEN_JS}</script>
 </body>
 </html>`;
 }
@@ -427,6 +498,7 @@ export function renderPost({ origin, post, next, older = [] }) {
       <time class="g-date" datetime="${esc(post.published_at)}">${fmtDate(post.published_at)}</time>
       <p class="g-readtime">Okuma süresi: ${readingTimeMinutes(post)} dk</p>
       <p class="g-excerpt">${esc(post.excerpt)}</p>
+      ${listenPlayer(post)}
       <div style="height:140px" aria-hidden="true"></div>
     </div>
   </header>
@@ -454,6 +526,17 @@ export function renderPost({ origin, post, next, older = [] }) {
       publisher: { '@type': 'Organization', name: 'ADON Studio', url: origin, logo: { '@type': 'ImageObject', url: `${origin}/media/logos/adon-ufak-logo.png` } },
       mainEntityOfPage: url,
     },
+    ...(audioSrc(post, origin)
+      ? [{
+          '@context': 'https://schema.org',
+          '@type': 'AudioObject',
+          name: `${post.title} — Sesli Dinle`,
+          contentUrl: audioSrc(post, origin),
+          encodingFormat: 'audio/mpeg',
+          inLanguage: 'tr',
+          about: url,
+        }]
+      : []),
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',

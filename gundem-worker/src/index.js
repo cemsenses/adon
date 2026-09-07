@@ -8,7 +8,7 @@ const html = (body, status = 200, extra = {}) =>
 const json = (obj, status = 200) =>
   new Response(JSON.stringify(obj), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 
-const PUBLIC_COLS = 'id, slug, title, excerpt, image_key, image_alt, published_at, updated_at, views';
+const PUBLIC_COLS = 'id, slug, title, excerpt, image_key, image_alt, audio_key, published_at, updated_at, views';
 
 export default {
   async fetch(request, env, ctx) {
@@ -27,6 +27,7 @@ export default {
         if (path === '') return indexPage(env, origin);
         if (path === 'feed.xml') return feed(env, origin);
         if (path.startsWith('img/')) return image(env, request, decodeURIComponent(path.slice(4)));
+        if (path.startsWith('audio/')) return audioFile(env, request, decodeURIComponent(path.slice(6)));
         if (path.startsWith('api/')) return api(request, env, origin, path.slice(4));
         // Strip an accidental trailing slash on article URLs
         if (path.endsWith('/')) return Response.redirect(`${origin}/gundem/${path.slice(0, -1)}`, 301);
@@ -132,6 +133,37 @@ function guessType(key) {
   return { webp: 'image/webp', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', avif: 'image/avif', gif: 'image/gif', svg: 'image/svg+xml' }[ext] || 'application/octet-stream';
 }
 
+async function audioFile(env, request, key) {
+  if (!key || key.includes('..') || !env.IMAGES) return new Response('Not found', { status: 404 });
+  const range = request.headers.get('range');
+  const obj = await env.IMAGES.get(key, range ? { range: parseRange(range) } : undefined);
+  if (!obj) return new Response('Not found', { status: 404 });
+  const headers = new Headers();
+  obj.writeHttpMetadata(headers);
+  headers.set('etag', obj.httpEtag);
+  headers.set('accept-ranges', 'bytes');
+  if (!headers.get('content-type')) headers.set('content-type', /\.mp3$/i.test(key) ? 'audio/mpeg' : 'application/octet-stream');
+  if (obj.range && (obj.range.length !== obj.size || obj.range.offset)) {
+    // Genuinely partial: never let a shared cache serve this slice to a different (or range-less) request.
+    headers.set('cache-control', 'private, no-store');
+    const end = obj.range.offset + obj.range.length - 1;
+    headers.set('content-range', `bytes ${obj.range.offset}-${end}/${obj.size}`);
+    headers.set('content-length', String(obj.range.length));
+    return new Response(obj.body, { status: 206, headers });
+  }
+  headers.set('cache-control', 'public, max-age=31536000, immutable');
+  headers.set('content-length', String(obj.size));
+  return new Response(obj.body, { status: 200, headers });
+}
+
+function parseRange(header) {
+  const m = /^bytes=(\d+)-(\d*)$/.exec(header || '');
+  if (!m) return undefined;
+  const offset = Number(m[1]);
+  const end = m[2] ? Number(m[2]) : undefined;
+  return end !== undefined ? { offset, length: end - offset + 1 } : { offset };
+}
+
 /* ---------------------------------------------------------------- */
 /* Admin API (Bearer ADMIN_TOKEN)                                     */
 /*   GET    /gundem/api/posts            list (all statuses)          */
@@ -166,14 +198,14 @@ async function api(request, env, origin, sub) {
       const published_at = b.published_at || new Date().toISOString();
       const status = b.status === 'draft' ? 'draft' : 'published';
       await env.DB.prepare(
-        `INSERT INTO posts (slug, title, excerpt, body_html, image_key, image_alt, published_at, status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `INSERT INTO posts (slug, title, excerpt, body_html, image_key, image_alt, audio_key, published_at, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
          ON CONFLICT(slug) DO UPDATE SET
            title=excluded.title, excerpt=excluded.excerpt, body_html=excluded.body_html,
-           image_key=excluded.image_key, image_alt=excluded.image_alt,
+           image_key=excluded.image_key, image_alt=excluded.image_alt, audio_key=excluded.audio_key,
            published_at=excluded.published_at, status=excluded.status, updated_at=datetime('now')`
       )
-        .bind(id, b.title, b.excerpt, b.body_html, b.image_key || null, b.image_alt || null, published_at, status)
+        .bind(id, b.title, b.excerpt, b.body_html, b.image_key || null, b.image_alt || null, b.audio_key || null, published_at, status)
         .run();
       return json({ ok: true, url: `${origin}/gundem/${id}` });
     }
@@ -190,6 +222,20 @@ async function api(request, env, origin, sub) {
       const ct = request.headers.get('content-type') || guessType(id);
       await env.IMAGES.put(id, request.body, { httpMetadata: { contentType: ct } });
       return json({ ok: true, key: id, url: `${origin}/gundem/img/${encodeURIComponent(id)}` });
+    }
+    if (m === 'DELETE') {
+      await env.IMAGES.delete(id);
+      return json({ ok: true });
+    }
+  }
+
+  if (resource === 'audio') {
+    if (!env.IMAGES) return json({ error: 'R2 binding missing' }, 503);
+    if (!id || id.includes('..')) return json({ error: 'invalid key' }, 400);
+    if (m === 'PUT') {
+      const ct = request.headers.get('content-type') || 'audio/mpeg';
+      await env.IMAGES.put(id, request.body, { httpMetadata: { contentType: ct } });
+      return json({ ok: true, key: id, url: `${origin}/gundem/audio/${encodeURIComponent(id)}` });
     }
     if (m === 'DELETE') {
       await env.IMAGES.delete(id);
