@@ -10,7 +10,7 @@ Ana sayfa ve iç sayfa düzeni sabit standarttır, yeni yazılarda yeniden tasar
 
 1. Yazı metni (`content/posts/<slug>.json`: slug, title, excerpt, body_html, image_key, image_alt, published_at, status) ve 16:9 kapak görseli (`content/images/`, `image_key` ile eşleşen dosya adı) hazırlanır.
 2. **Metin önce onaylanır.** Onaydan önce yayına alınmaz.
-3. **Ses (Sesli Dinle) ayrı bir onay gerektirir.** Metin onayı sesi otomatik tetiklemez; ses yalnızca Cem ayrıca "sesi de üret" dediğinde üretilir (ElevenLabs, kendi hesabı ve seçtiği voice ID ile — bkz. `/people` ya da ilgili not: voice ID `9Hlhs8vhmiUvbP4rTY7C`). Üretilen dosya `content/audio/<slug>.mp3` olarak konur, JSON'da `audio_key` alanı `audio/<slug>.mp3` olarak ayarlanır.
+3. **Ses (Sesli Dinle) ayrı bir onay gerektirir.** Metin onayı sesi otomatik tetiklemez; ses yalnızca Cem ayrıca "sesi de üret" dediğinde üretilir (ElevenLabs, kendi hesabı ve seçtiği voice ID ile — voice ID `9Hlhs8vhmiUvbP4rTY7C`). Her seslendirmenin en başına, başlıktan önce, sabit şu cümle eklenir: **"Adon Stüdyo ile Gündem'e hoş geldiniz."** Üretilen dosya `content/audio/<slug>.mp3` olarak konur, JSON'da `audio_key` alanı `audio/<slug>.mp3` olarak ayarlanır.
 4. Push edildiğinde GitHub Actions Worker'ı deploy eder ve içeriği D1/R2'ye senkronize eder (yazı, görsel, varsa ses). Repodan silinen yazı taslağa alınır, okunma sayısı korunur.
 
 ## Gerekli repo secret'ları (bir kez)
