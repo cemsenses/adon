@@ -1,10 +1,17 @@
 # adon.com.tr/gundem
 
-Gündem blogu. Worker `/gundem*` rotasında çalışır; yazılar D1'de, görseller R2'de, sitenin geri kalanı GitHub Pages'ta kalır.
+Gündem blogu. Worker `/gundem*` rotasında çalışır; yazılar D1'de, görseller ve ses R2'de, sitenin geri kalanı GitHub Pages'ta kalır.
 
-## Yayınlama
+## Sayfa şablonu (kilitli)
 
-Her yazı `content/posts/<slug>.json` dosyasıdır (slug, title, excerpt, body_html, image_key, image_alt, published_at, status). 16:9 görsel `content/images/` altına konur ve JSON'daki `image_key` dosya adına eşitlenir. Push edildiğinde GitHub Actions Worker'ı deploy eder ve içeriği D1/R2'ye senkronize eder. Repodan silinen yazı taslağa alınır, okunma sayısı korunur.
+Ana sayfa ve iç sayfa düzeni sabit standarttır, yeni yazılarda yeniden tasarlanmaz: siyah üst bant + breadcrumb, başlık, tarih, otomatik okuma süresi, giriş paragrafı, isteğe bağlı "Sesli Dinle" oynatıcısı, 16:9 kapak görseli, gövde, X/LinkedIn paylaşım ikonları, sonraki yazı ve eski yazılar. Site header/footer birebir adon.com.tr'den kopya, değiştirilmez.
+
+## Yayınlama iş akışı
+
+1. Yazı metni (`content/posts/<slug>.json`: slug, title, excerpt, body_html, image_key, image_alt, published_at, status) ve 16:9 kapak görseli (`content/images/`, `image_key` ile eşleşen dosya adı) hazırlanır.
+2. **Metin önce onaylanır.** Onaydan önce yayına alınmaz.
+3. **Ses (Sesli Dinle) ayrı bir onay gerektirir.** Metin onayı sesi otomatik tetiklemez; ses yalnızca Cem ayrıca "sesi de üret" dediğinde üretilir (ElevenLabs, kendi hesabı ve seçtiği voice ID ile — bkz. `/people` ya da ilgili not: voice ID `9Hlhs8vhmiUvbP4rTY7C`). Üretilen dosya `content/audio/<slug>.mp3` olarak konur, JSON'da `audio_key` alanı `audio/<slug>.mp3` olarak ayarlanır.
+4. Push edildiğinde GitHub Actions Worker'ı deploy eder ve içeriği D1/R2'ye senkronize eder (yazı, görsel, varsa ses). Repodan silinen yazı taslağa alınır, okunma sayısı korunur.
 
 ## Gerekli repo secret'ları (bir kez)
 
