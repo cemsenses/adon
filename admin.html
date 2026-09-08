@@ -269,10 +269,6 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
             <div class="fl">Telif Hakkı Metni</div>
             <input class="fi" id="footer-copyright-fi" type="text" placeholder="© 2026 ADON Studio..."/>
           </div>
-          <div class="fg">
-            <div class="fl">Lokasyonlar (alt bar)</div>
-            <input class="fi" id="footer-locations-fi" type="text" placeholder="İstanbul · Milan · ..."/>
-          </div>
         </div>
       </div>
 
@@ -1465,9 +1461,7 @@ function populateFooter(){
   makeQ('footer-tagline-q', ft.tagline, v=>{ ft.tagline=v; setDirty(); });
 
   const cp = document.getElementById('footer-copyright-fi');
-  const lc = document.getElementById('footer-locations-fi');
   if(cp){ cp.value=ft.copyright||''; cp.oninput=()=>{ ft.copyright=cp.value; setDirty(); }; }
-  if(lc){ lc.value=ft.locations||''; lc.oninput=()=>{ ft.locations=lc.value; setDirty(); }; }
 }
 
 // Populate sonunda block manager'ları render et

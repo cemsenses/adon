@@ -243,24 +243,14 @@ function footer(origin) {
         </div>
       </div>
       <div>
-        <div class="footer-col-title">Lokasyonlar</div>
+        <div class="footer-col-title">İletişim</div>
         <div class="footer-links">
-          <a href="#">İstanbul</a>
-          <a href="#">Milan</a>
-          <a href="#">Londra</a>
-          <a href="#">Lefkoşa</a>
-        </div>
-        <div style="margin-top: 32px;">
-          <div class="footer-col-title">İletişim</div>
-          <div class="footer-links">
-            <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
-          </div>
+          <a href="mailto:info@adon.com.tr">info@adon.com.tr</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span id="footer-copyright">© 2026 ADON Studio. Tüm hakları saklıdır.</span>
-      <span id="footer-locations">İstanbul · Milan · Londra · Lefkoşa</span>
     </div>
   </footer>`;
 }
