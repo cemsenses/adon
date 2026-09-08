@@ -161,7 +161,7 @@
             "items": [
                 {
                     "question": "What is ADON Studio and what does it do?",
-                    "answer": "ADON Studio is an Istanbul-based AI-powered creative production studio. We produce product and campaign videos, brand photography, and commercial content using artificial intelligence and human creative direction."
+                    "answer": "ADON Studio is an Adana-based AI-powered creative production studio. We produce product and campaign videos, brand photography, and commercial content using artificial intelligence and human creative direction."
                 },
                 {
                     "question": "Can AI-generated content compete with traditional production in terms of quality?",
@@ -173,7 +173,7 @@
                 },
                 {
                     "question": "What is ADON Studio and what does it do?",
-                    "answer": "ADON Studio is an Istanbul-based AI-powered creative production studio. We produce product and campaign videos, brand photography, and commercial content using artificial intelligence and human creative direction."
+                    "answer": "ADON Studio is an Adana-based AI-powered creative production studio. We produce product and campaign videos, brand photography, and commercial content using artificial intelligence and human creative direction."
                 }
             ]
         },
@@ -609,8 +609,6 @@
             "desc": "<p>Start the conversation with ADON Studio for your next large-scale creative production project. Share your brief and let's get to work.</p>"
         },
         "info": {
-            "istanbul": "LOTUS Halaskargazi Cd. 38-66",
-            "istanbulSub": "Istanbul, Turkey",
             "adana": "Adana",
             "adanaSub": "Turkey",
             "email": "info@adon.com.tr"

@@ -161,7 +161,7 @@
             "items": [
                 {
                     "question": "ADON Studio nedir ve ne iş yapar?",
-                    "answer": "ADON Studio, İstanbul merkezli bir yapay zeka destekli yaratıcı prodüksiyon stüdyosudur. On yıllık prodüksiyon birikimini kendi geliştirdiği yapay zeka orkestrasyon sistemiyle harmanlayarak markalar için video içerik, ürün görseli ve moda editoryal üretir. Geleneksel prodüksiyona kıyasla 10 kat daha hızlı, marka standartlarından ödün vermeden çalışır."
+                    "answer": "ADON Studio, Adana merkezli bir yapay zeka destekli yaratıcı prodüksiyon stüdyosudur. On yıllık prodüksiyon birikimini kendi geliştirdiği yapay zeka orkestrasyon sistemiyle harmanlayarak markalar için video içerik, ürün görseli ve moda editoryal üretir. Geleneksel prodüksiyona kıyasla 10 kat daha hızlı, marka standartlarından ödün vermeden çalışır."
                 },
                 {
                     "question": "Yapay zeka ile üretilen içerikler kalite açısından geleneksel prodüksiyonla rekabet edebilir mi?",
@@ -609,8 +609,6 @@
             "desc": "<p>Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim.</p>"
         },
         "info": {
-            "istanbul": "LOTUS Halaskargazi Cd. 38-66",
-            "istanbulSub": "İstanbul, Türkiye",
             "adana": "Adana",
             "adanaSub": "Türkiye",
             "email": "info@adon.com.tr"

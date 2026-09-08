@@ -462,10 +462,6 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 
         <div class="section-divider">CONTACT INFORMATION</div>
         <div class="frow">
-          <div class="fg"><div class="fl">Istanbul Address</div><input class="fi" id="il-ist" type="text"></div>
-          <div class="fg"><div class="fl">İstanbul Subtitle</div><input class="fi" id="il-ist-sub" type="text"></div>
-        </div>
-        <div class="frow">
           <div class="fg"><div class="fl">Adana Address</div><input class="fi" id="il-ada" type="text"></div>
           <div class="fg"><div class="fl">Adana Subtitle</div><input class="fi" id="il-ada-sub" type="text"></div>
         </div>
@@ -955,16 +951,12 @@ function populate(){
   // ── İLETİŞİM ──
   const il=s.iletisim||{};
   val('il-hero-title',(il.hero||{}).title);
-  val('il-ist',(il.info||{}).istanbul);
-  val('il-ist-sub',(il.info||{}).istanbulSub);
   val('il-ada',(il.info||{}).adana);
   val('il-ada-sub',(il.info||{}).adanaSub);
   val('il-email',(il.info||{}).email);
 
   makeQ('il-hero-desc-q',(il.hero||{}).desc, v=>il.hero.desc=v);
   bind('il-hero-title',v=>il.hero.title=v);
-  bind('il-ist',       v=>il.info.istanbul=v);
-  bind('il-ist-sub',   v=>il.info.istanbulSub=v);
   bind('il-ada',       v=>il.info.adana=v);
   bind('il-ada-sub',   v=>il.info.adanaSub=v);
   bind('il-email',     v=>il.info.email=v);

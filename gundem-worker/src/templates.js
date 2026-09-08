@@ -12,21 +12,21 @@ export function esc(s) {
     .replace(/'/g, '&#39;');
 }
 
-function toIstanbul(iso) {
+function toLocalTime(iso) {
   // Shift to UTC+3 so day/month are right regardless of Worker runtime tz.
   const d = new Date(iso);
   return new Date(d.getTime() + 3 * 60 * 60 * 1000);
 }
 export function fmtDate(iso) {
-  const d = toIstanbul(iso);
+  const d = toLocalTime(iso);
   return `${d.getUTCDate()} ${MONTHS_TR[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 export function fmtDateLong(iso) {
-  const d = toIstanbul(iso);
+  const d = toLocalTime(iso);
   return `${DAYS_TR[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS_TR[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 export function fmtDateShort(iso) {
-  const d = toIstanbul(iso);
+  const d = toLocalTime(iso);
   return `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.${d.getUTCFullYear()}`;
 }
 
