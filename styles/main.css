@@ -1119,6 +1119,65 @@ footer {
   color: var(--white);
 }
 
+.footer-gundem-link {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white) !important;
+  background: var(--accent);
+  padding: 8px 20px;
+  margin-top: 2px;
+  transition: background 0.3s ease;
+}
+
+.footer-gundem-link:hover {
+  color: var(--white) !important;
+  background: #333333;
+}
+
+.footer-gundem-link::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  padding: 1.5px;
+  background: conic-gradient(from var(--fg-angle, 0deg), transparent 0deg, #000 55deg, transparent 130deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: fg-rotate 3s linear infinite;
+  pointer-events: none;
+}
+
+@property --fg-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes fg-rotate {
+  to { --fg-angle: 360deg; }
+}
+
+.footer-gundem-badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: var(--white);
+  color: #000;
+  font-family: var(--font-body);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  padding: 0 4px;
+  pointer-events: none;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 32px;
