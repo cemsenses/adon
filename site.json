@@ -444,37 +444,6 @@
                 ]
             }
         ],
-        "whyItWorks": {
-            "label": "Neden İşe Yarar",
-            "headline": "Farkın\nKaynağı.",
-            "pillars": [
-                {
-                    "num": "Hız",
-                    "title": "Saatler İçinde Üretim",
-                    "body": "Geleneksel stüdyolar haftalara ihtiyaç duyar. Orkestrasyon sistemimiz birden fazla modeli eşzamanlı çalıştırarak üretimi dramatik biçimde hızlandırır."
-                },
-                {
-                    "num": "Kalite",
-                    "title": "Yapay Zeka + İnsan",
-                    "body": "Her kritik noktada insan yaratıcı yönetimi. Estetik kararlar deneyimli sanatçılar tarafından alınır; yapay zeka ise yüksek hacimli üretimi finanse eder."
-                },
-                {
-                    "num": "Ölçek",
-                    "title": "Sonsuz Varyasyon",
-                    "body": "Tek bir çekim veya fikir, binlerce pazara özel varyasyona dönüştürülebilir. Dil, kültür ve kanal uyarlamaları otomatik olarak üretilir."
-                },
-                {
-                    "num": "Etik",
-                    "title": "Sorumlu Yapay Zeka",
-                    "body": "SOC 2 veri güvenliği, köken takibi, etik içerik tembelliği ve önyargı azaltma protokolleri. Teknolojiyi şeffaflıkla kullanıyoruz."
-                },
-                {
-                    "num": "Tutarlılık",
-                    "title": "Marka Uyumu",
-                    "body": "Yapay zeka modelleri marka spesifik varlıklarla eğitilir. Her çıktı marka standartlarına otomatik olarak uygun. İnsani hata riski sıfıra yakın."
-                }
-            ]
-        },
         "cta": {
             "label": "Metodolojimiz",
             "headline": "Metodolojimizi\nProjenize Nasıl\n<em>Uygulayabileceğimizi</em>\nKonuşalım.",
@@ -490,11 +459,6 @@
             {
                 "id": "block-framework",
                 "label": "4 Adımlı Sentez",
-                "visible": true
-            },
-            {
-                "id": "block-why",
-                "label": "Neden İşe Yarar",
                 "visible": true
             },
             {
