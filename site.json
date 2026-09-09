@@ -390,8 +390,7 @@
         },
         "framework": {
             "label": "5 Adımlı Sentez",
-            "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>",
-            "body": "<p>Hangi modelin ne zaman, ne kadar ve hangi insan gözetiminde devreye gireceğini belirleyen bir sistem. Her adımda insan kararı, her çıktıda marka bütünlüğü.</p>"
+            "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>"
         },
         "steps": [
             {
