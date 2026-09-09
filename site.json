@@ -572,8 +572,6 @@
             "desc": "<p>Bir sonraki yüksek ölçekli yaratıcı prodüksiyon projeniz için ADON Studio ile diyaloğu başlatın. Formu doldurun, 24 saat içinde dönelim.</p>"
         },
         "info": {
-            "adana": "Adana",
-            "adanaSub": "Türkiye",
             "email": "info@adon.com.tr"
         },
         "_blocks": [
