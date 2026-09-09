@@ -3,7 +3,7 @@
         "hero": {
             "textTop": "Yapay zeka ile üretiyoruz",
             "textBottom": "<em>Markalarla büyüyoruz.</em>",
-            "desc": "<p>Adon Studio, markalar için görsel içerik üreten bir stüdyo olmanın çok ötesinde bir şey: 30 yıllık prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız </p><p><em>yeni nesil bir yaratıcı fabrika.</em></p><p> Daha hızlı. Daha tutarlı. Daha ölçeklenebilir.</p>",
+            "desc": "<p>Adon Studio, markalar için görsel ve video içerik üreten bir stüdyo olmanın çok ötesinde: 30 yıllık strateji ve prodüksiyon birikimini, kendi geliştirdiğimiz yapay zeka orkestrasyon sistemiyle harmanladığımız </p><p><em>yeni nesil yaratıcı bir fabrika.</em></p><p> Daha hızlı. Daha tutarlı. Daha hesaplı. Daha ölçeklenebilir.</p>",
             "video": "media/Dubaco-demo.mp4",
             "ctaText": "Sentezi İş Başında Görün →",
             "ctaLink": "sentez.html"
@@ -20,7 +20,7 @@
         "fark": {
             "label": "Farkımız",
             "headline": "Ürün, marka ve kampanya videolarını AI ile \n<em>Hızlı ve yüksek kalitede üretiyoruz.</em>",
-            "body": "<p>Pek çok stüdyo yapay zekayı üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde inşa ettiğimiz zanaatkâr birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarınıza tam uyan ve geleneksel prodüksiyonun çok daha kısa süresinde teslim edilen içerik.</p>",
+            "body": "<p>Pek çok ajans, marka ve stüdyo yapay zekayı yalnızca üretim maliyetini düşürmek için kullanıyor. Biz farklı bir yol seçtik: yıllar içinde yaratıcı sektörlerde inşa ettiğimiz bilgi birikimini, kendi tasarladığımız yapay zeka orkestrasyon altyapısıyla birleştirdik. Sonuç; sıradan bir otomasyon değil, sinematik kaliteden taviz vermeyen, marka standartlarına tam uyan ve geleneksel prodüksiyonun zamanlamalarından çok daha kısa sürede teslim edilen uygun bütçeli içerikler.</p>",
             "ctaText": "Sentezi İnceleyin →",
             "ctaLink": "sentez.html"
         },
