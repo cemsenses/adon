@@ -389,8 +389,8 @@
             "sub": "<p>Yapay Zeka ile hazırlanan her proje, kullanılan araçlarla başlar ve çoğunlukla onlarla biter. Biz Yapay Zeka ile hazırlanan film prodüksiyonlarına farklı bir çerçeveden bakıyoruz; hangi modellerin hangi projede ne zaman, ne kadar kullanılacağına uzmanlığımızla karar verdiğimiz, projenin her aşamasında konusunda yetkin ekibimizin uzun yıllara dayanan tecrübeleriyle müdahale ettiği bir metodoloji geliştirdik.</p>"
         },
         "framework": {
-            "label": "5 Adımlı Sentez",
-            "headline": "Bu Metodoloji,\n5 Adımda\n<em>İşliyor.</em>"
+            "label": "4 Adımlı Sentez",
+            "headline": "Bu Metodoloji,\n4 Adımda\n<em>İşliyor.</em>"
         },
         "steps": [
             {
@@ -489,7 +489,7 @@
             },
             {
                 "id": "block-framework",
-                "label": "5 Adımlı Sentez",
+                "label": "4 Adımlı Sentez",
                 "visible": true
             },
             {
