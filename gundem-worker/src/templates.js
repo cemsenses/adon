@@ -188,6 +188,12 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
   .g-body{font-size:16px}
 }
 @media (prefers-reduced-motion:reduce){body.gundem *{transition:none!important;animation:none!important}}
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.28);z-index:9000;cursor:pointer;transition:box-shadow .2s ease,filter .2s ease}
+.whatsapp-float:hover,.whatsapp-float:focus-visible{filter:brightness(1.08);box-shadow:0 6px 22px rgba(0,0,0,.38)}
+.whatsapp-float:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.whatsapp-float svg{width:28px;height:28px;display:block}
+@media (max-width:768px){.whatsapp-float{width:48px;height:48px;bottom:16px;right:16px}.whatsapp-float svg{width:24px;height:24px}}
+@media (prefers-reduced-motion:reduce){.whatsapp-float{transition:none}}
 `;
 
 // Nav and footer are copied from the site verbatim (paths made absolute). Do not restyle.
@@ -252,7 +258,13 @@ function footer(origin) {
     <div class="footer-bottom">
       <span id="footer-copyright">© 2026 ADON Studio. Tüm hakları saklıdır.</span>
     </div>
-  </footer>`;
+  </footer>
+  <a href="https://wa.me/905449588112?text=Merhaba%2C%20ADON%20Studio%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+    class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp'tan yazın">
+    <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true">
+      <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.34.657 4.522 1.797 6.377L4 29l7.824-1.752A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.818a9.78 9.78 0 0 1-4.98-1.363l-.357-.213-4.64 1.04 1.06-4.522-.234-.372A9.76 9.76 0 0 1 5.2 15c0-5.965 4.851-10.818 10.804-10.818 5.954 0 10.805 4.853 10.805 10.818 0 5.964-4.851 10.818-10.805 10.818zm5.938-8.104c-.326-.163-1.923-.95-2.222-1.058-.298-.109-.515-.163-.732.163-.217.326-.84 1.058-1.03 1.275-.19.217-.38.244-.706.081-.326-.163-1.375-.507-2.62-1.615-.968-.863-1.622-1.929-1.812-2.255-.19-.326-.02-.502.143-.664.147-.146.326-.38.489-.57.163-.19.217-.326.326-.543.108-.217.054-.407-.027-.57-.081-.163-.732-1.763-1.003-2.415-.264-.635-.532-.549-.732-.56l-.624-.01c-.217 0-.57.081-.868.407-.298.326-1.139 1.113-1.139 2.716 0 1.603 1.166 3.152 1.328 3.37.163.217 2.294 3.5 5.558 4.91.777.335 1.383.535 1.855.685.779.248 1.488.213 2.049.13.625-.093 1.923-.786 2.194-1.545.271-.76.271-1.41.19-1.545-.081-.136-.298-.217-.624-.38z" />
+    </svg>
+  </a>`;
 }
 
 function shareIcons({ url, title }) {
