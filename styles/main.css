@@ -2032,3 +2032,100 @@ footer {
     transition: none;
   }
 }
+
+/* ─── WhatsApp Quick-Select Panel ─── */
+.wa-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9000;
+}
+
+.wa-widget .whatsapp-float {
+  position: static;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.wa-panel {
+  position: absolute;
+  bottom: 68px;
+  right: 0;
+  width: 280px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: wa-panel-in 0.2s ease;
+}
+
+@keyframes wa-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wa-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: #075E54;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wa-panel-close {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.wa-panel-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-panel-options a {
+  padding: 13px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--black);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transition: background 0.15s ease;
+}
+
+.wa-panel-options a:last-child {
+  border-bottom: none;
+}
+
+.wa-panel-options a:hover,
+.wa-panel-options a:focus-visible {
+  background: rgba(37, 211, 102, 0.1);
+}
+
+@media (max-width: 768px) {
+  .wa-widget {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .wa-panel {
+    bottom: 60px;
+    width: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-panel {
+    animation: none;
+  }
+}

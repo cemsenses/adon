@@ -194,6 +194,18 @@ body.gundem :where(a,button):focus-visible{outline:2px solid var(--accent);outli
 .whatsapp-float svg{width:28px;height:28px;display:block}
 @media (max-width:768px){.whatsapp-float{width:48px;height:48px;bottom:16px;right:16px}.whatsapp-float svg{width:24px;height:24px}}
 @media (prefers-reduced-motion:reduce){.whatsapp-float{transition:none}}
+.wa-widget{position:fixed;bottom:24px;right:24px;z-index:9000}
+.wa-widget .whatsapp-float{position:static;border:none;padding:0;font:inherit}
+.wa-panel{position:absolute;bottom:68px;right:0;width:280px;background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);overflow:hidden;animation:wa-panel-in .2s ease}
+@keyframes wa-panel-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.wa-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#075E54;color:#fff;font-size:14px;font-weight:600}
+.wa-panel-close{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0;width:24px;height:24px}
+.wa-panel-options{display:flex;flex-direction:column}
+.wa-panel-options a{padding:13px 16px;font-size:14px;color:#000;border-bottom:1px solid rgba(0,0,0,.08);transition:background .15s ease}
+.wa-panel-options a:last-child{border-bottom:none}
+.wa-panel-options a:hover,.wa-panel-options a:focus-visible{background:rgba(37,211,102,.1)}
+@media (max-width:768px){.wa-widget{bottom:16px;right:16px}.wa-panel{bottom:60px;width:260px}}
+@media (prefers-reduced-motion:reduce){.wa-panel{animation:none}}
 `;
 
 // Nav and footer are copied from the site verbatim (paths made absolute). Do not restyle.
@@ -259,12 +271,45 @@ function footer(origin) {
       <span id="footer-copyright">© 2026 ADON Studio. Tüm hakları saklıdır.</span>
     </div>
   </footer>
-  <a href="https://wa.me/905449588112?text=Merhaba%2C%20ADON%20Studio%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
-    class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp'tan yazın">
-    <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true">
-      <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.34.657 4.522 1.797 6.377L4 29l7.824-1.752A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.818a9.78 9.78 0 0 1-4.98-1.363l-.357-.213-4.64 1.04 1.06-4.522-.234-.372A9.76 9.76 0 0 1 5.2 15c0-5.965 4.851-10.818 10.804-10.818 5.954 0 10.805 4.853 10.805 10.818 0 5.964-4.851 10.818-10.805 10.818zm5.938-8.104c-.326-.163-1.923-.95-2.222-1.058-.298-.109-.515-.163-.732.163-.217.326-.84 1.058-1.03 1.275-.19.217-.38.244-.706.081-.326-.163-1.375-.507-2.62-1.615-.968-.863-1.622-1.929-1.812-2.255-.19-.326-.02-.502.143-.664.147-.146.326-.38.489-.57.163-.19.217-.326.326-.543.108-.217.054-.407-.027-.57-.081-.163-.732-1.763-1.003-2.415-.264-.635-.532-.549-.732-.56l-.624-.01c-.217 0-.57.081-.868.407-.298.326-1.139 1.113-1.139 2.716 0 1.603 1.166 3.152 1.328 3.37.163.217 2.294 3.5 5.558 4.91.777.335 1.383.535 1.855.685.779.248 1.488.213 2.049.13.625-.093 1.923-.786 2.194-1.545.271-.76.271-1.41.19-1.545-.081-.136-.298-.217-.624-.38z" />
-    </svg>
-  </a>`;
+  <div class="wa-widget" id="wa-widget">
+    <div class="wa-panel" id="wa-panel" hidden>
+      <div class="wa-panel-header">
+        <span>Size nasıl yardımcı olabiliriz?</span>
+        <button type="button" class="wa-panel-close" id="wa-close" aria-label="Kapat">&times;</button>
+      </div>
+      <div class="wa-panel-options">
+        <a href="https://wa.me/905449588112?text=Merhaba%2C%20AI%20ile%20%C3%BCr%C3%BCn%20foto%C4%9Fraf%C4%B1%20%C3%BCretimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">AI ile Ürün Fotoğrafı</a>
+        <a href="https://wa.me/905449588112?text=Merhaba%2C%20AI%20ile%20video%20%C3%BCretimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">AI ile Video Üretimi</a>
+        <a href="https://wa.me/905449588112?text=Merhaba%2C%20hibrit%20prod%C3%BCksiyon%20(ger%C3%A7ek%20%2B%20AI)%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">Hibrit Prodüksiyon</a>
+        <a href="https://wa.me/905449588112?text=Merhaba%2C%20AI%20destekli%20m%C3%BCzik%20ve%20jingle%20%C3%BCretimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">Müzik &amp; Jingle</a>
+        <a href="https://wa.me/905449588112?text=Merhaba%2C%20ADON%20Studio%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">Diğer / Genel Bilgi</a>
+      </div>
+    </div>
+    <button type="button" class="whatsapp-float" id="wa-toggle" aria-expanded="false" aria-controls="wa-panel" aria-label="WhatsApp'tan yazın">
+      <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true">
+        <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.34.657 4.522 1.797 6.377L4 29l7.824-1.752A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.818a9.78 9.78 0 0 1-4.98-1.363l-.357-.213-4.64 1.04 1.06-4.522-.234-.372A9.76 9.76 0 0 1 5.2 15c0-5.965 4.851-10.818 10.804-10.818 5.954 0 10.805 4.853 10.805 10.818 0 5.964-4.851 10.818-10.805 10.818zm5.938-8.104c-.326-.163-1.923-.95-2.222-1.058-.298-.109-.515-.163-.732.163-.217.326-.84 1.058-1.03 1.275-.19.217-.38.244-.706.081-.326-.163-1.375-.507-2.62-1.615-.968-.863-1.622-1.929-1.812-2.255-.19-.326-.02-.502.143-.664.147-.146.326-.38.489-.57.163-.19.217-.326.326-.543.108-.217.054-.407-.027-.57-.081-.163-.732-1.763-1.003-2.415-.264-.635-.532-.549-.732-.56l-.624-.01c-.217 0-.57.081-.868.407-.298.326-1.139 1.113-1.139 2.716 0 1.603 1.166 3.152 1.328 3.37.163.217 2.294 3.5 5.558 4.91.777.335 1.383.535 1.855.685.779.248 1.488.213 2.049.13.625-.093 1.923-.786 2.194-1.545.271-.76.271-1.41.19-1.545-.081-.136-.298-.217-.624-.38z" />
+      </svg>
+    </button>
+  </div>
+  <script>
+    (function () {
+      var toggle = document.getElementById('wa-toggle');
+      var panel = document.getElementById('wa-panel');
+      var closeBtn = document.getElementById('wa-close');
+      var widget = document.getElementById('wa-widget');
+      if (!toggle || !panel) return;
+      function open() { panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); }
+      function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
+      toggle.addEventListener('click', function () { panel.hidden ? open() : close(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      document.addEventListener('click', function (e) {
+        if (!widget.contains(e.target)) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>`;
 }
 
 function shareIcons({ url, title }) {
