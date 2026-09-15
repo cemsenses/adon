@@ -1,4 +1,4 @@
-// Cloudflare Pages SEO-GEO syntax fix: 2026-09-15
+// Cloudflare Pages SEO-GEO syntax fix 2: 2026-09-15
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
@@ -90,7 +90,7 @@ const FILES = [
   "gundem/img/urun-fotografindan-yasam-tarzi-sahnesine.webp",
   "gundem/img/yapay-zeka-ciktisi-neden-asla-ham-teslim-edilmez.webp",
   "gundem/img/yapay-zekanin-hizindan-once-konusmamiz-gereken-yedi-risk.webp",
-  "gundem/index.html",\n  "gundem/feed.xml",
+  "gundem/index.html",
   "gundem/urun-fotografindan-yasam-tarzi-sahnesine/index.html",
   "gundem/yapay-zeka-ciktisi-neden-asla-ham-teslim-edilmez/index.html",
   "gundem/yapay-zekanin-hizindan-once-konusmamiz-gereken-yedi-risk/index.html",
@@ -98,7 +98,7 @@ const FILES = [
   "hero-video.js",
   "home-video-project.css",
   "iletisim/index.html",
-  "index.html",\n  "llms.txt",\n  "llms-full.txt",
+  "index.html",
   "motion.css",
   "motion.js",
   "robots.txt",
