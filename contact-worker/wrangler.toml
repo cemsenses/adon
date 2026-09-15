@@ -1,0 +1,15 @@
+name = "adon-contact-preview"
+main = "src/index.mjs"
+compatibility_date = "2026-09-01"
+workers_dev = true
+# Clone-only preparation: no routes on the original domain.
+routes = []
+
+[vars]
+CONTACT_ENABLED = "false"
+ALLOWED_ORIGINS = "https://adon-fuel-studio.cemsenses.chatgpt.site"
+
+[[ratelimits]]
+name = "CONTACT_LIMITER"
+namespace_id = "912607"
+simple = { limit = 5, period = 60 }
