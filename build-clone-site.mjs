@@ -1,4 +1,4 @@
-// Cloudflare Pages SEO-GEO retry: 2026-09-15
+// Cloudflare Pages SEO-GEO syntax fix: 2026-09-15
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
