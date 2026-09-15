@@ -5,7 +5,10 @@ compatibility_date = "2026-09-01"
 # The static Cloudflare Pages site owns /gundem and all article routes.
 # Keep this Worker available on workers.dev without intercepting adon.com.tr.
 workers_dev = true
-routes = []
+routes = [
+  { pattern = "adon.com.tr/__adon-gundem-worker*", zone_name = "adon.com.tr" },
+  { pattern = "www.adon.com.tr/__adon-gundem-worker*", zone_name = "adon.com.tr" }
+]
 
 [[d1_databases]]
 binding = "DB"
