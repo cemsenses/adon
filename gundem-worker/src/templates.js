@@ -31,7 +31,9 @@ export function fmtDateShort(iso) {
 }
 
 export function imgSrc(post, base = '') {
-  return post.image_key ? `${base}/gundem/img/${encodeURIComponent(post.image_key)}` : null;
+  if (!post.image_key) return null;
+  const v = post.updated_at ? `?v=${encodeURIComponent(post.updated_at)}` : '';
+  return `${base}/gundem/img/${encodeURIComponent(post.image_key)}${v}`;
 }
 
 export function audioSrc(post, base = '') {
