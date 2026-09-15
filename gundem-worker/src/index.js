@@ -14,6 +14,19 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const origin = env.SITE_ORIGIN || `${url.protocol}//${url.host}`;
+
+    // Cloudflare can retain the former /gundem* route after a route update.
+    // Resolve public pages from the new static site without forwarding visitor
+    // headers. The authenticated publishing API continues to run here.
+    const isPublicRead =
+      (request.method === 'GET' || request.method === 'HEAD') &&
+      !url.pathname.startsWith('/gundem/api/');
+    if (isPublicRead) {
+      const pagesOrigin = env.PAGES_ORIGIN || 'https://adon-bio.pages.dev';
+      const target = new URL(url.pathname + url.search, pagesOrigin);
+      return fetch(target, { method: request.method, redirect: 'follow' });
+    }
+
     let path = url.pathname;
 
     // Canonical: /gundem -> /gundem/
