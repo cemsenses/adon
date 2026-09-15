@@ -2,12 +2,10 @@ name = "adon-gundem"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
-# Worker route: Cloudflare proxies adon.com.tr (orange cloud) so /gundem* is served by this Worker,
-# everything else still goes to GitHub Pages.
-routes = [
-  { pattern = "adon.com.tr/gundem*", zone_name = "adon.com.tr" },
-  { pattern = "www.adon.com.tr/gundem*", zone_name = "adon.com.tr" }
-]
+# The static Cloudflare Pages site owns /gundem and all article routes.
+# Keep this Worker available on workers.dev without intercepting adon.com.tr.
+workers_dev = true
+routes = []
 
 [[d1_databases]]
 binding = "DB"
