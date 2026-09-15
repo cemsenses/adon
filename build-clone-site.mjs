@@ -1,3 +1,4 @@
+// Cloudflare Pages production deployment trigger: 2026-09-15
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
