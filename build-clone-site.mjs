@@ -1,4 +1,4 @@
-// Cloudflare Pages focused-service SEO deployment: 2026-09-15
+// Cloudflare Pages snapshot refresh: 2026-09-18 Develey featured video
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
