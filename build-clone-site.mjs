@@ -39,6 +39,7 @@ const FILES = [
   "assets/img_1774110425841.webp",
   "assets/img_1774110459473.webp",
   "assets/img_1774110663011.webp",
+  "assets/urban-care-home-tropical.webp",
   "assets/instagram.svg",
   "assets/isana-donut-lipjelly.webp",
   "assets/isana-hydration-cream.webp",
