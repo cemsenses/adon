@@ -1,4 +1,4 @@
-// Cloudflare Pages snapshot refresh: 2026-09-28 clean homepage hero
+// Cloudflare Pages snapshot refresh: 2026-09-28 clean hero and sauce cover
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
@@ -25,6 +25,7 @@ const FILES = [
   "assets/brands/12-imprime-perfume.jpg",
   "assets/brands/13-the-purest-solutions.jpg",
   "assets/dahafitol-ai-video-cover.jpg",
+  "assets/sos-video-kapak.jpg",
   "assets/collage/1175709535.jpg",
   "assets/collage/1175730877.jpg",
   "assets/collage/1175736459.jpg",
