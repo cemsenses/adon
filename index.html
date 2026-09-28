@@ -121,6 +121,27 @@
       ]
     }
     </script>
+  <style>
+    /* Hero: masaüstünde video temiz görünsün, yazılar mobilde kalsın.
+       Başlık ve açıklama SEO/erişilebilirlik için DOM'da kalır (görsel olarak gizli). */
+    @media (min-width: 769px) {
+      #block-hero .hero-headlines,
+      #block-hero .hero-desc {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+      #block-hero .hero-middle .btn { display: none; }
+      #block-hero .hero-video-overlay { display: none; }
+    }
+  </style>
 </head>
 
 <body>
@@ -160,10 +181,12 @@
     <div class="hero-video-bg">
       <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;pointer-events:none;">
         <iframe
-          src="https://player.vimeo.com/video/1220110557?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0"
-          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;border:none;"
-          allow="autoplay; fullscreen"
-          allowfullscreen
+          src="https://player.vimeo.com/video/1230804159?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;border:none;pointer-events:none;"
+          allow="autoplay; picture-in-picture; encrypted-media"
+          referrerpolicy="strict-origin-when-cross-origin"
+          tabindex="-1"
+          title="Adon Studio - AI Films Explained"
           frameborder="0">
         </iframe>
       </div>
