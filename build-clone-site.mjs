@@ -1,4 +1,4 @@
-// Cloudflare Pages snapshot refresh: 2026-09-28 homepage hero video 1230804159
+// Cloudflare Pages snapshot refresh: 2026-09-28 clean homepage hero
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
