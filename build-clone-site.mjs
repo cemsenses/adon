@@ -1,4 +1,4 @@
-// Cloudflare Pages snapshot refresh: 2026-09-28 clean hero and sauce cover
+// Cloudflare Pages snapshot refresh: 2026-10-06 solutions motion video
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
@@ -121,6 +121,7 @@ const FILES = [
   "sentez-images.css",
   "sentez/index.html",
   "sitemap.xml",
+  "solutions-loop-video.css",
   "style.css",
   "vendor/THREE-LICENSE.txt",
   "vendor/three.core.min.js",
